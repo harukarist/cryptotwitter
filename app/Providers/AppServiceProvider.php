@@ -24,5 +24,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        // MySQL5.7.7未満では、ユニーク制約を付けたカラムは最大767bytesなので
+        // varchar(191) * 4bytes(utf8mb4) = 764bytes となるよう
+        // varcharのデフォルト文字数を変更。
+        Schema::defaultStringLength(191);
     }
 }
