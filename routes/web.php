@@ -18,4 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/trend', 'TrendController@getTicker')->name('trend.get');
+Route::get('/news', 'NewsController@getNews')->name('news.get');
 // Route::get('/home', 'HomeController@index')->name('home');
