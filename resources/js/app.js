@@ -1,3 +1,10 @@
+import VueRouter from 'vue-router';
+import HeaderComponent from './components/HeaderComponent';
+import HomeComponent from './components/HomeComponent';
+import NewsListComponent from './components/NewsListComponent';
+import TrendListComponent from './components/TrendListComponent';
+import TwitterListComponent from './components/TwitterListComponent';
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -19,7 +26,37 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.use(VueRouter);
+
+// VueRouterのルーティング設定
+const router = new VueRouter({
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            name: 'home.index',
+            component: HomeComponent
+        },
+        {
+            path: '/news',
+            name: 'news.index',
+            component: NewsListComponent
+        },
+        {
+            path: '/trend',
+            name: 'trend.index',
+            component: TrendListComponent
+        },
+        {
+            path: '/twitter',
+            name: 'twitter.index',
+            component: TwitterListComponent
+        },
+    ]
+})
+
+// 常に表示するコンポーネント
+Vue.component('header-component', HeaderComponent);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -29,4 +66,5 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 const app = new Vue({
     el: '#app',
+    router //Vue Router
 });
