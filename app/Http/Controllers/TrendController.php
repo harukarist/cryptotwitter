@@ -60,6 +60,6 @@ class TrendController extends Controller
         }
 
         // dd($currencies, $list);
-        return view('home');
+        return view('top');
         }
 }
