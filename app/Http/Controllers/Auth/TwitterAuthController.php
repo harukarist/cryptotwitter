@@ -22,8 +22,7 @@ class TwitterAuthController extends Controller
     {
         try {
             // OAuthプロバイダからユーザー情報を取得
-            $social_user = Socialite::driver('twitter')->user();
-            // dd($social_user);
+            $twitterUser = Socialite::driver('twitter')->user();
         } catch (Exception $e) {
             // 認証エラーの場合はトップページにリダイレクト
             return redirect('/');
@@ -31,7 +30,7 @@ class TwitterAuthController extends Controller
 
         // Twitterアカウント情報をもとにDBからユーザー情報を取得する
         // DBにユーザー情報がなければ、DBに新規登録する
-        $authUser = $this->findOrCreateUser($social_user);
+        $authUser = $this->findOrCreateUser($twitterUser);
 
         // ログイン処理
         Auth::login($authUser, true);
