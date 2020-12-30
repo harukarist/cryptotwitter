@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
+    // ニュース画面表示処理
+    public function index()
+    {
+        $lists_json = $this->getNews();
+        return $lists_json;
+    }
+
     //$keyword:ニュース検索のキーワード
     //$max_num:取得記事数の上限
     public function getNews()
@@ -52,14 +59,16 @@ class NewsController extends Controller
 
             // 記事のURL（SimpleXMLElementオブジェクト）をstringにキャストして配列に格納
             $lists[$i]['url'] =  (string)$items_arr[$i]->link;
-            $lists[$i]['date'] =  (string)$items_arr[$i]->pubDate;
+            // 配信日時をstrtotime()でUNIXタイムスタンプに変換し、date()で表示形式を指定
+            $lists[$i]['date'] =  date('Y.m.d(D)', strtotime($items_arr[$i]->pubDate));
+            // 記事の配信元をstringにキャストして配列に格納
             $lists[$i]['source'] =  (string)$items_arr[$i]->source;
         }
 
         // JSON形式に変換してビューに渡す
         $lists_json = json_encode($lists);
-        dd($lists_json, $lists);
+        // dd($lists_json, $lists);
 
-        return view('news', compact('lists_json'));
+        return $lists_json;
     }
 }
