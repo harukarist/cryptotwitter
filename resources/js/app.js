@@ -4,6 +4,7 @@ import HomeComponent from './components/HomeComponent';
 import NewsListComponent from './components/NewsListComponent';
 import TrendListComponent from './components/TrendListComponent';
 import TwitterListComponent from './components/TwitterListComponent';
+import TwitterAuthComponent from './components/TwitterAuthComponent';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -30,7 +31,7 @@ Vue.use(VueRouter);
 
 // VueRouterのルーティング設定
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'history', // URLにハッシュ #を付けない
     routes: [
         {
             path: '/',
@@ -51,6 +52,11 @@ const router = new VueRouter({
             path: '/twitter',
             name: 'twitter.index',
             component: TwitterListComponent
+        },
+        {
+            path: '/auth',
+            name: 'twitter.auth',
+            component: TwitterAuthComponent
         },
     ]
 })

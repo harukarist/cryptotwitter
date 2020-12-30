@@ -1,24 +1,39 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="media">
-        <ul class="list-unstyled" style="width: 500px">
-          <li class="media mb-3">
-            <img src="64x564.gif" alt="64x64" class="mr-3" />
-            <div class="media-body">
-              <h5>HTML 5.2</h5>
-              This specification defines the 5th major version, second minor
-              revision of the core language of the World Wide Web: the Hypertext
-              Markup Language (HTML). In this version, new features continue...
-            </div>
-          </li>
-          :
-        </ul>
+    <div class="p-news" v-for="item in news" :key="item.title">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">
+            <a :href="item.url">
+              {{ item.title }}
+            </a>
+          </h5>
+          <p class="card-text">{{ item.date }} - {{ item.source }}</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      news: [], //ニュース一覧を格納する配列を用意
+    };
+  },
+  methods: {
+    // axiosでニュース一覧取得APIにリクエスト
+    getNews() {
+      axios.get("/api/news").then((res) => {
+        // レスポンスを配列に格納
+        this.news = res.data;
+      });
+    },
+  },
+  mounted() {
+    // 画面描画時にgetNews()メソッドを実行してニュースを取得
+    this.getNews();
+  },
+};
 </script>
