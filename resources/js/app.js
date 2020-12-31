@@ -7,6 +7,7 @@ import NewsListComponent from './components/NewsListComponent';
 import TrendListComponent from './components/TrendListComponent';
 import TwitterListComponent from './components/TwitterListComponent';
 import TwitterAuthComponent from './components/TwitterAuthComponent';
+import AuthLinkComponent from './components/AuthLinkComponent';
 import TickerListComponent from './components/TickerListComponent';
 
 /**
