@@ -24,22 +24,27 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="p-navbar navbar-nav">
             <li class="p-navbar__item nav-item active">
-              <router-link v-bind:to="{ name: 'trend.index' }" class="nav-link">
+              <RouterLink v-bind:to="{ name: 'trend.index' }" class="nav-link">
                 トレンド一覧
-              </router-link>
+              </RouterLink>
             </li>
-            <li class="p-navbar__item nav-item active">
-              <router-link
+            <li class="p-navbar__item nav-item">
+              <RouterLink
                 v-bind:to="{ name: 'twitter.index' }"
                 class="nav-link"
               >
                 Twitterフォロー
-              </router-link>
+              </RouterLink>
             </li>
-            <li class="p-navbar__item nav-item active">
-              <router-link v-bind:to="{ name: 'news.index' }" class="nav-link">
+            <li class="p-navbar__item nav-item">
+              <RouterLink v-bind:to="{ name: 'news.index' }" class="nav-link">
                 関連ニュース
-              </router-link>
+              </RouterLink>
+            </li>
+            <li class="p-navbar__item nav-item">
+              <RouterLink class="button button--link" to="/auth">
+                Login / Register
+              </RouterLink>
             </li>
           </ul>
         </div>
