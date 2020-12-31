@@ -1,24 +1,18 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import store from './store'
-import App from './App.vue';
-// import HeaderComponent from './components/HeaderComponent';
-import HomeComponent from './components/HomeComponent';
-import NewsListComponent from './components/NewsListComponent';
-import TrendListComponent from './components/TrendListComponent';
-import TwitterListComponent from './components/TwitterListComponent';
-import AuthLinkComponent from './components/AuthLinkComponent';
-import TickerListComponent from './components/TickerListComponent';
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+// require('./bootstrap');
 
-window.Vue = require('vue');
+// window.Vue = require('vue');
+
+import './bootstrap'
+import Vue from 'vue';
+import router from './router'; // router.jsからルーティング定義をインポート
+import store from './store' // ストアをインポート
+import App from './App.vue'; // ルートコンポーネントをインポート 
 
 /**
  * The following block of code may be used to automatically register your
@@ -31,47 +25,6 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.use(VueRouter);
-
-// VueRouterのルーティング設定
-const router = new VueRouter({
-    mode: 'history', // URLにハッシュ #を付けない
-    routes: [
-        {
-            path: '/',
-            name: 'home.index',
-            component: HomeComponent
-        },
-        {
-            path: '/news',
-            name: 'news.index',
-            component: NewsListComponent
-        },
-        {
-            path: '/trend',
-            name: 'trend.index',
-            component: TrendListComponent
-        },
-        {
-            path: '/twitter',
-            name: 'twitter.index',
-            component: TwitterListComponent
-        },
-        {
-            path: '/auth',
-            name: 'twitter.auth',
-            component: AuthLinkComponent
-        },
-        {
-            path: '/tickers',
-            name: 'tickers.index',
-            component: TickerListComponent
-        },
-    ]
-})
-
-// 常に表示するコンポーネント
-// Vue.component('header-component', HeaderComponent);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -79,10 +32,19 @@ const router = new VueRouter({
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
-    router, // Vue Routerを読み込む
-    store, // Vuexのストアを読み込む
-    components: { App }, // ルートコンポーネントを宣言
-    template: '<App />' // ルートコンポーネントを描画
-});
+// Vueインスタンス生成前に非同期処理でauthストアのcurrentUserアクションを呼び出して
+// ログインチェックを行う
+const createApp = async () => {
+    await store.dispatch('auth/currentUser');
+
+    // currentUserアクションの処理が終わったらVueインスタンスを生成
+    new Vue({
+        el: '#app',
+        router, // Vue Routerを読み込む
+        store, // Vuexのストアを読み込む
+        components: { App }, // ルートコンポーネントを宣言
+        template: '<App />' // ルートコンポーネントを描画
+    });
+}
+// 初回起動時のログインチェック、Vueインスタンス生成を呼び出し
+createApp();
