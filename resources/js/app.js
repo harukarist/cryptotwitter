@@ -1,10 +1,13 @@
+import Vue from 'vue';
 import VueRouter from 'vue-router';
-import HeaderComponent from './components/HeaderComponent';
+import App from './App.vue';
+// import HeaderComponent from './components/HeaderComponent';
 import HomeComponent from './components/HomeComponent';
 import NewsListComponent from './components/NewsListComponent';
 import TrendListComponent from './components/TrendListComponent';
 import TwitterListComponent from './components/TwitterListComponent';
 import TwitterAuthComponent from './components/TwitterAuthComponent';
+import TickerListComponent from './components/TickerListComponent';
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -58,11 +61,16 @@ const router = new VueRouter({
             name: 'twitter.auth',
             component: TwitterAuthComponent
         },
+        {
+            path: '/tickers',
+            name: 'tickers.index',
+            component: TickerListComponent
+        },
     ]
 })
 
 // 常に表示するコンポーネント
-Vue.component('header-component', HeaderComponent);
+// Vue.component('header-component', HeaderComponent);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -72,5 +80,7 @@ Vue.component('header-component', HeaderComponent);
 
 const app = new Vue({
     el: '#app',
-    router //Vue Router
+    router, //Vue Routerを読み込む
+    components: { App }, // ルートコンポーネントを宣言
+    template: '<App />' // ルートコンポーネントを描画
 });

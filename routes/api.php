@@ -17,3 +17,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('/news', 'NewsController@index');
+Route::get('/trend', 'TrendController@index');
+Route::get('/tickers', 'TickerController@index');
