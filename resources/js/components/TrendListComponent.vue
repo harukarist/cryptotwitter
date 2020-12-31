@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div class="container c-container">
+    <h5 class="c-container__title">トレンド一覧</h5>
     更新日時 {{ items.updated_at }}
     <table class="table">
       <thead>
