@@ -1,5 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container c-container">
+    <div class="row justify-content-center">
+      <h5 class="c-container__title">関連ニュース一覧</h5>
+    </div>
+
     <div class="p-news" v-for="item in news" :key="item.title">
       <div class="card">
         <div class="card-body">

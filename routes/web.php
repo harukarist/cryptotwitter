@@ -15,6 +15,15 @@
 Route::get('/trend/sv', 'TrendController@index');
 Route::get('/ticker/getTicker', 'TrendController@getTicker');
 Route::get('/ticker/getTweet', 'TrendController@getTweet');
+Route::get('/getNews', 'NewsController@getNews');
+
+Auth::routes();
+
+// Twitterログイン認証
+Route::get('/auth/twitter', 'Auth\TwitterAuthController@redirectToProvider')->name('auth.twitter');
+Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
+Route::get("/auth/twitter/logout", "Auth\TwitterAuthController@logout")->name('auth.logout');
+
 
 // 初回アクセス時のみLaravel側でapp.blade.phpを表示し、
 // 以後はフロント側のVueRouterでルーティングを行う
@@ -24,18 +33,6 @@ Route::get('/{any?}', function () {
     return view('layouts.app');
 })->where('any', '.+');
 
-// Route::get('/', function () {
-//     return view('top');
-// });
 
-Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-
-
-Route::get('/getNews', 'NewsController@getNews')->name('news.get');
-
-// Twitterログイン認証
-Route::get('/auth/twitter', 'Auth\TwitterAuthController@redirectToProvider')->name('auth.twitter');
-Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
-Route::get("/auth/twitter/logout", "Auth\TwitterAuthController@logout")->name('auth.logout');
