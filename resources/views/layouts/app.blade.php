@@ -28,9 +28,6 @@
 </head>
 <body>
     <div id="app">
-        <header-component></header-component>
-        <!-- Vue Routerでコンポーネントを表示 -->
-        {{-- <router-view></router-view> --}}
     </div>
 </body>
 </html>

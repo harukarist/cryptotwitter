@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from './store'
 import App from './App.vue';
 // import HeaderComponent from './components/HeaderComponent';
 import HomeComponent from './components/HomeComponent';
 import NewsListComponent from './components/NewsListComponent';
 import TrendListComponent from './components/TrendListComponent';
 import TwitterListComponent from './components/TwitterListComponent';
-import TwitterAuthComponent from './components/TwitterAuthComponent';
 import AuthLinkComponent from './components/AuthLinkComponent';
 import TickerListComponent from './components/TickerListComponent';
 
@@ -60,7 +60,7 @@ const router = new VueRouter({
         {
             path: '/auth',
             name: 'twitter.auth',
-            component: TwitterAuthComponent
+            component: AuthLinkComponent
         },
         {
             path: '/tickers',
@@ -81,7 +81,8 @@ const router = new VueRouter({
 
 const app = new Vue({
     el: '#app',
-    router, //Vue Routerを読み込む
+    router, // Vue Routerを読み込む
+    store, // Vuexのストアを読み込む
     components: { App }, // ルートコンポーネントを宣言
     template: '<App />' // ルートコンポーネントを描画
 });

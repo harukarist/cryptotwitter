@@ -11,7 +11,7 @@ try {
     window.$ = window.jQuery = require('jquery');
 
     require('bootstrap');
-} catch (e) {}
+} catch (e) { }
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -19,9 +19,19 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
+import { getCookieValue } from './util' // クッキーを取得する処理を追加
+
 window.axios = require('axios');
 
+// Ajaxリクエストを示すX-Requested-Withヘッダーを付与
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+// クッキーからXSRFトークンを取り出してX-XSRF-TOKENヘッダーに添付し
+// ヘッダー情報からCSRFトークンチェックが行えるようにする
+window.axios.interceptors.request.use(config => {
+    config.headers['X-XSRF-TOKEN'] = getCookieValue('XSRF-TOKEN')
+    return config
+})
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
