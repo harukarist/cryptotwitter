@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-    <meta name="robots" content="noindex">
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -20,6 +17,7 @@
     <!-- preconnectで複数のリクエストを同時に実行 -->
     <link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+    
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/f2d7c28546.js" crossorigin="anonymous"></script>
 
@@ -27,6 +25,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    <!-- Vueアプリケーションを表示 -->
     <div id="app">
     </div>
 </body>

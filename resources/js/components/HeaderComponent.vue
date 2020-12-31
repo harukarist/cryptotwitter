@@ -27,8 +27,8 @@
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- メニュー -->
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <!-- ログイン済みユーザー向けメニュー -->
+        <div v-if="isLogin" class="collapse navbar-collapse" id="navbarNav">
           <ul class="p-navbar navbar-nav">
             <li class="p-navbar__item nav-item">
               <RouterLink
@@ -58,10 +58,34 @@
               </RouterLink>
             </li>
             <li class="p-navbar__item nav-item">
-              <a class="nav-link" @click="auth()"> Login / Register </a>
+              {{ username }}
             </li>
             <li class="p-navbar__item nav-item">
-              <a class="nav-link" @click="logout()"> Logout </a>
+              <a class="nav-link" @click="logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 未ログインユーザー向けメニュー -->
+        <div v-if="!isLogin" class="collapse navbar-collapse" id="navbarNav">
+          <ul class="p-navbar navbar-nav">
+            <li class="p-navbar__item nav-item">
+              <RouterLink
+                :to="{ name: 'register' }"
+                active-class="active"
+                class="nav-link"
+              >
+                無料ユーザー登録
+              </RouterLink>
+            </li>
+            <li class="p-navbar__item nav-item">
+              <RouterLink
+                :to="{ name: 'login' }"
+                active-class="active"
+                class="nav-link"
+              >
+                ログイン
+              </RouterLink>
             </li>
           </ul>
         </div>
@@ -72,20 +96,31 @@
 
 <script>
 export default {
-  methods: {
-    auth() {
-      axios.get("/api/auth/twitter").then((res) => {
-        // 現在のパスをgo()メソッドに渡してリロード
-        // this.$router.go({ path: this.$router.currentRoute.path, force: true });
-        console.log("oAuth Login success");
-      });
+  computed: {
+    apiStatus() {
+      // ストアのapiStatusステートを参照し、API通信の成否ステータスを取得
+      return this.$store.state.auth.apiStatus;
     },
-    logout() {
-      axios.get("/api/auth/twitter/logout").then((res) => {
-        // 現在のパスをgo()メソッドに渡してリロード
-        // this.$router.go({ path: this.$router.currentRoute.path, force: true });
-        console.log("oAuth Logout success");
-      });
+    isLogin() {
+      // authストアのcheckゲッターでユーザーのログイン状態をチェック
+      return this.$store.getters["auth/check"];
+    },
+    username() {
+      // authストアのusernameゲッターでユーザー名を取得
+      return this.$store.getters["auth/username"];
+    },
+  },
+  methods: {
+    async logout() {
+      // dispatch()でauthストアのlogoutアクションを呼び出す
+      await this.$store.dispatch("auth/logout");
+
+      // API通信が成功した場合
+      if (this.apiStatus) {
+        // VueRouterのpush()でログイン画面に遷移
+        this.$router.push("/login");
+      }
+      // context.commit("setUser", null);
     },
   },
 };

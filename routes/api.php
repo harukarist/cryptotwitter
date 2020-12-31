@@ -13,9 +13,18 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// ユーザー登録
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
+// ログイン
+Route::post('/login', 'Auth\LoginController@login')->name('login');
+// ログアウト
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+// ログインユーザー情報を返却
+Route::get('/user', fn() => Auth::user())->name('user');
+
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::get('/news', 'NewsController@index');
 Route::get('/trend', 'TrendController@index');
 Route::get('/tickers', 'TickerController@index');
