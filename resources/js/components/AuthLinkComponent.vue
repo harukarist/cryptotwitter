@@ -10,7 +10,7 @@
 export default {
   methods: {
     auth() {
-      axios.get("/auth/twitter").then((res) => {
+      axios.get("/api/auth/twitter").then((res) => {
         // トップページに移動する
         console.log("oAuth success");
         this.$router.push("/");
