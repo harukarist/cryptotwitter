@@ -1,13 +1,21 @@
 <template>
-  <router-link v-bind:to="{ name: 'twitter.auth' }" class="navbar-brand">
-    <button type="submit" class="btn btn-outline-primary">
-      <!-- #00aced -->
-      <i class="fab fa-twitter"></i>
-      Twitterでログイン・ユーザー登録
-    </button>
-  </router-link>
+  <button type="submit" class="btn btn-outline-primary" @click="auth()">
+    <!-- #00aced -->
+    <i class="fab fa-twitter"></i>
+    Twitterでログイン・ユーザー登録
+  </button>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    auth() {
+      axios.get("/auth/twitter").then((res) => {
+        // トップページに移動する
+        console.log("oAuth success");
+        this.$router.push("/");
+      });
+    },
+  },
+};
 </script>
