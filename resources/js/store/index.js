@@ -3,7 +3,6 @@ import Vuex from 'vuex'
 
 // ストアのモジュールをインポート
 import auth from './auth'
-import auth_twitter from './auth_twitter'
 import error from './error'
 
 // Vuexを使用して、どのコンポーネントからでもデータを参照・更新できるようにする
@@ -15,7 +14,6 @@ const store = new Vuex.Store({
   modules: {
     auth,
     error,
-    auth_twitter
   }
 })
 
