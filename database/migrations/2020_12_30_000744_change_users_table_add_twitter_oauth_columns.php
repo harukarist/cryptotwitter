@@ -14,7 +14,7 @@ class ChangeUsersTableAddTwitterOauthColumns extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('avatar')->nullable()->after('email')->comment('Twitter アバター画像');
+            $table->text('twitter_avatar')->nullable()->after('email')->comment('Twitter アバター画像');
             $table->unsignedBigInteger('twitter_id')->nullable()->after('email')->comment('Twitter ID');
         });
     }
@@ -27,7 +27,7 @@ class ChangeUsersTableAddTwitterOauthColumns extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('avatar');
+            $table->dropColumn('twitter_avatar');
             $table->dropColumn('twitter_id');
         });
     }

@@ -28,11 +28,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/news', 'NewsController@index');
   Route::get('/trend', 'TrendController@index');
   Route::get('/tickers', 'TickerController@index');
-
-  // Twitterログイン認証
-  Route::get('/auth/twitter', 'Auth\TwitterAuthController@redirectToProvider');
-  Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
-  Route::get("/auth/twitter/logout", "Auth\TwitterAuthController@logout");
 });
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
