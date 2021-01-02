@@ -93,7 +93,7 @@ export default {
       // API通信が成功した場合
       if (this.apiStatus) {
         // awaitで非同期アクションの完了を待ってからVueRouterのpush()で遷移
-        this.$router.push("/");
+        this.$router.push("/home");
       }
     },
     clearError() {
