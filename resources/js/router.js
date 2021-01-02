@@ -10,7 +10,7 @@ import TwitterListComponent from './components/TwitterListComponent';
 import TickerListComponent from './components/TickerListComponent';
 import RegisterComponent from './components/RegisterComponent';
 import LoginComponent from './components/LoginComponent';
-import AuthLinkComponent from './components/AuthLinkComponent';
+import TwitterLoginComponent from './components/TwitterLoginComponent';
 import SystemError from './errors/SystemError';
 
 
@@ -44,7 +44,7 @@ const router = new VueRouter({
     {
       path: '/auth',
       name: 'twitter.auth',
-      component: AuthLinkComponent
+      component: TwitterLoginComponent
     },
     {
       path: '/register',

@@ -32,11 +32,12 @@ class AppServiceProvider extends ServiceProvider
         // varcharのデフォルト文字数を変更。
         Schema::defaultStringLength(191);
 
-        // 商用環境以外の場合、storage/logs/の中にSQLログを出力する
-        if (config('app.env') !== 'production') {
-            DB::listen(function ($query) {
-                \Log::info("Query Time:{$query->time}s] $query->sql");
-            });
-        }
+        // // 商用環境以外の場合、storage/logs/の中にSQLログを出力する
+        // if (config('app.env') !== 'production') {
+        //     DB::listen(function ($query) {
+        //         \Log::info("Query Time:{$query->time}s] $query->sql");
+        // //         logger()->info("Query Time:{$query->time}s] $query->sql");でもOK
+        //     });
+        // }
     }
 }

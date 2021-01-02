@@ -20,16 +20,20 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウト
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 // ログインユーザー情報を返却
-Route::get('/user', fn() => Auth::user())->name('user');
+Route::get('/user', function () {
+  return Auth::user();
+})->name('user');
 
+Route::group(['middleware' => 'auth'], function () {
+  Route::get('/news', 'NewsController@index');
+  Route::get('/trend', 'TrendController@index');
+  Route::get('/tickers', 'TickerController@index');
+
+  // Twitterログイン認証
+  Route::get('/auth/twitter', 'Auth\TwitterAuthController@redirectToProvider');
+  Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
+  Route::get("/auth/twitter/logout", "Auth\TwitterAuthController@logout");
+});
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-Route::get('/news', 'NewsController@index');
-Route::get('/trend', 'TrendController@index');
-Route::get('/tickers', 'TickerController@index');
-
-// Twitterログイン認証
-Route::get('/auth/twitter', 'Auth\TwitterAuthController@redirectToProvider');
-Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
-Route::get("/auth/twitter/logout", "Auth\TwitterAuthController@logout");

@@ -11,21 +11,21 @@
 |
 */
 
-// Route::get('/', function () {
-//     if (empty(Auth::user())) {
-//         return view('index');
-//     } else {
-//         return redirect('/home');
-//     }
-// });
+Route::get('/', function () {
+    if (empty(Auth::user())) {
+        return view('index');
+    } else {
+        return redirect('/home');
+    }
+});
 // // 会員登録・ログイン・ログアウト・パスワード再設定
 // Auth::routes();
 
 // Route::group(['middleware' => 'auth'], function () {
 //     // Route::get('/home', 'HomeController@index')->name('home');
-//     Route::get('/trend/sv', 'TrendController@index');
-//     Route::get('/ticker/getTicker', 'TrendController@getTicker');
-//     Route::get('/ticker/getTweet', 'TrendController@getTweet');
+    Route::get('/trend/sv', 'TrendController@index');
+    Route::get('/trend/getPrices', 'PriceController@getPrices');
+//     Route::get('/ticker/getTweet', 'TweetController@getTweet');
 //     Route::get('/getNews', 'NewsController@getNews');
 
 //     // Twitterログイン認証

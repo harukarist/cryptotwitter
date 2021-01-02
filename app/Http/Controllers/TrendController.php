@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Batch;
 use App\Trend;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -12,21 +13,26 @@ class TrendController extends Controller
     // トレンド表示処理
     public function index()
     {
+        // トレンドテーブルから全データを取得し、ツイート数の多い順にレコードを並べ替える
         $trends = Trend::orderBy('high', 'DESC')->get();
         // $trends = Trend::all();
 
         foreach ($trends as $trend) {
+            // 通貨ペアがある通貨は最高価格、最安価格の数値をカンマ区切りにフォーマット
             if ($trend->currency_pair) {
                 $trend->high = number_format($trend->high);
                 $trend->low = number_format($trend->low);
             } else {
+                // 通貨ペアが登録されていない通貨は'不明'を表示
                 $trend->high = '不明';
                 $trend->low = '不明';
             }
         }
-
-        $updated_at = $trends->first()->updated_at->format('Y/m/d H:i');
-
+        // バッチの最終実行日時をバッチテーブルから取得
+        $batch =  Batch::select('batch_finished_at')->where('batch_name', 'update_prices')->first();
+        // 日時形式を変換（Batchモデルの$datesプロパティに'batch_finished_at'カラムを指定する）
+        $updated_at = $batch->batch_finished_at->format('Y/m/d H:i');
+        // 各通貨の情報と更新日時を配列に格納
         $items['trends'] = $trends;
         $items['updated_at'] = $updated_at;
 
@@ -35,34 +41,53 @@ class TrendController extends Controller
     }
 
     // 過去24時間の最高取引価格、最安取引価格をDBに保存
-    public function getTicker()
+    public function getPrices()
     {
-        $trends = Trend::all();
+        // Trendsテーブルから全レコードを取得
+        $currency_records = Trend::all();
+        // $currency_records = Trend::select(['currency_name', 'currency_pair', 'used_api_type', 'high', 'low', 'updated_at'])->get();
 
-        foreach ($trends as $trend) {
-            $api = $trend->used_api_type;
-            $pair = $trend->currency_pair;
+        // それぞれの仮想通貨についてループ処理を行う
+        foreach ($currency_records as $currency_record) {
+            $api = $currency_record->used_api_type; //使用するAPI（使用しない場合は0）
+            $pair = $currency_record->currency_pair; //通貨ペアの種類
+
+            // その通貨の通貨ペア情報がDBに登録されている場合は、DBで指定した種類のAPIから最新価格を取得する
             if ($pair) {
                 if ($api === 1) {
-                    $ticker = $this->getTickerFromCoinCheck($pair);
+                    // CoinCheckAPIから価格情報を取得
+                    $newest_price = $this->getPricesFromCoinCheck($pair);
                 } elseif ($api === 2) {
-                    $ticker = $this->getTickerFromZaif($pair);
+                    // ZaifAPIから価格情報を取得
+                    $newest_price = $this->getPricesFromZaif($pair);
                 } elseif ($api === 3) {
-                    $ticker = $this->getTickerFromBitBank($pair);
+                    // bitbankAPIから価格情報を取得
+                    $newest_price = $this->getPricesFromBitBank($pair);
                 }
             } else {
-                $ticker = '';
+                // 通貨ペア情報がDBに未登録の場合は空文字を格納する
+                $newest_price = '';
             }
 
-            // 高値、安値の情報がある場合はDBに上書き
-            if ($ticker) {
-                echo ($pair . '<br>');
-                echo ($ticker['high'] . '<br>');
-                echo ($ticker['low'] . '<br>');
-                $trend->high = $ticker['high'];
-                $trend->low = $ticker['low'];
-                $trend->updated_at = Carbon::now();
-                $trend->save();
+            $table_updated = false; //DB更新の有無を判定するフラグ
+
+            // APIから最高取引価格を取得しており、かつDBの最高取引価格と異なる場合は、その通貨の最高取引価格を上書きする
+            if ($newest_price && $currency_record->high <> $newest_price['high']) {
+                $currency_record->high = $newest_price['high'];
+                logger()->info('high:' . $currency_record->high . '-' . $currency_record->currency_name); // ヘルパー関数info()でログを出力
+                $table_updated = true; //更新フラグをtrueに変更
+            }
+            // APIから最安取引価格を取得しており、かつDBの最安取引価格と異なる場合は、その通貨の最低取引価格を上書きする
+            if ($newest_price && $currency_record->low <> $newest_price['low']) {
+                $currency_record->low = $newest_price['low'];
+                logger()->info('low:' . $currency_record->low . '-' . $currency_record->currency_name); // ヘルパー関数info()でログを出力
+                $table_updated = true; //更新フラグをtrueに変更
+            }
+            // 更新フラグがtrueの場合は更新日時に現在日時を代入し、価格と共にDBの値を更新する
+            if ($table_updated) {
+                $currency_record->updated_at = Carbon::now();
+                $currency_record->save();
+                logger()->info($currency_record->currency_name . 'の価格を更新' . $currency_record->updated_at); // ヘルパー関数info()でログを出力
             }
         }
         return;
@@ -70,27 +95,27 @@ class TrendController extends Controller
 
 
     // ZaifAPIで過去24時間の最高取引価格、最安取引価格を取得
-    public function getTickerFromZaif(string $currency_pair)
+    public function getPricesFromZaif(string $currency_pair)
     {
-        // Zaif API エンドポイントURL
+        // ZaifAPI エンドポイントURL
         $endpoint = 'https://api.zaif.jp/api/1';
 
         // 取得可能な通貨ペア
         $active_pairs = ['btc_jpy', 'eth_jpy', 'xem_jpy', 'bch_jpy', 'mona_jpy'];
 
-        // 通貨ペアのティッカーを取得
-        // https://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/4_ticker.html?highlight=ticker
+        // 引数で渡された通貨ペアが取得可能な通貨ペアに含まれる場合は、APIから通貨ペアのティッカーを取得
+        // API Doc: https://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/4_ticker.html?highlight=ticker
         if (in_array($currency_pair, $active_pairs)) {
             // API URL: /ticker/{currency_pair}
             $url = $endpoint . '/ticker/' . $currency_pair;
-            $ticker_json = file_get_contents($url);
-            $ticker_obj = json_decode($ticker_json);
+            $prices_json = file_get_contents($url);
+            $prices_obj = json_decode($prices_json);
             $lists = [
-                'high' => $ticker_obj->high, // 過去24時間の高値
-                'low' => $ticker_obj->low, // 過去24時間の安値
+                'high' => $prices_obj->high, // 過去24時間の高値
+                'low' => $prices_obj->low, // 過去24時間の安値
             ];
 
-            // $ticker キー一覧
+            // $prices_obj キー一覧
             // キー	詳細	型
             // last	終値	float
             // high	過去24時間の高値	float
@@ -105,32 +130,30 @@ class TrendController extends Controller
         return $lists;
     }
 
-    //  bitbank APIで過去24時間の最高取引価格、最安取引価格を取得
-    public function getTickerFromBitBank(string $currency_pair)
+    //  bitbankAPIで過去24時間の最高取引価格、最安取引価格を取得
+    public function getPricesFromBitBank(string $currency_pair)
     {
-        // bitbank API エンドポイントURL
+        // bitbankAPI エンドポイントURL
         $endpoint = 'https://public.bitbank.cc';
 
         // 取得可能な通貨ペア
         $active_pairs = ['btc_jpy', 'eth_jpy', 'xrp_jpy', 'ltc_jpy', 'mona_jpy', 'xlm_jpy'];
 
-        // 通貨ペアのティッカーを取得
-        // https://github.com/bitbankinc/bitbank-api-docs/blob/master/public-api_JP.md#ticker
+        // 引数で渡された通貨ペアが取得可能な通貨ペアに含まれる場合は、APIから通貨ペアのティッカーを取得
+        // API Doc: https://github.com/bitbankinc/bitbank-api-docs/blob/master/public-api_JP.md#ticker
         if (in_array($currency_pair, $active_pairs)) {
             // API URL: /{pair}/ticker
             $url = $endpoint . '/' . $currency_pair . '/ticker';
-            $ticker_json = file_get_contents($url);
-            $ticker_obj = json_decode($ticker_json);
-            // dd($ticker_obj);
-
-            // APIから返却されたステータスが成功であればデータを格納
+            $prices_json = file_get_contents($url);
+            $prices_obj = json_decode($prices_json);
+            // dd($prices_obj);
 
             $lists = [
-                'high' => $ticker_obj->data->high, // 過去24時間の高値
-                'low' => $ticker_obj->data->low, // 過去24時間の安値
+                'high' => $prices_obj->data->high, // 過去24時間の高値
+                'low' => $prices_obj->data->low, // 過去24時間の安値
             ];
 
-            // $ticker キー一覧
+            // $prices_obj キー一覧
             // Name	Type	Description
             // sell	string	現在の売り注文の最安値
             // buy	string	現在の買い注文の最高値
@@ -146,21 +169,22 @@ class TrendController extends Controller
     }
 
     // coincheckで過去24時間の最高取引価格、最安取引価格を取得
-    public function getTickerFromCoinCheck(string $currency_pair)
+    public function getPricesFromCoinCheck(string $currency_pair)
     {
-        // https://coincheck.com/ja/documents/exchange/api#ticker
         // coincheck API エンドポイントURL
         $endpoint = 'https://coincheck.com/api/ticker';
         // 取得可能な通貨ペア
         $active_pairs = ['btc_jpy'];
 
+        // 引数で渡された通貨ペアが取得可能な通貨ペアに含まれる場合は、APIから通貨ペアのティッカーを取得
+        // API Doc: https://coincheck.com/ja/documents/exchange/api#ticker
         if (in_array($currency_pair, $active_pairs)) {
             $url = $endpoint;
             $json_str = file_get_contents($url);
-            $ticker = json_decode($json_str);
+            $prices = json_decode($json_str);
             $lists = [
-                'high' => $ticker->high, // 過去24時間の高値
-                'low' => $ticker->low, // 過去24時間の安値
+                'high' => $prices->high, // 過去24時間の高値
+                'low' => $prices->low, // 過去24時間の安値
             ];
         } else {
             $lists = '';
@@ -169,7 +193,8 @@ class TrendController extends Controller
     }
 
 
-    public function getTweet(string $keyword = '')
+    // キーワードを含むツイートを取得して保存する処理
+    public function getTweet()
     {
         $bearer_token = 'AAAAAAAAAAAAAAAAAAAAAGE1LAEAAAAAHsZcrDgnnO3Je0XRBXNlZMbcRKQ%3DHtfSfMmaE6d4Z21HqJYv6G6yzfsqLtIIunLf3h4S5BnHpgF1MN';
         $request_url = 'https://api.twitter.com/1.1/search/tweets.json';

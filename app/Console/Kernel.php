@@ -5,6 +5,7 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
+// バッチ処理を行うタスクスケジューラー
 class Kernel extends ConsoleKernel
 {
     /**
@@ -12,8 +13,9 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
+    // 作成したCommandを登録する
     protected $commands = [
-        //
+        Commands\UpdatePrices::Class,
     ];
 
     /**
@@ -22,10 +24,15 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+    // Commandを定期的に実行するタスクスケジュールの設定
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        // everyMinute()で指定のコマンドを毎分実行する
+        $schedule->command('update:prices')
+            ->everyMinute();
     }
 
     /**
@@ -35,7 +42,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }
