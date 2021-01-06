@@ -14,19 +14,22 @@ class TrendController extends Controller
     public function index()
     {
         // トレンドテーブルから全データを取得し、ツイート数の多い順にレコードを並べ替える
-        $trends = Trend::orderBy('high', 'DESC')->get();
+        $trends = Trend::orderBy('tweet_hour', 'DESC')->get();
         // $trends = Trend::all();
 
         foreach ($trends as $trend) {
             // 通貨ペアがある通貨は最高価格、最安価格の数値をカンマ区切りにフォーマット
             if ($trend->currency_pair) {
-                $trend->high = number_format($trend->high);
-                $trend->low = number_format($trend->low);
+                $trend->high = number_format($trend->high) . ' 円';
+                $trend->low = number_format($trend->low) . ' 円';
             } else {
                 // 通貨ペアが登録されていない通貨は'不明'を表示
                 $trend->high = '不明';
                 $trend->low = '不明';
             }
+            $trend->tweet_hour = number_format($trend->tweet_hour);
+            $trend->tweet_day = number_format($trend->tweet_day);
+            $trend->tweet_week = number_format($trend->tweet_week);
         }
         // バッチの最終実行日時をバッチテーブルから取得
         $batch =  Batch::select('batch_finished_at')->where('batch_name', 'update_prices')->first();

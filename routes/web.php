@@ -12,8 +12,7 @@
 */
 
 Route::get('/getAll', 'FetchTweetController@fetchAllTweets');
-// Route::get('/getDaily', 'FetchTweetController@getDailyTweet');
-// Route::get('/trend/sv', 'TrendController@index');
+Route::get('/countTweet', 'CountTweetController@countTweet');
 
 // // 会員登録・ログイン・ログアウト・パスワード再設定
 // Auth::routes();
@@ -29,6 +28,6 @@ Route::group(['middleware' => 'auth'], function () {
 // 以後はフロント側のVueRouterでルーティングを行う
 // {any?} で任意のパスパラメータ any を受け入れ
 // パスパラメータの文字列は任意'.+'
-// Route::get('/{any?}', function () {
-//     return view('layouts.app');
-// })->where('any', '.+');
+Route::get('/{any?}', function () {
+    return view('layouts.app');
+})->where('any', '.+');

@@ -125,11 +125,13 @@ class TrendsTableSeeder extends Seeder
         ];
 
         foreach ($trends as $trend) {
+            $words = $trend['currency_name'] . ' OR ' . $trend['currency_ja'];
             Trend::insert([
                 'currency_name' => $trend['currency_name'],
                 'currency_ja' => $trend['currency_ja'],
                 'currency_pair' => $trend['currency_pair'],
                 'used_api_type' => $trend['used_api_type'],
+                'tweet_words' => $words,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
