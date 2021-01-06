@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     // 作成したCommandを登録する
     protected $commands = [
         Commands\UpdatePrices::Class,
+        Commands\UpdateTweets::Class,
     ];
 
     /**
@@ -30,9 +31,12 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        // everyMinute()で指定のコマンドを毎分実行する
+        // everyMinute()で1分毎に仮想通貨の価格チェックを実行する
         $schedule->command('update:prices')
             ->everyMinute();
+        // everyFifteenMinutes()で15分毎にツイート検索を実行する
+        $schedule->command('update:tweets')
+            ->everyFifteenMinutes();
     }
 
     /**

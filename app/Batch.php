@@ -8,7 +8,7 @@ class Batch extends Model
 {
     // 書き込みを許可するカラムの指定
     protected $fillable = [
-        'batch_name', 'batch_finished_at'
+        'batch_name', 'batch_finished_at', 'next_results'
     ];
 
     // 日付のデータ属性を指定

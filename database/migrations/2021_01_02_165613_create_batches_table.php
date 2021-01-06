@@ -16,6 +16,7 @@ class CreateBatchesTable extends Migration
         Schema::create('batches', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('batch_name');
+            $table->string('max_id')->nullable();
             $table->dateTime('batch_finished_at');
             $table->timestamps();
         });
