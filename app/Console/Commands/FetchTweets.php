@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Controllers\FetchTweetController;
 
-class UpdateTweets extends Command
+class FetchTweets extends Command
 {
     /**
      * The name and signature of the console command.
@@ -13,7 +13,7 @@ class UpdateTweets extends Command
      * @var string
      */
     // Command名
-    protected $signature = 'update:tweets';
+    protected $signature = 'fetch:tweets';
 
     /**
      * The console command description.
@@ -21,7 +21,7 @@ class UpdateTweets extends Command
      * @var string
      */
     // php artisan listに表示されるコマンドの説明
-    protected $description = 'Update tweets table set searched tweets';
+    protected $description = 'Fetch tweets from TwitterAPI and Insert tweets table';
 
     /**
      * Create a new command instance.
@@ -41,11 +41,11 @@ class UpdateTweets extends Command
     // 実行したい処理
     public function handle()
     {
-        // // コントローラーのタスクを実行する
-        // $tweet = new FetchTweetController;
-        // logger()->info('>>>> ツイート保存バッチを実行します');
-        // $tweet->fetchAllTweets();
-        // //ログファイルに書き込む
-        // logger()->info('ツイート保存バッチを実行しました <<<<');
+        // コントローラーのタスクを実行する
+        $tweet = new FetchTweetController;
+        logger()->info('>>>> ツイート保存バッチを実行します');
+        $tweet->fetchAllTweets();
+        //ログファイルに書き込む
+        logger()->info('ツイート保存バッチを実行しました <<<<');
     }
 }

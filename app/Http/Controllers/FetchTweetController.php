@@ -56,9 +56,9 @@ class FetchTweetController extends Controller
     // １週間分のツイートを検索し、未取得の時間帯があればDBに保存する処理
     public function fetchAllTweets()
     {
-        $max_request = 180; // ツイート検索の最大リクエスト回数の初期値（上限は15分間に180回）
+        $MAX_REQUEST = 180; // ツイート検索の最大リクエスト回数の初期値（上限は15分間に180回）
         // TwitterAPIのリクエスト残り回数を取得
-        $remain_count = $this->checkLimit($max_request);
+        $remain_count = $this->checkLimit($MAX_REQUEST);
         // リクエスト残り回数が0の場合は処理を終了
         if (!$remain_count) {
             echo "リクエスト上限に達しました";
@@ -69,6 +69,7 @@ class FetchTweetController extends Controller
         $dt = Carbon::today();
         // 7日前から1日ずつ処理
         $target_date = $dt->subDays(7);
+
         // 0時から1時間毎に未取得のツイートがないかをチェックし、あれば取得、なければ次の時間帯へループする。
         for ($target_hour = 0; $target_hour < 24 * 7; $target_hour++) {
 
@@ -115,9 +116,10 @@ class FetchTweetController extends Controller
                 echo  $since_param . "〜" . $until_param . "の保存データはまだありません<br>";
                 logger()->info($since_param . "〜" . $until_param . "の保存データはまだありません");
             }
-            $max_request = 1;
             // TwitterAPIでツイートを検索し、該当データを保存
-            [$total_count, $max_id, $req_num] = $this->requestTweets($max_request, $param);
+            [$total_count, $max_id, $req_count] = $this->requestTweets($remain_count, $param);
+            echo  $req_count . "回リクエスト済み<br>";
+            logger()->info($req_count . "回リクエスト済み");
 
             // 対象時間帯のログをDBに保存して次の時間帯のチェックへ
             DB::table('tweets_fetch_logs')->insert([
@@ -130,7 +132,11 @@ class FetchTweetController extends Controller
             ]);
 
             // 残り使用可能回数から今回のリクエスト回数を減らす
-            $remain_count -= $req_num;
+            $remain_count -= $req_count;
+
+            echo  $remain_count . "回可能<br>";
+            logger()->info($remain_count . "回可能");
+
             // 残り使用可能回数が0以下なら処理を終了
             if ($remain_count <= 0) {
                 return;
@@ -139,48 +145,6 @@ class FetchTweetController extends Controller
         return;
     }
 
-
-    // 最長１週間分の未保存ツイートをまとめて取得
-    // public function getWeeklyTweet()
-    // {
-    //     for ($i = 1; $i > 0; $i--) {
-    //         $since = '';
-    //         $until = '';
-    //         // $until = date('Y-m-d', strtotime('-6 day'));
-    //         $dt = Carbon::today();
-    //         $since = $dt->copy()->subDays($i)->format('Y-m-d');
-    //         $until = $dt->copy()->subDays($i - 1)->format('Y-m-d');
-    //         // dd($until,$since);
-
-    //         // 検索パラメータを取得
-    //         $param = $this->getParam($since, $until);
-    //         // var_dump($param);
-
-    //         // 対象日のツイートが保存されていればDBから取得済みTweetIDを取得
-    //         $first = Tweet::select('tweet_id')->whereDate('tweeted_at', $since)->orderBy('tweet_id', 'ASC')->first();
-
-    //         if ($first && $first->tweet_id) {
-    //             $param['max_id'] = $first->tweet_id;; //これより古いIDのツイートを検索
-    //             echo  $first->tweet_id . "より古いツイートを取得<br>";
-    //             logger()->info($first->tweet_id . "より古いツイートを取得");
-    //         } else {
-    //             echo  $until . "の保存データはまだありません<br>";
-    //             logger()->info($until . "の保存データはまだありません");
-    //         }
-
-    //         // リクエスト上限を取得
-    //         $max_request = $this->checkLimit();
-    //         // リクエスト残り回数がない場合
-    //         if (!$max_request) {
-    //             logger()->info("リクエスト上限に達しました");
-    //             break;
-    //         }
-
-    //         // TwitterAPIで検索、保存
-    //         $this->requestTweets($max_request, $param);
-    //     }
-    //     return;
-    // }
 
     // 検索用パラメーターを生成
     public function getParam($since, $until)
@@ -252,14 +216,14 @@ class FetchTweetController extends Controller
     }
 
     // TwitterAPIでツイートを検索
-    public function requestTweets($max_request, $param)
+    public function requestTweets($remain_count, $param)
     {
         $total_count = 0;
         $max_id = '';
         // 最大リクエスト回数までループ
-        for ($req_num = 0; $req_num < $max_request; $req_num++) {
-            echo $req_num + 1 . '回目/' . $max_request . '回<br>';
-            logger()->info(($req_num + 1) . "回目");
+        for ($req_count = 1; $req_count <= $remain_count; $req_count++) {
+            echo $req_count . '回目/' . $remain_count . '回<br>';
+            logger()->info(($req_count) . "回目");
 
             // ツイートをTwitterAPIで検索し、返却された検索結果を変数に格納
             $tweets_obj = \Twitter::get("search/tweets", $param);
@@ -283,9 +247,10 @@ class FetchTweetController extends Controller
                 $max_id = $this->createNextParam($tweets_obj->search_metadata);
                 // 次のループ時の検索パラメーターにmax_idを追加
                 if ($max_id) {
-                    $param['max_id'] = $max_id - 1;
-                    echo "次の開始位置：" . $max_id . "<br>";
-                    logger()->info("次の開始位置：" . $max_id);
+                    $next_id = $max_id - 1; //今回の取得対象にmax_idも含まれているため、次回はそのID未満からスタート
+                    $param['max_id'] = $next_id;
+                    echo "次の開始位置：" . $next_id . "<br>";
+                    logger()->info("次の開始位置：" . $next_id);
                     continue;
                 } else {
                     echo "最後まで取得しました" . $max_id . "<br>";
@@ -299,7 +264,7 @@ class FetchTweetController extends Controller
                 break;
             }
         }
-        return [$total_count, $max_id, $req_num];
+        return [$total_count, $max_id, $req_count];
     }
 
     // 検索結果からツイート文章を取り出し、DBに保存
