@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Batch;
 use App\Trend;
 use App\Tweet;
 use Carbon\Carbon;
 use App\Facades\Twitter;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Abraham\TwitterOAuth\TwitterOAuth;
-use App\Tweets_Fetch_Log;
 
 class FetchTweetController extends Controller
 {
@@ -22,15 +19,15 @@ class FetchTweetController extends Controller
         $since = $dt->copy()->format('Y-m-d');
         $until = $dt->copy()->addDay()->format('Y-m-d');
         // 検索パラメータを取得
-        $param = $this->getParam($since, $until);
-        var_dump($param);
+        $params = $this->getParams($since, $until);
+        var_dump($params);
 
         // 対象日のツイートが保存されていればDBから取得済みTweetIDを取得
         $last = Tweet::select('tweet_id')->whereDate('tweeted_at', $since)->orderBy('tweet_id', 'DESC')->first();
 
         // 対象日の保存済みツイートがあれば、そのTweetIDより新しいツイートを取得するパラメータを追加
         if ($last && $last->tweet_id) {
-            $param['since_id'] = $last->tweet_id;
+            $params['since_id'] = $last->tweet_id;
             echo  $last->tweet_id . "より新しいツイートを取得<br>";
             logger()->info($last->tweet_id . "より新しいツイートを取得");
         } else {
@@ -48,12 +45,12 @@ class FetchTweetController extends Controller
             return;
         }
         // TwitterAPIで検索、保存
-        $this->requestTweets($remain_count, $param);
+        $this->requestTweets($remain_count, $params);
 
         return;
     }
 
-    // １週間分のツイートを検索し、未取得の時間帯があればDBに保存する処理
+    // 今日の0:00までの１週間分のツイートを検索し、未取得の時間帯があればDBに保存する処理
     public function fetchAllTweets()
     {
         $MAX_REQUEST = 180; // ツイート検索の最大リクエスト回数の初期値（上限は15分間に180回）
@@ -66,25 +63,30 @@ class FetchTweetController extends Controller
             return;
         }
         // 今日の0:00の日時を取得
-        $dt = Carbon::today();
+        $dt = Carbon::today()->addMinutes(30);
+        $carbon_now = Carbon::now();
         // 7日前から1日ずつ処理
         $target_date = $dt->subDays(7);
 
         // 0時から1時間毎に未取得のツイートがないかをチェックし、あれば取得、なければ次の時間帯へループする。
-        for ($target_hour = 0; $target_hour < 24 * 7; $target_hour++) {
-
+        for ($target_hour = 0; true; $target_hour++) {
             // 検索対象とする日時を生成
             $since_at = $target_date->copy()->addHours($target_hour);
             $until_at = $target_date->copy()->addHours($target_hour + 1);
 
-            // 対象時間帯のログデータのnext_idを取得
-            $log = DB::table('tweets_fetch_logs')->select('next_id')
+            // 取得対象の開始日時と現在時刻との差が2時間未満の場合は取得しない
+            if ($since_at->diffInHours($carbon_now) < 2) {
+                break;
+            }
+
+            // 対象の開始日時の最新ログデータがあれば、該当ログのnext_idを取得
+            $log = DB::table('fetch_tweets_logs')->select('next_id')
                 ->where('since_at', '=', $since_at)
                 ->orderBy('id', 'DESC')->first();
-
-            // 対象時間帯のログデータがあり、取得予定IDが空の場合は全て取得済みのため次の時間帯へ
+            // 対象の開始日時のログデータがあり、取得予定IDが空の場合は全て取得済みのため次の時間帯へ
             if ($log && !($log->next_id)) {
                 echo  $since_at . "〜" . $until_at .  "のツイートは全て取得済み<br>";
+                echo  $carbon_now . "<br>";
                 logger()->info($since_at . "〜" . $until_at . "のツイートは全て取得済み");
                 continue; //以降の処理は行わずに次のループへ
             }
@@ -92,12 +94,12 @@ class FetchTweetController extends Controller
             // TwitterAPIの日付形式に変換
             $since_param = $since_at->format('Y-m-d_H:i:s') . "_JST";
             $until_param = $until_at->format('Y-m-d_H:i:s') . "_JST";
-            echo  $since_param . "〜" . $until_param . "までの期間を検索<br>";
+            echo  $since_at . "〜" . $until_at . "までの期間を検索<br>";
 
             // 検索パラメータを生成
-            $param = $this->getParam($since_param, $until_param);
+            $params = $this->getParams($since_param, $until_param);
 
-            // 対象の時間帯にツイートが保存されていればDBから取得済みTweetIDを取得
+            // 対象の時間帯にツイートが保存されていればDBから一番若い取得済みTweetIDを取得
             $first = Tweet::select('tweet_id', 'tweeted_at')
                 ->where('tweeted_at', '>=', $since_at)
                 ->where('tweeted_at', '<', $until_at)
@@ -107,22 +109,22 @@ class FetchTweetController extends Controller
             // 取得済みTweetIDをmax_idに設定
             if ($first && $first->tweet_id) {
                 $first_id = $first->tweet_id;
-                $param['max_id'] = $first_id - 1; //取得済みIDよりも1つ小さいIDのツイートから検索開始
-                echo  $first->tweeted_at . "<br>";
-                echo  $first->tweet_id . "より古いツイートをチェック<br>";
-                logger()->info($first->tweeted_at);
+                $params['max_id'] = $first_id - 1; //取得済みIDよりも1つ小さいIDのツイートから検索開始
+                echo  $first->tweet_id . "より古いツイートをチェック";
+                echo  'ツイート日時 ' . $first->tweeted_at . "<br>";
                 logger()->info($first->tweet_id . "より古いツイートをチェック");
+                logger()->info('ツイート日時 ' . $first->tweeted_at);
             } else {
                 echo  $since_param . "〜" . $until_param . "の保存データはまだありません<br>";
                 logger()->info($since_param . "〜" . $until_param . "の保存データはまだありません");
             }
             // TwitterAPIでツイートを検索し、該当データを保存
-            [$total_count, $max_id, $req_count] = $this->requestTweets($remain_count, $param);
+            [$total_count, $max_id, $req_count] = $this->requestTweets($remain_count, $params);
             echo  $req_count . "回リクエスト済み<br>";
             logger()->info($req_count . "回リクエスト済み");
 
             // 対象時間帯のログをDBに保存して次の時間帯のチェックへ
-            DB::table('tweets_fetch_logs')->insert([
+            DB::table('fetch_tweets_logs')->insert([
                 'since_at' => $since_at,
                 'until_at' => $until_at,
                 'total_count' => $total_count,
@@ -147,36 +149,41 @@ class FetchTweetController extends Controller
 
 
     // 検索用パラメーターを生成
-    public function getParam($since, $until)
+    public function getParams($since, $until)
     {
         $tweet_count = 100; // 1回あたりの検索ツイート数（上限は100件）
 
         // 検索キーワード用の通貨名、日本語名をTrendモデルから取得し、implode()で文字列に変換
-        $collection = Trend::select('currency_name', 'currency_ja')->get();
-        $keywords = $collection->implode('currency_name', ' OR ');
-        $keywords .= ' OR ';
-        $keywords .= $collection->implode('currency_ja', ' OR ');
-        // dd($keywords);
+        // $collection = Trend::select('currency_name', 'currency_ja')->get();
+        // $keywords = $collection->implode('currency_name', ' OR ');
+        // $keywords .= ' OR ';
+        // $keywords .= $collection->implode('currency_ja', ' OR ');
+
+        $words_arr = Trend::select('tweet_words')->get();
+        $keywords = $words_arr->implode('tweet_words', ' OR ');
 
         // ツイート検索オプションを指定
-        $param = array(
-            'q' => $keywords,
+        $params = array(
+            'q' => $keywords . ' OR @i -@i' . ' exclude:retweets', //アカウント名とリツイートは検索対象から除く
             'count' => $tweet_count,
             'lang' => 'ja',
             'locale' => 'ja',
             'result_type' => 'mixed', // recent 最新ツイート, popular 人気のツイート, mixed 全てのツイート
+
         );
+        // dd($keywords, $params);
+
         if ($since) {
-            $param['since'] = $since;
+            $params['since'] = $since;
             echo "開始日" . $since . "から<br>";
             logger()->info("開始日:{$since}から");
         }
         if ($until) {
-            $param['until'] = $until;
+            $params['until'] = $until;
             echo "終了日" . $until . "まで<br>";
             logger()->info("終了日:{$until}まで");
         }
-        return $param;
+        return $params;
     }
 
     // TwitterAPIでレートリミットを取得
@@ -216,7 +223,7 @@ class FetchTweetController extends Controller
     }
 
     // TwitterAPIでツイートを検索
-    public function requestTweets($remain_count, $param)
+    public function requestTweets($remain_count, $params)
     {
         $total_count = 0;
         $max_id = '';
@@ -226,7 +233,7 @@ class FetchTweetController extends Controller
             logger()->info(($req_count) . "回目");
 
             // ツイートをTwitterAPIで検索し、返却された検索結果を変数に格納
-            $tweets_obj = \Twitter::get("search/tweets", $param);
+            $tweets_obj = \Twitter::get("search/tweets", $params);
             // dd($tweets_obj);
 
             if (http_response_code() === 500) {
@@ -248,7 +255,7 @@ class FetchTweetController extends Controller
                 // 次のループ時の検索パラメーターにmax_idを追加
                 if ($max_id) {
                     $next_id = $max_id - 1; //今回の取得対象にmax_idも含まれているため、次回はそのID未満からスタート
-                    $param['max_id'] = $next_id;
+                    $params['max_id'] = $next_id;
                     echo "次の開始位置：" . $next_id . "<br>";
                     logger()->info("次の開始位置：" . $next_id);
                     continue;
@@ -347,7 +354,7 @@ class FetchTweetController extends Controller
     //     // dd($max_request);
 
     //     // ツイート検索オプションを指定
-    //     $param = array(
+    //     $params = array(
     //         'q' => $keywords,
     //         'count' => $tweet_count,
     //         'lang' => 'ja',
@@ -360,10 +367,10 @@ class FetchTweetController extends Controller
     //     //このTweetIDより古いツイートを取得
     //     $max_id = DB::table('tweets')->orderBy('tweet_id', 'ASC')->first()->tweet_id;
     //     if ($max_id) {
-    //         $param['max_id'] = $max_id;
+    //         $params['max_id'] = $max_id;
     //     }
     //     // ツイートを検索してDBに保存
-    //     $this->requestTweets($max_request, $param);
+    //     $this->requestTweets($max_request, $params);
 
 
     //     //残り使用回数をチェック
@@ -375,12 +382,12 @@ class FetchTweetController extends Controller
     //     if ($remain_count) {
     //         $since_id = DB::table('tweets')->orderBy('tweet_id', 'DESC')->first()->tweet_id; //このTweetIDより新しいツイートを取得
     //         if ($since_id) {
-    //             $param['since_id'] = $since_id;
-    //             $param['max_id'] = '';
+    //             $params['since_id'] = $since_id;
+    //             $params['max_id'] = '';
     //         }
-    //         // dd($param);
+    //         // dd($params);
     //         // ツイートを検索してDBに保存
-    //         $this->requestTweets($remain_count, $param);
+    //         $this->requestTweets($remain_count, $params);
     //     }
     //     return;
     // }

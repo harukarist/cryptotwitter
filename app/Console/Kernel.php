@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\UpdatePrices::Class,
         Commands\FetchTweets::Class,
+        Commands\FetchUsers::Class,
+        Commands\FetchTwpro::Class,
         Commands\UpdateTweets::Class,
     ];
 
@@ -39,6 +41,27 @@ class Kernel extends ConsoleKernel
         // everyFifteenMinutes()で15分毎にツイート検索を実行する
         $schedule->command('fetch:tweets')
             ->everyFifteenMinutes();
+        // daily()で毎日深夜12時にTwitterアカウントの検索を実行する
+        // $schedule->command('fetch:users')
+        //     ->daily();
+        $schedule->command('fetch:users')
+            ->everyFiveMinutes();
+
+
+        $schedule->command('fetch:twpro')
+            ->everyMinute();
+
+        // everyMinute() 毎分
+        // everyFiveMinutes()
+        // everyTenMinutes()
+        // everyFifteenMinutes()
+        // everyThirtyMinutes()
+        // hourly()
+        // hourlyAt(17)
+        // daily(17)
+        // dailyAt('13:00')
+        // dailyAt('13:00')
+
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tweets_Fetch_Log extends Model
+class Fetch_Users_Log extends Model
 {
     //
 }

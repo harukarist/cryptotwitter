@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/getAll', 'FetchTweetController@fetchAllTweets');
+Route::get('/getTweet', 'FetchTweetController@fetchAllTweets');
+Route::get('/getUser', 'FetchTwitterUserController@fetchUsers');
+Route::get('/twpro', 'FetchTwproController@fetchUsers');
 Route::get('/countTweet', 'CountTweetController@countTweet');
 
 // // 会員登録・ログイン・ログアウト・パスワード再設定
