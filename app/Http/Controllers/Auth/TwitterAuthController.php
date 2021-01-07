@@ -10,6 +10,9 @@ use Socialite;
 // TwitterAPIの処理を行うコントローラー
 class TwitterAuthController extends Controller
 {
+    public function index(){
+        return view('twitter');
+    }
     // Twitter認証ページへのリダイレクト処理
     public function redirectToProvider()
     {
@@ -30,38 +33,41 @@ class TwitterAuthController extends Controller
 
         // Twitterアカウント情報をもとにDBからユーザー情報を取得する
         // DBにユーザー情報がなければ、DBに新規登録する
-        $authUser = $this->findOrCreateUser($twitterUser);
+        $authUser = $this->findOrUpdateUser($twitterUser);
 
         // ログイン処理
-        Auth::login($authUser, true);
+        // Auth::login($authUser, true);
+        // dd($authUser);
 
         // ホーム画面にリダイレクトする
-        return redirect()->route('home');
+        return redirect('/twitter')->with('flash_message', __('Twitterアカウントを連携しました'));
     }
 
     // DBのユーザー情報取得 または アカウント新規作成の処理
-    public function findOrCreateUser($twitterUser)
+    public function findOrUpdateUser($twitterUser)
     {
-        // DBにユーザーのtwitter_idが登録されていればそのユーザー情報を返却
-        $authUser = User::where('twitter_id', $twitterUser->id)->first();
-        if ($authUser) {
+        // ログインユーザーのユーザーモデルを取得
+        $user_id = Auth::id();
+        $authUser = User::find($user_id);
+
+        // ログインユーザーのtwitter_idが登録されていればそのユーザー情報を返却
+        if ($authUser->twitter_id === $twitterUser->id) {
             return $authUser;
         }
 
-        //DBにユーザー情報がなければ、Twitterアカウント情報をDBに新規登録
-        return User::create([
-            'name' => $twitterUser->nickname,
-            'twitter_id' => $twitterUser->id,
-            'avatar' => $twitterUser->avatar_original,
-        ]);
+        // ログインユーザーのtwitter_id情報がなければ、Twitterアカウント情報をテーブルに保存して返却
+        $authUser->twitter_id = $twitterUser->id;
+        $authUser->twitter_avatar = $twitterUser->avatar_original;
+        $authUser->save();
+        return $authUser;
     }
 
     // ログアウト処理
     public function logout()
     {
-        // ログアウト処理
-        Auth::logout();
-        // トップページにリダイレクトする
-        return redirect('/');
+        // // ログアウト処理
+        // Auth::logout();
+        // // トップページにリダイレクトする
+        // return redirect('/');
     }
 }

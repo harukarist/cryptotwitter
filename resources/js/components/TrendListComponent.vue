@@ -21,7 +21,9 @@
             {{ trend.currency_name }}<br />
             {{ trend.currency_ja }}
           </td>
-          <td></td>
+          <td>
+            {{ trend.tweet_hour }}
+          </td>
           <td>
             {{ trend.high }}
           </td>

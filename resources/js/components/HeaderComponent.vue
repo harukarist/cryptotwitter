@@ -117,8 +117,8 @@ export default {
 
       // API通信が成功した場合
       if (this.apiStatus) {
-        // VueRouterのpush()でログイン画面に遷移
-        this.$router.push("/login");
+        // VueRouterのpush()でトップ画面に遷移
+        this.$router.push("/");
       }
       // context.commit("setUser", null);
     },

@@ -25,8 +25,16 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    {{-- フラッシュメッセージ --}}
+    @if (session('flash_message'))
+        <div class="alert alert-primary text-center" role="alert">
+            {{ session('flash_message') }}
+        </div>
+    @endif
     <!-- Vueアプリケーションを表示 -->
     <div id="app">
+        
     </div>
+    @yield('content')
 </body>
 </html>

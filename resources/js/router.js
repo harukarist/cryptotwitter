@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import store from './store' //ストアをインポート
 
 // ページコンポーネントをインポート
+import TopComponent from './components/TopComponent';
 import HomeComponent from './components/HomeComponent';
 import NewsListComponent from './components/NewsListComponent';
 import TrendListComponent from './components/TrendListComponent';
@@ -10,7 +11,7 @@ import TwitterListComponent from './components/TwitterListComponent';
 import TickerListComponent from './components/TickerListComponent';
 import RegisterComponent from './components/RegisterComponent';
 import LoginComponent from './components/LoginComponent';
-import AuthLinkComponent from './components/AuthLinkComponent';
+import TwitterLoginComponent from './components/TwitterLoginComponent';
 import SystemError from './errors/SystemError';
 
 
@@ -23,6 +24,21 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
+      name: 'top.index',
+      component: TopComponent,
+      beforeEnter(to, from, next) {
+        // authストアのcheckゲッターでログイン状態をチェック
+        if (store.getters['auth/check']) {
+          // ログイン済みの場合はホーム画面に遷移
+          next('/home')
+        } else {
+          // 未ログインの場合はトップ画面を表示
+          next()
+        }
+      }
+    },
+    {
+      path: '/home',
       name: 'home.index',
       component: HomeComponent
     },
@@ -44,7 +60,7 @@ const router = new VueRouter({
     {
       path: '/auth',
       name: 'twitter.auth',
-      component: AuthLinkComponent
+      component: TwitterLoginComponent
     },
     {
       path: '/register',
@@ -54,8 +70,8 @@ const router = new VueRouter({
       beforeEnter(to, from, next) {
         // authストアのcheckゲッターでログイン状態をチェック
         if (store.getters['auth/check']) {
-          // ログイン済みの場合はトップページに遷移
-          next('/')
+          // ログイン済みの場合はホーム画面に遷移
+          next('/home')
         } else {
           // 未ログインの場合はユーザー登録画面を表示
           next()
@@ -69,8 +85,8 @@ const router = new VueRouter({
       beforeEnter(to, from, next) {
         // authストアのcheckゲッターでログイン状態をチェック
         if (store.getters['auth/check']) {
-          // ログイン済みの場合はトップページに遷移
-          next('/')
+          // ログイン済みの場合はホーム画面に遷移
+          next('/home')
         } else {
           // 未ログインの場合はログイン画面を表示
           next()
