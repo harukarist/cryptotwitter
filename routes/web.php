@@ -19,11 +19,10 @@ Route::get('/countTweet', 'CountTweetController@countTweet');
 // // 会員登録・ログイン・ログアウト・パスワード再設定
 // Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
-
     // Twitterログイン認証
-    Route::get('/auth/twitter/', 'Auth\TwitterAuthController@redirectToProvider')->name('oauth.twitter');
+    Route::get('/auth/twitter/', 'Auth\TwitterAuthController@redirectToProvider');
     Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
-    Route::get("/auth/twitter/logout", "Auth\TwitterAuthController@logout")->name('oauth.logout');
+    Route::get("/auth/twitter/delete", "Auth\TwitterAuthController@delete");
 });
 
 // 初回アクセス時のみLaravel側でapp.blade.phpを表示し、

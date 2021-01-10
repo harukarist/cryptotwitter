@@ -17,7 +17,6 @@ class ChangeNullableToTargetUsersTable extends Migration
             $table->integer('follow_num')->nullable()->change();
             $table->integer('follower_num')->nullable()->change();
             $table->text('profile_text')->nullable()->change();
-            $table->string('profile_img')->nullable()->change();
         });
     }
 
@@ -32,7 +31,6 @@ class ChangeNullableToTargetUsersTable extends Migration
             $table->integer('follow_num')->nullable(false)->change();
             $table->integer('follower_num')->nullable(false)->change();
             $table->text('profile_text')->nullable(false)->change();
-            $table->string('profile_img')->nullable(false)->change();
         });
     }
 }

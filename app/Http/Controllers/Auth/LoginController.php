@@ -38,15 +38,32 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
     protected function authenticated(Request $request, $user)
     {
+        // ログイン完了後にログインユーザの情報を返却するよう、
+        // AuthenticatesUsersトレイトのauthenticated()を上書き
         return $user;
     }
 
+    /**
+     * The user has logged out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return mixed
+     */
     protected function loggedOut(Request $request)
     {
-        // セッションを再生成する
+        // ログアウト後にセッションを再生成するよう
+        // AuthenticatesUsersトレイトのauthenticated()を上書き
         $request->session()->regenerate();
 
         return response()->json();

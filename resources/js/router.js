@@ -3,15 +3,14 @@ import VueRouter from 'vue-router'
 import store from './store' //ストアをインポート
 
 // ページコンポーネントをインポート
-import TopComponent from './components/TopComponent';
-import HomeComponent from './components/HomeComponent';
-import NewsListComponent from './components/NewsListComponent';
-import TrendListComponent from './components/TrendListComponent';
-import TwitterListComponent from './components/TwitterListComponent';
-import TickerListComponent from './components/TickerListComponent';
-import RegisterComponent from './components/RegisterComponent';
-import LoginComponent from './components/LoginComponent';
-import TwitterLoginComponent from './components/TwitterLoginComponent';
+import TopComponent from './pages/TopComponent';
+import HomeComponent from './pages/HomeComponent';
+import NewsListComponent from './pages/NewsListComponent';
+import TrendListComponent from './pages/TrendListComponent';
+import TwitterList from './pages/TwitterList';
+import TickerListComponent from './pages/TickerListComponent';
+import RegisterComponent from './pages/RegisterComponent';
+import LoginComponent from './pages/LoginComponent';
 import SystemError from './errors/SystemError';
 
 
@@ -21,6 +20,9 @@ Vue.use(VueRouter)
 // VueRouterインスタンスのルーティング設定
 const router = new VueRouter({
   mode: 'history', // URLにハッシュ #を付けない
+  scrollBehavior() {
+    return { x: 0, y: 0 } //ページ遷移時にスクロール位置を先頭に戻す
+  },
   routes: [
     {
       path: '/',
@@ -55,12 +57,14 @@ const router = new VueRouter({
     {
       path: '/twitter',
       name: 'twitter.index',
-      component: TwitterListComponent
-    },
-    {
-      path: '/auth',
-      name: 'twitter.auth',
-      component: TwitterLoginComponent
+      component: TwitterList,
+      // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
+      props: route => {
+        const page = route.query.page
+        console.log(page)
+        // 整数以外が渡された場合は1に変換して返却
+        return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
+      }
     },
     {
       path: '/register',

@@ -126,12 +126,11 @@ class FetchTwproController extends FetchTwitterUserController
                     // レコードがなければ新規作成
                     DB::table('target_users')->insert($query);
                     $create_count++;
+                } else {
+                    // レコードがあれば更新
+                    // DB::table('target_users')->where('twitter_id', $user->id)->update($query);
+                    $update_count++;
                 }
-                // } else {
-                //     // レコードがあれば更新
-                //     DB::table('target_users')->where('twitter_id', $user->id)->update($query);
-                //     $update_count++;
-                // }
             }
             $count['create'] = $create_count;
             $count['update'] = $update_count;
@@ -139,8 +138,8 @@ class FetchTwproController extends FetchTwitterUserController
             echo $count['create'] . "件のユーザー情報を保存しました<br>";
             logger()->info($count['create'] . "件のユーザー情報を保存しました");
 
-            echo $count['update'] . "件のユーザー情報を更新しました<br>";
-            logger()->info($count['update'] . "件のユーザー情報を更新しました");
+            echo $count['update'] . "件のユーザー情報が存在します<br>";
+            logger()->info($count['update'] . "件のユーザー情報が存在します");
         }
 
         return;

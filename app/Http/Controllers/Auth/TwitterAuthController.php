@@ -3,19 +3,35 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Socialite;
+use App\TwitterUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Socialite;
 
-// TwitterAPIの処理を行うコントローラー
+// TwitterAPIでのTwitterログイン処理を行うコントローラー
 class TwitterAuthController extends Controller
 {
-    public function index(){
-        return view('twitter');
+    public function __construct()
+    {
+        // authミドルウェアの認証から除外
+        $this->middleware('auth')->except(['handleProviderCallback']);
     }
+
+    public function checkTwitterUserAuth()
+    {
+        $user_id = Auth::id();
+        $twitter_user = TwitterUser::select('user_name', 'screen_name', 'twitter_avatar', 'use_autofollow')
+            ->where('user_id', $user_id)->first();
+        // 
+        return $twitter_user;
+    }
+
     // Twitter認証ページへのリダイレクト処理
     public function redirectToProvider()
     {
+        // SocialiteからリダイレクトURLを取得
+        // return Socialite::driver('twitter')->redirect()->getTargetUrl();
+
         // ユーザーをOAuthプロバイダへ送る
         return Socialite::driver('twitter')->redirect();
     }
@@ -25,49 +41,49 @@ class TwitterAuthController extends Controller
     {
         try {
             // OAuthプロバイダからユーザー情報を取得
-            $twitterUser = Socialite::driver('twitter')->user();
+            $oauth_user = Socialite::driver('twitter')->user();
         } catch (Exception $e) {
             // 認証エラーの場合はトップページにリダイレクト
-            return redirect('/');
+            return redirect('/')->with('flash_message', __('Twitterアカウントの連携ができませんでした'));
         }
+        // dd($oauth_user);
 
         // Twitterアカウント情報をもとにDBからユーザー情報を取得する
         // DBにユーザー情報がなければ、DBに新規登録する
-        $authUser = $this->findOrUpdateUser($twitterUser);
+        $twitterUser = $this->findOrRegisterTwitter($oauth_user);
 
-        // ログイン処理
-        // Auth::login($authUser, true);
-        // dd($authUser);
-
-        // ホーム画面にリダイレクトする
+        // twitter画面にリダイレクトする
         return redirect('/twitter')->with('flash_message', __('Twitterアカウントを連携しました'));
     }
 
     // DBのユーザー情報取得 または アカウント新規作成の処理
-    public function findOrUpdateUser($twitterUser)
+    public function findOrRegisterTwitter($oauth_user)
     {
-        // ログインユーザーのユーザーモデルを取得
+        // ログインユーザーIDに紐づくTwitterユーザー情報があればDBから取得し、なければ新規作成
         $user_id = Auth::id();
-        $authUser = User::find($user_id);
-
-        // ログインユーザーのtwitter_idが登録されていればそのユーザー情報を返却
-        if ($authUser->twitter_id === $twitterUser->id) {
-            return $authUser;
-        }
-
-        // ログインユーザーのtwitter_id情報がなければ、Twitterアカウント情報をテーブルに保存して返却
-        $authUser->twitter_id = $twitterUser->id;
-        $authUser->twitter_avatar = $twitterUser->avatar_original;
-        $authUser->save();
-        return $authUser;
+        $twitter_user = TwitterUser::updateOrCreate(
+            ['user_id' => $user_id],
+            // 最新の情報で更新
+            [
+                'twitter_id' => $oauth_user->id,
+                'twitter_token' => $oauth_user->token,
+                'twitter_token_secret' => $oauth_user->tokenSecret,
+                'user_name' => $oauth_user->name,
+                'screen_name' => $oauth_user->nickname,
+                'twitter_avatar' => $oauth_user->avatar,
+            ]
+        );
+        return $twitter_user;
     }
 
-    // ログアウト処理
-    public function logout()
+    // Twitterアカウント連携の解除
+    public function delete()
     {
-        // // ログアウト処理
-        // Auth::logout();
-        // // トップページにリダイレクトする
-        // return redirect('/');
+        $user_id = Auth::id();
+        // ログインユーザーに紐づくTwitterアカウント情報を削除
+        TwitterUser::where('user_id', $user_id)->delete();
+
+        // twitter画面にリダイレクトする
+        return redirect('/twitter')->with('flash_message', __('Twitterアカウント連携を解除しました'));
     }
 }

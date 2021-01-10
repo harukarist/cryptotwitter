@@ -89,7 +89,8 @@ class PriceController extends Controller
         $active_pairs = ['btc_jpy', 'eth_jpy', 'xem_jpy', 'bch_jpy', 'mona_jpy'];
 
         // 引数で渡された通貨ペアが取得可能な通貨ペアに含まれる場合は、APIから通貨ペアのティッカーを取得
-        // API Doc: https://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/4_ticker.html?highlight=ticker
+        // API Doc: https://zaif-api-document.readthedocs.io/ja/latest/PublicAPI.html#id22
+        // API Doc: https://techbureau-api-document.readthedocs.io/ja/latest/public/2_individual/4_ticker.html
         if (in_array($currency_pair, $active_pairs)) {
             // API URL: /ticker/{currency_pair}
             $url = $endpoint . '/ticker/' . $currency_pair;

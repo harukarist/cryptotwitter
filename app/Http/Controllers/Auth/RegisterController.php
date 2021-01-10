@@ -71,8 +71,18 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed  $user
+     */
     protected function registered(Request $request, $user)
     {
+        // ユーザ登録完了後に登録ユーザ情報を返却するよう、
+        // RegistersUsersトレイトのregistered()を上書き
         return $user;
     }
 }

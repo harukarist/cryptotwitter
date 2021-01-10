@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','twitter_id','avatar'
+        'name', 'email', 'password', 'twitter_id', 'avatar'
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', self::CREATED_AT, self::UPDATED_AT,
     ];
 
     /**

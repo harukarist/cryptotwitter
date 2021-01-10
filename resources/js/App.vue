@@ -1,16 +1,16 @@
 <template>
   <div>
     <header>
-      <HeaderComponent></HeaderComponent>
+      <HeaderComponent />
     </header>
     <main>
       <div class="container">
         <!-- VueRouterでコンポーネントを表示 -->
-        <RouterView></RouterView>
+        <RouterView />
       </div>
     </main>
     <footer>
-      <FooterComponent></FooterComponent>
+      <FooterComponent />
     </footer>
   </div>
 </template>

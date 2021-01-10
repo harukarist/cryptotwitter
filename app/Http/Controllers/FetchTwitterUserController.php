@@ -11,7 +11,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class FetchTwitterUserController extends Controller
 {
-    public $KEYWORDS = '仮想通貨'; //ユーザー検索キーワード
+    public $KEYWORDS = '仮想通貨 暗号資産'; //ユーザー検索キーワード
 
     public function fetchUsers()
     {

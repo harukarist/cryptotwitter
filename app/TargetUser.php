@@ -25,4 +25,30 @@ class TargetUser extends Model
     protected $dates = [
         'tweeted_at',
     ];
+
+    // /**
+    //  * 返却するJSONに含める項目
+    //  * @var array
+    //  */
+    // // twitter_followersテーブルを結合してフォロー対象かどうかを表示
+    // protected $appends = [
+    //     'target_id',
+    // ];
+
+    // /**
+    //  * 返却するJSONに含めない項目
+    //  * @var array
+    //  */
+    // protected $hidden = [
+    //     'tweet_id', self::CREATED_AT, self::UPDATED_AT,
+    // ];
+
+    // /**
+    //  * リレーションシップ - twitter_followsテーブル
+    //  * @return \Illuminate\Database\Eloquent\Relations\hasMany
+    //  */
+    // public function twitter_follows()
+    // {
+    //     return $this->hasMany('App\TwitterFollows', 'twitter_id', 'target_id', 'twitter_follows');
+    // }
 }
