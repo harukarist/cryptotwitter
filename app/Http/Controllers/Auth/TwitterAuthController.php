@@ -7,6 +7,7 @@ use Socialite;
 use App\TwitterUser;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\FollowListController;
 
 // TwitterAPIでのTwitterログイン処理を行うコントローラー
 class TwitterAuthController extends Controller
@@ -17,11 +18,18 @@ class TwitterAuthController extends Controller
         $this->middleware('auth')->except(['handleProviderCallback']);
     }
 
+    // ログインユーザーのTwitterアカウント情報があれば返却
     public function checkTwitterUserAuth()
     {
         $user_id = Auth::id();
+        // twitter_usersテーブルに保存済みのTwitterアカウント情報を取得
         $twitter_user = TwitterUser::select('user_name', 'screen_name', 'twitter_avatar', 'use_autofollow')
             ->where('user_id', $user_id)->first();
+
+        if ($twitter_user) {
+            // ログインユーザーのTwitterフォローリストを更新
+            FollowListController::createOrUpdateFollowList();
+        }
         // 
         return $twitter_user;
     }
@@ -50,14 +58,14 @@ class TwitterAuthController extends Controller
 
         // Twitterアカウント情報をもとにDBからユーザー情報を取得する
         // DBにユーザー情報がなければ、DBに新規登録する
-        $twitterUser = $this->findOrRegisterTwitter($oauth_user);
+        $twitterUser = $this->updateOrCreateTwitterUser($oauth_user);
 
         // twitter画面にリダイレクトする
         return redirect('/twitter')->with('flash_message', __('Twitterアカウントを連携しました'));
     }
 
     // DBのユーザー情報取得 または アカウント新規作成の処理
-    public function findOrRegisterTwitter($oauth_user)
+    public function updateOrCreateTwitterUser($oauth_user)
     {
         // ログインユーザーIDに紐づくTwitterユーザー情報があればDBから取得し、なければ新規作成
         $user_id = Auth::id();

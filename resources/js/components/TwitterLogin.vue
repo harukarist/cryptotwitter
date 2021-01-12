@@ -16,7 +16,7 @@
       <!-- <pre>{{ $data }}</pre> -->
     </div>
     <div v-else>
-      <a class="btn btn-outline-primary" href="/auth/twitter">
+      <a class="btn btn-outline-primary" href="/auth/twitter/login">
         <i class="fab fa-twitter"></i>
         Twitterアカウント連携
       </a>
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     usersTwitter() {
-      // twitterストアのusernameゲッターでユーザー名を取得
+      // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
       return this.$store.getters["twitter/usersTwitter"];
     },
   },
@@ -47,7 +47,7 @@ export default {
     // },
 
     async checkAuth() {
-      // dispatch()でauthストアのloginアクションを呼び出す
+      // dispatch()でtwitterストアのcheckAuthアクションを呼び出す
       await this.$store.dispatch("twitter/checkAuth");
     },
   },

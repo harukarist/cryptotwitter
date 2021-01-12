@@ -28,10 +28,11 @@ const mutations = {
 // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
 const actions = {
 
-  // ログイン処理
+  // Twitter認証チェック
   async checkAuth(context) {
     // サーバーのAPIを呼び出し
     const response = await axios.get('/api/auth/twitter/check')
+    console.log('Twitter認証チェック')
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
     const usersTwitter = response.data || null
     // API通信が成功した場合

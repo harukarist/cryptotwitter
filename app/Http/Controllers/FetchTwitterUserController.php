@@ -33,7 +33,6 @@ class FetchTwitterUserController extends Controller
         return;
     }
 
-
     // 検索用パラメーターを生成
     public function getParams()
     {
@@ -185,7 +184,6 @@ class FetchTwitterUserController extends Controller
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ];
-
                 if (property_exists($user, 'status')) {
                     $query = array_merge($query, [
                         'tweet_id' => $user->status->id, //最新ツイートID
@@ -193,27 +191,6 @@ class FetchTwitterUserController extends Controller
                         'tweeted_at' => date('Y-m-d H:i:s', strtotime($user->status->created_at)), //最新ツイート日時
                     ]);
                 }
-
-                // // target_usersテーブルに存在する場合は更新、存在しない場合は保存
-                // $target = TargetUser::updateOrCreate([
-                //     'twitter_id' => $user->id
-                // ], [
-                //     'twitter_id' => $user->id,  //ユーザーID
-                //     'user_name' => $user->name, //ユーザー名
-                //     'screen_name' => $user->screen_name, //@から始まるアカウント名
-                //     'follow_num' => $user->friends_count, //フォロー数
-                //     'follower_num' => $user->followers_count, //フォロワー数
-                //     'profile_text' => $user->description, //プロフィール文章
-                //     'profile_img' => $user->profile_image_url, //プロフィールアイコンURL
-                //     'tweet_id' => $user->status->id, //最新ツイートID
-                //     'tweet_text' => $user->status->text, //最新ツイート文章
-                //     'tweeted_at' => date('Y-m-d H:i:s', strtotime($user->status->created_at)), //最新ツイート日時
-                //     'url' => $user->url, //URL
-                //     'created_at' => Carbon::now(),
-                //     'updated_at' => Carbon::now(),
-                // ]);
-
-                // dd($user, $target);
 
                 // 該当のTwitterIDを持つレコードをテーブルから1件取得
                 $target = DB::table('target_users')->where('twitter_id', $user->id)->first();
@@ -226,6 +203,10 @@ class FetchTwitterUserController extends Controller
                     DB::table('target_users')->where('twitter_id', $user->id)->update($query);
                     $update_count++;
                 }
+                // // target_usersテーブルに存在する場合は更新、存在しない場合は保存
+                // $target = TargetUser::updateOrCreate([
+                //     'twitter_id' => $user->id
+                // ], $query);
             }
             $count['create'] = $create_count;
             $count['update'] = $update_count;

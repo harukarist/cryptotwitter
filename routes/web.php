@@ -11,17 +11,25 @@
 |
 */
 
+// バッチ処理の手動実行用
 Route::get('/getTweet', 'FetchTweetController@fetchAllTweets');
 Route::get('/getUser', 'FetchTwitterUserController@fetchUsers');
-Route::get('/twpro', 'FetchTwproController@fetchUsers');
+Route::get('/getNews', 'FetchNewsController@fetchNews');
+Route::get('/getTwpro', 'FetchTwproController@fetchUsers');
+Route::get('/addUser', 'LookupTwitterUserController@addUsers');
 Route::get('/countTweet', 'CountTweetController@countTweet');
+Route::get('/followList', 'FollowListController@createOrUpdateFollowList');
+Route::get('/twitter/{id}/follow', 'FollowTargetController@createFollow');
+Route::get('/twitter/{id}/unfollow', 'FollowTargetController@destroyFollow');
 
-// // 会員登録・ログイン・ログアウト・パスワード再設定
-// Auth::routes();
+
+
 Route::group(['middleware' => 'auth'], function () {
-    // Twitterログイン認証
-    Route::get('/auth/twitter/', 'Auth\TwitterAuthController@redirectToProvider');
+    // Twitterログイン認証（TwitterAPIへのリダイレクト）
+    Route::get('/auth/twitter/login', 'Auth\TwitterAuthController@redirectToProvider');
+    // Twitterログイン認証（TwitterAPIからのコールバック）
     Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
+    // Twitterアカウントの削除
     Route::get("/auth/twitter/delete", "Auth\TwitterAuthController@delete");
 });
 
@@ -29,6 +37,11 @@ Route::group(['middleware' => 'auth'], function () {
 // 以後はフロント側のVueRouterでルーティングを行う
 // {any?} で任意のパスパラメータ any を受け入れ
 // パスパラメータの文字列は任意'.+'
-Route::get('/{any?}', function () {
-    return view('layouts.app');
-})->where('any', '.+');
+Route::middleware(['cors'])->group(function () {
+    Route::get('/{any?}', function () {
+        return view('layouts.app');
+    })->where('any', '.+');
+});
+
+// // 会員登録・ログイン・ログアウト・パスワード再設定
+// Auth::routes();

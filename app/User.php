@@ -5,9 +5,13 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
+    // ソフトデリート用のトレイトを追加
+    use SoftDeletes;
+
     use Notifiable;
 
     /**
@@ -36,4 +40,13 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * リレーションシップ - twitter_usersテーブル
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function twitter_user()
+    {
+        return $this->hasOne('App\TwitterUser');
+    }
 }

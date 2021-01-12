@@ -18,11 +18,23 @@
             {{ index + 1 }}
           </td>
           <td>
-            {{ trend.currency_name }}<br />
-            {{ trend.currency_ja }}
+            <a
+              :href="`https://twitter.com/search?q=${trend.currency_name}`"
+              target="_blank"
+            >
+              {{ trend.currency_name }}</a
+            ><br />
+            <a
+              :href="`https://twitter.com/search?q=${trend.currency_ja}`"
+              target="_blank"
+            >
+              {{ trend.currency_ja }}</a
+            >
           </td>
           <td>
-            {{ trend.tweet_hour }}
+            {{ trend.tweet_hour }}<br>
+            {{ trend.tweet_day }}<br>
+            {{ trend.tweet_week }}
           </td>
           <td>
             {{ trend.high }}

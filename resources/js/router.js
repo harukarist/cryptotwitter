@@ -47,7 +47,13 @@ const router = new VueRouter({
     {
       path: '/news',
       name: 'news.index',
-      component: NewsListComponent
+      component: NewsListComponent,
+      // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
+      props: route => {
+        const page = route.query.page
+        // 整数以外が渡された場合は1に変換して返却
+        return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
+      }
     },
     {
       path: '/trend',
@@ -61,7 +67,6 @@ const router = new VueRouter({
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
       props: route => {
         const page = route.query.page
-        console.log(page)
         // 整数以外が渡された場合は1に変換して返却
         return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
       }

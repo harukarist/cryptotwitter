@@ -7,19 +7,22 @@
       <TwitterLogin />
     </div>
     <div class="p-target-list row justify-content-center">
-      <div class="grid">
-        <TargetItem
-          class="p-target-list__item grid__item"
-          v-for="target in targets"
-          :key="target.id"
-          :item="target"
-        />
-      </div>
       <Pagination
         :directory="directoryName"
         :current-page="currentPage"
         :last-page="lastPage"
       />
+
+      <div class="grid">
+        <TwitterTargetItem
+          class="p-target-list__item grid__item"
+          v-for="target in targets"
+          :key="target.id"
+          :item="target"
+          @follow="createFollow"
+          @unfollow="destroyFollow"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -27,13 +30,13 @@
 <script>
 import { OK } from "../utility";
 import TwitterLogin from "../components/TwitterLogin.vue";
-import TargetItem from "../components/TargetItem.vue";
+import TwitterTargetItem from "../components/TwitterTargetItem.vue";
 import Pagination from "../components/Pagination.vue";
 
 export default {
   components: {
     TwitterLogin,
-    TargetItem,
+    TwitterTargetItem,
     Pagination,
   },
   data() {
@@ -49,15 +52,16 @@ export default {
     page: {
       type: Number,
       required: false,
-      default: 1,
+      default: 0,
     },
   },
   methods: {
+    // Twitterアカウント一覧を取得
     async fetchTargets() {
-      console.log(this.page);
       const response = await axios.get(`/api/twitter?page=${this.page}`);
+      // console.log(response.data);
       if (response.status !== OK) {
-        this.$store.commit("error/setCode", respoonse.status);
+        this.$store.commit("error/setCode", response.status);
         return false;
       }
       // JSONのdata項目を格納
@@ -65,7 +69,47 @@ export default {
       // ページネーションの現在ページ、最終ページの値を格納
       this.currentPage = response.data.current_page;
       this.lastPage = response.data.last_page;
-      console.log(this.currentPage);
+      return;
+    },
+    // フォロー登録メソッド
+    async createFollow(id) {
+      console.log(id);
+      const response = await axios.post(`/api/twitter/${id}/follow`);
+      console.log(response.status);
+      console.log(response.data);
+      // レスポンスのステータスが200以外の場合はエラーをストアにコミット
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false;
+      }
+      // レスポンスがOKの場合は配列の該当項目を変更して返却
+      this.targets = this.targets.map((target) => {
+        if (target.twitter_id === response.data.target_id) {
+          // フォロー済みフラグをtrueに
+          target.followed_by_user = true;
+        }
+        return target;
+      });
+    },
+    // フォロー解除メソッド
+    async destroyFollow(id) {
+      console.log(id);
+      const response = await axios.post(`/api/twitter/${id}/unfollow`);
+      console.log(response.status);
+      console.log(response.data);
+      // レスポンスのステータスが200以外の場合はエラーをストアにコミット
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false;
+      }
+      // レスポンスがOKの場合は配列の該当項目を変更して返却
+      this.targets = this.targets.map((target) => {
+        if (target.twitter_id === response.data.target_id) {
+          // フォロー済みフラグをfalseに
+          target.followed_by_user = false;
+        }
+        return target;
+      });
     },
   },
   watch: {

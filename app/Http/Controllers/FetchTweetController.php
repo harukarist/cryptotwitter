@@ -20,7 +20,7 @@ class FetchTweetController extends Controller
         $until = $dt->copy()->addDay()->format('Y-m-d');
         // 検索パラメータを取得
         $params = $this->getParams($since, $until);
-        var_dump($params);
+        // var_dump($params);
 
         // 対象日のツイートが保存されていればDBから取得済みTweetIDを取得
         $last = Tweet::select('tweet_id')->whereDate('tweeted_at', $since)->orderBy('tweet_id', 'DESC')->first();
