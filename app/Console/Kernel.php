@@ -13,13 +13,13 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    // 作成したCommandを登録する
+    // バッチ処理を実行するCommandクラスを登録する
     protected $commands = [
+        Commands\AutoFollow::Class,
         Commands\UpdatePrices::Class,
         Commands\FetchTweets::Class,
-        Commands\FetchUsers::Class,
         Commands\FetchTwpro::Class,
-        Commands\UpdateTweets::Class,
+        Commands\FetchUsers::Class,
     ];
 
     /**
@@ -31,26 +31,25 @@ class Kernel extends ConsoleKernel
     // Commandを定期的に実行するタスクスケジュールの設定
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-
-        // everyHour()で1時間毎に仮想通貨の価格チェックを実行する
         // hourlyAt()で毎時5分に仮想通貨の価格チェックを実行する
         $schedule->command('update:prices')
             ->hourlyAt(5);
+        // everyFifteenMinutes()で15分毎に自動フォローを実行する
+        $schedule->command('follow:autofollow')
+            ->everyFifteenMinutes();
+
         // everyFifteenMinutes()で15分毎にツイート検索を実行する
         $schedule->command('fetch:tweets')
             ->everyFifteenMinutes();
-        // daily()で毎日深夜12時にTwitterアカウントの検索を実行する
-        // $schedule->command('fetch:users')
-        //     ->daily();
+
+        // dailyAt('01:00')で毎日深夜1:00にアカウント一覧を更新する
         $schedule->command('fetch:users')
-            ->everyFiveMinutes();
-
-
+            ->dailyAt('01:00');
         $schedule->command('fetch:twpro')
-            ->everyMinute();
+            ->dailyAt('01:00');
 
+        // daily()で毎日深夜12時に実行する
+        // everyHour()で1時間毎に仮想通貨の価格チェックを実行する
         // everyMinute() 毎分
         // everyFiveMinutes()
         // everyTenMinutes()

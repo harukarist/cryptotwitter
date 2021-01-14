@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Abraham\TwitterOAuth\TwitterOAuth;
 
+// フォロー対象となるTwitterの仮想通貨アカウントを取得
 class FetchTwitterUserController extends Controller
 {
     public $KEYWORDS = '仮想通貨 暗号資産'; //ユーザー検索キーワード
@@ -20,15 +21,15 @@ class FetchTwitterUserController extends Controller
         $remain_count = $this->checkLimit($MAX_REQUEST);
         // リクエスト残り回数が0の場合は処理を終了
         if (!$remain_count) {
-            echo "リクエスト上限に達しました";
-            logger()->info("リクエスト上限に達しました");
+            echo "Twitterアカウント取得のリクエスト上限に達しました";
+            logger()->info("Twitterアカウント取得のリクエスト上限に達しました");
             return;
         }
 
         // 検索パラメータを生成
         $params = $this->getParams();
 
-        // // TwitterAPIでツイートを検索し、該当データを保存
+        // // TwitterAPIでTwitterアカウントを検索し、該当データを保存
         $this->requestUsers($remain_count, $params);
         return;
     }
@@ -36,7 +37,7 @@ class FetchTwitterUserController extends Controller
     // 検索用パラメーターを生成
     public function getParams()
     {
-        // ツイート検索オプションを指定
+        // Twitterアカウント検索オプションを指定
         $params = array(
             'q' => $this->KEYWORDS,
             'count' => 20, // 1ページ毎に取得するユーザー件数（上限は20件）
@@ -80,7 +81,7 @@ class FetchTwitterUserController extends Controller
         return $max_request;
     }
 
-    // TwitterAPIでツイートを検索
+    // TwitterAPIでTwitterアカウントを検索
     public function requestUsers($remain_count, $params)
     {
         $create_total = 0;
@@ -95,7 +96,7 @@ class FetchTwitterUserController extends Controller
             echo $params['page'] . 'ページ目を取得' . '<br>';
             logger()->info($params['page'] . "ページ目を取得");
 
-            // ツイートをTwitterAPIで検索し、返却された検索結果を変数に格納
+            // TwitterアカウントをTwitterAPIで検索し、返却された検索結果を変数に格納
             $users_arr = \Twitter::get("users/search", $params);
 
             if (http_response_code() == 500) {
@@ -161,7 +162,7 @@ class FetchTwitterUserController extends Controller
         return;
     }
 
-    // 検索結果からユーザー情報を取り出し、DBに保存
+    // 検索結果からTwitterアカウント情報を取り出し、DBに保存
     public function createRecord($users_arr)
     {
         $create_count = 0;
@@ -169,7 +170,7 @@ class FetchTwitterUserController extends Controller
         $query = [];
         // 検索結果がある場合
         if ($users_arr) {
-            // 取得したツイート件数分ループを回し、必要なデータを配列に格納
+            // 取得したTwitterアカウント件数分ループを回し、必要なデータを配列に格納
             foreach ($users_arr as $user) {
                 echo $user->name . '<br>';
                 $query = [
@@ -186,9 +187,9 @@ class FetchTwitterUserController extends Controller
                 ];
                 if (property_exists($user, 'status')) {
                     $query = array_merge($query, [
-                        'tweet_id' => $user->status->id, //最新ツイートID
-                        'tweet_text' => $user->status->text, //最新ツイート文章
-                        'tweeted_at' => date('Y-m-d H:i:s', strtotime($user->status->created_at)), //最新ツイート日時
+                        'tweet_id' => $user->status->id, //最新ツイートのID
+                        'tweet_text' => $user->status->text, //最新ツイートの文章
+                        'tweeted_at' => date('Y-m-d H:i:s', strtotime($user->status->created_at)), //最新ツイートの日時
                     ]);
                 }
 

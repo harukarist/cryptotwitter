@@ -29,8 +29,8 @@ class FetchTwproController extends FetchTwitterUserController
 
         // リクエスト残り回数が0の場合は処理を終了
         if (!$this->remain_count) {
-            echo "リクエスト上限に達しました";
-            logger()->info("リクエスト上限に達しました");
+            echo "Twproのリクエスト上限に達しました";
+            logger()->info("Twproのリクエスト上限に達しました");
             return;
         }
         // TwproAPIでユーザーを検索し、該当データを保存

@@ -43,8 +43,9 @@ class UpdatePrices extends Command
     {
         // コントローラーのタスクを実行する
         $trend = new PriceController;
+        logger()->info('>>>> 取引価格の更新バッチ処理を実行します');
         $trend->getPrices();
         //ログファイルに書き込む
-        logger()->info('取引価格の更新バッチ処理を実行しました');
+        logger()->info('取引価格の更新バッチ処理を実行しました <<<<');
     }
 }

@@ -13,21 +13,35 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class FollowTargetController extends Controller
 {
   /**
-   * ターゲット1件をフォロー
+   * ログインユーザーのTwitterアカウントでターゲット1件をフォロー
    */
-  public function createFollow(string $target_id)
+  public function createUsersFollow(string $target_id)
   {
+    // ログインユーザーのTwitterアカウント情報を取得
     $twitter_user = Auth::user()->twitter_user;
     if (!$twitter_user) {
       abort(404);
     }
+    $follow = self::createFollow($twitter_user, $target_id);
+    return $follow;
+  }
 
+  /**
+   * ターゲット1件をフォロー
+   */
+  static public function createFollow(object $twitter_user, string $target_id)
+  {
+    // ログインユーザーのTwitterIDを取得
     $twitter_id = $twitter_user->twitter_id;
 
-    // ターゲットをフォロー済みかどうかをチェック
-    $is_following = $this->checkIsFollowing($twitter_id, $target_id);
+    // ユーザーのTwitterアカウントでoAuth認証
+    $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
-    // すでにフォロー済みの場合は何もせずに返却
+    // ターゲットをフォロー済みかどうかをチェック
+    $is_following = self::checkIsFollowing($twitter_id, $target_id, $connect);
+    // dd($is_following);
+
+    // すでにターゲットをフォロー済みの場合は何もせずに返却
     if ($is_following) {
       return [
         'message' => 'アカウントはフォロー済みです',
@@ -36,8 +50,7 @@ class FollowTargetController extends Controller
     }
 
     // ターゲットをフォロー
-    $result = $this->followTarget($twitter_user, $target_id);
-    // dd($result);
+    self::followTarget($twitter_user, $target_id, $connect);
 
     // return redirect('/twitter')->with('flash_message', __('アカウントをフォローしました'));
     return [
@@ -47,55 +60,34 @@ class FollowTargetController extends Controller
   }
 
   /**
-   * ターゲット1件をフォロー解除
+   * 対象Twitterアカウントのフォロー状況をチェック
    */
-  public function destroyFollow(string $target_id)
-  {
-    $twitter_user = Auth::user()->twitter_user;
-    if (!$twitter_user) {
-      abort(404);
-    }
-
-    $twitter_id = $twitter_user->twitter_id;
-
-    // ターゲットをフォロー済みかどうかをチェック
-    $is_following = $this->checkIsFollowing($twitter_id, $target_id);
-
-    // フォローしていない場合は何もせずに返却
-    if (!$is_following) {
-      return [
-        'message' => 'このアカウントをフォローしていません',
-        'target_id' => $target_id
-      ];
-    }
-
-    // ターゲットをフォロー解除
-    $result = $this->unfollowTarget($twitter_user, $target_id);
-    // dd($result);
-
-    // return redirect('/twitter')->with('flash_message', __('アカウントをフォローしました'));
-    return [
-      'message' => 'アカウントをフォロー解除しました',
-      'target_id' => $target_id
-    ];
-  }
-
-  /**
-   * フォロー済みかどうかをチェック
-   */
-  public function checkIsFollowing($twitter_id, $target_id)
+  static public function checkIsFollowing($twitter_id, $target_id, $connect)
   {
     $params = array(
       'source_id' => $twitter_id,
       'target_id' => $target_id,
     );
+    $category = "friendships";
+    $endpoint = "/friendships/show";
 
-    $result = \Twitter::get("friendships/show", $params);
+    // ユーザーアカウントでのTwitterAPIのレートリミットをチェック
+    $limit = UsersTwitterOAuth::checkLimit($connect, $category, $endpoint);
+    // dd($limit);
+
+    if (!$limit) {
+      logger()->info("フォロー状況チェックのリクエスト上限に達しました");
+      return;
+    }
+
+    // TwitterAPIでフォロー状況を取得
+    $result = $connect->get($endpoint, $params);
     // dd($result);
 
     if (!$result) {
       return abort(404);
     }
+    // TwitterAPIからの返却値からフォロー状況の値を取得
     $is_following = $result->relationship->source->following;
     return $is_following;
   }
@@ -103,17 +95,18 @@ class FollowTargetController extends Controller
   /**
    * ターゲットをフォロー
    */
-  public function followTarget($twitter_user, $target_id)
+  static public function followTarget($twitter_user, $target_id, $connect)
   {
 
     $params = array(
       'user_id' => $target_id,
       'follow' => true, //フォローを相手に通知するか
     );
+    $endpoint = "friendships/create";
+    // レートリミット上限なし
 
     // TwitterAPIでターゲットをフォロー
-    $connect = $this->userOAuth($twitter_user);
-    $result = $connect->post("friendships/create", $params);
+    $result = $connect->post($endpoint, $params);
 
     if (!$result) {
       return abort(404);
@@ -126,53 +119,5 @@ class FollowTargetController extends Controller
     $twitter_user->follows()->attach($target->id);
 
     return $result;
-  }
-
-  /**
-   * ターゲットをフォロー解除
-   */
-  public function unfollowTarget($twitter_user, $target_id)
-  {
-
-    $params = array(
-      'user_id' => $target_id,
-    );
-
-    // TwitterAPIでターゲットをフォロー解除
-    $connect = $this->userOAuth($twitter_user);
-    $result = $connect->post("friendships/destroy", $params);
-
-    if (!$result) {
-      return abort(404);
-    }
-
-    // target_usersテーブルから該当TwitterIDのレコードを取得
-    $target = TargetUser::where('twitter_id', $target_id)->first();
-    // followsテーブルからユーザーとフォロー相手のidを削除
-    $twitter_user->follows()->detach($target->id);
-
-    return $result;
-  }
-
-  /**
-   * ログインユーザーのトークンでOAuth認証
-   */
-  public function userOAuth($twitter_user)
-  {
-    $user_token = $twitter_user->twitter_token;
-    $user_secret = $twitter_user->twitter_token_secret;
-
-    // ヘルパー関数config()でconfig/twitter.phpを参照してインスタンスを作成
-    $config = config('twitter');
-    //接続に必要な接続インスタンスを生成
-    $connect = new TwitterOAuth(
-      $config['api_key'],
-      $config['secret_key'],
-      $user_token,
-      $user_secret,
-    );
-    // dd($connect);
-    // dd($config['api_key']);
-    return $connect;
   }
 }

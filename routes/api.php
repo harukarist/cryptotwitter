@@ -33,12 +33,15 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // Twitterアカウント一覧取得API
   Route::get('/twitter', 'TwitterTargetListController@index')->name('twitter.index');
   // Twitterアカウントフォロー処理
-  Route::post('/twitter/{id}/follow', 'FollowTargetController@createFollow');
+  Route::post('/twitter/{id}/follow', 'FollowTargetController@createUsersFollow');
   // Twitterアカウントフォロー解除処理
-  Route::post('/twitter/{id}/unfollow', 'FollowTargetController@destroyFollow');
+  Route::post('/twitter/{id}/unfollow', 'FollowTargetController@destroyUsersFollow');
 
   // ログインユーザーのTwitter認証チェック（認証済みであればアカウント情報を返却）
   Route::get('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAuth');
+
+  Route::get('/autofollow/apply', 'AutofollowController@applyAutoFollow');
+  Route::get('/autofollow/cancel', 'AutofollowController@cancelAutoFollow');
 
   // ティッカー情報取得（管理者用）
   Route::get('/tickers', 'TickerController@index');

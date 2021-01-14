@@ -18,7 +18,8 @@ Route::get('/getNews', 'FetchNewsController@fetchNews');
 Route::get('/getTwpro', 'FetchTwproController@fetchUsers');
 Route::get('/addUser', 'LookupTwitterUserController@addUsers');
 Route::get('/countTweet', 'CountTweetController@countTweet');
-Route::get('/followList', 'FollowListController@createOrUpdateFollowList');
+Route::get('/followList', 'FollowListController@loginUsersFollowList');
+Route::get('/autofollow', 'AutoFollowController@autoFollow');
 Route::get('/twitter/{id}/follow', 'FollowTargetController@createFollow');
 Route::get('/twitter/{id}/unfollow', 'FollowTargetController@destroyFollow');
 

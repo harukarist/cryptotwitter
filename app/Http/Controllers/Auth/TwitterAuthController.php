@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\User;
 use Socialite;
 use App\TwitterUser;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FollowListController;
@@ -22,16 +23,26 @@ class TwitterAuthController extends Controller
     public function checkTwitterUserAuth()
     {
         $user_id = Auth::id();
-        // twitter_usersテーブルに保存済みのTwitterアカウント情報を取得
-        $twitter_user = TwitterUser::select('user_name', 'screen_name', 'twitter_avatar', 'use_autofollow')
+        // twitter_usersテーブルからログインユーザーのTwitterアカウント情報を取得
+        $twitter_user = TwitterUser::select('id', 'user_name', 'screen_name', 'twitter_avatar', 'use_autofollow')
             ->where('user_id', $user_id)->first();
+
+        if ($twitter_user->use_autofollow) {
+            $follow_total = DB::table('autofollow_logs')->where('twitter_user_id', $twitter_user->id)
+                ->sum('follow_total');
+        } else {
+            $follow_total = 0;
+        }
 
         if ($twitter_user) {
             // ログインユーザーのTwitterフォローリストを更新
-            FollowListController::createOrUpdateFollowList();
+            FollowListController::loginUsersFollowList();
         }
-        // 
-        return $twitter_user;
+        // Twitterアカウント情報を返却
+        return [
+            'twitter_user' => $twitter_user,
+            'follow_total' => $follow_total,
+        ];
     }
 
     // Twitter認証ページへのリダイレクト処理

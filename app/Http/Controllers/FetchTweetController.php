@@ -40,8 +40,8 @@ class FetchTweetController extends Controller
         $remain_count = $this->checkLimit($max_request);
         // リクエスト残り回数が0の場合は処理を終了
         if (!$remain_count) {
-            echo "リクエスト上限に達しました";
-            logger()->info("リクエスト上限に達しました");
+            echo "一括ツイート検索のリクエスト上限に達しました";
+            logger()->info("一括ツイート検索のリクエスト上限に達しました");
             return;
         }
         // TwitterAPIで検索、保存
@@ -58,8 +58,8 @@ class FetchTweetController extends Controller
         $remain_count = $this->checkLimit($MAX_REQUEST);
         // リクエスト残り回数が0の場合は処理を終了
         if (!$remain_count) {
-            echo "リクエスト上限に達しました";
-            logger()->info("リクエスト上限に達しました");
+            echo "一括ツイート検索のリクエスト上限に達しました";
+            logger()->info("一括ツイート検索のリクエスト上限に達しました");
             return;
         }
         // 今日の0:00の日時を取得
@@ -191,6 +191,7 @@ class FetchTweetController extends Controller
     {
         //残り使用可能回数をTwitterAPIでチェック
         $status = \Twitter::get("application/rate_limit_status");
+        // dd($status);
 
         // APIから返ってきたオブジェクトにエラープロパティがあれば残り回数を0にする
         if (property_exists($status, 'errors')) {
