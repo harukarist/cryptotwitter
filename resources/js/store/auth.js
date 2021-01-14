@@ -124,7 +124,7 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.get('/api/user')
+    const response = await axios.get(`${process.env.APP_URL}/api/user`)
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
     const user = response.data || null
 

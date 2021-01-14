@@ -58,7 +58,7 @@ export default {
   methods: {
     // axiosでニュース一覧取得APIにリクエスト
     getTrends() {
-      axios.get("/api/trend").then((res) => {
+      axios.get(`${process.env.APP_URL}/api/trend`).then((res) => {
         // レスポンスを配列に格納
         this.items = res.data;
       });
