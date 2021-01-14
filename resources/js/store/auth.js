@@ -122,7 +122,7 @@ const actions = {
   // ログインユーザーチェック処理
   async currentUser(context) {
     // setApiStatusミューテーションでステータスを初期化
-    context.commit('setApiStatus', null)l
+    context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
     const response = await axios.get('/api/user')
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
