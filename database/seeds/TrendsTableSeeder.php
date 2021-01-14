@@ -18,13 +18,13 @@ class TrendsTableSeeder extends Seeder
                 'currency_name' => 'BTC',
                 'currency_ja' => 'ビットコイン',
                 'currency_pair' => 'btc_jpy',
-                'used_api_type' => 1,
+                'used_api_type' => 2,
             ],
             [
                 'currency_name' => 'ETH',
                 'currency_ja' => 'イーサリアム',
                 'currency_pair' => 'eth_jpy',
-                'used_api_type' => 3,
+                'used_api_type' => 2,
             ],
             [
                 'currency_name' => 'ETC',
@@ -72,7 +72,7 @@ class TrendsTableSeeder extends Seeder
                 'currency_name' => 'MONA',
                 'currency_ja' => 'モナコイン',
                 'currency_pair' => 'mona_jpy',
-                'used_api_type' => 3,
+                'used_api_type' => 2,
             ],
             [
                 'currency_name' => 'XLM',
