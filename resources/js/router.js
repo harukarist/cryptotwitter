@@ -32,7 +32,7 @@ const router = new VueRouter({
         // authストアのcheckゲッターでログイン状態をチェック
         if (store.getters['auth/check']) {
           // ログイン済みの場合はホーム画面に遷移
-          next('./home')
+          next('/home')
         } else {
           // 未ログインの場合はトップ画面を表示
           next()
@@ -40,12 +40,12 @@ const router = new VueRouter({
       }
     },
     {
-      path: './home',
+      path: '/home',
       name: 'home.index',
       component: HomeComponent
     },
     {
-      path: './news',
+      path: '/news',
       name: 'news.index',
       component: NewsListComponent,
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
@@ -56,12 +56,12 @@ const router = new VueRouter({
       }
     },
     {
-      path: './trend',
+      path: '/trend',
       name: 'trend.index',
       component: TrendListComponent
     },
     {
-      path: './twitter',
+      path: '/twitter',
       name: 'twitter.index',
       component: TwitterList,
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
@@ -72,7 +72,7 @@ const router = new VueRouter({
       }
     },
     {
-      path: './register',
+      path: '/register',
       name: 'register',
       component: RegisterComponent,
       // ログイン済みユーザーがアクセスした場合は
@@ -80,7 +80,7 @@ const router = new VueRouter({
         // authストアのcheckゲッターでログイン状態をチェック
         if (store.getters['auth/check']) {
           // ログイン済みの場合はホーム画面に遷移
-          next('./home')
+          next('/home')
         } else {
           // 未ログインの場合はユーザー登録画面を表示
           next()
@@ -88,14 +88,14 @@ const router = new VueRouter({
       }
     },
     {
-      path: './login',
+      path: '/login',
       name: 'login',
       component: LoginComponent,
       beforeEnter(to, from, next) {
         // authストアのcheckゲッターでログイン状態をチェック
         if (store.getters['auth/check']) {
           // ログイン済みの場合はホーム画面に遷移
-          next('./home')
+          next('/home')
         } else {
           // 未ログインの場合はログイン画面を表示
           next()
@@ -103,12 +103,12 @@ const router = new VueRouter({
       }
     },
     {
-      path: './tickers',
+      path: '/tickers',
       name: 'tickers.index',
       component: TickerListComponent
     },
     {
-      path: './500',
+      path: '/500',
       name: 'errors.system',
       component: SystemError
     },
