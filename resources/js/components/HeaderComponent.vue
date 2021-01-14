@@ -6,7 +6,7 @@
         <!-- home '/'のみ、子のディレクトリは内包しないよう、exactオプションを使用 -->
         <!-- サイトロゴ -->
         <RouterLink
-          :to="{ name: 'home.index' }"
+          :to="{ name: 'top.index' }"
           active-class="active"
           exact
           class="navbar-brand"
