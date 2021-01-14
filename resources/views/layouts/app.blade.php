@@ -33,7 +33,6 @@
     @endif
     <!-- Vueアプリケーションを表示 -->
     <div id="app">
-        
     </div>
     @yield('content')
 </body>

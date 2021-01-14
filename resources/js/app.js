@@ -8,7 +8,7 @@
 
 // window.Vue = require('vue');
 
-import './bootstrap'
+import './bootstrap' //bootstrap.jsの設定ファイルをインポート
 import Vue from 'vue';
 import router from './router'; // router.jsからルーティング定義をインポート
 import store from './store' // ストアをインポート
