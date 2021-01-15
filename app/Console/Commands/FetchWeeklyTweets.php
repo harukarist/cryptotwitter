@@ -13,7 +13,7 @@ class FetchTweets extends Command
      * @var string
      */
     // Command名
-    protected $signature = 'fetch:tweets';
+    protected $signature = 'fetch:weeklytweets';
 
     /**
      * The console command description.
@@ -44,7 +44,7 @@ class FetchTweets extends Command
         // コントローラーのタスクを実行する
         $tweet = new FetchTweetController;
         logger()->info('>>>> ツイート保存バッチを実行します');
-        $tweet->fetchAllTweets();
+        $tweet->fetchWeeklyTweets();
         //ログファイルに書き込む
         logger()->info('ツイート保存バッチを実行しました <<<<');
     }

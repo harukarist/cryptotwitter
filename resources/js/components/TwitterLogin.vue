@@ -29,7 +29,7 @@
           自動フォロー機能を利用する
         </button>
       </div>
-      <a class="text-secondary" href="/auth/twitter/delete">
+      <a class="text-secondary" href="./auth/twitter/delete">
         <i class="fab fa-twitter"></i>
         Twitterアカウント連携を解除する
       </a>
@@ -38,7 +38,7 @@
       <!-- <pre>{{ $data }}</pre> -->
     </div>
     <div v-if="!isTwitterLogin">
-      <a class="btn btn-outline-primary" href="/auth/twitter/login">
+      <a class="btn btn-outline-primary" href="./auth/twitter/login">
         <i class="fab fa-twitter"></i>
         Twitterアカウント連携
       </a>

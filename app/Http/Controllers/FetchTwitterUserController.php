@@ -91,10 +91,10 @@ class FetchTwitterUserController extends Controller
         // 最大リクエスト回数までループ
         for ($req_count = 1; $req_count <= $remain_count; $req_count++) {
             $params['page'] = $page_num;
-            echo $req_count . '回目/' . $remain_count . '回<br>';
-            logger()->info(($req_count) . "回目");
-            echo $params['page'] . 'ページ目を取得' . '<br>';
-            logger()->info($params['page'] . "ページ目を取得");
+            // echo $req_count . '回目/' . $remain_count . '回<br>';
+            // logger()->info(($req_count) . "回目");
+            // echo $params['page'] . 'ページ目を取得' . '<br>';
+            // logger()->info($params['page'] . "ページ目を取得");
 
             // TwitterアカウントをTwitterAPIで検索し、返却された検索結果を変数に格納
             $users_arr = \Twitter::get("users/search", $params);
@@ -121,8 +121,8 @@ class FetchTwitterUserController extends Controller
             // 検索結果がある場合
             $users_count = count($users_arr);
             if ($users_count) {
-                echo "ユーザー情報を" . $users_count . "件取得<br>";
-                logger()->info("ユーザー情報を" . $users_count . "件取得");
+                // echo "ユーザー情報を" . $users_count . "件取得<br>";
+                // logger()->info("ユーザー情報を" . $users_count . "件取得");
 
                 // 検索結果から必要なデータを抽出し、DBに保存
                 $count = $this->createRecord($users_arr);
@@ -172,7 +172,6 @@ class FetchTwitterUserController extends Controller
         if ($users_arr) {
             // 取得したTwitterアカウント件数分ループを回し、必要なデータを配列に格納
             foreach ($users_arr as $user) {
-                echo $user->name . '<br>';
                 $query = [
                     'twitter_id' => $user->id,  //ユーザーID
                     'user_name' => $user->name, //ユーザー名

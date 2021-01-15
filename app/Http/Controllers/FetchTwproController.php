@@ -58,8 +58,8 @@ class FetchTwproController extends FetchTwitterUserController
 
         $limit = curlRequestController::curl($url);
         $this->remain_count = $limit->rest; //	残りAPI利用可能回数
-        echo "残り回数" . $this->remain_count . "回<br>";
-        logger()->info("残り回数" . $this->remain_count . "回");
+        // echo "残り回数" . $this->remain_count . "回<br>";
+        // logger()->info("残り回数" . $this->remain_count . "回");
 
         $until = $limit->until; //次にrest値が復帰する日時(Unix時間)
         if ($until) {
@@ -98,7 +98,6 @@ class FetchTwproController extends FetchTwitterUserController
         if ($users_arr) {
             // 取得したユーザー件数分ループを回し、必要なデータを配列に格納
             foreach ($users_arr as $user) {
-                echo $user->name . '<br>';
                 $query = [
                     'twitter_id' => $user->id,  //ユーザーID
                     'user_name' => $user->name, //ユーザー名

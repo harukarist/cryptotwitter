@@ -13,7 +13,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class FetchTweetController extends Controller
 {
     // 現在日時から保存済み最新ツイートIDまでの範囲を検索して保存
-    public function getNewestTweet()
+    public function fetchRecentTweets()
     {
         $dt = Carbon::today();
         $since = $dt->copy()->format('Y-m-d');
@@ -51,7 +51,7 @@ class FetchTweetController extends Controller
     }
 
     // 今日の0:00までの１週間分のツイートを検索し、未取得の時間帯があればDBに保存する処理
-    public function fetchAllTweets()
+    public function fetchWeeklyTweets()
     {
         $MAX_REQUEST = 180; // ツイート検索の最大リクエスト回数の初期値（上限は15分間に180回）
         // TwitterAPIのリクエスト残り回数を取得
@@ -63,7 +63,7 @@ class FetchTweetController extends Controller
             return;
         }
         // 今日の0:00の日時を取得
-        $dt = Carbon::today()->addMinutes(30);
+        $dt = Carbon::today();
         $carbon_now = Carbon::now();
         // 7日前から1日ずつ処理
         $target_date = $dt->subDays(7);
