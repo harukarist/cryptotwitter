@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Controllers\FetchTweetController;
 
-class FetchTweets extends Command
+class FetchWeeklyTweets extends Command
 {
     /**
      * The name and signature of the console command.
@@ -21,7 +21,7 @@ class FetchTweets extends Command
      * @var string
      */
     // php artisan listに表示されるコマンドの説明
-    protected $description = 'Fetch tweets from TwitterAPI and Insert tweets table';
+    protected $description = 'Fetch weekly tweets from TwitterAPI and Insert tweets table';
 
     /**
      * Create a new command instance.
