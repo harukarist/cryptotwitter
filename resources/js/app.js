@@ -8,11 +8,12 @@
 
 // window.Vue = require('vue');
 
-import './bootstrap' //bootstrap.jsの設定ファイルをインポート
+import './bootstrap'; //bootstrap.jsの設定ファイルをインポート
 import Vue from 'vue';
 import router from './router'; // router.jsからルーティング定義をインポート
-import store from './store' // ストアをインポート
+import store from './store'; // ストアをインポート
 import App from './App.vue'; // ルートコンポーネントをインポート 
+import '../sass/app.scss'; //Sassの起点ファイルをインポート
 
 /**
  * The following block of code may be used to automatically register your

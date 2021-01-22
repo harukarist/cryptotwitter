@@ -60,7 +60,7 @@ const actions = {
     }
     // API通信が失敗した場合はステータスをfalseに変更
     context.commit('setApiStatus', false)
-    
+
     // バリデーションエラー時はエラーメッセージのステートを更新
     if (response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setRegisterErrorMessages', response.data.errors)
@@ -124,7 +124,7 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`${process.env.APP_URL}/api/user`)
+    const response = await axios.get(`/api/user`)
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
     const user = response.data || null
 

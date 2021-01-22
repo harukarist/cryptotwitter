@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <ul class="pagination">
+      <ul class="c-pagination">
         <li class="inactive" v-if="!isFirstPage">
           <RouterLink :to="`/${directory}?page=${currentPage - 1}`">
             «
@@ -142,20 +142,20 @@ export default {
 };
 </script>
 
-<style scoped>
-.pagination {
+<style lang="scss" scoped>
+.c-pagination {
   display: flex;
   list-style-type: none;
 }
-.pagination li {
-  border: 1px solid #ddd;
+.c-pagination li {
+  border: 3px solid #ddd;
   padding: 6px 12px;
   text-align: center;
 }
 .active {
   background: blue;
 }
-.pagination li + li {
+.c-pagination li + li {
   border-left: none;
 }
 .disabled {

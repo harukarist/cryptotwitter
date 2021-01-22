@@ -82,7 +82,7 @@ export default {
   methods: {
     // axiosでニュース一覧取得APIにリクエスト
     getTickers() {
-      axios.get(`${process.env.APP_URL}/api/tickers`).then((res) => {
+      axios.get(`api/tickers`).then((res) => {
         // レスポンスを配列に格納
         this.tickers = res.data;
       });

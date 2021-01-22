@@ -33,7 +33,7 @@ const actions = {
   // Twitter認証チェック
   async checkAuth(context) {
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`${process.env.APP_URL}/api/auth/twitter/check`)
+    const response = await axios.get(`api/auth/twitter/check`)
     console.log('Twitter認証チェック')
 
     // API通信が成功した場合
@@ -44,14 +44,13 @@ const actions = {
       // setUserミューテーションでuserステートを更新
       context.commit('setUsersTwitter', usersTwitter)
       context.commit('setTotalAutoFollow', totalAutoFollow)
-      console.log(totalAutoFollow)
       return false
     }
   },
   // 自動フォロー利用開始
   async applyAutoFollow(context) {
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`${process.env.APP_URL}/api/autofollow/apply`)
+    const response = await axios.get(`api/autofollow/apply`)
     // API通信が成功した場合
     if (response.status === OK) {
       console.log('自動フォロー利用開始')
@@ -64,7 +63,7 @@ const actions = {
   // 自動フォロー利用解除
   async cancelAutoFollow(context) {
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`${process.env.APP_URL}/api/autofollow/cancel`)
+    const response = await axios.get(`api/autofollow/cancel`)
     // API通信が成功した場合
     if (response.status === OK) {
       console.log('自動フォロー利用解除')

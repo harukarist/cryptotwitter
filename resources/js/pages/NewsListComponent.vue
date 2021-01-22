@@ -50,9 +50,7 @@ export default {
   methods: {
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews() {
-      const response = await axios.get(
-        `${process.env.APP_URL}/api/news?page=${this.page}`
-      );
+      const response = await axios.get(`api/news?page=${this.page}`);
       // console.log(response.data);
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
