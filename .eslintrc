@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "eslint:recommended" //ESLintが推奨するテスト項目
+  ],
+  "plugins": [],
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2016
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {},
+  "rules": {
+    "no-console": "warn", //console出力をエラーから警告に変更
+    "no-unused-vars": "warn" //未使用変数をエラーから警告に変更
+  }
+}
