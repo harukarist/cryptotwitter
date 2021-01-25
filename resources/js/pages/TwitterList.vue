@@ -74,7 +74,7 @@ export default {
     // フォロー登録メソッド
     async createFollow(id) {
       console.log(id);
-      const response = await axios.post(`/api/twitter/${id}/follow`);
+      const response = await axios.post(`api/twitter/${id}/follow`);
       console.log(response.status);
       console.log(response.data);
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
@@ -94,7 +94,7 @@ export default {
     // フォロー解除メソッド
     async destroyFollow(id) {
       console.log(id);
-      const response = await axios.post(`/api/twitter/${id}/unfollow`);
+      const response = await axios.post(`api/twitter/${id}/unfollow`);
       console.log(response.status);
       console.log(response.data);
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット

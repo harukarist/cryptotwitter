@@ -3,11 +3,10 @@
     "scripts": {
         "development": "cross-env NODE_ENV=development webpack --progress --config=webpack.config.js",
         "production": "cross-env NODE_ENV=production webpack --config=webpack.config.js",
-        "start": "webpack serve",
+        "hot": "cross-env NODE_ENV=development webpack serve --inline --hot --disable-host-check --config=webpack.config.js",
         "dev": "npm run development",
         "watch": "npm run development -- --watch",
         "watch-poll": "npm run watch -- --watch-poll",
-        "hot": "cross-env NODE_ENV=development webpack serve --inline --hot --disable-host-check --config=webpack.config.js",
         "prod": "npm run production"
     },
     "devDependencies": {

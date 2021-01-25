@@ -48,7 +48,7 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // 非同期処理でサーバーのAPIを呼び出し
-    const response = await axios.post('/api/register', data)
+    const response = await axios.post('api/register', data)
 
     // API通信が成功した場合
     if (response.status === CREATED) {
@@ -76,7 +76,7 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.post('/api/login', data)
+    const response = await axios.post('api/login', data)
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -103,7 +103,7 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.post('/api/logout')
+    const response = await axios.post('api/logout')
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -124,7 +124,7 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`/api/user`)
+    const response = await axios.get(`api/user`)
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
     const user = response.data || null
 

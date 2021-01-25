@@ -10,10 +10,10 @@ module.exports = {
     path: path.resolve(__dirname, "./public/js"),
     // 出力ファイル名
     filename: "app.js",
-  },
-  devServer: { //webpack-dev-serverの設定
-    contentBase: path.resolve(__dirname, "./public/js"),
-    open: true
+    // サブディレクトリ
+    publicPath: process.env.NODE_ENV === 'production'
+      ? '/crypto-trend/'
+      : '/',
   },
   target: ['web', 'es5'], //IE対応
   module: {
