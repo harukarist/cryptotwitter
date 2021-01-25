@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\FetchWeeklyTweets::Class,
         Commands\FetchTwpro::Class,
         Commands\FetchUsers::Class,
+        Commands\FetchNews::Class,
     ];
 
     /**
@@ -42,6 +43,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('fetch:weeklytweets')
             ->everyFifteenMinutes();
         // ->dailyAt('01:00');
+
+        // everyFifteenMinutes()で15分毎にニュース検索を実行する
+        $schedule->command('fetch:news')
+            ->everyFifteenMinutes();
 
         // dailyAt('01:00')で毎日深夜1:00にアカウント一覧を更新する
         $schedule->command('fetch:users')

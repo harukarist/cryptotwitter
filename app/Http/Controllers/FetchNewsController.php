@@ -72,9 +72,7 @@ class FetchNewsController extends Controller
                 'source' => $lists[$i]['source']
             ]);
         }
-
-        echo "ニュースを{$max_num}件保存しました";
-        logger()->info("ニュースを{$max_num}件保存しました");
+        logger()->info("{$keyword}のニュースを{$max_num}件保存しました");
         return;
     }
 }
