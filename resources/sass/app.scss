@@ -6,3 +6,56 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// =================================================
+// Foundation
+// =================================================
+//  reset.cssやnormalize.cssを読み込み
+//  サイト全体のデフォルトスタイルを定義
+
+@import "foundation/_reset";
+@import "foundation/_base";
+@import "foundation/_mixin";
+
+// =================================================
+// Layout
+// =================================================
+//  Objectの配置を決める
+//  ページ単位で唯一の存在＝idセレクタを使う
+
+@import "layout/_header";
+@import "layout/_main";
+@import "layout/_footer";
+
+// =================================================
+// Object
+// =================================================
+
+// -----------------------------------
+// Component
+// -----------------------------------
+// 再利用可能な共通パーツ
+// プレフィックスに「c-」
+
+@import "object/component/_btn";
+@import "object/component/_container";
+@import "object/component/_form";
+
+// -----------------------------------
+// Project
+// -----------------------------------
+// 各ページ固有の使い回さないパーツ
+// プレフィックスに「p-」
+
+@import "object/project/_follow";
+@import "object/project/_hero";
+@import "object/project/_news";
+@import "object/project/_trend";
+
+// -----------------------------------
+// Utility
+// -----------------------------------
+// 微妙なスタイル調整
+// プレフィックスに「u-」
+
+
