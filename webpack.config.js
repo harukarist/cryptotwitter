@@ -3,17 +3,13 @@ const VueLoaderPlugin = require("vue-loader/lib/plugin"); // vue-loader@15から
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'development',
+  mode: process.env.NODE_ENV || 'production',
   entry: "./resources/js/app.js", // エントリポイントのファイル
   output: {
     // 出力先のディレクトリ
     path: path.resolve(__dirname, "./public/js"),
     // 出力ファイル名
     filename: "app.js",
-    // サブディレクトリ
-    publicPath: process.env.NODE_ENV === 'production'
-      ? '/crypto-trend/'
-      : '/',
   },
   target: ['web', 'es5'], //IE対応
   module: {

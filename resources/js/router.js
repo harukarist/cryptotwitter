@@ -19,7 +19,6 @@ Vue.use(VueRouter)
 // VueRouterインスタンスのルーティング設定
 const router = new VueRouter({
   mode: 'history', // URLにハッシュ #を付けない
-  // base: '/crypto-trend/', //サブディレクトリを設定
   scrollBehavior() {
     return { x: 0, y: 0 } //ページ遷移時にスクロール位置を先頭に戻す
   },
