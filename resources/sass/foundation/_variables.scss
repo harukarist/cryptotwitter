@@ -1,0 +1,50 @@
+// ==============================
+// 変数
+// ==============================
+
+$site-width: 980px;
+
+$shadow-color--s: 0 1px 4px 0 rgba(0, 0, 0, .1);
+$shadow-color--m: 0 2px 3px 0 rgba(0, 0, 0, .1);
+$shadow-color--l: 0 2px 5px rgba(0, 0, 0, .1);
+$shadow-color--xl: 0 2px 10px rgba(0, 0, 0, .1);
+
+$font-color--default: #3B4043;
+$font-color--main: #19465B; //主に見出し、ナビの文字色に使用
+$font-color--main-light: #82A1B0;
+$font-color--link: #1D6DD8;
+$font-color--hover: #82A1B0;
+$font-color--muted: #707F89;
+$font-color--white: #FCFCFC;
+
+$bg-color--white: #FFFFFF;
+$bg-color--main: #F8FBFE; //主にページ背景の塗りに使用
+$bg-color--light-gray: #F0F4F7; //主にテキスト背景の塗りに使用
+$bg-color--border: #D3D9E0; //主に罫線に使用
+
+$bg-color--accent: #358558;//主にボタンに使用
+$bg-color--accent-light: #5CA27A; //主にボタンに使用
+$bg-color--accent-dark: #5CA27A; //主にボタンに使用
+
+$bg-color--twitter: #5CA27A;
+$bg-color--danger: #DC5B34;
+$bg-color--gray: #B4B4B4;
+$bg-color--lucent-white: rgba(255, 255, 255, 0.9);
+
+$font-size--s: 12px;
+$font-size--m: 14px;
+$font-size--default: 16px;
+$font-size--l: 20px;
+$font-size--xl: 24px;
+$font-size--xxl: 32px;
+$font-size--xxxl: 40px;
+
+$space--s: 5px;
+$space--m: 10px;
+$space--l: 15px; 
+$space--xl: 20px;
+$space--xxl: 30px;
+$space--xxxl: 40px;
+
+$font-family--theme: 'Nunito Sans', sans-serif;
+$font-family--default: 'Nunito Sans','Noto Sans JP', "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro W3", Meiryo, sans-serif;

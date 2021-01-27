@@ -1,19 +1,10 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
-@import 'variables';
-
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
-
 // =================================================
 // Foundation
 // =================================================
-//  reset.cssやnormalize.cssを読み込み
 //  サイト全体のデフォルトスタイルを定義
 
 @import "foundation/_reset";
+@import "foundation/_variables";
 @import "foundation/_base";
 @import "foundation/_mixin";
 
@@ -49,6 +40,7 @@
 
 @import "object/project/_follow";
 @import "object/project/_hero";
+@import "object/project/_navbar";
 @import "object/project/_news";
 @import "object/project/_trend";
 

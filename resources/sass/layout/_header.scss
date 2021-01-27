@@ -1,4 +1,4 @@
-#header {
+.l-header {
   width: 100%;
   box-sizing: border-box;
   min-height: 60px;
@@ -16,7 +16,7 @@
     z-index: 5;
     top: 0;
     left: 0;
-    background-color: $bg-color--lucent-base;
+    background-color: $bg-color--white;
     transition: all .4s ease 0s, background-color .6s ease .2s;
     -webkit-transition: all .4s ease 0s,background-color .6s ease .2s;
   }

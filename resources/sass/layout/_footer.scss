@@ -1,6 +1,6 @@
 #footer {
-  background: $bg-color--dark;
-  color: $bg-color--base;
+  background: $bg-color--main;
+  color: $font-color--default;
   text-align: center;
   padding-top: $space--xxxl;
   padding-bottom: $space--xl;
@@ -11,10 +11,10 @@
     min-height: 80px;
   }
   a {
-    color: $bg-color--base;
+    color: $font-color--link;
   }
   .footer__list {
-    color: $bg-color--base;
+    color: $font-color--link;
     font-size: $font-size--xxxl;
     text-align: center;
   }
