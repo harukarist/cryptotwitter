@@ -66,6 +66,7 @@ class LoginController extends Controller
         // AuthenticatesUsersトレイトのauthenticated()を上書き
         $request->session()->regenerate();
 
+        // ログアウト処理の成功をフロント側に通知するため、ステータスコードを返却
         return response()->json();
     }
 }

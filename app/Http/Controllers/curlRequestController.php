@@ -21,9 +21,8 @@ class curlRequestController extends Controller
         // cURLの終了
         curl_close($ch);
 
-        // レスポンスをJSON形式にデコード
+        // レスポンスをJSON形式にデコードして返却
         $response_json = json_decode($response);
-
         return $response_json;
     }
 
@@ -36,7 +35,6 @@ class curlRequestController extends Controller
 
         // レスポンスをJSON形式にデコード
         $response_json = json_decode($response);
-
         return $response_json;
     }
 }
