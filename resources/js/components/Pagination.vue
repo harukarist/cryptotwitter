@@ -1,36 +1,32 @@
 <template>
-  <div>
-    <div>
-      <ul class="c-pagination">
-        <li class="c-pagination__item" v-if="!isFirstPage">
-          <RouterLink :to="`/${directory}?page=1`"> « </RouterLink>
-        </li>
-        <li class="c-pagination__item" v-if="!isFirstPage">
-          <RouterLink :to="`/${directory}?page=${currentPage - 1}`">
-            &lt;
-          </RouterLink>
-        </li>
-        <li
-          v-for="page in pageRange"
-          :key="page"
-          class="c-pagination__item"
-          :class="isCurrent(page) ? 'is-active' : ''"
-        >
-          <RouterLink :to="`/${directory}?page=${page}`">
-            {{ page }}
-          </RouterLink>
-        </li>
-        <li class="c-pagination__item" v-if="!isLastPage">
-          <RouterLink :to="`/${directory}?page=${currentPage + 1}`">
-            &gt;
-          </RouterLink>
-        </li>
-        <li class="c-pagination__item" v-if="!isLastPage">
-          <RouterLink :to="`/${directory}?page=${lastPage}`"> » </RouterLink>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <ul class="c-pagination__list">
+    <li class="c-pagination__item" v-if="!isFirstPage">
+      <RouterLink :to="`/${directory}?page=1`"> « </RouterLink>
+    </li>
+    <li class="c-pagination__item" v-if="!isFirstPage">
+      <RouterLink :to="`/${directory}?page=${currentPage - 1}`">
+        &lt;
+      </RouterLink>
+    </li>
+    <li
+      v-for="page in pageRange"
+      :key="page"
+      class="c-pagination__item"
+      :class="isCurrent(page) ? 'is-active' : ''"
+    >
+      <RouterLink :to="`/${directory}?page=${page}`">
+        {{ page }}
+      </RouterLink>
+    </li>
+    <li class="c-pagination__item" v-if="!isLastPage">
+      <RouterLink :to="`/${directory}?page=${currentPage + 1}`">
+        &gt;
+      </RouterLink>
+    </li>
+    <li class="c-pagination__item" v-if="!isLastPage">
+      <RouterLink :to="`/${directory}?page=${lastPage}`"> » </RouterLink>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -43,6 +39,16 @@ export default {
     },
     // 最終ページ数
     lastPage: {
+      type: Number,
+      required: true,
+    },
+    //1ページあたりの表示件数
+    perPage: {
+      type: Number,
+      required: true,
+    },
+    //トータル件数
+    totalItems: {
       type: Number,
       required: true,
     },

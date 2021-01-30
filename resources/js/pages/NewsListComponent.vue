@@ -23,11 +23,21 @@
         </div>
       </div>
 
-      <Pagination
-        :directory="directoryName"
-        :current-page="currentPage"
-        :last-page="lastPage"
-      />
+      <div class="c-pagination">
+        <Pagination
+          :directory="directoryName"
+          :current-page="currentPage"
+          :last-page="lastPage"
+          :per-page="perPage"
+          :total-items="totalItems"
+        />
+        <PaginationInfo
+          :current-page="currentPage"
+          :per-page="perPage"
+          :total-items="totalItems"
+          :items-length="news.length"
+        />
+      </div>
     </section>
   </div>
 </template>
@@ -35,16 +45,20 @@
 <script>
 import { OK } from "../utility";
 import Pagination from "../components/Pagination.vue";
+import PaginationInfo from "../components/PaginationInfo.vue";
 
 export default {
   components: {
     Pagination,
+    PaginationInfo,
   },
   data() {
     return {
       news: [], //ニュース一覧を格納する配列を用意
       currentPage: 0, //現在ページ
       lastPage: 0, //最終ページ
+      perPage: 0, //1ページあたりの表示件数
+      totalItems: 0, //トータル件数
       directoryName: "news", //ページネーションリンクに付与するディレクトリ
     };
   },
@@ -70,6 +84,9 @@ export default {
       // ページネーションの現在ページ、最終ページの値を格納
       this.currentPage = response.data.current_page;
       this.lastPage = response.data.last_page;
+      // 1ページあたりの表示件数、トータル件数を格納
+      this.perPage = response.data.per_page;
+      this.totalItems = response.data.total;
       return;
     },
   },

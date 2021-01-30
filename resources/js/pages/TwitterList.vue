@@ -3,9 +3,12 @@
     <section class="c-section">
       <h5 class="c-section__title">Twitterフォロー</h5>
       <p class="c-section__text">
-        Twitterの仮想通貨関連アカウントをまとめました。<br />
-        お持ちのTwitterアカウントをご登録いただくと、自動フォロー機能で<br />
-        全てのユーザーをまとめてフォローできます。<br />
+        Twitterの仮想通貨関連アカウントを<br
+          class="u-sp--only"
+        />集めました。<br />
+        自動フォロー機能を使うことで
+        {{ totalItems }}件以上の<br class="u-sp--only" />ユーザーを<br />
+        まとめてフォローできます。<br />
       </p>
 
       <div class="p-twitter">
@@ -28,6 +31,14 @@
             :directory="directoryName"
             :current-page="currentPage"
             :last-page="lastPage"
+            :per-page="perPage"
+            :total-items="totalItems"
+          />
+          <PaginationInfo
+            :current-page="currentPage"
+            :per-page="perPage"
+            :total-items="totalItems"
+            :items-length="targets.length"
           />
         </div>
       </div>
@@ -40,19 +51,23 @@ import { OK } from "../utility";
 import TwitterLogin from "../components/TwitterLogin.vue";
 import TwitterTargetItem from "../components/TwitterTargetItem.vue";
 import Pagination from "../components/Pagination.vue";
+import PaginationInfo from "../components/PaginationInfo.vue";
 
 export default {
   components: {
     TwitterLogin,
     TwitterTargetItem,
     Pagination,
+    PaginationInfo,
   },
   data() {
     return {
       targets: [],
       currentPage: 0, //現在ページ
       lastPage: 0, //最終ページ
-      directoryName: "twitter",
+      perPage: 0, //1ページあたりの表示件数
+      totalItems: 0, //トータル件数
+      directoryName: "twitter", //ページネーションリンクに付与するディレクトリ
     };
   },
   // ページネーションのページ番号をrouter.jsから受け取る
@@ -80,9 +95,14 @@ export default {
       }
       // JSONのdata項目を格納
       this.targets = response.data.data;
+      console.log(response);
       // ページネーションの現在ページ、最終ページの値を格納
       this.currentPage = response.data.current_page;
       this.lastPage = response.data.last_page;
+      // 1ページあたりの表示件数、トータル件数を格納
+      this.perPage = response.data.per_page;
+      this.totalItems = response.data.total;
+
       return;
     },
     // フォロー登録メソッド
@@ -96,7 +116,7 @@ export default {
       // レスポンスがOKの場合は配列の該当項目を変更して返却
       this.targets = this.targets.map((target) => {
         if (target.twitter_id === response.data.target_id) {
-          // フォロー済みフラグをtrueに
+          // フォロー済みフラグをtrueにしてフォローボタンの表示を変更
           target.followed_by_user = true;
         }
         // フラッシュメッセージを表示
@@ -119,7 +139,7 @@ export default {
       // レスポンスがOKの場合は配列の該当項目を変更して返却
       this.targets = this.targets.map((target) => {
         if (target.twitter_id === response.data.target_id) {
-          // フォロー済みフラグをfalseに
+          // フォロー済みフラグをfalseにしてフォローボタンの表示を変更
           target.followed_by_user = false;
         }
         // フラッシュメッセージを表示
