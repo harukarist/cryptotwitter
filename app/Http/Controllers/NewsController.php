@@ -16,6 +16,11 @@ class NewsController extends Controller
         $news = NewsList::orderBy('published_date', 'DESC')
             ->paginate(10);
 
+        // 取得できなかった場合はNotFoundエラーを返却
+        if (!$news) {
+            return abort(404);
+        }
+
         // 自動でJSONに変換して返却される
         return $news;
     }
