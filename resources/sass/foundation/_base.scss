@@ -20,7 +20,7 @@ html, body {
   background: $bg-color--white;
 }
 
-p, a {
+p, a, h1, h2, h3, h4, h5, h6 {
   // フォントをスムーズに表示
   -webkit-font-smoothing: antialiased;
 }
@@ -57,6 +57,6 @@ input, button, textarea, select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  font-family: inherit;
+  font-family: $font-family--default;
   font-size: 100%;
 }

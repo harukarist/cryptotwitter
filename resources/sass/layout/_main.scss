@@ -1,3 +1,7 @@
 #main {
   width: 100%;
+  min-height:100%;
+  background: $bg-color--main;
+  padding-top: 60px; //固定ヘッダー分の高さを空ける
+  padding-bottom:70px; /*フッターの高さと同じ*/
 }

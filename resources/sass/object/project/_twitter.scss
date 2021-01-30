@@ -1,0 +1,58 @@
+.p-twitter {
+  &__login {
+    text-align: center;
+  }
+  &-user {
+    border:1px solid $bg-color--border;
+    padding: $space--l;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: $space--xxxl;
+    &__title {
+      margin-bottom: $space--m;
+    }
+    &__head {
+      display: inline-block;
+      overflow: hidden;
+      margin-bottom: $space--m;
+    }
+    &__body {
+      margin-bottom: $space--m;
+    }
+    &__bottom {
+      margin-bottom: $space--m;
+    }
+    &__avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      float: left;
+    }
+    &__name {
+      margin-left: $space--l;
+      text-align: left;
+      float: left;
+    }
+    &__delete {
+      font-size: $font-size--m;
+      color: $font-color--muted;
+    }
+  }
+}
+.p-autofollow {
+  margin-bottom: $space--l;
+  &__guide {
+    color: $font-color--muted;
+    margin-bottom: $space--s;
+  }
+  &__guide-text{
+    &.num {
+      font-weight: bold;
+    }
+  }
+  &__cancel {
+    font-size: $font-size--m;
+  }
+}

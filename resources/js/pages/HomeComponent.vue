@@ -1,5 +1,5 @@
 <template>
-  <div class="container c-container">
+  <div class="c-container">
     <div class="row justify-content-center">
       <h5 class="c-container__title">リアルタイムトレンド</h5>
     </div>

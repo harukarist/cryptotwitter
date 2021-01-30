@@ -1,0 +1,83 @@
+.p-target {
+  // text-align: center;
+  &__list {
+    text-align: center;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: $space--xxxl;
+    position: relative;
+    padding: $space--xl $space--l;
+    border: solid 2px rgba($bg-color--twitter, 0.6);
+    border-radius: 8px;
+  }
+  &__title {
+    color: rgba($bg-color--twitter, 0.6);
+    background: $bg-color--white;
+    font-weight: bold;
+    position: absolute;
+    display: inline-block;
+    top: -12px;
+    transform: translateX(-50%);
+    padding: 0 $space--m;
+    margin-bottom: $space--l;
+  }
+  &__item {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $space--xxxl;
+  }
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $space--m;
+  }
+  &__head-left {
+    display: flex;
+  }
+  &__head-right {
+    text-align: right;
+    width: 140px;
+  }
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  &__name {
+    margin-left: $space--l;
+  }
+  &__btn {
+    width: 140px;
+  }
+  &__body {
+    margin-bottom: $space--m;
+  }
+  &__profile {
+    color: $font-color--muted;
+  }
+  &__follow {
+    display: inline-block;
+    color: $font-color--muted;
+    margin-right: $space--l;
+  }
+  &__num {
+    font-weight: bold;
+    color: $font-color--default;
+  }
+
+  &__tweet {
+    background: $bg-color--light;
+    padding: $space--l;
+    border-radius: 4px;
+  }
+  &__tweeted-text {
+    margin-bottom: $space--s;
+  }
+  &__tweeted-at {
+    color: $font-color--muted;
+    text-align: right;
+    font-size: $font-size--s;
+  }
+}

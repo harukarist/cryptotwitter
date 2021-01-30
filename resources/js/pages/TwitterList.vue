@@ -1,29 +1,37 @@
 <template>
-  <div class="container c-container">
-    <div class="row justify-content-center">
-      <h5 class="c-container__title">Twitterフォロー</h5>
-    </div>
-    <div class="row justify-content-center">
-      <TwitterLogin />
-    </div>
-    <div class="p-target-list row justify-content-center">
-      <Pagination
-        :directory="directoryName"
-        :current-page="currentPage"
-        :last-page="lastPage"
-      />
+  <div class="c-container--bg">
+    <section class="c-section">
+      <h5 class="c-section__title">Twitterフォロー</h5>
+      <p class="c-section__text">
+        Twitterの仮想通貨関連アカウントをまとめました。<br />
+        お持ちのTwitterアカウントをご登録いただくと、自動フォロー機能で<br />
+        全てのユーザーをまとめてフォローできます。<br />
+      </p>
 
-      <div class="grid">
-        <TwitterTargetItem
-          class="p-target-list__item grid__item"
-          v-for="target in targets"
-          :key="target.id"
-          :item="target"
-          @follow="createFollow"
-          @unfollow="destroyFollow"
-        />
+      <div class="p-twitter">
+        <TwitterLogin :is-login="isTwitterLogin" />
       </div>
-    </div>
+
+      <div class="p-target">
+        <div class="p-target__list">
+          <h5 class="p-target__title">仮想通貨関連アカウント</h5>
+          <TwitterTargetItem
+            v-for="target in targets"
+            :key="target.id"
+            :item="target"
+            :is-login="isTwitterLogin"
+            @follow="createFollow"
+            @unfollow="destroyFollow"
+          />
+
+          <Pagination
+            :directory="directoryName"
+            :current-page="currentPage"
+            :last-page="lastPage"
+          />
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -55,14 +63,20 @@ export default {
       default: 0,
     },
   },
+  computed: {
+    isTwitterLogin() {
+      // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
+      return this.$store.getters["twitter/check"];
+    },
+  },
   methods: {
     // Twitterアカウント一覧を取得
     async fetchTargets() {
-      const response = await axios.get(`api/twitter?page=${this.page}`);
-      // console.log(response.data);
+      const response = await axios.get(`/api/twitter?page=${this.page}`);
+      // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
-        return false;
+        return false; //処理を中断
       }
       // JSONのdata項目を格納
       this.targets = response.data.data;
@@ -73,14 +87,11 @@ export default {
     },
     // フォロー登録メソッド
     async createFollow(id) {
-      console.log(id);
-      const response = await axios.post(`api/twitter/${id}/follow`);
-      console.log(response.status);
-      console.log(response.data);
+      const response = await axios.post(`/api/twitter/${id}/follow`);
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
-        return false;
+        return false; //処理を中断
       }
       // レスポンスがOKの場合は配列の該当項目を変更して返却
       this.targets = this.targets.map((target) => {
@@ -88,19 +99,22 @@ export default {
           // フォロー済みフラグをtrueに
           target.followed_by_user = true;
         }
+        // フラッシュメッセージを表示
+        this.$store.dispatch("message/showMessage", {
+          text: "フォローしました",
+          type: "success",
+          timeout: 2000,
+        });
         return target;
       });
     },
     // フォロー解除メソッド
     async destroyFollow(id) {
-      console.log(id);
-      const response = await axios.post(`api/twitter/${id}/unfollow`);
-      console.log(response.status);
-      console.log(response.data);
+      const response = await axios.post(`/api/twitter/${id}/unfollow`);
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
-        return false;
+        return false; //処理を中断
       }
       // レスポンスがOKの場合は配列の該当項目を変更して返却
       this.targets = this.targets.map((target) => {
@@ -108,6 +122,12 @@ export default {
           // フォロー済みフラグをfalseに
           target.followed_by_user = false;
         }
+        // フラッシュメッセージを表示
+        this.$store.dispatch("message/showMessage", {
+          text: "フォロー解除しました",
+          type: "success",
+          timeout: 2000,
+        });
         return target;
       });
     },

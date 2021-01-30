@@ -1,0 +1,44 @@
+.p-news {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  // スマホサイトは横幅いっぱい
+  @include mq() {
+    width: 100%;
+    padding-left: $space--xl;
+    padding-right: $space--xl;
+  }
+
+  &__item {
+    margin-bottom: $space--l;
+  }
+
+  &__title {
+    margin-bottom: $space--m;
+    a {
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  &__info {
+    display: flex;
+    align-items: center;
+    margin-bottom: $space--m;
+  }
+  &__date {
+    font-size: $font-size--m;
+    padding: $space--s $space--m;
+    background: $bg-color--light;
+    border-radius: 4px;
+  }
+  &__source {
+    font-size: $font-size--s;
+    color: $font-color--muted;
+    margin-left: $space--l;
+  }
+}

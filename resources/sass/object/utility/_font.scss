@@ -1,0 +1,12 @@
+.u-font {
+  &__num {
+    font-family: $font-family--theme;
+    font-weight: bold;
+  }
+  &__small {
+    font-size: $font-size--m;
+  }
+  &__muted {
+    color: $font-color--muted;
+  }
+}

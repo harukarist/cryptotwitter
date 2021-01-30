@@ -1,0 +1,79 @@
+%btnBase {
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all .3s;
+  padding:10px 15px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  border-radius: 100vh; //角丸
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  &:hover {
+    transform: scale(0.97); //ホバー時にボタンを縮める
+  }
+}
+.c-btn {
+  @extend %btnBase;
+  &__accent {
+    @extend %btnBase;
+    background-color: $bg-color--accent;
+    color: $font-color--white;
+    &:hover {
+      color: $font-color--white;
+    }
+  }
+  &__main {
+    @extend %btnBase;
+    background-color: $font-color--main;
+    color: $font-color--white;
+    &:hover {
+      color: $font-color--white;
+    }
+  }
+  &__main-outline {
+    @extend %btnBase;
+    border: 2px solid $bg-color--border;
+    color: $font-color--main;
+    &:hover {
+      color: $font-color--main;
+    }
+  }
+  &__twitter {
+    @extend %btnBase;
+    background-color: $bg-color--twitter;
+    color: $font-color--white;
+    &:hover {
+      color: $font-color--white;
+    }
+  }
+  &__twitter-outline {
+    @extend %btnBase;
+    border: 2px solid $bg-color--twitter;
+    color: $bg-color--twitter;
+    &:hover {
+      color: $bg-color--twitter;
+    }
+  }
+  &__danger {
+    @extend %btnBase;
+    background-color: $bg-color--danger;
+    color: $font-color--white;
+    &:hover {
+      color: $font-color--white;
+    }
+  }
+  &__muted-outline {
+    @extend %btnBase;
+    border: 1px solid $bg-color--border;
+    color: $font-color--muted;
+    font-weight: normal;
+    font-size: $font-size--m;
+    padding: 5px 10px;
+    &:hover {
+      color: $font-color--muted;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+.c-sp {
+  &--hidden {
+  display: block; //通常サイズでは表示
+    @include mq() {
+      display: none; //スマホサイズでは非表示
+    }
+  }
+}

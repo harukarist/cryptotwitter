@@ -1,0 +1,36 @@
+.p-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: $bg-color--main;
+  padding-left: $space--l;
+  padding-right: $space--l;
+  
+  &__title {
+    font-size: $font-size--xxl;
+    color: $font-color--main;
+    text-align: center;
+    margin-bottom: $space--xl;
+  }
+  &__text-wrap {
+    margin-bottom: $space--xl;
+  }
+  &__text {
+    text-align: center;
+    letter-spacing: 0.02em;
+    margin-bottom: $space--l;
+  }
+  &__action {
+    width: 100%;
+    text-align: center;
+  }
+  &__btn {
+    max-width: 300px;
+    width: 100%;
+    margin: $space--l $space--s;
+    padding-top: $space--l;
+    padding-bottom: $space--l;
+  }
+}

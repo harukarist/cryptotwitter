@@ -1,72 +1,298 @@
 <template>
-  <div class="container c-container">
-    <h5 class="c-container__title">トレンド一覧</h5>
-    更新日時 {{ items.updated_at }}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>順位</th>
-          <th>銘柄名</th>
-          <th>ツイート数</th>
-          <th>過去24時間の最高取引価格</th>
-          <th>過去24時間の最低取引価格</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(trend, index) in items.trends" :key="trend.id">
-          <td>
-            {{ index + 1 }}
-          </td>
-          <td>
-            <a
-              :href="`https://twitter.com/search?q=${trend.currency_name}`"
-              target="_blank"
-            >
-              {{ trend.currency_name }}</a
-            ><br />
-            <a
-              :href="`https://twitter.com/search?q=${trend.currency_ja}`"
-              target="_blank"
-            >
-              {{ trend.currency_ja }}</a
-            >
-          </td>
-          <td>
-            {{ trend.tweet_hour }}<br />
-            {{ trend.tweet_day }}<br />
-            {{ trend.tweet_week }}
-          </td>
-          <td>
-            {{ trend.high }}
-          </td>
-          <td>
-            {{ trend.low }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="c-container--bg">
+    <section class="c-section">
+      <h5 class="c-section__title">トレンド一覧</h5>
+      <p class="c-section__text">
+        銘柄名を含むツイートの数をランキング形式でお届けします。<br />
+        気になる銘柄がどのぐらいつぶやかれているか、チェックしてみましょう。<br />
+        銘柄名のリンクをクリックすると、Twitterで該当銘柄のツイートを検索できます。<br />
+      </p>
+      <div class="c-tab">
+        <ul class="c-tab__list">
+          <li
+            class="c-tab__item"
+            :class="{ 'c-tab__item--active': tabNum === 1 }"
+            @click="sortByHour"
+          >
+            過去1時間のツイート
+          </li>
+          <li
+            class="c-tab__item"
+            :class="{ 'c-tab__item--active': tabNum === 2 }"
+            @click="sortByDay"
+          >
+            過去24時間のツイート
+          </li>
+          <li
+            class="c-tab__item"
+            :class="{ 'c-tab__item--active': tabNum === 3 }"
+            @click="sortByWeek"
+          >
+            過去1週間のツイート
+          </li>
+        </ul>
+
+        <div class="p-trend">
+          <div class="p-trend__head">
+            <div class="p-trend__head-left">
+              <span
+                v-if="selectedItems.length"
+                class="u-font__small u-font__muted"
+              >
+                {{ selectedItems.length }}件を絞り込み表示
+              </span>
+              <span v-else class="u-font__small u-font__muted">
+                全{{ sorted.length }}銘柄を表示
+              </span>
+              <button
+                class="c-btn__muted-outline"
+                @click="isActive = !isActive"
+              >
+                <i v-show="!isActive" class="fas fa-angle-down"></i>
+                <i v-show="isActive" class="fas fa-angle-up"></i>
+                銘柄名で絞り込み
+              </button>
+            </div>
+            <div class="p-trend__head-right">
+              <span class="u-font__small u-font__muted">
+                更新日時 {{ items.updated_at }}
+              </span>
+            </div>
+          </div>
+          <transition name="pulldown">
+            <div v-show="isActive" class="p-trend__select">
+              <p class="p-trend__select-text">表示する銘柄を選択</p>
+              <ul class="p-trend__select-list">
+                <li
+                  v-for="trend in items.trends"
+                  :key="trend.id"
+                  class="c-checkbox p-trend__select-item"
+                >
+                  <input
+                    type="checkbox"
+                    v-bind:id="trend.id"
+                    v-bind:value="trend.id"
+                    v-model="selectedItems"
+                    @click="showMessage()"
+                  />
+                  <label v-bind:for="trend.id">
+                    {{ trend.currency_name }}
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </transition>
+
+          <transition name="popup">
+            <table class="c-table">
+              <thead class="c-table__thead">
+                <tr>
+                  <th>順位</th>
+                  <th>銘柄名</th>
+                  <th>ツイート数</th>
+                  <th>過去24時間の<br />最高取引価格</th>
+                  <th>過去24時間の<br />最低取引価格</th>
+                </tr>
+              </thead>
+              <tbody class="c-table__tbody">
+                <tr
+                  v-for="(trend, index) in sorted"
+                  v-show="trend.show"
+                  :key="trend.id"
+                  class="p-trend__item"
+                >
+                  <td class="p-trend__order">
+                    {{ index + 1 }}
+                  </td>
+                  <td class="p-trend__name">
+                    <a
+                      :href="`https://twitter.com/search?q=${trend.currency_name}`"
+                      target="_blank"
+                    >
+                      <p class="p-trend__name--text">
+                        {{ trend.currency_name }}
+                      </p>
+                    </a>
+                    <a
+                      :href="`https://twitter.com/search?q=${trend.currency_ja}`"
+                      target="_blank"
+                    >
+                      <span class="p-trend__name--small">
+                        {{ trend.currency_ja }}
+                      </span>
+                    </a>
+                  </td>
+                  <td>
+                    <p v-if="tabNum === 1" class="u-font__num">
+                      {{ trend.tweet_hour | localeNum }}
+                    </p>
+                    <p v-if="tabNum === 2" class="u-font__num">
+                      {{ trend.tweet_day | localeNum }}
+                    </p>
+                    <p v-if="tabNum === 3" class="u-font__num">
+                      {{ trend.tweet_week | localeNum }}
+                    </p>
+                  </td>
+                  <td>
+                    <p v-if="trend.high" class="p-trend__price">
+                      <span class="u-font__num">{{
+                        trend.high | round | localeNum
+                      }}</span>
+                      <span class="u-font__small">円</span>
+                    </p>
+                    <p v-else class="u-font__small u-font__muted">不明</p>
+                  </td>
+                  <td>
+                    <p v-if="trend.low" class="p-trend__price">
+                      <span class="u-font__num">{{
+                        trend.low | round | localeNum
+                      }}</span>
+                      <span class="u-font__small">円</span>
+                    </p>
+                    <p v-else class="u-font__small u-font__muted">不明</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </transition>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
+import { OK } from "../utility";
+
 export default {
   data() {
     return {
-      items: [], //ニュース一覧を格納する配列を用意
+      tabNum: 1,
+      column: "tweet_hour",
+      items: [], //トレンド一覧を格納する配列を用意
+      isActive: false,
+      selectedItems: [], // 絞り込み表示する銘柄のidを格納する
     };
   },
-  methods: {
-    // axiosでニュース一覧取得APIにリクエスト
-    getTrends() {
-      axios.get(`api/trend`).then((res) => {
-        // レスポンスを配列に格納
-        this.items = res.data;
-      });
+  filters: {
+    // 小数点以下を第一位に丸めるフィルタ
+    round(val) {
+      return Math.round(val * 10) / 10;
+    },
+    // 数字をカンマ区切りに変換するフィルタ
+    localeNum(val) {
+      return val.toLocaleString();
     },
   },
-  mounted() {
-    // 画面描画時にgetNews()メソッドを実行してニュースを取得
-    this.getTrends();
+  computed: {
+    // 銘柄名を指定して絞り込み表示
+    matched() {
+      // 絞り込み表示の配列に要素が入っている場合
+      if (this.selectedItems.length) {
+        // トレンド一覧の配列をlodashで展開し、絞り込み表示の配列と一致する要素のidをshowプロパティに代入
+        var arr = this.selectedItems;
+        return _.each(this.items.trends, function (item) {
+          item.show = arr.includes(item.id);
+        });
+      }
+      // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
+      return _.each(this.items.trends, function (item) {
+        item.show = true;
+      });
+    },
+    // ツイート数の大きい順に並べ替えて表示
+    sorted() {
+      // 絞り込み処理を行った後の配列を、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
+      return _.orderBy(this.matched, this.column, "desc");
+    },
+  },
+  methods: {
+    // axiosでトレンド一覧取得APIにリクエスト
+    async fetchTrends() {
+      const response = await axios.get("/api/trend");
+      if (response.status !== OK) {
+        // 通信失敗の場合
+        this.$store.commit("error/setCode", response.status);
+        return false; //処理を中断
+      }
+      // JSONのdata項目を格納
+      this.items = response.data;
+    },
+    // fetchTrends() {
+    //   axios
+    //     .get(`/api/trend`)
+    //     .then((res) => {
+    //       // レスポンスを配列に格納
+    //       this.items = res.data;
+    //     })
+    //     .catch((e) => {
+    //       // エラー時
+    //       console.error(e);
+    //     });
+    // },
+    sortByHour() {
+      this.tabNum = 1;
+      this.column = "tweet_hour";
+    },
+    sortByDay() {
+      this.tabNum = 2;
+      this.column = "tweet_day";
+    },
+    sortByWeek() {
+      this.tabNum = 3;
+      this.column = "tweet_week";
+    },
+  },
+  // mounted() {
+  //   // 画面描画時にgetNews()メソッドを実行してトレンドを取得
+  //   this.fetchTrends();
+  // },
+  watch: {
+    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    $route: {
+      async handler() {
+        await this.fetchTrends();
+      },
+      immediate: true, //コンポーネント生成時も実行
+    },
   },
 };
 </script>
+
+<style scoped>
+/* フラッシュメッセージ表示アニメーション */
+.pulldown-enter-active,
+.pulldown-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+/* 表示時 */
+.pulldown-enter {
+  /* 上からスライドイン */
+  opacity: 0;
+  transform: translateY(-10px);
+}
+/* 非表示時 */
+.pulldown-leave-to {
+  /* 上にスライドアウト */
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* フラッシュメッセージ表示アニメーション */
+.popup-enter-active,
+.popup-leave-active {
+  transition: all 0.3s ease-in-out;
+}
+/* 表示時 */
+.popup-enter {
+  /* 下からスライドイン */
+  opacity: 0;
+  transform: translateY(10px);
+}
+/* 非表示時 */
+.popup-leave-to {
+  /* 下にスライドアウト */
+  opacity: 0;
+  transform: translateY(10px);
+}
+</style>

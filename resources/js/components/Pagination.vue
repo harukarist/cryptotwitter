@@ -2,44 +2,31 @@
   <div>
     <div>
       <ul class="c-pagination">
-        <li class="inactive" v-if="!isFirstPage">
+        <li class="c-pagination__item" v-if="!isFirstPage">
+          <RouterLink :to="`/${directory}?page=1`"> « </RouterLink>
+        </li>
+        <li class="c-pagination__item" v-if="!isFirstPage">
           <RouterLink :to="`/${directory}?page=${currentPage - 1}`">
-            «
+            &lt;
           </RouterLink>
         </li>
         <li
-          v-for="page in frontPageRange"
+          v-for="page in pageRange"
           :key="page"
-          :class="isCurrent(page) ? 'active' : 'inactive'"
+          class="c-pagination__item"
+          :class="isCurrent(page) ? 'is-active' : ''"
         >
           <RouterLink :to="`/${directory}?page=${page}`">
             {{ page }}
           </RouterLink>
         </li>
-        <li v-show="frontDot" class="inactive disabled">...</li>
-        <li
-          v-for="page in middlePageRange"
-          :key="page"
-          :class="isCurrent(page) ? 'active' : 'inactive'"
-        >
-          <RouterLink :to="`/${directory}?page=${page}`">
-            {{ page }}
-          </RouterLink>
-        </li>
-        <li v-show="endDot" class="inactive disabled">...</li>
-        <li
-          v-for="page in endPageRange"
-          :key="page"
-          :class="isCurrent(page) ? 'active' : 'inactive'"
-        >
-          <RouterLink :to="`/${directory}?page=${page}`">
-            {{ page }}
-          </RouterLink>
-        </li>
-        <li class="inactive" v-if="!isLastPage">
+        <li class="c-pagination__item" v-if="!isLastPage">
           <RouterLink :to="`/${directory}?page=${currentPage + 1}`">
-            »
+            &gt;
           </RouterLink>
+        </li>
+        <li class="c-pagination__item" v-if="!isLastPage">
+          <RouterLink :to="`/${directory}?page=${lastPage}`"> » </RouterLink>
         </li>
       </ul>
     </div>
@@ -67,10 +54,7 @@ export default {
   },
   data() {
     return {
-      range: 5, //ページ数を表示する幅
-      size: 5, //省略表示しない最大個数
-      frontDot: false,
-      endDot: false,
+      range: 5, //ページ数を表示する個数
     };
   },
   computed: {
@@ -82,54 +66,48 @@ export default {
     isLastPage() {
       return this.currentPage === this.lastPage;
     },
-    // ページネーション前半の描画
-    frontPageRange() {
-      if (!this.sizeCheck) {
-        return this.calRange(1, this.lastPage);
-      }
-      return this.calRange(1, 2);
-    },
-    // ページネーション中間の描画
-    middlePageRange() {
-      if (!this.sizeCheck) return [];
-      let start = "";
-      let end = "";
-      if (this.currentPage <= this.range) {
-        start = 3;
-        end = this.range + 2;
-        this.frontDot = false;
-        this.endDot = true;
-      } else if (this.currentPage > this.lastPage - this.range) {
-        start = this.lastPage - this.range - 1;
-        end = this.lastPage - 2;
-        this.frontDot = true;
-        this.endDot = false;
+    // ページ番号配列の生成
+    pageRange() {
+      let minPage = "";
+      let maxPage = "";
+
+      if (this.currentPage === this.lastPage && this.range < this.lastPage) {
+        // 現在のページが総ページ数と同じ かつ 総ページ数が表示項目数以上の場合
+        minPage = this.currentPage - (this.range - 1);
+        maxPage = this.currentPage;
+      } else if (
+        this.currentPage === this.lastPage - 1 &&
+        this.range < this.lastPage
+      ) {
+        // 現在のページが総ページ数の1ページ前 かつ 総ページ数が表示項目数以上の場合
+        minPage = this.currentPage - (this.range - 2);
+        maxPage = this.currentPage + 1;
+      } else if (this.currentPage === 2 && this.range < this.lastPage) {
+        // 現在のページが2 かつ 総ページ数が表示項目数以上の場合
+        minPage = this.currentPage - 1;
+        maxPage = this.currentPage + (this.range - 2);
+      } else if (this.currentPage === 1 && this.range < this.lastPage) {
+        // 現在のページが1の場合
+        minPage = this.currentPage;
+        maxPage = this.currentPage + (this.range - 1);
+      } else if (this.lastPage < this.range) {
+        // 総ページ数が表示項目数より少ない場合
+        minPage = 1;
+        maxPage = this.lastPage;
       } else {
-        start = this.currentPage - Math.floor(this.range / 2);
-        end = this.currentPage + Math.floor(this.range / 2);
-        this.frontDot = true;
-        this.endDot = true;
+        // その他の場合は左右にリンクを出す
+        minPage = this.currentPage - Math.floor(this.range / 2);
+        maxPage = this.currentPage + Math.floor(this.range / 2);
       }
-      return this.calRange(start, end);
-    },
-    // ページネーション後半の描画
-    endPageRange() {
-      if (!this.sizeCheck) return [];
-      return this.calRange(this.lastPage - 1, this.lastPage);
-    },
-    // ページ数を省略表示するかを判定
-    sizeCheck() {
-      if (this.lastPage < this.size) {
-        return false;
-      }
-      return true;
+      // 配列を生成
+      return this.calRange(minPage, maxPage);
     },
   },
   methods: {
     // 引数で指定した開始値から終了値までの配列を生成
-    calRange(start, end) {
+    calRange(minPage, maxPage) {
       const range = [];
-      for (let i = start; i <= end; i++) {
+      for (let i = minPage; i <= maxPage; i++) {
         range.push(i);
       }
       return range;
@@ -141,24 +119,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.c-pagination {
-  display: flex;
-  list-style-type: none;
-}
-.c-pagination li {
-  border: 3px solid #ddd;
-  padding: 6px 12px;
-  text-align: center;
-}
-.active {
-  background: blue;
-}
-.c-pagination li + li {
-  border-left: none;
-}
-.disabled {
-  cursor: not-allowed;
-}
-</style>

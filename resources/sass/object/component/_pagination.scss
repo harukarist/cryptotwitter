@@ -1,0 +1,30 @@
+.c-pagination {
+  display: flex;
+  list-style-type: none;
+  justify-content: center;
+  margin-top: $space--m;
+  margin-bottom: $space--xxl;
+  &__item {
+    background: rgba($bg-color--light, 0.8);
+    text-align: center;
+    padding: $space--s  $space--m;
+    a {
+      color: $font-color--main;
+      
+      &:hover{
+        background: rgba($bg-color--light, 1);
+        color: $font-color--hover;
+      }
+    }
+    & + & {
+      border-left: none; //要素が重なる場合は左の枠線を非表示
+    }
+    &.is-active {
+      background: $bg-color--active;
+      a {
+        color: $font-color--white;
+      }
+    }
+    
+  }
+}

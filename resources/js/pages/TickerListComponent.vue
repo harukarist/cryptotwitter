@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="c-container">
     <h5>CoinCheck</h5>
     <ul v-for="coincheck in tickers.coincheck">
       <li>高値　{{ coincheck.high }}</li>
@@ -82,7 +82,7 @@ export default {
   methods: {
     // axiosでニュース一覧取得APIにリクエスト
     getTickers() {
-      axios.get(`api/tickers`).then((res) => {
+      axios.get(`/api/tickers`).then((res) => {
         // レスポンスを配列に格納
         this.tickers = res.data;
       });

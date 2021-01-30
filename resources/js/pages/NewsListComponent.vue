@@ -1,25 +1,34 @@
 <template>
-  <div class="container c-container">
-    <div class="row justify-content-center">
-      <h5 class="c-container__title">関連ニュース一覧</h5>
-    </div>
-    <Pagination
-      :directory="directoryName"
-      :current-page="currentPage"
-      :last-page="lastPage"
-    />
-    <div class="p-news" v-for="item in news" :key="item.title">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">
-            <a :href="item.url">
+  <div class="c-container--bg">
+    <section class="c-section">
+      <h5 class="c-section__title">関連ニュース一覧</h5>
+      <p class="c-section__text">
+        仮想通貨に関する最新ニュースをお届けします。<br />
+      </p>
+      <div class="p-news">
+        <div class="p-news__item" v-for="item in news" :key="item.title">
+          <div class="p-news__info">
+            <span class="p-news__date">
+              {{ item.published_date }}
+            </span>
+            <span class="p-news__source">
+              {{ item.source }}
+            </span>
+          </div>
+          <h5 class="p-news__title">
+            <a :href="item.url" target="_blank">
               {{ item.title }}
             </a>
           </h5>
-          <p class="card-text">{{ item.published_date }} - {{ item.source }}</p>
         </div>
       </div>
-    </div>
+
+      <Pagination
+        :directory="directoryName"
+        :current-page="currentPage"
+        :last-page="lastPage"
+      />
+    </section>
   </div>
 </template>
 
@@ -36,7 +45,7 @@ export default {
       news: [], //ニュース一覧を格納する配列を用意
       currentPage: 0, //現在ページ
       lastPage: 0, //最終ページ
-      directoryName: "news",
+      directoryName: "news", //ページネーションリンクに付与するディレクトリ
     };
   },
   // ページネーションのページ番号をrouter.jsから受け取る
@@ -50,11 +59,11 @@ export default {
   methods: {
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews() {
-      const response = await axios.get(`api/news?page=${this.page}`);
-      // console.log(response.data);
+      const response = await axios.get(`/api/news?page=${this.page}`);
       if (response.status !== OK) {
+        // 通信失敗の場合
         this.$store.commit("error/setCode", response.status);
-        return false;
+        return false; //処理を中断
       }
       // JSONのdata項目を格納
       this.news = response.data.data;

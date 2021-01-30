@@ -1,44 +1,59 @@
 <template>
-  <div class="p-target__item my-4">
-    <ul>
-      <img
-        class="p-target__avatar"
-        :src="item.profile_img"
-        :alt="`${item.screen_name}'s avatar`"
-      />
+  <div class="p-target__item">
+    <div class="p-target__head">
+      <div class="p-target__head-left">
+        <img
+          class="p-target__avatar"
+          :src="item.profile_img"
+          :alt="`${item.user_name}'s avatar`"
+          @error="noImage"
+        />
+        <div class="p-target__name">
+          <a :href="`https://twitter.com/${item.screen_name}`" target="_blank">
+            {{ item.user_name }}</a
+          >
+          <p>@{{ item.screen_name }}</p>
+        </div>
+      </div>
 
-      <li>
-        <a :href="`https://twitter.com/${item.screen_name}`" target="_blank">
-          {{ item.user_name }}</a
+      <div v-if="isLogin" class="p-target__head-right">
+        <button
+          v-if="!item.followed_by_user"
+          class="c-btn__twitter-outline p-target__btn"
+          @click.prevent="follow()"
         >
-      </li>
-      <li>@{{ item.screen_name }}</li>
-      <li>フォロー数：{{ item.follow_num }}</li>
-      <li>フォロワー数：{{ item.follower_num }}</li>
-      <li>{{ item.profile_text }}</li>
-    </ul>
-    <div class="border">
-      <ul>
-        <li>{{ item.tweet_text }}</li>
-        <li>{{ item.tweeted_at }}</li>
-      </ul>
+          フォローする
+        </button>
+        <button
+          v-if="item.followed_by_user"
+          class="c-btn__danger p-target__btn"
+          @click.prevent="unfollow()"
+        >
+          フォロー解除
+        </button>
+      </div>
     </div>
-    <span v-if="!item.followed_by_user">未フォロー</span>
-    <span v-if="item.followed_by_user">フォロー済み</span>
-    <button
-      v-if="!item.followed_by_user"
-      class="p-target__action p-target__action--follow"
-      @click.prevent="follow()"
-    >
-      <i class="icon ion-md-heart"></i>フォローする
-    </button>
-    <button
-      v-if="item.followed_by_user"
-      class="p-target__action p-target__action--follow"
-      @click.prevent="unfollow()"
-    >
-      <i class="icon ion-md-heart"></i>フォロー解除
-    </button>
+    <div class="p-target__body">
+      <p class="p-target__profile">{{ item.profile_text }}</p>
+      <p class="p-target__follow">
+        <span class="p-target__num">
+          {{ item.follow_num }}
+        </span>
+        フォロー中
+      </p>
+      <p class="p-target__follow">
+        <span class="p-target__num">
+          {{ item.follower_num }}
+        </span>
+        フォロワー
+      </p>
+    </div>
+    <div class="p-target__tweet">
+      <p class="p-target__tweeted-text">{{ item.tweet_text }}</p>
+      <p class="p-target__tweeted-at">
+        {{ item.tweeted_at }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -52,8 +67,16 @@ export default {
       type: Object,
       required: true,
     },
+    isLogin: {
+      type: Boolean,
+      required: true,
+    },
   },
   methods: {
+    noImage(element) {
+      // APIで取得したアバターがリンク切れの場合は代替画像を表示
+      element.target.src = "../img/avatar_noimage.png";
+    },
     follow() {
       // $emitでfollowイベントを発火し、親コンポーネントでメソッドを実行
       this.$emit("follow", this.item.twitter_id);

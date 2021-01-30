@@ -1,0 +1,107 @@
+.c-input {
+  display: block;
+  margin-top: $space--s;
+  margin-bottom: $space--m;
+  font-size: $font-size--default;
+  color: $font-color--default;
+  font-weight: normal;
+  transition: all .3s ease-in;
+  box-sizing: border-box;
+  outline: none;
+  &--box {
+    border:1px solid $bg-color--border;
+    border-radius: 4px;
+    background: $bg-color--white;
+    .is-invalid { //バリデーションエラー時
+      border:1px solid $bg-color--danger;
+    }
+  }
+  &--underline {
+    border-bottom:1px solid $bg-color--border;
+    border-right:none;
+    border-left:none;
+    border-top:none;
+    background: transparent;
+  }
+  &--large {
+    padding: 5px 20px;
+    height: 48px;
+    width: 100%;
+  }
+  &__textarea {
+    height: 200px;
+    border:1px solid $bg-color--border;
+    background: transparent;
+    padding: 20px;
+  }
+  &:focus {
+    border: 2px solid $bg-color--border;
+    border-radius: 4px;
+    background: $bg-color--white;
+  }
+}
+// フォーム内に初期表示するプレースホルダ
+::placeholder {
+  color: $font-color--muted;
+}
+
+// チェックボックス
+input[type="checkbox"] {
+  display: none;
+  & + label {
+      display: block;
+      cursor: pointer;
+      margin: 10px;
+      color: $font-color--muted; //ラベルのテキスト
+      &::before { // チェックボックス
+          content: '\f058';
+          font-family: FontAwesome;
+          color: $bg-color--border;
+          font-size: 18px;
+          display: inline-block;
+          vertical-align: middle;
+          text-align: center;
+          padding: 0;
+          margin: -2px 0 0 0;
+          box-sizing: border-box;
+      }
+      // ホバー時
+      &:hover {
+        color: $bg-color--accent; //ラベルのテキスト
+        &::before {
+          color: $bg-color--accent; //チェックボックス
+        }
+      }
+  }
+  // チェック状態
+  &:checked + label {
+      color: $bg-color--active; //ラベルのテキスト
+      &::before {
+          color: $bg-color--active; //チェックボックス
+      }
+  }  
+}
+// .c-checkbox {
+//   label {
+//     display: inline;
+//     cursor: pointer;
+//   }
+//   input[type=checkbox] {
+//     display: none;
+//   }
+//   label:before {
+//     display: inline-block;
+//     width: 22px;
+//     font-family: 'Font Awesome 5 Free';
+//     content: "\f14a";
+//     font-size: 20px;
+//     color: #666;
+//   }
+//   &.is-active {
+//     label:before {
+//       font-family: 'Font Awesome 5 Free';
+//       content: "\f14a";
+//       color: #28A7E1;
+//     }
+//   }
+// }

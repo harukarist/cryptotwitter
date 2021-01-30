@@ -1,112 +1,140 @@
 <template>
-  <div class="l-header is-fixed">
-    <nav class="p-navbar">
-      <!-- active-class="is-active"で、該当ディレクトリ内にいる時のみis-activeクラスを付与 -->
-      <!-- home '/'のみ、子のディレクトリは内包しないよう、exactオプションを使用 -->
-      <!-- サイトロゴ -->
-      <RouterLink
-        :to="{ name: 'top.index' }"
-        active-class="active"
-        exact
-        class="navbar-brand"
-      >
-        CryptoTrend
-      </RouterLink>
+  <nav class="p-navbar">
+    <!-- active-class="is-active"で、該当ディレクトリ内にいる時のみis-activeクラスを付与 -->
+    <!-- home '/'のみ、子のディレクトリは内包しないよう、exactオプションを使用 -->
+    <!-- サイトロゴ -->
+    <RouterLink :to="{ name: 'top' }" active-class="is-active" exact>
+      <h1 class="p-navbar__title">CryptoTrend</h1>
+    </RouterLink>
 
-      <!-- トグルアイコン -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+    <!-- ハンバーガーメニュー　spanタグで三本線を描写 -->
+    <div
+      class="p-navbar__toggle"
+      @click="toggleSpMenu"
+      :class="{ 'is-active': isActiveSpMenu }"
+    >
+      <span class="p-navbar__toggle--line"></span>
+      <span class="p-navbar__toggle--line"></span>
+      <span class="p-navbar__toggle--line"></span>
+      <span class="p-navbar__toggle--text"></span>
+    </div>
 
-      <!-- ログイン済みユーザー向けメニュー -->
-      <div v-if="isLogin" class="collapse navbar-collapse" id="navbarNav">
-        <ul class="p-navbar navbar-nav">
-          <li class="p-navbar__item nav-item">
-            <RouterLink
-              :to="{ name: 'trend.index' }"
-              active-class="active"
-              class="nav-link"
-            >
-              トレンド一覧
-            </RouterLink>
-          </li>
-          <li class="p-navbar__item nav-item">
-            <RouterLink
-              :to="{ name: 'twitter.index' }"
-              active-class="active"
-              class="nav-link"
-            >
-              Twitterフォロー
-            </RouterLink>
-          </li>
-          <li class="p-navbar__item nav-item">
-            <RouterLink
-              :to="{ name: 'news.index' }"
-              active-class="active"
-              class="nav-link"
-            >
-              関連ニュース
-            </RouterLink>
-          </li>
-          <li class="p-navbar__item nav-item">
-            {{ username }}
-          </li>
-          <li class="p-navbar__item nav-item">
-            <a class="nav-link" @click="logout">Logout</a>
-          </li>
-        </ul>
-      </div>
+    <!-- ログイン済みユーザー向けメニュー -->
+    <div
+      v-if="isLogin"
+      class="p-nav-menu"
+      :class="{ 'is-active': isActiveSpMenu }"
+    >
+      <ul class="p-nav-menu__list">
+        <li class="p-nav-menu__item" @click="toggleSpMenu">
+          <RouterLink
+            :to="{ name: 'trend.index' }"
+            active-class="is-active"
+            class="p-nav-menu__link"
+          >
+            <span class="p-nav-menu__text">トレンド一覧</span>
+          </RouterLink>
+        </li>
+        <li class="p-nav-menu__item" @click="toggleSpMenu">
+          <RouterLink
+            :to="{ name: 'twitter.index' }"
+            active-class="is-active"
+            class="p-nav-menu__link"
+          >
+            Twitterフォロー
+          </RouterLink>
+        </li>
+        <li class="p-nav-menu__item" @click="toggleSpMenu">
+          <RouterLink
+            :to="{ name: 'news.index' }"
+            active-class="is-active"
+            class="p-nav-menu__link"
+          >
+            関連ニュース
+          </RouterLink>
+        </li>
+        <li class="p-nav-menu__item" @click="toggleSpMenu">
+          {{ userName }}
+        </li>
+        <li class="p-nav-menu__item">
+          <a class="p-nav-menu__link" @click="logout">Logout</a>
+        </li>
+      </ul>
+    </div>
 
-      <!-- 未ログインユーザー向けメニュー -->
-      <div v-if="!isLogin" class="collapse navbar-collapse" id="navbarNav">
-        <ul class="p-navbar navbar-nav">
-          <li class="p-navbar__item nav-item">
-            <RouterLink
-              :to="{ name: 'register' }"
-              active-class="active"
-              class="nav-link"
-            >
-              無料ユーザー登録
-            </RouterLink>
-          </li>
-          <li class="p-navbar__item nav-item">
-            <RouterLink
-              :to="{ name: 'login' }"
-              active-class="active"
-              class="nav-link"
-            >
-              ログイン
-            </RouterLink>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+    <!-- 未ログインユーザー向けメニュー -->
+    <div
+      v-if="!isLogin"
+      class="p-nav-menu"
+      :class="{ 'is-active': isActiveSpMenu }"
+    >
+      <ul class="p-nav-menu__list">
+        <li class="p-nav-menu__item">
+          <a href="#" class="p-nav-menu__link" @click="toggleSpMenu"
+            >CryptoTrendとは</a
+          >
+        </li>
+        <li class="p-nav-menu__item">
+          <a href="#" class="p-nav-menu__link" @click="toggleSpMenu"
+            >サービスの特長</a
+          >
+        </li>
+
+        <li class="p-nav-menu__item-btn" @click="toggleSpMenu">
+          <RouterLink
+            :to="{ name: 'register' }"
+            active-class="is-active"
+            class="c-btn__accent p-nav-menu__btn"
+          >
+            新規ユーザー登録
+          </RouterLink>
+        </li>
+        <li class="p-nav-menu__item-btn" @click="toggleSpMenu">
+          <RouterLink
+            :to="{ name: 'login' }"
+            active-class="is-active"
+            class="c-btn__main-outline p-nav-menu__btn"
+          >
+            ログイン
+          </RouterLink>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
+
 export default {
+  data() {
+    return {
+      isActiveSpMenu: false,
+    };
+  },
   computed: {
-    apiStatus() {
-      // ストアのapiStatusステートを参照し、API通信の成否ステータスを取得
-      return this.$store.state.auth.apiStatus;
-    },
-    isLogin() {
+    ...mapState({
+      // authストアのステートを参照し、API通信の成否ステータスを取得
+      apiStatus: (state) => state.auth.apiStatus,
+    }),
+    ...mapGetters({
       // authストアのcheckゲッターでユーザーのログイン状態をチェック
-      return this.$store.getters["auth/check"];
-    },
-    username() {
-      // authストアのusernameゲッターでユーザー名を取得
-      return this.$store.getters["auth/username"];
-    },
+      isLogin: "auth/check",
+      // authストアのuserNameゲッターでユーザー名を取得
+      userName: "auth/userName",
+    }),
+    // apiStatus() {
+    //   // authストアのステートを参照し、API通信の成否ステータスを取得
+    //   return this.$store.state.auth.apiStatus;
+    // },
+    // isLogin() {
+    //   // authストアのcheckゲッターでユーザーのログイン状態をチェック
+    //   return this.$store.getters["auth/check"];
+    // },
+    // userName() {
+    //   // authストアのuserNameゲッターでユーザー名を取得
+    //   return this.$store.getters["auth/userName"];
+    // },
   },
   methods: {
     async logout() {
@@ -115,10 +143,23 @@ export default {
 
       // API通信が成功した場合
       if (this.apiStatus) {
+        // フラッシュメッセージを表示
+        this.$store.dispatch(
+          "message/showMessage",
+          {
+            text: "ログアウトしました。ご利用ありがとうございました。",
+            type: "success",
+            timeout: 3000,
+          },
+          { root: true }
+        );
+
         // VueRouterのpush()でトップ画面に遷移
-        this.$router.push("/");
+        this.$router.push({ name: "top" });
       }
-      // context.commit("setUser", null);
+    },
+    toggleSpMenu() {
+      this.isActiveSpMenu = !this.isActiveSpMenu;
     },
   },
 };

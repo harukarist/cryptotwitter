@@ -1,0 +1,109 @@
+.p-nav-menu {
+  display: flex;
+  align-items: center; //子要素を上下中央揃え
+  color: $font-color--link;
+  margin-right: $space--xxl;
+
+  // スマホ用ドロワーメニュー
+  @include mq(medium) {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: -100%; //画面外の右端に配置
+    background: rgba(255, 255, 255, .85);
+    width: 90vw;
+    height: 100vh;
+    padding-top: 50px; //閉じるボタン分の高さ
+    transition : all .5s ease-in-out;
+    // ハンバーガーアイコン押下時
+    &.is-active {
+      transform: translateX(-100%); //右端にあったメニューが100％左に移動
+      -webkit-transform: translateX(-100%);
+      z-index: 2;
+    }
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: $font-size--xl;
+      border: none;
+    }
+  }
+  &__item {
+    margin: 0 $space--l;
+    line-height: 60px;
+    &:first-child {
+      margin-left: $space--s;
+    }
+    &:last-child {
+      margin-right: $space--s;
+    }
+    @include mq(medium){
+      margin: 0 $space--m;
+      &:first-child {
+        margin-left: $space--s;
+      }
+      &:last-child {
+        margin-right: $space--s;
+      }
+    }
+    @include mq() {
+      margin: 0;
+      &:first-child {
+        margin: 0;
+      }
+      &:last-child {
+        margin: 0;
+      }
+    }
+  }
+  &__item-btn {
+    margin: 0 $space--l;
+  }
+  &__link {
+    height: 60px;
+    color: $font-color--main;
+    display: inline-block; //下線の幅をテキストと合わせる
+    position: relative; //擬似要素でabsoluteを指定
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto; //中央からスタート
+      width: 0;
+      transition: width .2s ease-in-out;  //widthを変化
+    }
+    &:hover {
+      color: $font-color--hover;
+      transform: scale(0.97, 1); //ホバー時に文字を縮める
+    }
+    &.is-active { //現在表示しているページのメニュー描画
+      color: $font-color--active;
+      &::before {
+        width: 100%; //擬似要素の下線幅を0から100%に伸ばす
+        border-bottom: 2px solid $bg-color--active;
+      }
+    }
+    @include mq(medium) {
+      display: block;
+      text-align: center;
+      padding: 20px; 
+      &:hover::before {
+        width: 0; //スマホメニューは下線を表示しない
+      }
+    }
+  }
+  &__btn {
+    font-size: $font-size--default;
+    padding-top: $space--s;
+    padding-bottom: $space--s;
+  }
+}
