@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <header>
+  <div id="wrap">
+    <!-- ローディング中の表示 -->
+    <Loader />
+    <header id="header">
       <HeaderComponent />
     </header>
-    <main>
-      <div class="container">
-        <!-- VueRouterでコンポーネントを表示 -->
-        <RouterView />
-      </div>
+    <main id="main">
+      <!-- メッセージ表示 -->
+      <Message />
+      <!-- VueRouterでコンポーネントを表示 -->
+      <RouterView />
     </main>
-    <footer>
+    <footer id="footer">
       <FooterComponent />
     </footer>
   </div>
@@ -18,12 +20,16 @@
 <script>
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
-import { INTERNAL_SERVER_ERROR } from "./utility";
+import Message from "./components/Message";
+import Loader from "./components/Loader";
+import { NOT_FOUND, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./utility";
 
 export default {
   components: {
     HeaderComponent,
     FooterComponent,
+    Message,
+    Loader,
   },
   computed: {
     errorCode() {
@@ -34,10 +40,25 @@ export default {
   watch: {
     // watchプロパティでerrorCodeの値の変更を監視
     errorCode: {
-      handler(val) {
+      async handler(val) {
         // サーバー内部エラーの場合は500エラーページへ遷移
         if (val === INTERNAL_SERVER_ERROR) {
-          this.$router.push("/500");
+          // this.$router.push("/error");
+          this.$router.push({ name: "errors.system" });
+        } else if (val === UNAUTHORIZED) {
+          console.log("認証エラー");
+          // 認証エラーの場合はログインページへ移動
+          // CSRFトークンをリフレッシュ
+          await axios.get("/api/refresh-token");
+          // ストアの古いuserDataをクリア
+          this.$store.commit("auth/setUserData", null);
+          // ログイン画面へ遷移
+          // this.$router.push("/login");
+          this.$router.push({ name: "login" });
+        } else if (val === NOT_FOUND) {
+          // 404エラーの場合はNotFoundページを表示
+          // this.$router.push("/not-found");
+          this.$router.push({ name: "errors.notfound" });
         }
       },
       immediate: true, // 初期化時もwatchを発火させる

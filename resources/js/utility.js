@@ -3,6 +3,8 @@ export const OK = 200 //通信成功時
 export const CREATED = 201 //ユーザー登録成功時
 export const INTERNAL_SERVER_ERROR = 500 //サーバー内部エラー
 export const UNPROCESSABLE_ENTITY = 422 //バリデーションエラー
+export const NOT_FOUND = 404 //NotFoundエラー
+export const UNAUTHORIZED = 419 //認証セッション切れ（Laravel独自コード）
 
 /**
  * クッキーの値を取得する

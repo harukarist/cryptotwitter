@@ -5,7 +5,7 @@ import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../utility'
 
 // データを格納するステート
 const state = {
-  user: null, //ログイン済みユーザーの情報を保持
+  userData: null, //ログイン済みユーザーの情報を保持
   apiStatus: null, //API呼び出しの成否を格納
   registerErrorMessages: null, //ユーザー登録エラーメッセージを格納
   loginErrorMessages: null, //ログインエラーメッセージを格納
@@ -14,16 +14,16 @@ const state = {
 // ステートの値から状態を算出するゲッター
 const getters = {
   // ユーザーが認証済みかどうかをチェックする
-  check: state => !!state.user, //ログインチェック（二重否定で確実に真偽値を返す）
-  username: state => state.user ? state.user.name : '' //ユーザー名を格納（nullの場合は空文字を返す）
+  check: state => !!state.userData, //ログインチェック（二重否定で確実に真偽値を返す）
+  userName: state => state.userData ? state.userData.name : '' //ユーザー名を格納（nullの場合は空文字を返す）
 }
 
 // ステートの値を同期処理で更新するミューテーション
 // ミューテーションでは必ず第一引数にステートを指定する
 const mutations = {
-  // userステートの値を更新する処理
-  setUser(state, user) {
-    state.user = user
+  // userDataステートの値を更新する処理
+  setUserData(state, userData) {
+    state.userData = userData
   },
   // apiStatusステートを更新する処理
   setApiStatus(state, status) {
@@ -48,15 +48,17 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // 非同期処理でサーバーのAPIを呼び出し
-    const response = await axios.post('api/register', data)
+    const response = await axios.post('/api/register', data)
+    // 通信失敗時のcatch処理はbootstrap.jsでaxiosのインターセプターにまとめて記載
+    // .catch(err => err.response || err)
 
     // API通信が成功した場合
     if (response.status === CREATED) {
       // setApiStatusミューテーションでステータスをtrueに変更
       context.commit('setApiStatus', true)
-      // setUserミューテーションでuserステートを更新
-      context.commit('setUser', response.data)
-      return false
+      // setUserDataミューテーションでuserDataステートを更新
+      context.commit('setUserData', response.data)
+      return false  //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
     context.commit('setApiStatus', false)
@@ -66,8 +68,8 @@ const actions = {
       context.commit('setRegisterErrorMessages', response.data.errors)
     } else {
       // errorモジュールのsetCodeミューテーションでステータスを更新
+      // 別モジュールのミューテーションをcommitするためroot: trueを指定する
       context.commit('error/setCode', response.status, { root: true })
-      // 別のモジュールのミューテーションを commit する場合は第三引数に { root: true } を追加
     }
   },
 
@@ -76,15 +78,19 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.post('api/login', data)
+    const response = await axios.post('/api/login', data)
 
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
       context.commit('setApiStatus', true)
-      // setUserミューテーションでuserステートを更新
-      context.commit('setUser', response.data)
-      return false
+      // setUserDataミューテーションでuserDataステートを更新
+      context.commit('setUserData', response.data)
+      // dispatch()でtwitterストアのcheckAuthアクションを呼び出す
+      // 別モジュールのアクションを呼び出すため、第三引数にroot: trueを指定する
+      context.dispatch("twitter/checkAuth", '', { root: true });
+
+      return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
     context.commit('setApiStatus', false)
@@ -93,7 +99,8 @@ const actions = {
     if (response.status === UNPROCESSABLE_ENTITY) {
       context.commit('setLoginErrorMessages', response.data.errors)
     } else {
-      // errorモジュールのsetCodeミューテーションでステータスを更新
+      // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
+      // 別モジュールのミューテーションをcommitするためroot: trueを指定する
       context.commit('error/setCode', response.status, { root: true })
     }
   },
@@ -103,42 +110,48 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.post('api/logout')
+    const response = await axios.post('/api/logout')
 
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
       context.commit('setApiStatus', true)
-      // setUserミューテーションでuserステートをnullにする
-      context.commit('setUser', null)
-      return false
+      // setUserDataミューテーションでuserDataステートをnullにする
+      context.commit('setUserData', null)
+      // twitterストアのステートをnullにする
+      context.commit('twitter/setUsersTwitter', null, { root: true })
+      context.commit('twitter/setTotalAutoFollow', null, { root: true })
+
+      return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
     context.commit('setApiStatus', false)
     // errorモジュールのsetCodeミューテーションでステータスを更新
+    // 別モジュールのミューテーションをcommitするためroot: trueを指定する
     context.commit('error/setCode', response.status, { root: true })
   },
 
-  // ログインユーザーチェック処理
+  // ログインチェック処理
   async currentUser(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`api/user`)
+    const response = await axios.get('api/user')
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
-    const user = response.data || null
+    const data = response.data || null
 
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
       context.commit('setApiStatus', true)
-      // setUserミューテーションでuserステートを更新
-      context.commit('setUser', user)
-      return false
+      // setUserDataミューテーションでuserDataステートを更新
+      context.commit('setUserData', data)
+      return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
     context.commit('setApiStatus', false)
     // errorモジュールのsetCodeミューテーションでステータスを更新
+    // 別モジュールのミューテーションをcommitするためroot: trueを指定する
     context.commit('error/setCode', response.status, { root: true })
   }
 }

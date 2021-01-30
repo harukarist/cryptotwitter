@@ -17,13 +17,17 @@ const getters = {
 // ステートの値を同期処理で更新するミューテーション
 // ミューテーションでは必ず第一引数にステートを指定する
 const mutations = {
-  // userステートの値を更新する処理
+  // userDataステートの値を更新する処理
   setUsersTwitter(state, usersTwitter) {
     state.usersTwitter = usersTwitter
   },
-  // userステートの値を更新する処理
+  // userDataステートの値を更新する処理
   setTotalAutoFollow(state, totalAutoFollow) {
     state.totalAutoFollow = totalAutoFollow
+  },
+  // userDataステートの値を更新する処理
+  setUseAutoFollow(state, isActive) {
+    state.usersTwitter.use_autofollow = isActive
   },
 }
 
@@ -34,14 +38,13 @@ const actions = {
   async checkAuth(context) {
     // サーバーのAPIを呼び出し
     const response = await axios.get(`api/auth/twitter/check`)
-    console.log('Twitter認証チェック')
 
     // API通信が成功した場合
     if (response.status === OK) {
-      // 返却されたユーザー情報を格納
-      const usersTwitter = response.data.twitter_user
-      const totalAutoFollow = response.data.follow_total
-      // setUserミューテーションでuserステートを更新
+      // 返却されたユーザー情報（未ログインの場合はnull）を格納
+      const usersTwitter = response.data.twitter_user || null
+      const totalAutoFollow = response.data.follow_total || null
+      // setUserDataミューテーションでuserDataステートを更新
       context.commit('setUsersTwitter', usersTwitter)
       context.commit('setTotalAutoFollow', totalAutoFollow)
       return false
@@ -50,31 +53,31 @@ const actions = {
   // 自動フォロー利用開始
   async applyAutoFollow(context) {
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`api/autofollow/apply`)
-    // API通信が成功した場合
-    if (response.status === OK) {
-      console.log('自動フォロー利用開始')
-      // setUserミューテーションでuserステートを更新
-      context.commit('setUsersTwitter', response.data)
-      console.log(usersTwitter)
+    const response = await axios.get('api/autofollow/apply')
+    // API通信が失敗した場合
+    if (response.status !== OK) {
+      this.$store.commit('error/setCode', response.status, { root: true })
       return false
     }
+    // API通信が成功した場合は自動フォロー利用フラグをtrueに更新
+    // 自動フォロー利用フラグが切り替わるためミューテーションでuserDataステートを更新する
+    context.commit('setUseAutoFollow', true)
+    return false
   },
   // 自動フォロー利用解除
   async cancelAutoFollow(context) {
     // サーバーのAPIを呼び出し
-    const response = await axios.get(`api/autofollow/cancel`)
-    // API通信が成功した場合
-    if (response.status === OK) {
-      console.log('自動フォロー利用解除')
-      // setUserミューテーションでuserステートを更新
-      context.commit('setUsersTwitter', response.data)
-      console.log(usersTwitter)
+    const response = await axios.get('api/autofollow/cancel')
+    // API通信が失敗した場合
+    if (response.status !== OK) {
+      this.$store.commit('error/setCode', response.status, { root: true })
       return false
     }
+    // API通信が成功した場合は自動フォロー利用フラグをfalseに更新
+    context.commit('setUseAutoFollow', false)
+    return false
   },
 }
-
 
 // ストアオブジェクトとしてエクスポート
 export default {

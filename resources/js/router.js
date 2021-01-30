@@ -12,6 +12,7 @@ import TickerListComponent from './pages/TickerListComponent';
 import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import SystemError from './errors/SystemError';
+import NotFound from './errors/NotFound';
 
 // VueRouterを使用してVueコンポーネントを切り替える
 Vue.use(VueRouter)
@@ -25,7 +26,7 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'top.index',
+      name: 'top',
       component: TopComponent,
       beforeEnter(to, from, next) {
         // authストアのcheckゲッターでログイン状態をチェック
@@ -40,13 +41,15 @@ const router = new VueRouter({
     },
     {
       path: '/home',
-      name: 'home.index',
-      component: HomeComponent
+      name: 'home',
+      component: HomeComponent,
+      meta: { requiresAuth: true }, //認証必須
     },
     {
       path: '/news',
       name: 'news.index',
       component: NewsListComponent,
+      meta: { requiresAuth: true }, //認証必須
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
       props: route => {
         const page = route.query.page
@@ -57,12 +60,14 @@ const router = new VueRouter({
     {
       path: '/trend',
       name: 'trend.index',
-      component: TrendListComponent
+      component: TrendListComponent,
+      meta: { requiresAuth: true }, //認証必須
     },
     {
       path: '/twitter',
       name: 'twitter.index',
       component: TwitterList,
+      meta: { requiresAuth: true }, //認証必須,
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
       props: route => {
         const page = route.query.page
@@ -74,7 +79,7 @@ const router = new VueRouter({
       path: '/register',
       name: 'register',
       component: RegisterComponent,
-      // ログイン済みユーザーがアクセスした場合は
+      // ページコンポーネントが切り替わる直前のナビゲーションガード
       beforeEnter(to, from, next) {
         // authストアのcheckゲッターでログイン状態をチェック
         if (store.getters['auth/check']) {
@@ -90,6 +95,7 @@ const router = new VueRouter({
       path: '/login',
       name: 'login',
       component: LoginComponent,
+      // ページコンポーネントが切り替わる直前のナビゲーションガード
       beforeEnter(to, from, next) {
         // authストアのcheckゲッターでログイン状態をチェック
         if (store.getters['auth/check']) {
@@ -104,14 +110,37 @@ const router = new VueRouter({
     {
       path: '/tickers',
       name: 'tickers.index',
-      component: TickerListComponent
+      component: TickerListComponent,
+      meta: { requiresAuth: true }, //認証必須
     },
     {
-      path: '/500',
+      path: '/error',
       name: 'errors.system',
-      component: SystemError
+      component: SystemError,
+    },
+    {
+      path: '*', //定義されたルート以外のパス
+      name: 'errors.notfound',
+      component: NotFound,
     },
   ]
+})
+
+// ルーターナビゲーションの前にフック
+router.beforeEach((to, from, next) => {
+  // 認証必須のルートで認証チェックがfalseならログイン画面へ
+  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters['auth/check']) {
+    next({ name: 'login' });
+  } else {
+    // ローディング表示をオン
+    store.commit('loader/start')
+    next();
+  }
+})
+// ルーターナビゲーションの後にフック
+router.afterEach(() => {
+  // ローディング表示をオフ
+  store.commit('loader/end')
 })
 
 // VueRouterインスタンスをエクスポートし、app.jsでインポートする

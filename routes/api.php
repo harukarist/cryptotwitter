@@ -24,6 +24,16 @@ Route::get('/user', function () {
   return Auth::user();
 })->name('user');
 
+// ログインユーザーのTwitter認証チェック（認証済みであればアカウント情報を返却）
+Route::get('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAuth');
+
+// トークンリフレッシュ
+Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
+  $request->session()->regenerateToken();
+
+  return response()->json();
+});
+
 // authミドルウェア、CORSミドルウェアを使用するルート
 Route::group(['middleware' => ['auth', 'cors']], function () {
   // 関連ニュース取得API
@@ -35,12 +45,11 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // Twitterアカウントフォロー処理
   Route::post('/twitter/{id}/follow', 'FollowTargetController@createUsersFollow');
   // Twitterアカウントフォロー解除処理
-  Route::post('/twitter/{id}/unfollow', 'FollowTargetController@destroyUsersFollow');
+  Route::post('/twitter/{id}/unfollow', 'UnfollowTargetController@destroyUsersFollow');
 
-  // ログインユーザーのTwitter認証チェック（認証済みであればアカウント情報を返却）
-  Route::get('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAuth');
-
+  // 自動フォローを適用
   Route::get('/autofollow/apply', 'AutofollowController@applyAutoFollow');
+  // 自動フォローを解除
   Route::get('/autofollow/cancel', 'AutofollowController@cancelAutoFollow');
 
   // ティッカー情報取得（管理者用）

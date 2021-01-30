@@ -33,12 +33,14 @@ import '../sass/app.scss'; //Sassの起点ファイルをインポート
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vueインスタンス生成前に非同期処理でauthストアのcurrentUserアクションを呼び出して
-// ログインチェックを行う
+// 画面リロード時にVueインスタンスを再生成してもユーザー情報が表示されるよう、生成前に非同期処理でログインチェックを行う
 const createApp = async () => {
-    await store.dispatch('auth/currentUser');
+    const userLogin = store.dispatch("auth/currentUser");
+    const userTwitter = store.dispatch("twitter/checkAuth");
+    // await store.dispatch('auth/currentUser');
+    await Promise.all([userLogin, userTwitter]);
 
-    // currentUserアクションの処理が終わったらVueインスタンスを生成
+    // Vueインスタンスを生成
     new Vue({
         el: '#app',
         router, // Vue Routerを読み込む

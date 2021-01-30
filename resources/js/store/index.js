@@ -3,8 +3,10 @@ import Vuex from 'vuex'
 
 // ストアのモジュールをインポート
 import auth from './auth'
-import twitter from './twitter'
 import error from './error'
+import loader from './loader'
+import message from './message'
+import twitter from './twitter'
 
 // Vuexを使用して、どのコンポーネントからでもデータを参照・更新できるようにする
 Vue.use(Vuex)
@@ -17,8 +19,10 @@ const store = new Vuex.Store({
   // ストアのモジュールを登録
   modules: {
     auth,
-    twitter,
     error,
+    loader,
+    message,
+    twitter,
   }
 })
 

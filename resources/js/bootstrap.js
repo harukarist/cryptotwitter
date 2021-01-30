@@ -29,6 +29,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // リクエスト時にaxiosのインターセプターでクッキーのXSRF-TOKENをヘッダーに添付し、
 // ヘッダー情報からCSRFトークンチェックが行えるようにする
 window.axios.interceptors.request.use(config => {
+    // クッキーからトークンを取り出してヘッダーに添付
     config.headers['X-XSRF-TOKEN'] = getCookieValue('XSRF-TOKEN')
     return config
 })
