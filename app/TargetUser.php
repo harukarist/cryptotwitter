@@ -54,8 +54,8 @@ class TargetUser extends Model
      */
     public function getFollowedByUserAttribute()
     {
-        // ユーザーがログイン前の場合はfalseを返す
-        if (Auth::guest()) {
+        // ユーザーがTwitter連携前の場合はfalseを返す
+        if (!isset(Auth::user()->twitter_user)) {
             return false;
         }
         // ログインユーザーが該当Twitterアカウントをフォロー済みかを返す（followsテーブルにログインユーザーのtwitterIDと該当TwitterアカウントのIDのセットが存在するか）

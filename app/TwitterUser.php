@@ -7,9 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TwitterUser extends Model
 {
-    // ソフトデリート用のトレイトを追加
-    use SoftDeletes;
-
     // 書き込みを許可するカラムの指定
     protected $fillable = [
         'user_id',

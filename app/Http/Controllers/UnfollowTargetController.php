@@ -12,7 +12,6 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class UnfollowTargetController extends Controller
 {
-
   /**
    * ログインユーザーのTwitterアカウントでターゲット1件をフォロー解除
    */
@@ -20,8 +19,10 @@ class UnfollowTargetController extends Controller
   {
     // ログインユーザーのTwitterアカウント情報を取得
     $twitter_user = Auth::user()->twitter_user;
+
+    // 取得できなかった場合はNotFoundエラーを返却
     if (!$twitter_user) {
-      abort(404);
+      return abort(404);
     }
     $unfollow = self::destroyFollow($twitter_user, $target_id);
     return $unfollow;
@@ -74,6 +75,7 @@ class UnfollowTargetController extends Controller
     // TwitterAPIでターゲットをフォロー解除
     $result = $connect->post($endpoint, $params);
 
+    // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }

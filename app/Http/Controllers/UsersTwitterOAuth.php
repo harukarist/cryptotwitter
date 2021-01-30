@@ -37,6 +37,7 @@ class UsersTwitterOAuth
     $result = $connect->get("application/rate_limit_status");
     // dd($result);
 
+    // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }

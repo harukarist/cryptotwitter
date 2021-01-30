@@ -14,27 +14,28 @@ use App\Http\Controllers\FollowTargetController;
 
 class AutoFollowController extends Controller
 {
+    // 自動フォローを適用
     public function applyAutoFollow()
     {
+        // ログインユーザーの自動フォロー利用フラグをtrueに更新
         $user_id = Auth::id();
-        // twitter_usersテーブルに保存済みのTwitterアカウント情報を取得
         $twitter_user = TwitterUser::where('user_id', $user_id)
             ->update(['use_autofollow' => true]);
-        $twitter_user = TwitterUser::select('user_name', 'screen_name', 'twitter_avatar', 'use_autofollow')
-            ->where('user_id', $user_id)->first();
-        // Twitterアカウント情報を返却
-        return $twitter_user;
+
+        // Twitterアカウント情報を返却(更新できなかった場合は404エラーを返却)
+        return  $twitter_user ?? abort(404);
     }
+
+    // 自動フォローを解除
     public function cancelAutoFollow()
     {
+        // ログインユーザーの自動フォロー利用フラグをfalseに更新
         $user_id = Auth::id();
-        // twitter_usersテーブルに保存済みのTwitterアカウント情報を取得
         $twitter_user = TwitterUser::where('user_id', $user_id)
             ->update(['use_autofollow' => false]);
-        $twitter_user = TwitterUser::select('user_name', 'screen_name', 'twitter_avatar', 'use_autofollow')
-            ->where('user_id', $user_id)->first();
-        // Twitterアカウント情報を返却
-        return $twitter_user;
+
+        // Twitterアカウント情報を返却(更新できなかった場合は404エラーを返却)
+        return  $twitter_user ?? abort(404);
     }
 
     /**

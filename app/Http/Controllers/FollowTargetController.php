@@ -19,8 +19,10 @@ class FollowTargetController extends Controller
   {
     // ログインユーザーのTwitterアカウント情報を取得
     $twitter_user = Auth::user()->twitter_user;
+
+    // 取得できなかった場合はNotFoundエラーを返却
     if (!$twitter_user) {
-      abort(404);
+      return abort(404);
     }
     $follow = self::createFollow($twitter_user, $target_id);
     return $follow;
@@ -84,6 +86,7 @@ class FollowTargetController extends Controller
     $result = $connect->get($endpoint, $params);
     // dd($result);
 
+    // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }
@@ -108,6 +111,7 @@ class FollowTargetController extends Controller
     // TwitterAPIでターゲットをフォロー
     $result = $connect->post($endpoint, $params);
 
+    // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }
