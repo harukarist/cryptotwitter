@@ -1,13 +1,16 @@
 .c-pagination {
-  display: flex;
-  list-style-type: none;
-  justify-content: center;
-  margin-top: $space--m;
-  margin-bottom: $space--xxl;
+  text-align: center;
+  &__list{
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+    margin-top: $space--m;
+    margin-bottom: $space--l;
+  }
   &__item {
     background: rgba($bg-color--light, 0.8);
     text-align: center;
-    padding: $space--s  $space--m;
+    padding: $space--m  $space--m;
     a {
       color: $font-color--main;
       
@@ -25,6 +28,9 @@
         color: $font-color--white;
       }
     }
-    
+  }
+  &__info{
+    font-size: $font-size--m;
+    color: $font-color--muted;
   }
 }
