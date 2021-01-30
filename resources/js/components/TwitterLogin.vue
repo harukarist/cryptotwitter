@@ -51,16 +51,16 @@
             自動フォロー機能を利用する
           </button>
         </div>
-        <a class="p-twitter-user__delete" href="./auth/twitter/delete">
+        <a class="p-twitter-user__delete" href="/auth/twitter/delete">
           Twitterアカウント連携を解除する
         </a>
       </div>
-
-      <!-- データ全体の状態を確認 -->
-      <!-- <pre>{{ $data }}</pre> -->
     </div>
     <div v-if="!isLogin" class="p-twitter__login">
-      <a class="c-btn__twitter" href="./auth/twitter/login">
+      <div class="p-twitter__welcome">
+        <p class="p-twitter__welcome-text">自動フォローをはじめる</p>
+      </div>
+      <a class="c-btn__twitter" href="/auth/twitter/login">
         <i class="fab fa-twitter"></i>
         Twitterアカウント連携
       </a>
@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
 export default {
   name: "TwitterLogin",
   props: {
@@ -78,39 +79,67 @@ export default {
     },
   },
   computed: {
-    usersTwitter() {
+    ...mapState({
+      // twitterストアのステートを参照し、API通信の成否ステータスを取得
+      apiStatus: (state) => state.twitter.apiStatus,
+    }),
+    ...mapGetters({
       // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
-      return this.$store.getters["twitter/usersTwitter"];
-    },
-    totalAutoFollow() {
+      usersTwitter: "twitter/usersTwitter",
       // twitterストアのtotalAutoFollowゲッターでユーザーのTwitterアカウント情報を取得
-      return this.$store.getters["twitter/totalAutoFollow"];
-    },
+      totalAutoFollow: "twitter/totalAutoFollow",
+    }),
   },
   methods: {
     noImage(element) {
       // APIで取得したアバターがリンク切れの場合は代替画像を表示
       element.target.src = "../img/avatar_noimage.png";
     },
+
+    // 自動フォロー適用処理
     async applyAutoFollow() {
       // dispatch()でtwitterストアのapplyAutoFollowアクションを呼び出す
       await this.$store.dispatch("twitter/applyAutoFollow");
-      // フラッシュメッセージを表示
-      this.$store.dispatch("message/showMessage", {
-        text: "自動フォローを適用しました",
-        type: "success",
-        timeout: 6000,
-      });
+      // API通信が成功した場合
+      if (this.apiStatus) {
+        // フラッシュメッセージを表示
+        this.$store.dispatch("message/showMessage", {
+          text: "自動フォローを適用しました",
+          type: "success",
+          timeout: 6000,
+        });
+      }
     },
+
+    // 自動フォロー解除処理
     async cancelAutoFollow() {
       // dispatch()でtwitterストアのcancelAutoFollowアクションを呼び出す
       await this.$store.dispatch("twitter/cancelAutoFollow");
-      // フラッシュメッセージを表示
-      this.$store.dispatch("message/showMessage", {
-        text: "自動フォローを解除しました",
-        type: "notice",
-        timeout: 6000,
-      });
+      // API通信が成功した場合
+      if (this.apiStatus) {
+        // フラッシュメッセージを表示
+        this.$store.dispatch("message/showMessage", {
+          text: "自動フォローを解除しました",
+          type: "notice",
+          timeout: 6000,
+        });
+      }
+    },
+    async deleteTwitterAuth() {
+      // dispatch()でauthストアのloginアクションを呼び出す
+      await this.$store.dispatch("twitter/deleteAuth");
+      // API通信が成功した場合
+      if (this.apiStatus) {
+        // フラッシュメッセージを表示
+        this.$store.dispatch("message/showMessage", {
+          text: "Twitterアカウントの連携を解除しました",
+          type: "success",
+          timeout: 2000,
+        });
+
+        // awaitで非同期アクションの完了を待ってからVueRouterのpush()で遷移
+        this.$router.push({ name: "home" });
+      }
     },
   },
 };

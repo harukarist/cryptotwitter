@@ -2,6 +2,31 @@
   &__login {
     text-align: center;
   }
+  &__welcome{
+    margin-bottom: $space--l;
+    &-text {
+      position: relative;
+      display: inline-block;
+      padding: 0 45px;
+      &:before, &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        display: inline-block;
+        width: 38px; //斜め線の長さ
+        height: 2px; //斜め線の太さ
+        background-color: $bg-color--accent;
+      }
+      &:before {
+        left:0;
+        transform: rotate(60deg);
+      }
+      &:after {
+        right: 0;
+        transform: rotate(-60deg);
+      }
+    }
+  }
   &-user {
     border:1px solid $bg-color--border;
     padding: $space--l;
