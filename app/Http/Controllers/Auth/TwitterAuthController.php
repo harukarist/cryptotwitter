@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use Socialite;
 use App\TwitterUser;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\FollowListController;
 
 // TwitterAPIでのTwitterログイン処理を行うコントローラー
@@ -58,25 +59,30 @@ class TwitterAuthController extends Controller
     // Twitterから戻ってきた後のログイン認証処理
     public function handleProviderCallback()
     {
-        try {
-            // OAuthプロバイダからユーザー情報を取得
-            $oauth_user = Socialite::driver('twitter')->user();
-        } catch (InvalidArgumentException $e) {
-            return abort(404);
-            // return false;
-            // 認証エラーの場合はエラーメッセージを返却
-            // return redirect('/twitter')->with('flash_message', __('Twitterアカウントの連携を中断しました'));
+        $referrer = Request::server('HTTP_REFERER');
+        if ($referrer) {
+            $host = parse_url($referrer, PHP_URL_HOST);
+            if (strpos($host, 'twitter.com') !== false) {
+                $oauth_user = Socialite::driver('twitter')->user();
+                $twitterUser = $this->updateOrCreateTwitterUser($oauth_user);
+            }
         }
+        // try {
+        //     // OAuthプロバイダからユーザー情報を取得
+        //     $oauth_user = Socialite::driver('twitter')->user();
+        // } catch (InvalidArgumentException $e) {
+        //     return abort(404);
+        // }
 
-        try {
-            // Twitterアカウント情報をもとにDBからユーザー情報を取得する
-            // DBにユーザー情報がなければ、DBに新規登録する
-            $twitterUser = $this->updateOrCreateTwitterUser($oauth_user);
-        } catch (Exception $e) {
-            abort(404);
-            // エラーの場合はエラーメッセージを返却
-            // return redirect('/twitter')->with('flash_message', __('Twitterアカウントの連携を中断しました'));
-        }
+        // try {
+        //     // Twitterアカウント情報をもとにDBからユーザー情報を取得する
+        //     // DBにユーザー情報がなければ、DBに新規登録する
+        //     $twitterUser = $this->updateOrCreateTwitterUser($oauth_user);
+        // } catch (Exception $e) {
+        //     abort(404);
+        //     // エラーの場合はエラーメッセージを返却
+        //     // return redirect('/twitter')->with('flash_message', __('Twitterアカウントの連携を中断しました'));
+        // }
         // Twitter一覧画面へリダイレクト
         return redirect('/twitter')->with('flash_message', __('Twitterアカウントを連携しました。自動フォローを利用する場合は、以下のボタンで自動フォローをONにしてください。'));
     }
