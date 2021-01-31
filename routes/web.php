@@ -27,8 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/auth/twitter/login', 'Auth\TwitterAuthController@redirectToProvider');
     // Twitterログイン認証（TwitterAPIからのコールバック）
     Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
-    // Twitterアカウントの削除
-    Route::get("/auth/twitter/delete", "Auth\TwitterAuthController@delete");
+
 });
 
 // 初回アクセス時のみLaravel側でapp.blade.phpを表示し、

@@ -5,6 +5,9 @@
     margin: 0 $space--l;
     display: flex;
     justify-content: space-between;
+    @include mq(){
+      margin: 0 $space--m;
+    }
   }
 
   &__item {

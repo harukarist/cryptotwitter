@@ -47,11 +47,11 @@
               }}件フォローしました。
             </p>
           </div>
-          <button class="c-btn__main" @click="applyAutoFollow()">
-            自動フォロー機能を利用する
+          <button class="c-btn__accent" @click="applyAutoFollow()">
+            自動フォロー機能をON
           </button>
         </div>
-        <a class="p-twitter-user__delete" href="/auth/twitter/delete">
+        <a class="p-twitter-user__delete" @click.stop="deleteTwitterAuth()">
           Twitterアカウント連携を解除する
         </a>
       </div>
@@ -91,11 +91,25 @@ export default {
     }),
   },
   methods: {
+    // APIで取得したアバターがリンク切れの場合
     noImage(element) {
-      // APIで取得したアバターがリンク切れの場合は代替画像を表示
+      // 代替画像を表示
       element.target.src = "../img/avatar_noimage.png";
     },
-
+    // Twitterアカウント連携を削除
+    async deleteTwitterAuth() {
+      // dispatch()でauthストアのloginアクションを呼び出す
+      await this.$store.dispatch("twitter/deleteAuth");
+      // API通信が成功した場合
+      if (this.apiStatus) {
+        // フラッシュメッセージを表示
+        this.$store.dispatch("message/showMessage", {
+          text: "Twitterアカウントの連携を解除しました",
+          type: "success",
+          timeout: 2000,
+        });
+      }
+    },
     // 自動フォロー適用処理
     async applyAutoFollow() {
       // dispatch()でtwitterストアのapplyAutoFollowアクションを呼び出す
@@ -110,7 +124,6 @@ export default {
         });
       }
     },
-
     // 自動フォロー解除処理
     async cancelAutoFollow() {
       // dispatch()でtwitterストアのcancelAutoFollowアクションを呼び出す
@@ -123,22 +136,6 @@ export default {
           type: "notice",
           timeout: 6000,
         });
-      }
-    },
-    async deleteTwitterAuth() {
-      // dispatch()でauthストアのloginアクションを呼び出す
-      await this.$store.dispatch("twitter/deleteAuth");
-      // API通信が成功した場合
-      if (this.apiStatus) {
-        // フラッシュメッセージを表示
-        this.$store.dispatch("message/showMessage", {
-          text: "Twitterアカウントの連携を解除しました",
-          type: "success",
-          timeout: 2000,
-        });
-
-        // awaitで非同期アクションの完了を待ってからVueRouterのpush()で遷移
-        this.$router.push({ name: "home" });
       }
     },
   },

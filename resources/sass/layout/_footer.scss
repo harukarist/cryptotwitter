@@ -5,11 +5,11 @@
   padding-top: $space--xxxl;
   padding-bottom: $space--xl;
   width: 100%;
-  height:70px;
+  height: $footer-height;
   position:absolute;
   bottom:0;
   @include mq() {
     font-size: $font-size--s;
-    min-height: 80px;
+    min-height: $footer-height;
   }
 }

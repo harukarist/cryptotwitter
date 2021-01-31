@@ -14,17 +14,18 @@
   &__item {
     width: calc(100%/3); //3つ要素を持つタブ
     height: 50px;
-    line-height: 50px;
     border-bottom: 2px solid $bg-color--active;
     background-color: $bg-color--light;
-    font-size: 16px;
     text-align: center;
     color: $font-color--default;
-    display: block;
-    float: left;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: bold;
     transition: all 0.2s ease;
+    @include mq(){
+      font-size: $font-size--m;
+    }
     &:hover {
       background-color: rgba($bg-color--light, 0.3);
     }

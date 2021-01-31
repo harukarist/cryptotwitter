@@ -35,14 +35,26 @@
   &__head {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: $space--m;
+    @include mq() {
+      flex-direction: column; //スマホ画面ではボタンを縦方向に配置
+      align-items: baseline;
+    }
   }
   &__head-left {
     display: flex;
+    @include mq() {
+      margin-bottom: $space--m;
+    }
   }
   &__head-right {
-    text-align: right;
     width: 140px;
+    @include mq() {
+      align-self: center;
+      width: 100%;
+      text-align: center;
+    }
   }
   &__avatar {
     width: 48px;
@@ -54,21 +66,36 @@
   }
   &__btn {
     width: 140px;
+    @include mq() {
+      width: 90%;
+      font-size: $font-size--m;
+    }
   }
   &__body {
     margin-bottom: $space--m;
   }
   &__profile {
     color: $font-color--muted;
+    margin-bottom: $space--s;
+    text-align: justify; //両端揃え
+    // text-align: left;
   }
   &__follow {
-    display: inline-block;
     color: $font-color--muted;
-    margin-right: $space--l;
+    @include mq() {
+      font-size: $font-size--m;
+      // text-align: center;
+    }
   }
   &__num {
     font-weight: bold;
     color: $font-color--default;
+  }
+  &__aside {
+    margin-right: $space--l;
+    @include mq() {
+      margin-right: $space--s;
+    }
   }
 
   &__tweet {
@@ -78,6 +105,7 @@
   }
   &__tweeted-text {
     margin-bottom: $space--s;
+    text-align: justify; //両端揃え
   }
   &__tweeted-at {
     color: $font-color--muted;

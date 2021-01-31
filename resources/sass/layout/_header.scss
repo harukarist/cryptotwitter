@@ -1,7 +1,7 @@
 #header {
   width: 100%;
   box-sizing: border-box;
-  min-height: 60px;
+  min-height: $header-height;
   margin: 0;
   padding: 0;
   z-index: 2;
@@ -9,6 +9,6 @@
   box-shadow: $shadow-color--m;
   position: fixed;
   @include mq() {
-    height: 60px;
+    height: $header-height;
   }
 }

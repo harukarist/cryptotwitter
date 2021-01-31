@@ -53,7 +53,6 @@ class UnfollowTargetController extends Controller
     // ターゲットをフォロー解除
     self::unfollowTarget($twitter_user, $target_id, $connect);
 
-    // return redirect('/twitter')->with('flash_message', __('アカウントをフォローしました'));
     return [
       'message' => 'アカウントをフォロー解除しました',
       'target_id' => $target_id

@@ -29,8 +29,8 @@ Route::get('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAu
 
 // トークンリフレッシュ
 Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
+  // 認証切れの場合はセッションのCSRFトークンをリフレッシュして返却
   $request->session()->regenerateToken();
-
   return response()->json();
 });
 
@@ -42,15 +42,17 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   Route::get('/trend', 'TrendController@index')->name('trend.index');
   // Twitterアカウント一覧取得API
   Route::get('/twitter', 'TwitterTargetListController@index')->name('twitter.index');
-  // Twitterアカウントフォロー処理
+  // TwitterアカウントフォローAPI
   Route::post('/twitter/{id}/follow', 'FollowTargetController@createUsersFollow');
-  // Twitterアカウントフォロー解除処理
+  // Twitterアカウントフォロー解除API
   Route::post('/twitter/{id}/unfollow', 'UnfollowTargetController@destroyUsersFollow');
-
-  // 自動フォローを適用
+  // 自動フォロー適用API
   Route::get('/autofollow/apply', 'AutofollowController@applyAutoFollow');
-  // 自動フォローを解除
+  // 自動フォロー解除API
   Route::get('/autofollow/cancel', 'AutofollowController@cancelAutoFollow');
+
+  // Twitterアカウントの削除
+  Route::get("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");
 
   // ティッカー情報取得（管理者用）
   Route::get('/tickers', 'TickerController@index');

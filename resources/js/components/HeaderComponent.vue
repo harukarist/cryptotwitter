@@ -85,7 +85,7 @@
             :to="{ name: 'register' }"
             active-class="is-active"
             class="c-btn__accent p-nav-menu__btn"
-          >
+        >
             新規ユーザー登録
           </RouterLink>
         </li>
@@ -123,16 +123,14 @@ export default {
       // authストアのuserNameゲッターでユーザー名を取得
       userName: "auth/userName",
     }),
+    // mapState,mapGettersを使わない場合は下記を記述
     // apiStatus() {
-    //   // authストアのステートを参照し、API通信の成否ステータスを取得
     //   return this.$store.state.auth.apiStatus;
     // },
     // isLogin() {
-    //   // authストアのcheckゲッターでユーザーのログイン状態をチェック
     //   return this.$store.getters["auth/check"];
     // },
     // userName() {
-    //   // authストアのuserNameゲッターでユーザー名を取得
     //   return this.$store.getters["auth/userName"];
     // },
   },
@@ -153,6 +151,7 @@ export default {
           },
           { root: true }
         );
+        this.isActiveSpMenu = false; //スマホメニューが開いていたら閉じる
 
         // VueRouterのpush()でトップ画面に遷移
         this.$router.push({ name: "top" });

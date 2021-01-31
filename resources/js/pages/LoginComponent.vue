@@ -2,21 +2,11 @@
   <div class="c-container--bg">
     <h2 class="c-container__title">ログイン</h2>
     <div class="c-form__wrapper">
-      <form class="c-form--small" @submit.prevent="login">
-        <div v-if="loginErrors" class="errors">
-          <ul v-if="loginErrors.email">
-            <li v-for="message in loginErrors.email" :key="message">
-              {{ message }}
-            </li>
-          </ul>
-          <ul v-if="loginErrors.password">
-            <li v-for="message in loginErrors.password" :key="message">
-              {{ message }}
-            </li>
-          </ul>
-        </div>
+      <form class="c-form--small" @submit.prevent="checkForm">
         <div class="c-form__group">
-          <label for="login-email">メールアドレス</label>
+          <label for="login-email" class="c-form__label">
+            メールアドレス
+          </label>
           <input
             type="text"
             class="c-input c-input--large c-input--box"
@@ -24,9 +14,23 @@
             v-model="loginForm.email"
             autocomplete
           />
+          <ul v-if="emailErrors" class="c-error__item">
+            <li v-for="error in emailErrors" :key="error" class="c-error__text">
+              {{ error }}
+            </li>
+          </ul>
+          <ul v-if="loginErrors && loginErrors.email" class="c-error__item">
+            <li
+              v-for="error in loginErrors.email"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
         </div>
         <div class="c-form__group">
-          <label for="login-password">パスワード</label>
+          <label for="login-password" class="c-form__label">パスワード</label>
           <input
             type="password"
             class="c-input c-input--large c-input--box"
@@ -34,6 +38,24 @@
             v-model="loginForm.password"
             autocomplete
           />
+          <ul v-if="passwordErrors" class="c-error__item">
+            <li
+              v-for="error in passwordErrors"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
+          <ul v-if="loginErrors && loginErrors.password" class="c-error__item">
+            <li
+              v-for="error in loginErrors.password"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
         </div>
 
         <div class="c-form__button">
@@ -55,6 +77,8 @@ export default {
         email: "",
         password: "",
       },
+      emailErrors: [],
+      passwordErrors: [],
     };
   },
   computed: {
@@ -64,20 +88,55 @@ export default {
       // authストアのステートを参照し、エラーメッセージを取得
       loginErrors: (state) => state.auth.loginErrorMessages,
     }),
-    // apiStatus() {
-    //   // authストアのステートを参照し、API通信の成否ステータスを取得
-    //   return this.$store.state.auth.apiStatus;
-    // },
-    // loginErrors() {
-    //   // authストアのステートを参照し、エラーメッセージを取得
-    //   return this.$store.state.auth.loginErrorMessages;
-    // },
   },
   methods: {
+    // フロントエンド側のバリデーションチェック
+    checkForm(e) {
+      const MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      const MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      const MSG_EMAIL_MAX = "50文字以内で入力してください";
+      const MSG_PASS_EMPTY = "パスワードを入力してください";
+      const MSG_PASS_LESS = "パスワードが異なります";
+
+      this.emailErrors = [];
+      this.passwordErrors = [];
+
+      // メールアドレスのバリデーション
+      if (!this.loginForm.email) {
+        // 空欄チェック
+        this.emailErrors.push(MSG_EMAIL_EMPTY);
+      } else if (this.loginForm.email.length > 50) {
+        // 文字数チェック
+        this.emailErrors.push(MSG_EMAIL_MAX);
+      } else if (!this.validEmail(this.loginForm.email)) {
+        // 下記のメソッドで形式チェック
+        this.emailErrors.push(MSG_EMAIL_TYPE);
+      }
+      // パスワードのバリデーション
+      if (!this.loginForm.password) {
+        // 空欄チェック
+        this.passwordErrors.push(MSG_PASS_EMPTY);
+      } else if (this.loginForm.password.length < 6) {
+        // 文字数チェック
+        this.passwordErrors.push(MSG_PASS_LESS);
+      }
+      // エラーメッセージを格納した配列を全て結合
+      const results = this.emailErrors.concat(this.passwordErrors);
+      // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      if (!results.length) {
+        this.login();
+      }
+    },
+    // メールアドレス形式チェック
+    validEmail(email) {
+      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return regex.test(email);
+    },
+
+    // ログインWebAPI呼び出し
     async login() {
       // dispatch()でauthストアのloginアクションを呼び出す
       await this.$store.dispatch("auth/login", this.loginForm);
-
       // API通信が成功した場合
       if (this.apiStatus) {
         // フラッシュメッセージを表示
@@ -86,8 +145,7 @@ export default {
           type: "success",
           timeout: 2000,
         });
-
-        // awaitで非同期アクションの完了を待ってからVueRouterのpush()で遷移
+        // VueRouterのpush()でホーム画面へ遷移
         this.$router.push({ name: "home" });
       }
     },

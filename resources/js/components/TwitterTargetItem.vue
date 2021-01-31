@@ -35,18 +35,17 @@
     </div>
     <div class="p-target__body">
       <p class="p-target__profile">{{ item.profile_text }}</p>
-      <p class="p-target__follow">
+
+      <div class="p-target__follow">
         <span class="p-target__num">
           {{ item.follow_num }}
         </span>
-        フォロー中
-      </p>
-      <p class="p-target__follow">
+        <span class="p-target__aside">フォロー中</span>
         <span class="p-target__num">
           {{ item.follower_num }}
         </span>
-        フォロワー
-      </p>
+        <span class="p-target__aside">フォロワー</span>
+      </div>
     </div>
     <div class="p-target__tweet">
       <p class="p-target__tweeted-text">{{ item.tweet_text }}</p>

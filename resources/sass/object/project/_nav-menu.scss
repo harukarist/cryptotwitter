@@ -36,7 +36,7 @@
   }
   &__item {
     margin: 0 $space--l;
-    line-height: 60px;
+    line-height: $header-height;
     &:first-child {
       margin-left: $space--s;
     }
@@ -66,7 +66,7 @@
     margin: 0 $space--l;
   }
   &__link {
-    height: 60px;
+    height: $header-height;
     color: $font-color--main;
     display: inline-block; //下線の幅をテキストと合わせる
     position: relative; //擬似要素でabsoluteを指定

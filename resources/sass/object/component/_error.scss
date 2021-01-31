@@ -1,0 +1,8 @@
+.c-error {
+  &__item {
+  }
+  &__text {
+    margin-left: $space--m;
+    color: $font-color--danger;
+  }
+}

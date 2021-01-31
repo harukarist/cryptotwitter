@@ -62,8 +62,10 @@ class TwitterAuthController extends Controller
             // OAuthプロバイダからユーザー情報を取得
             $oauth_user = Socialite::driver('twitter')->user();
         } catch (Exception $e) {
-            // 認証エラーの場合はNotFoundエラーを返却
-            return abort(404);
+            abort(404);
+            // return false;
+            // 認証エラーの場合はエラーメッセージを返却
+            // return redirect('/twitter')->with('flash_message', __('Twitterアカウントの連携を中断しました'));
         }
 
         try {
@@ -71,11 +73,12 @@ class TwitterAuthController extends Controller
             // DBにユーザー情報がなければ、DBに新規登録する
             $twitterUser = $this->updateOrCreateTwitterUser($oauth_user);
         } catch (Exception $e) {
-            // エラーの場合はNotFoundエラーを返却
-            return abort(404);
+            abort(404);
+            // エラーの場合はエラーメッセージを返却
+            // return redirect('/twitter')->with('flash_message', __('Twitterアカウントの連携を中断しました'));
         }
-        // twitter画面にリダイレクトする
-        return $twitterUser;
+        // Twitter一覧画面へリダイレクト
+        return redirect('/twitter')->with('flash_message', __('Twitterアカウントを連携しました。自動フォローを利用する場合は、以下のボタンで自動フォローをONにしてください。'));
     }
 
     // DBのユーザー情報取得 または アカウント新規作成の処理
@@ -99,7 +102,7 @@ class TwitterAuthController extends Controller
     }
 
     // Twitterアカウント連携の解除
-    public function delete()
+    public function deleteTwitterUser()
     {
         $user_id = Auth::id();
         try {

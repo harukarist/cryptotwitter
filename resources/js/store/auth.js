@@ -47,6 +47,7 @@ const actions = {
   async register(context, data) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
+    
     // 非同期処理でサーバーのAPIを呼び出し
     const response = await axios.post('/api/register', data)
     // 通信失敗時のcatch処理はbootstrap.jsでaxiosのインターセプターにまとめて記載

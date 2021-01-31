@@ -11,24 +11,24 @@
         <ul class="c-tab__list">
           <li
             class="c-tab__item"
-            :class="{ 'c-tab__item--active': tabNum === 1 }"
+            :class="{ 'c-tab__item--active': column === 'tweet_hour' }"
             @click="sortByHour"
           >
-            過去1時間のツイート
+            過去1時間の<br class="u-sp--only" />ツイート
           </li>
           <li
             class="c-tab__item"
-            :class="{ 'c-tab__item--active': tabNum === 2 }"
+            :class="{ 'c-tab__item--active': column === 'tweet_day' }"
             @click="sortByDay"
           >
-            過去24時間のツイート
+            過去24時間の<br class="u-sp--only" />ツイート
           </li>
           <li
             class="c-tab__item"
-            :class="{ 'c-tab__item--active': tabNum === 3 }"
+            :class="{ 'c-tab__item--active': column === 'tweet_week' }"
             @click="sortByWeek"
           >
-            過去1週間のツイート
+            過去1週間の<br class="u-sp--only" />ツイート
           </li>
         </ul>
 
@@ -89,9 +89,11 @@
                 <tr>
                   <th>順位</th>
                   <th>銘柄名</th>
-                  <th>ツイート数</th>
-                  <th>過去24時間の<br />最高取引価格</th>
-                  <th>過去24時間の<br />最低取引価格</th>
+                  <th>
+                    {{ activeColumn }}の<br class="u-sp-hidden" />ツイート数
+                  </th>
+                  <th>過去24時間の<br class="u-sp-hidden" />最高取引価格</th>
+                  <th>過去24時間の<br class="u-sp-hidden" />最低取引価格</th>
                 </tr>
               </thead>
               <tbody class="c-table__tbody">
@@ -204,6 +206,16 @@ export default {
     sorted() {
       // 絞り込み処理を行った後の配列を、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
       return _.orderBy(this.matched, this.column, "desc");
+    },
+    // 表示中のトレンド
+    activeColumn() {
+      if (this.column === "tweet_hour") {
+        return "1時間";
+      } else if (this.column === "tweet_day") {
+        return "24時間";
+      } else if (this.column === "tweet_week") {
+        return "1週間";
+      }
     },
   },
   methods: {

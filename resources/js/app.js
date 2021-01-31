@@ -12,7 +12,8 @@ import './bootstrap'; //bootstrap.jsの設定ファイルをインポート
 import Vue from 'vue';
 import router from './router'; // router.jsからルーティング定義をインポート
 import store from './store'; // ストアをインポート
-import App from './App.vue'; // ルートコンポーネントをインポート 
+import AppComponent from './AppComponent.vue'; // ルートコンポーネントをインポート 
+import MessageComponent from './components/MessageComponent.vue'; // ルートコンポーネントをインポート 
 import '../sass/app.scss'; //Sassの起点ファイルをインポート
 
 /**
@@ -45,8 +46,11 @@ const createApp = async () => {
         el: '#app',
         router, // Vue Routerを読み込む
         store, // Vuexのストアを読み込む
-        components: { App }, // ルートコンポーネントを宣言
-        template: '<App />' // ルートコンポーネントを描画
+        components: {
+            AppComponent,
+            MessageComponent
+        }, // ルートコンポーネントを宣言
+        // template: '<App />' // ルートコンポーネントを描画
     });
 }
 // 初回起動時のログインチェック、Vueインスタンス生成を呼び出し

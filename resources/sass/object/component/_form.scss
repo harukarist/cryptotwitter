@@ -50,5 +50,11 @@
   }
   &__button {
     text-align: center;
+    margin-bottom: $space--xxl;
+  }
+  &__link {
+    text-align: center;
+    color: $font-color--muted;
+    font-size: $font-size--m;
   }
 }

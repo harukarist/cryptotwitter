@@ -54,7 +54,6 @@ class FollowTargetController extends Controller
     // ターゲットをフォロー
     self::followTarget($twitter_user, $target_id, $connect);
 
-    // return redirect('/twitter')->with('flash_message', __('アカウントをフォローしました'));
     return [
       'message' => 'アカウントをフォローしました',
       'target_id' => $target_id

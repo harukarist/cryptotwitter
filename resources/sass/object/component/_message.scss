@@ -4,7 +4,9 @@
   border-radius: 4px;
   text-align: center;
   position: fixed;
+  top: $header-height + 10px;
   right: 10px;
+  z-index: 5;
   &--success {
     color: $font-color--white;
     background-color: rgba($bg-color--active, 0.98);

@@ -2,26 +2,12 @@
   <div class="c-container--bg">
     <h2 class="c-container__title">新規ユーザー登録</h2>
     <div class="c-form__wrapper">
-      <form class="c-form--small" @submit.prevent="register">
-        <div v-if="registerErrors" class="errors">
-          <ul v-if="registerErrors.name">
-            <li v-for="message in registerErrors.name" :key="message">
-              {{ message }}
-            </li>
-          </ul>
-          <ul v-if="registerErrors.email">
-            <li v-for="message in registerErrors.email" :key="message">
-              {{ message }}
-            </li>
-          </ul>
-          <ul v-if="registerErrors.password">
-            <li v-for="message in registerErrors.password" :key="message">
-              {{ message }}
-            </li>
-          </ul>
-        </div>
+      <form class="c-form--small" @submit.prevent="checkForm">
         <div class="c-form__group">
-          <label for="username" class="c-form__label">お名前</label>
+          <label for="username" class="c-form__label">
+            お名前
+            <span class="c-form__notes">20文字以内</span>
+          </label>
           <input
             type="text"
             class="c-input c-input--large c-input--box"
@@ -29,6 +15,23 @@
             placeholder="クリプト太郎"
             v-model="registerForm.name"
           />
+          <ul v-if="nameErrors" class="c-error__item">
+            <li v-for="error in nameErrors" :key="error" class="c-error__text">
+              {{ error }}
+            </li>
+          </ul>
+          <ul
+            v-if="registerErrors && registerErrors.name"
+            class="c-error__item"
+          >
+            <li
+              v-for="error in registerErrors.name"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
         </div>
         <div class="c-form__group">
           <label for="email" class="c-form__label">メールアドレス</label>
@@ -39,12 +42,29 @@
             placeholder="例）your.email@example.com"
             v-model="registerForm.email"
           />
+          <ul v-if="emailErrors" class="c-error__item">
+            <li v-for="error in emailErrors" :key="error" class="c-error__text">
+              {{ error }}
+            </li>
+          </ul>
+          <ul
+            v-if="registerErrors && registerErrors.email"
+            class="c-error__item"
+          >
+            <li
+              v-for="error in registerErrors.email"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
         </div>
         <div class="c-form__group">
-          <label for="password" class="c-form__label"
-            >パスワード
-            <span class="c-form__notes">半角英数字6文字以上</span></label
-          >
+          <label for="password" class="c-form__label">
+            パスワード
+            <span class="c-form__notes">半角英数字6文字以上</span>
+          </label>
           <input
             type="password"
             class="c-input c-input--large c-input--box"
@@ -53,6 +73,27 @@
             v-model="registerForm.password"
             autocomplete
           />
+          <ul v-if="passwordErrors" class="c-error__item">
+            <li
+              v-for="error in passwordErrors"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
+          <ul
+            v-if="registerErrors && registerErrors.password"
+            class="c-error__item"
+          >
+            <li
+              v-for="error in registerErrors.password"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
         </div>
         <div class="c-form__group">
           <label for="password-confirmation" class="c-form__label"
@@ -66,6 +107,15 @@
             v-model="registerForm.password_confirmation"
             autocomplete
           />
+          <ul v-if="confirmErrors" class="c-error__item">
+            <li
+              v-for="error in confirmErrors"
+              :key="error"
+              class="c-error__text"
+            >
+              {{ error }}
+            </li>
+          </ul>
         </div>
         <div class="c-form__info">
           <a href="#">利用規約</a> および
@@ -75,6 +125,11 @@
           <button type="submit" class="c-btn__accent">ユーザー登録</button>
         </div>
       </form>
+      <div class="c-form__link">
+        <RouterLink :to="{ name: 'login' }" class="c-form__link">
+          アカウントをお持ちの方はこちら
+        </RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -92,13 +147,17 @@ export default {
         password: "",
         password_confirmation: "",
       },
+      nameErrors: [],
+      emailErrors: [],
+      passwordErrors: [],
+      confirmErrors: [],
     };
   },
   computed: {
     ...mapState({
-      // authストアのステートを参照し、API通信の成否ステータスを取得
+      // authストアのステートを参照し、WebAPIの成否ステータスを取得
       apiStatus: (state) => state.auth.apiStatus,
-      // authストアのステートを参照し、エラーメッセージを取得
+      // authストアのステートを参照し、WebAPIから返却されるエラーメッセージを取得
       registerErrors: (state) => state.auth.registerErrorMessages,
     }),
     // apiStatus() {
@@ -111,6 +170,80 @@ export default {
     // },
   },
   methods: {
+    // フロントエンド側のバリデーションチェック
+    checkForm(e) {
+      const MSG_NAME_EMPTY = "お名前を入力してください";
+      const MSG_NAME_MAX = "20文字以内で入力してください";
+      const MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      const MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      const MSG_EMAIL_MAX = "50文字以内で入力してください";
+      const MSG_PASS_EMPTY = "パスワードを入力してください";
+      const MSG_PASS_LESS = "6文字以上で入力してください";
+      const MSG_RETYPE = "パスワードが一致していません";
+
+      this.nameErrors = [];
+      this.emailErrors = [];
+      this.passwordErrors = [];
+      this.confirmErrors = [];
+
+      // 名前のバリデーション
+      if (!this.registerForm.name) {
+        // 空欄チェック
+        this.nameErrors.push(MSG_NAME_EMPTY);
+      } else if (this.registerForm.name.length > 20) {
+        // 文字数チェック
+        this.nameErrors.push(MSG_NAME_MAX);
+      }
+      // メールアドレスのバリデーション
+      if (!this.registerForm.email) {
+        // 空欄チェック
+        this.emailErrors.push(MSG_EMAIL_EMPTY);
+      } else if (this.registerForm.email.length > 50) {
+        // 文字数チェック
+        this.emailErrors.push(MSG_EMAIL_MAX);
+      } else if (!this.validEmail(this.registerForm.email)) {
+        // 下記のメソッドで形式チェック
+        this.emailErrors.push(MSG_EMAIL_TYPE);
+      }
+      // パスワードのバリデーション
+      if (!this.registerForm.password) {
+        // 空欄チェック
+        this.passwordErrors.push(MSG_PASS_EMPTY);
+      } else if (this.registerForm.password.length < 6) {
+        // 文字数チェック
+        this.passwordErrors.push(MSG_PASS_LESS);
+      }
+      // パスワード再入力のバリデーション
+      if (!this.registerForm.password_confirmation) {
+        // 空欄チェック
+        this.confirmErrors.push(MSG_PASS_EMPTY);
+      } else if (this.registerForm.password_confirmation.length < 6) {
+        // 文字数チェック
+        this.confirmErrors.push(MSG_PASS_LESS);
+      } else if (
+        this.registerForm.password !== this.registerForm.password_confirmation
+      ) {
+        // パスワード一致チェック
+        this.confirmErrors.push(MSG_RETYPE);
+      }
+      // エラーメッセージを格納した配列を全て結合
+      const results = this.nameErrors.concat(
+        this.emailErrors,
+        this.passwordErrors,
+        this.confirmErrors
+      );
+      // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      if (!results.length) {
+        this.register();
+      }
+    },
+    // メールアドレス形式チェック
+    validEmail(email) {
+      const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return regex.test(email);
+    },
+
+    // ユーザー登録WebAPI呼び出し
     async register() {
       // dispatch()でauthストアのresigterアクションを呼び出す
       await this.$store.dispatch("auth/register", this.registerForm);
@@ -122,7 +255,6 @@ export default {
           type: "success",
           timeout: 4000,
         });
-
         // VueRouterのpush()でホーム画面へ遷移
         this.$router.push({ name: "home" });
       }

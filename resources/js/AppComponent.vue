@@ -1,5 +1,5 @@
 <template>
-  <div id="wrap">
+  <div>
     <!-- ローディング中の表示 -->
     <Loader />
     <header id="header">

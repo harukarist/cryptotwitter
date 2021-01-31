@@ -8,6 +8,10 @@
   @include mq(medium) {
     margin-top: 0;
   }
+  @include mq() {
+    margin-top: 0;
+    padding: $space--l;
+  }
   &--bg {
     background: $bg-color--main;
   }
