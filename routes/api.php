@@ -51,13 +51,10 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // Twitterアカウントフォロー解除API
   Route::post('/twitter/{id}/unfollow', 'UnfollowTargetController@destroyUsersFollow');
   // 自動フォロー適用API
-  Route::get('/autofollow/apply', 'AutofollowController@applyAutoFollow');
+  Route::post('/autofollow/apply', 'AutofollowController@applyAutoFollow');
   // 自動フォロー解除API
-  Route::get('/autofollow/cancel', 'AutofollowController@cancelAutoFollow');
+  Route::post('/autofollow/cancel', 'AutofollowController@cancelAutoFollow');
 
   // Twitterアカウントの削除
-  Route::get("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");
-
-  // ティッカー情報取得（管理者用）
-  Route::get('/tickers', 'TickerController@index');
+  Route::post("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");
 });
