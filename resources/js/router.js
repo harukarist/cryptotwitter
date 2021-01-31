@@ -8,7 +8,6 @@ import HomeComponent from './pages/HomeComponent';
 import NewsListComponent from './pages/NewsListComponent';
 import TrendListComponent from './pages/TrendListComponent';
 import TwitterListComponent from './pages/TwitterListComponent';
-import TickerListComponent from './pages/TickerListComponent';
 import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import PassRequestComponent from './pages/PassRequestComponent';
@@ -118,12 +117,6 @@ const router = new VueRouter({
       path: '/password/reset/:token',
       name: 'password.reset',
       component: PassResetComponent,
-    },
-    {
-      path: '/tickers',
-      name: 'tickers.index',
-      component: TickerListComponent,
-      meta: { requiresAuth: true }, //認証必須
     },
     {
       path: '/error',

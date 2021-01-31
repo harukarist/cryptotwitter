@@ -74,7 +74,7 @@ const actions = {
     context.commit('setApiStatus', null)
 
     // サーバーのAPIを呼び出し
-    const response = await axios.get('api/auth/twitter/delete')
+    const response = await axios.post('api/auth/twitter/delete')
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -99,7 +99,7 @@ const actions = {
     context.commit('setApiStatus', null)
 
     // サーバーのAPIを呼び出し
-    const response = await axios.get('api/autofollow/apply')
+    const response = await axios.post('api/autofollow/apply')
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -123,7 +123,7 @@ const actions = {
     context.commit('setApiStatus', null)
 
     // サーバーのAPIを呼び出し
-    const response = await axios.get('api/autofollow/cancel')
+    const response = await axios.post('api/autofollow/cancel')
 
     // API通信が成功した場合
     if (response.status === OK) {
