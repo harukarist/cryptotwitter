@@ -8,11 +8,13 @@
             メールアドレス
           </label>
           <input
-            type="text"
+            type="email"
             class="c-input c-input--large c-input--box"
             id="login-email"
             v-model="loginForm.email"
-            autocomplete
+            required
+            autocomplete="email"
+            autofocus
           />
           <ul v-if="emailErrors" class="c-error__item">
             <li v-for="error in emailErrors" :key="error" class="c-error__text">
@@ -36,7 +38,8 @@
             class="c-input c-input--large c-input--box"
             id="login-password"
             v-model="loginForm.password"
-            autocomplete
+            required
+            autocomplete="current-password"
           />
           <ul v-if="passwordErrors" class="c-error__item">
             <li
@@ -57,11 +60,28 @@
             </li>
           </ul>
         </div>
+        <div class="c-form__group">
+          <label class="c-checkbox__label" for="remember">
+            <input
+              class="c-checkbox__input"
+              type="checkbox"
+              id="remember"
+              v-model="loginForm.remember"
+            />
+            <span class="c-checkbox__dummyInput"></span>
+            <span class="c-checkbox__text">ログイン状態を保持する</span></label
+          >
+        </div>
 
         <div class="c-form__button">
           <button type="submit" class="c-btn__main-outline">ログイン</button>
         </div>
       </form>
+      <div class="c-form__link">
+        <RouterLink :to="{ name: 'password.request' }" class="c-form__link">
+          パスワードをお忘れの方はこちら
+        </RouterLink>
+      </div>
     </div>
   </div>
 </template>
@@ -76,6 +96,7 @@ export default {
       loginForm: {
         email: "",
         password: "",
+        remember: "",
       },
       emailErrors: [],
       passwordErrors: [],
@@ -103,7 +124,7 @@ export default {
 
       // メールアドレスのバリデーション
       if (!this.loginForm.email) {
-        // 空欄チェック
+        // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
       } else if (this.loginForm.email.length > 50) {
         // 文字数チェック
@@ -114,7 +135,7 @@ export default {
       }
       // パスワードのバリデーション
       if (!this.loginForm.password) {
-        // 空欄チェック
+        // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
       } else if (this.loginForm.password.length < 6) {
         // 文字数チェック

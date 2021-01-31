@@ -27,8 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/auth/twitter/login', 'Auth\TwitterAuthController@redirectToProvider');
     // Twitterログイン認証（TwitterAPIからのコールバック）
     Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
-
 });
+// パスワード
+// Auth::routes(['register' => false, 'reset'=> true, 'verify'=> true]);
 
 // 初回アクセス時のみLaravel側でapp.blade.phpを表示し、
 // 以後はフロント側のVueRouterでルーティングを行う
@@ -39,6 +40,3 @@ Route::middleware(['cors'])->group(function () {
         return view('layouts.app');
     })->where('any', '.+');
 });
-
-// // 会員登録・ログイン・ログアウト・パスワード再設定
-// Auth::routes();

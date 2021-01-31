@@ -13,12 +13,16 @@ use Illuminate\Http\Request;
 |
 */
 
-// ユーザー登録
+// ユーザー登録API
 Route::post('/register', 'Auth\RegisterController@register')->name('register');
-// ログイン
+// ログインAPI
 Route::post('/login', 'Auth\LoginController@login')->name('login');
-// ログアウト
+// ログアウトAPI
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+// パスワードリセットメール送信API
+Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
+
 // ログインユーザー情報を返却
 Route::get('/user', function () {
   return Auth::user();
@@ -57,6 +61,3 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // ティッカー情報取得（管理者用）
   Route::get('/tickers', 'TickerController@index');
 });
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });

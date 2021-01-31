@@ -7,10 +7,12 @@ import TopComponent from './pages/TopComponent';
 import HomeComponent from './pages/HomeComponent';
 import NewsListComponent from './pages/NewsListComponent';
 import TrendListComponent from './pages/TrendListComponent';
-import TwitterList from './pages/TwitterList';
+import TwitterListComponent from './pages/TwitterListComponent';
 import TickerListComponent from './pages/TickerListComponent';
 import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
+import PassRequestComponent from './pages/PassRequestComponent';
+import PassResetComponent from './pages/PassResetComponent';
 import SystemError from './errors/SystemError';
 import NotFound from './errors/NotFound';
 
@@ -66,7 +68,7 @@ const router = new VueRouter({
     {
       path: '/twitter',
       name: 'twitter.index',
-      component: TwitterList,
+      component: TwitterListComponent,
       meta: { requiresAuth: true }, //認証必須,
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
       props: route => {
@@ -106,6 +108,16 @@ const router = new VueRouter({
           next()
         }
       }
+    },
+    {
+      path: '/password/request',
+      name: 'password.request',
+      component: PassRequestComponent,
+    },
+    {
+      path: '/password/reset/:token',
+      name: 'password.reset',
+      component: PassResetComponent,
     },
     {
       path: '/tickers',

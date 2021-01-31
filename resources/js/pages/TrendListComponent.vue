@@ -66,7 +66,7 @@
                 <li
                   v-for="trend in items.trends"
                   :key="trend.id"
-                  class="c-checkbox p-trend__select-item"
+                  class="c-checkbox__icon p-trend__select-item"
                 >
                   <input
                     type="checkbox"

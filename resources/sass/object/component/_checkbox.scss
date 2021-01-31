@@ -1,0 +1,100 @@
+.c-checkbox {
+  // FontAwesomeアイコンを使ったチェックボックス
+  &__icon {
+    display: none;
+    & + label {
+        display: block;
+        cursor: pointer;
+        margin: 10px;
+        color: $font-color--muted; //ラベルのテキスト
+        &::before { // チェックボックス
+            content: '\f058';
+            font-family: FontAwesome;
+            color: $bg-color--border;
+            font-size: 18px;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            padding: 0;
+            margin: -2px 0 0 0;
+            box-sizing: border-box;
+        }
+        // ホバー時
+        &:hover {
+          color: $bg-color--accent; //ラベルのテキスト
+          &::before {
+            color: $bg-color--accent; //チェックボックス
+          }
+        }
+    }
+    // チェック状態
+    &:checked + label {
+      color: $bg-color--active; //ラベルのテキスト
+      &::before {
+          color: $bg-color--active; //チェックボックス
+      }
+    }  
+  }
+}
+
+.c-checkbox__label {
+  padding: 12px 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.c-checkbox__input {
+  margin: 0;
+  width: 0;
+  padding: 0;
+  opacity: 0;
+}
+//チェック時のチェックボックス背景
+.c-checkbox__input:checked + .c-checkbox__dummyInput {
+  background: $bg-color--accent;
+}
+//チェック時のチェックマーク左側
+.c-checkbox__input:checked + .c-checkbox__dummyInput::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40%;
+  height: 3px;
+  border-radius: 2px;
+  transform: translate(-6px, 5px) rotateZ(-135deg);
+  transform-origin: 2px 2px;
+  background: #FFFFFF;
+}
+//チェック時のチェックマーク右側
+.c-checkbox__input:checked + .c-checkbox__dummyInput::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 76%;
+  height: 3px;
+  border-radius: 2px;
+  transform: translate(-6px, 5px) rotateZ(-45deg);
+  transform-origin: 2px 2px;
+  background: #FFFFFF;
+}
+//未チェック時のチェックボックス背景
+.c-checkbox__dummyInput {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 24px;
+  height: 24px;
+  border: solid 2px transparent;
+  background: rgba(0,0,0, .1);
+  border-radius: 4px;
+}
+.c-checkbox__text {
+  margin-left: 12px;
+  display: block;
+}

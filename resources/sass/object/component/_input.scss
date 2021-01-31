@@ -45,42 +45,6 @@
   color: $font-color--muted;
 }
 
-// チェックボックス
-input[type="checkbox"] {
-  display: none;
-  & + label {
-      display: block;
-      cursor: pointer;
-      margin: 10px;
-      color: $font-color--muted; //ラベルのテキスト
-      &::before { // チェックボックス
-          content: '\f058';
-          font-family: FontAwesome;
-          color: $bg-color--border;
-          font-size: 18px;
-          display: inline-block;
-          vertical-align: middle;
-          text-align: center;
-          padding: 0;
-          margin: -2px 0 0 0;
-          box-sizing: border-box;
-      }
-      // ホバー時
-      &:hover {
-        color: $bg-color--accent; //ラベルのテキスト
-        &::before {
-          color: $bg-color--accent; //チェックボックス
-        }
-      }
-  }
-  // チェック状態
-  &:checked + label {
-      color: $bg-color--active; //ラベルのテキスト
-      &::before {
-          color: $bg-color--active; //チェックボックス
-      }
-  }  
-}
 // .c-checkbox {
 //   label {
 //     display: inline;
