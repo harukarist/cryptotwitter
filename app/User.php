@@ -3,15 +3,17 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    // ソフトデリート用のトレイトを追加
+    // ソフトデリート用のSoftDeletesトレイトを使用
     use SoftDeletes;
 
+    // 通知用のNotifiableトレイトを使用
     use Notifiable;
 
     /**

@@ -61,8 +61,8 @@ class TwitterAuthController extends Controller
         try {
             // OAuthプロバイダからユーザー情報を取得
             $oauth_user = Socialite::driver('twitter')->user();
-        } catch (Exception $e) {
-            abort(404);
+        } catch (InvalidArgumentException $e) {
+            return abort(404);
             // return false;
             // 認証エラーの場合はエラーメッセージを返却
             // return redirect('/twitter')->with('flash_message', __('Twitterアカウントの連携を中断しました'));
