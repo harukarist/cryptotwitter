@@ -1,13 +1,12 @@
 <template>
   <div>
-    <!-- ローディング中の表示 -->
-    <Loader />
     <header id="header">
       <HeaderComponent />
     </header>
     <main id="main">
+      <LoaderComponent />
       <!-- メッセージ表示 -->
-      <Message />
+      <InnerMessage />
       <!-- VueRouterでコンポーネントを表示 -->
       <RouterView />
     </main>
@@ -18,18 +17,18 @@
 </template>
 
 <script>
+import InnerMessage from "./components/InnerMessage";
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
-import Message from "./components/Message";
-import Loader from "./components/Loader";
+import LoaderComponent from "./components/LoaderComponent";
 import { NOT_FOUND, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./utility";
 
 export default {
   components: {
+    InnerMessage,
     HeaderComponent,
     FooterComponent,
-    Message,
-    Loader,
+    LoaderComponent,
   },
   computed: {
     errorCode() {

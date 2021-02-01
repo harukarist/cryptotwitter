@@ -12,8 +12,11 @@ import './bootstrap'; //bootstrap.jsの設定ファイルをインポート
 import Vue from 'vue';
 import router from './router'; // router.jsからルーティング定義をインポート
 import store from './store'; // ストアをインポート
-import AppComponent from './AppComponent.vue'; // ルートコンポーネントをインポート 
-import MessageComponent from './components/MessageComponent.vue'; // ルートコンポーネントをインポート 
+import AppComponent from './AppComponent.vue'; // コンテンツのルートコンポーネント
+import MessageComponent from './components/MessageComponent.vue'; // フラッシュメッセージ
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+import LoaderComponent from "./components/LoaderComponent";
 import '../sass/app.scss'; //Sassの起点ファイルをインポート
 
 /**
@@ -48,9 +51,11 @@ const createApp = async () => {
         store, // Vuexのストアを読み込む
         components: {
             AppComponent,
-            MessageComponent
-        }, // ルートコンポーネントを宣言
-        // template: '<App />' // ルートコンポーネントを描画
+            MessageComponent,
+            HeaderComponent,
+            FooterComponent,
+            LoaderComponent
+        },
     });
 }
 // 初回起動時のログインチェック、Vueインスタンス生成を呼び出し

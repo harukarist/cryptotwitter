@@ -12,6 +12,8 @@ import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import PassRequestComponent from './pages/PassRequestComponent';
 import PassResetComponent from './pages/PassResetComponent';
+import ProfileEditComponent from './pages/ProfileEditComponent';
+import WithdrawComponent from './pages/WithdrawComponent';
 import SystemError from './errors/SystemError';
 import NotFound from './errors/NotFound';
 
@@ -77,6 +79,18 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/edit',
+      name: 'edit',
+      component: ProfileEditComponent,
+      meta: { requiresAuth: true }, //認証必須,
+    },
+    {
+      path: '/withdraw',
+      name: 'withdraw',
+      component: WithdrawComponent,
+      meta: { requiresAuth: true }, //認証必須,
+    },
+    {
       path: '/register',
       name: 'register',
       component: RegisterComponent,
@@ -123,11 +137,11 @@ const router = new VueRouter({
       name: 'errors.system',
       component: SystemError,
     },
-    {
-      path: '*', //定義されたルート以外のパス
-      name: 'errors.notfound',
-      component: NotFound,
-    },
+    // {
+    //   path: '*', //定義されたルート以外のパス
+    //   name: 'errors.notfound',
+    //   component: NotFound,
+    // },
   ]
 })
 
