@@ -10,21 +10,21 @@
       <div class="c-tab">
         <ul class="c-tab__list">
           <li
-            class="c-tab__item"
+            class="c-tab__item c-tab__item--three"
             :class="{ 'c-tab__item--active': column === 'tweet_hour' }"
             @click="sortByHour"
           >
             過去1時間の<br class="u-sp--only" />ツイート
           </li>
           <li
-            class="c-tab__item"
+            class="c-tab__item c-tab__item--three"
             :class="{ 'c-tab__item--active': column === 'tweet_day' }"
             @click="sortByDay"
           >
             過去24時間の<br class="u-sp--only" />ツイート
           </li>
           <li
-            class="c-tab__item"
+            class="c-tab__item c-tab__item--three"
             :class="{ 'c-tab__item--active': column === 'tweet_week' }"
             @click="sortByWeek"
           >
@@ -66,14 +66,14 @@
                 <li
                   v-for="trend in items.trends"
                   :key="trend.id"
-                  class="c-checkbox__icon p-trend__select-item"
+                  class="p-trend__select-item"
                 >
                   <input
                     type="checkbox"
+                    class="c-checkbox__icon"
                     v-bind:id="trend.id"
                     v-bind:value="trend.id"
                     v-model="selectedItems"
-                    @click="showMessage()"
                   />
                   <label v-bind:for="trend.id">
                     {{ trend.currency_name }}
@@ -230,18 +230,6 @@ export default {
       // JSONのdata項目を格納
       this.items = response.data;
     },
-    // fetchTrends() {
-    //   axios
-    //     .get(`/api/trend`)
-    //     .then((res) => {
-    //       // レスポンスを配列に格納
-    //       this.items = res.data;
-    //     })
-    //     .catch((e) => {
-    //       // エラー時
-    //       console.error(e);
-    //     });
-    // },
     sortByHour() {
       this.tabNum = 1;
       this.column = "tweet_hour";
