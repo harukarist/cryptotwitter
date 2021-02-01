@@ -19,6 +19,7 @@ Route::post('/register', 'Auth\RegisterController@register')->name('register');
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウトAPI
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
 // パスワードリセットメール送信API
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
@@ -57,4 +58,9 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
 
   // Twitterアカウントの削除
   Route::post("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");
+
+  // ユーザー情報編集API
+  Route::post('/edit', 'AccountController@edit')->name('edit');
+  // ユーザー退会API
+  Route::post('/withdraw', 'AccountController@withdraw')->name('withdraw');
 });

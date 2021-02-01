@@ -13,6 +13,7 @@ const getters = {
   check: state => !!state.usersTwitter,  //ログインチェック（二重否定で確実に真偽値を返す）
   usersTwitter: state => state.usersTwitter ? state.usersTwitter : '',
   totalAutoFollow: state => state.totalAutoFollow ? state.totalAutoFollow : '',
+  usersAvatar: state => state.usersTwitter ? state.usersTwitter.twitter_avatar : '../img/avatar_noimage.png',
 }
 
 // ステートの値を同期処理で更新するミューテーション
@@ -100,6 +101,7 @@ const actions = {
 
     // サーバーのAPIを呼び出し
     const response = await axios.post('api/autofollow/apply')
+    console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {
