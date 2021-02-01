@@ -1,4 +1,5 @@
 .p-trend {
+  padding-bottom: $space--xxl;
   &__head {
     padding-top: $space--l;
     padding-bottom: $space--s;
@@ -34,6 +35,9 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      @include mq() {
+        padding-left: $space--l;
+      }
     }
     &-item {
       flex-grow: 1;
@@ -42,10 +46,13 @@
       &:nth-child(6n) {
         margin-right: 0; //6番目の要素は右に余白を空けない
       }
+      @include mq(medium) {
+        margin-right: 5px;
+      }
       @include mq() {
-        margin-right: 10px;
-        width: calc((100% - (10px * 1)) / 2 ); //スマホ表示時は1行に2銘柄を均等配置
-        &:nth-child(2n) {
+        margin-right: 5px;
+        width: calc((100% - (5px * 2)) / 3 ); //スマホ表示時は1行に2銘柄を均等配置
+        &:nth-child(3n) {
           margin-right: 0; //2番目の要素は右に余白を空けない
         }
       }

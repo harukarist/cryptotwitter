@@ -1,11 +1,9 @@
 .c-checkbox {
   // FontAwesomeアイコンを使ったチェックボックス
   &__icon {
-    display: none;
     & + label {
         display: block;
         cursor: pointer;
-        margin: 10px;
         color: $font-color--muted; //ラベルのテキスト
         &::before { // チェックボックス
             content: '\f058';
