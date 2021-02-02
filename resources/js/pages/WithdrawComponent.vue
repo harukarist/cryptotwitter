@@ -8,7 +8,9 @@
           本当に削除しますか？<br />
         </p>
         <div class="c-form__button">
-          <button type="submit" class="c-btn__accent">アカウントを削除</button>
+          <button type="submit" class="c-btn__danger">
+            アカウントを削除する
+          </button>
         </div>
       </form>
       <div class="c-form__link">
