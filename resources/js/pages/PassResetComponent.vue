@@ -3,7 +3,7 @@
     <h2 class="c-container__title">パスワードの再設定</h2>
     <div class="c-form__wrapper">
       <form class="c-form--small" @submit.prevent="checkForm">
-        <input type="hidden" name="token" :value="token" />
+        <!-- <input type="hidden" name="token" :value="token" /> -->
         <p class="c-section__text">
           新しいパスワードを設定してください。<br />
         </p>
@@ -19,13 +19,12 @@
             v-model="resetForm.email"
             autocomplete="email"
           />
-          <ul v-if="emailErrors" class="c-error__item">
-            <li v-for="error in emailErrors" :key="error" class="c-error__text">
-              {{ error }}
-            </li>
-          </ul>
-          <ul v-if="apiErrors" class="c-error__item">
-            <li v-for="error in apiErrors" :key="error" class="c-error__text">
+          <ul v-if="emailErrors">
+            <li
+              v-for="error in emailErrors"
+              :key="error"
+              class="c-valid__error"
+            >
               {{ error }}
             </li>
           </ul>
@@ -44,20 +43,18 @@
             required
             autocomplete="new-password"
           />
-          <ul v-if="passwordErrors" class="c-error__item">
+          <ul v-if="passwordErrors">
             <li
               v-for="error in passwordErrors"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
           </ul>
-          <ul v-if="apiErrors" class="c-error__item">
-            <li v-for="error in apiErrors" :key="error" class="c-error__text">
-              {{ error }}
-            </li>
-          </ul>
+          <p v-if="apiError" class="c-valid__error">
+            {{ apiError }}
+          </p>
         </div>
         <div class="c-form__group">
           <label for="password-confirmation" class="c-form__label"
@@ -72,11 +69,11 @@
             required
             autocomplete="new-password"
           />
-          <ul v-if="confirmErrors" class="c-error__item">
+          <ul v-if="confirmErrors">
             <li
               v-for="error in confirmErrors"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
@@ -87,11 +84,6 @@
           <button type="submit" class="c-btn__main-outline">送信する</button>
         </div>
       </form>
-      <div class="c-form__link">
-        <RouterLink :to="{ name: 'login' }" class="c-form__link">
-          ログインページへ戻る
-        </RouterLink>
-      </div>
     </div>
   </div>
 </template>
@@ -106,10 +98,13 @@ export default {
       resetForm: {
         email: "",
         password: "",
+        password_confirmation: "",
+        token: "",
       },
       emailErrors: [],
-      apiErrors: [],
-      token: "",
+      passwordErrors: [],
+      confirmErrors: [],
+      apiError: "",
     };
   },
   methods: {
@@ -139,22 +134,22 @@ export default {
       }
 
       // パスワードのバリデーション
-      if (!this.registerForm.password) {
+      if (!this.resetForm.password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.registerForm.password.length < 6) {
+      } else if (this.resetForm.password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       }
       // パスワード再入力のバリデーション
-      if (!this.registerForm.password_confirmation) {
+      if (!this.resetForm.password_confirmation) {
         // 未入力チェック
         this.confirmErrors.push(MSG_PASS_EMPTY);
-      } else if (this.registerForm.password_confirmation.length < 8) {
+      } else if (this.resetForm.password_confirmation.length < 8) {
         // 文字数チェック
         this.confirmErrors.push(MSG_PASS_LESS);
       } else if (
-        this.registerForm.password !== this.registerForm.password_confirmation
+        this.resetForm.password !== this.resetForm.password_confirmation
       ) {
         // パスワード一致チェック
         this.confirmErrors.push(MSG_RETYPE);
@@ -182,18 +177,20 @@ export default {
       console.log(response);
       // API通信が成功した場合
       if (response.status === OK) {
-        // フラッシュメッセージを表示
-        this.$store.dispatch("message/showMessage", {
-          text: "パスワードを変更しました",
-          type: "success",
-          timeout: 2000,
-        });
-        // VueRouterのpush()でホーム画面へ遷移
-        this.$router.push({ name: "hoome" });
-      }
-      // バリデーションエラー時はエラーメッセージのステートを更新
-      if (response.status === UNPROCESSABLE_ENTITY) {
-        this.apiErrors = response.data.errors;
+        // パスワード変更が完了した場合
+        if (response.data.result === "OK") {
+          // フラッシュメッセージを表示
+          this.$store.dispatch("message/showMessage", {
+            text: "パスワードを変更しました",
+            type: "success",
+            timeout: 2000,
+          });
+          // VueRouterのpush()でホーム画面へ遷移
+          this.$router.push({ name: "home" });
+        } else {
+          // パスワード変更できなかった場合はエラーメッセージを表示
+          this.apiError = response.data.message;
+        }
       } else {
         // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
         // 別モジュールのミューテーションをcommitするためroot: trueを指定する
@@ -203,8 +200,8 @@ export default {
   },
   created() {
     // ページ読み込み時にURLのトークンを格納
-    this.token = this.$route.token;
-    // this.token = this.$route.query;
+    this.resetForm.token = this.$route.params["token"];
+    this.resetForm.email = this.$route.query.email;
   },
 };
 </script>

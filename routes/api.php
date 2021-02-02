@@ -14,20 +14,24 @@ use Illuminate\Http\Request;
 */
 
 // ユーザー登録API
-Route::post('/register', 'Auth\RegisterController@register')->name('register');
+Route::post('/register', 'Auth\RegisterController@register');
 // ログインAPI
-Route::post('/login', 'Auth\LoginController@login')->name('login');
+Route::post('/login', 'Auth\LoginController@login');
 // ログアウトAPI
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+Route::post('/logout', 'Auth\LoginController@logout');
 
 // パスワードリセットメール送信API
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::post('/password/reset', 'Auth\ResetPasswordController@reset');
+// パスワードリセットフォーム
+Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+// パスワードリセット
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 // ログインユーザー情報を返却
-Route::get('/user', function () {
+Route::post('/user', function () {
   return Auth::user();
 })->name('user');
+
 
 // ログインユーザーのTwitter認証チェック（認証済みであればアカウント情報を返却）
 Route::get('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAuth');
@@ -59,8 +63,11 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // Twitterアカウントの削除
   Route::post("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");
 
+  // パスワード変更
+  Route::post('/password/change', 'Auth\ChangePasswordController@ChangePassword')->name('password.change');
   // ユーザー情報編集API
-  Route::post('/edit', 'AccountController@edit')->name('edit');
+  Route::post('/account/change', 'Auth\ChangeAccountController@changeAccount')->name('account.change');
+
   // ユーザー退会API
-  Route::post('/withdraw', 'AccountController@withdraw')->name('withdraw');
+  Route::post('/account/withdraw', 'Auth\ChangeAccountController@withdraw')->name('account.withdraw');
 });

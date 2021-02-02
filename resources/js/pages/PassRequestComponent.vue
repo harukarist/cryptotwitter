@@ -2,9 +2,9 @@
   <div class="c-container--bg">
     <h2 class="c-container__title">パスワードをお忘れの方</h2>
     <div class="c-form__wrapper">
-      <form class="c-form--small" @submit.prevent="checkForm">
-        <p class="c-section__text">
-          ご登録いただいたメールアドレスをご入力ください。<br />
+      <form class="c-form--large" @submit.prevent="checkForm">
+        <p class="c-form__text">
+          ユーザー登録時にご登録いただいたメールアドレスをご入力ください。<br />
           メールアドレス宛に、パスワード変更ページのURLが記載されたメールが送信されます。<br />
         </p>
         <div class="c-form__group">
@@ -19,20 +19,24 @@
             v-model="requestForm.email"
             autocomplete="email"
           />
-          <ul v-if="emailErrors" class="c-error__item">
-            <li v-for="error in emailErrors" :key="error" class="c-error__text">
-              {{ error }}
-            </li>
-          </ul>
-          <ul v-if="apiErrors" class="c-error__item">
+          <ul v-if="emailErrors">
             <li
-              v-for="error in apiErrors"
+              v-for="error in emailErrors"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
           </ul>
+          <p
+            v-if="apiMessage"
+            :class="{
+              'c-valid__error': apiResult === 'NG',
+              'c-valid__success': apiResult === 'OK',
+            }"
+          >
+            {{ apiMessage }}
+          </p>
         </div>
 
         <div class="c-form__button">
@@ -57,10 +61,10 @@ export default {
       // v-modelでフォームの入力値と紐付けるデータ変数
       requestForm: {
         email: "",
-        password: "",
       },
       emailErrors: [],
-      apiErrors: [],
+      apiMessage: "",
+      apiResult: "",
     };
   },
   methods: {
@@ -104,27 +108,16 @@ export default {
       console.log(response);
       // API通信が成功した場合
       if (response.status === OK) {
-        // フラッシュメッセージを表示
-        this.$store.dispatch("message/showMessage", {
-          text: "メールを送信しました",
-          type: "success",
-          timeout: 2000,
-        });
+        this.apiMessage = response.data.message;
+        this.apiResult = response.data.result;
         // // VueRouterのpush()でホーム画面へ遷移
         // this.$router.push({ name: "home" });
-      }
-      // バリデーションエラー時はエラーメッセージのステートを更新
-      if (response.status === UNPROCESSABLE_ENTITY) {
-        this.apiErrors = response.data.errors;
       } else {
         // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
         // 別モジュールのミューテーションをcommitするためroot: trueを指定する
         this.$store.commit("error/setCode", response.status);
       }
     },
-    // clearError() {
-    //   this.$store.commit("auth/setLoginErrorMessages", null);
-    // },
   },
   // created() {
   //   // ページ読み込み時にエラーメッセージをクリア

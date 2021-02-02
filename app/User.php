@@ -17,8 +17,8 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
+     * 値の代入を許可するカラム
      * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -26,8 +26,8 @@ class User extends Authenticatable
     ];
 
     /**
+     * サーバーから返却するレスポンスに含めないカラム
      * The attributes that should be hidden for arrays.
-     *
      * @var array
      */
     protected $hidden = [
@@ -35,8 +35,8 @@ class User extends Authenticatable
     ];
 
     /**
+     * DBから取得した値の型を変換するカラム
      * The attributes that should be cast to native types.
-     *
      * @var array
      */
     protected $casts = [

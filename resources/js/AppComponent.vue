@@ -1,18 +1,10 @@
 <template>
   <div>
-    <header id="header">
-      <HeaderComponent />
-    </header>
-    <main id="main">
-      <LoaderComponent />
-      <!-- メッセージ表示 -->
-      <InnerMessage />
-      <!-- VueRouterでコンポーネントを表示 -->
-      <RouterView />
-    </main>
-    <footer id="footer">
-      <FooterComponent />
-    </footer>
+    <LoaderComponent />
+    <!-- メッセージ表示 -->
+    <InnerMessage />
+    <!-- VueRouterでコンポーネントを表示 -->
+    <RouterView />
   </div>
 </template>
 
@@ -40,10 +32,16 @@ export default {
     // watchプロパティでerrorCodeの値の変更を監視
     errorCode: {
       async handler(val) {
-        // サーバー内部エラーの場合は500エラーページへ遷移
+        // サーバー内部エラーの場合はエラーメッセージを表示
         if (val === INTERNAL_SERVER_ERROR) {
           // this.$router.push("/error");
-          this.$router.push({ name: "errors.system" });
+          // this.$router.push({ name: "errors.system" });
+          this.$store.dispatch("message/showMessage", {
+            text:
+              "システムエラーが発生しました。お手数ですが、時間を置いて再度お試しください。",
+            type: "danger",
+            timeout: 6000,
+          });
         } else if (val === UNAUTHORIZED) {
           console.log("認証エラー");
           // 認証エラーの場合はログインページへ移動

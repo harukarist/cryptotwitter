@@ -11,8 +11,6 @@ const mutations = {
   // codeステートの値を更新する処理
   setCode(state, code) {
     state.code = code
-    console.log('setCode')
-    console.log(code)
   }
 }
 

@@ -12,7 +12,7 @@ import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import PassRequestComponent from './pages/PassRequestComponent';
 import PassResetComponent from './pages/PassResetComponent';
-import ProfileEditComponent from './pages/ProfileEditComponent';
+import ChangeAccountComponent from './pages/ChangeAccountComponent';
 import WithdrawComponent from './pages/WithdrawComponent';
 import SystemError from './errors/SystemError';
 import NotFound from './errors/NotFound';
@@ -31,16 +31,7 @@ const router = new VueRouter({
       path: '/',
       name: 'top',
       component: TopComponent,
-      beforeEnter(to, from, next) {
-        // authストアのcheckゲッターでログイン状態をチェック
-        if (store.getters['auth/check']) {
-          // ログイン済みの場合はホーム画面に遷移
-          next('/home')
-        } else {
-          // 未ログインの場合はトップ画面を表示
-          next()
-        }
-      }
+      meta: { onlyGuest: true }, //ログイン前のみアクセス可能
     },
     {
       path: '/home',
@@ -81,7 +72,7 @@ const router = new VueRouter({
     {
       path: '/edit',
       name: 'edit',
-      component: ProfileEditComponent,
+      component: ChangeAccountComponent,
       meta: { requiresAuth: true }, //認証必須,
     },
     {
@@ -94,43 +85,19 @@ const router = new VueRouter({
       path: '/register',
       name: 'register',
       component: RegisterComponent,
-      // ページコンポーネントが切り替わる直前のナビゲーションガード
-      beforeEnter(to, from, next) {
-        // authストアのcheckゲッターでログイン状態をチェック
-        if (store.getters['auth/check']) {
-          // ログイン済みの場合はホーム画面に遷移
-          next('/home')
-        } else {
-          // 未ログインの場合はユーザー登録画面を表示
-          next()
-        }
-      }
+      meta: { onlyGuest: true }, //ログイン前のみアクセス可能
     },
     {
       path: '/login',
       name: 'login',
       component: LoginComponent,
-      // ページコンポーネントが切り替わる直前のナビゲーションガード
-      beforeEnter(to, from, next) {
-        // authストアのcheckゲッターでログイン状態をチェック
-        if (store.getters['auth/check']) {
-          // ログイン済みの場合はホーム画面に遷移
-          next('/home')
-        } else {
-          // 未ログインの場合はログイン画面を表示
-          next()
-        }
-      }
+      meta: { onlyGuest: true }, //ログイン前のみアクセス可能
     },
     {
       path: '/password/request',
       name: 'password.request',
       component: PassRequestComponent,
-    },
-    {
-      path: '/password/reset/:token',
-      name: 'password.reset',
-      component: PassResetComponent,
+      meta: { onlyGuest: true }, //ログイン前のみアクセス可能
     },
     {
       path: '/error',
@@ -145,11 +112,14 @@ const router = new VueRouter({
   ]
 })
 
-// ルーターナビゲーションの前にフック
+// ルーターナビゲーションの前にフック（ページコンポーネントが切り替わる直前のナビゲーションガード）
 router.beforeEach((to, from, next) => {
   // 認証必須のルートで認証チェックがfalseならログイン画面へ
   if (to.matched.some(record => record.meta.requiresAuth) && !store.getters['auth/check']) {
     next({ name: 'login' });
+    // ログイン前のみアクセス可のルートで認証チェックがtrueならホーム画面へ
+  } else if (to.matched.some(record => record.meta.onlyGuest) && store.getters['auth/check']) {
+    next({ name: 'home' });
   } else {
     // ローディング表示をオン
     store.commit('loader/start')

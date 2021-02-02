@@ -25,15 +25,24 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <!-- Vueアプリケーションを表示 -->
     <div id="app">
+        <header id="header">
+            <header-component />
+        </header>
+        <!-- フラッシュメッセージを表示 -->
         @if (session('flash_message'))
-            <!-- フラッシュメッセージを表示 -->
             <message-component message="{{ session('flash_message') }}"></message-component>
-        @endif        
-        <app-component></app-component>
+        @endif
+        @if (session('status'))
+            <message-component message="{{ session('status') }}"></message-component>
+        @endif
+        <main id="main">
+            @yield('content')
+            <app-component></app-component>
+        </main>
+        <footer id="footer">
+            <footer-component />
+        </footer>
     </div>
-
-    @yield('content')
 </body>
 </html>

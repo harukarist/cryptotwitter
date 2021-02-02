@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
@@ -19,4 +21,23 @@ class ForgotPasswordController extends Controller
     */
 
     use SendsPasswordResetEmails;
+
+    public function sendResetLinkEmail(Request $request)
+    {
+        //パスワードリセットメール送信のリクエストをチェックする
+        $this->validateEmail($request);
+        $response = $this->broker()->sendResetLink(
+            $request->only('email')
+        );
+        // 結果をJSON形式で返却
+        return $response == Password::RESET_LINK_SENT
+            ? response()->json([
+                'message' => trans($response),
+                'result' => 'OK'
+            ])
+            : response()->json([
+                'message' => trans($response),
+                'result' => 'NG'
+            ]);
+    }
 }

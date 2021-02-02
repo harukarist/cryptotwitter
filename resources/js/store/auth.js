@@ -85,7 +85,6 @@ const actions = {
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
     const response = await axios.post('/api/login', data)
-
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
@@ -142,10 +141,11 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.get('api/user')
+    const response = await axios.post('/api/user')
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
     const data = response.data || null
-
+    console.log('currentUser')
+    console.log(response)
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
@@ -160,14 +160,15 @@ const actions = {
     // 別モジュールのミューテーションをcommitするためroot: trueを指定する
     context.commit('error/setCode', response.status, { root: true })
   },
+
   // ユーザー情報編集処理
-  async edit(context, data) {
+  async changeAccount(context, data) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
 
     // 非同期処理でサーバーのAPIを呼び出し
-    const response = await axios.post('/api/edit', data)
-
+    const response = await axios.post('/api/account/change', data)
+    console.log(response)
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
@@ -194,7 +195,7 @@ const actions = {
     context.commit('setApiStatus', null)
 
     // 非同期処理でサーバーのAPIを呼び出し
-    const response = await axios.post('/api/withdraw', data)
+    const response = await axios.post('/api/account/withdraw', data)
 
     // API通信が成功した場合
     if (response.status === OK) {

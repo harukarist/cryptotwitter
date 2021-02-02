@@ -141,6 +141,8 @@ return [
         "email" => "メールアドレス",
         "password" => "パスワード",
         "password_confirmation" => "パスワード(確認用)",
+        "current_password" => "現在のパスワード",
+        "new_password" => "新しいパスワード",
     ],
 
 ];
