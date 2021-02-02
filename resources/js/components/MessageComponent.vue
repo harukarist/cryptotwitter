@@ -2,11 +2,11 @@
   <transition name="slide-item">
     <div
       v-if="flashMessage && isShow"
-      class="c-message"
-      :class="`c-message--success`"
+      class="c-alert p-flash"
+      :class="`c-alert--success`"
     >
-      <p class="c-message__text">{{ flashMessage }}</p>
-      <i class="fas fa-times c-message__close" @click="closeMsgBox()"></i>
+      <p class="p-flash__text">{{ flashMessage }}</p>
+      <i class="fas fa-times p-flash__close" @click="closeMsgBox()"></i>
     </div>
   </transition>
 </template>

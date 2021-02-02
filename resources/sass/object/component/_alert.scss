@@ -1,12 +1,8 @@
-.c-message {
+.c-alert {
   padding: $space--m $space--l;
   margin: $space--s $space--m;
   border-radius: 4px;
   text-align: center;
-  position: fixed;
-  top: $header-height + 10px;
-  right: 10px;
-  z-index: 5;
   &--success {
     color: $font-color--white;
     background-color: rgba($bg-color--active, 0.98);
@@ -19,14 +15,18 @@
     color: $font-color--white;
     background-color: rgba($bg-color--notice, 0.98);
   }
-  &__text {
-    display: inline-block;
-    padding-right: $space--l;
-  }
-  &__close {
-    position: absolute;
-    right: 10px;
-    top: 50%; //閉じるボタンの高さをボックスの上下中央に配置
-    transform: translateY(-50%); //要素自身の高さの半分だけ上にずらす
+  &__inline {
+    &--success {
+      color: $font-color--active;
+      background-color: rgba($bg-color--active, 0.1);
+    }
+    &--danger {
+      color: $font-color--danger;
+      background-color: rgba($bg-color--danger, 0.1);
+    }
+    &--notice {
+      color: $font-color--notice;
+      background-color: rgba($bg-color--notice, 0.1);
+    }
   }
 }

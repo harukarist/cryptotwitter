@@ -1,0 +1,12 @@
+.c-valid {
+  &__error {
+    margin-left: $space--m;
+    color: $font-color--danger;
+    font-weight: normal;
+  }
+  &__success {
+    margin-left: $space--m;
+    color: $font-color--accent;
+    font-weight: normal;
+  }
+}

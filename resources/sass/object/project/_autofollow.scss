@@ -1,0 +1,27 @@
+.p-autofollow {
+  margin-bottom: $space--l;
+  &__guide {
+    color: $font-color--accent;
+    margin-bottom: $space--m;
+  }
+  &__status {
+    display: inline-block;
+    margin-bottom: $space--m;
+  }
+  &__total {
+    color: $font-color--accent;
+    margin-bottom: $space--m;
+  }
+  &__text {
+    &.num {
+      font-weight: bold;
+    }
+    &--small {
+      color: $font-color--muted;
+      font-size: $font-size--m;
+    }
+  }
+  &__cancel {
+    font-size: $font-size--m;
+  }
+}

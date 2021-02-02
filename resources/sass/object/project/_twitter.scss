@@ -68,20 +68,15 @@
       font-size: $font-size--m;
       color: $font-color--muted;
     }
-  }
-}
-.p-autofollow {
-  margin-bottom: $space--l;
-  &__guide {
-    color: $font-color--muted;
-    margin-bottom: $space--s;
-  }
-  &__guide-text{
-    &.num {
-      font-weight: bold;
+    &__confirm {
+      padding-top: $space--l;
+      padding-bottom: $space--l;
+      margin-top: $space--l;
+      margin-bottom: $space--l;
+      border: 1px solid $bg-color--danger;
+      &-text {
+        margin-bottom: $space--l;
+      }
     }
-  }
-  &__cancel {
-    font-size: $font-size--m;
   }
 }

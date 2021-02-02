@@ -29,18 +29,19 @@
 // 再利用可能な共通パーツ
 // プレフィックスに「c-」
 
+@import "object/component/_alert";
 @import "object/component/_btn";
 @import "object/component/_checkbox";
 @import "object/component/_container";
-@import "object/component/_error";
+@import "object/component/_flashmsg";
 @import "object/component/_form";
 @import "object/component/_input";
 @import "object/component/_loader";
-@import "object/component/_message";
 @import "object/component/_pagination";
 @import "object/component/_section";
 @import "object/component/_tab";
 @import "object/component/_table";
+@import "object/component/_valid";
 
 // -----------------------------------
 // Project
@@ -48,7 +49,7 @@
 // 各ページ固有の使い回さないパーツ
 // プレフィックスに「p-」
 
-@import "object/project/_follow";
+@import "object/project/_autofollow";
 @import "object/project/_footer-menu";
 @import "object/project/_hero";
 @import "object/project/_nav-menu";

@@ -44,28 +44,3 @@
 ::placeholder {
   color: $font-color--muted;
 }
-
-// .c-checkbox {
-//   label {
-//     display: inline;
-//     cursor: pointer;
-//   }
-//   input[type=checkbox] {
-//     display: none;
-//   }
-//   label:before {
-//     display: inline-block;
-//     width: 22px;
-//     font-family: 'Font Awesome 5 Free';
-//     content: "\f14a";
-//     font-size: 20px;
-//     color: #666;
-//   }
-//   &.is-active {
-//     label:before {
-//       font-family: 'Font Awesome 5 Free';
-//       content: "\f14a";
-//       color: #28A7E1;
-//     }
-//   }
-// }

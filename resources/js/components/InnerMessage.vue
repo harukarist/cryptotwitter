@@ -2,25 +2,18 @@
   <transition name="slide-item">
     <div
       v-if="flashMessage"
-      class="c-message"
-      :class="`c-message--${messageType}`"
+      class="c-alert p-flash"
+      :class="`c-alert--${messageType}`"
     >
-      <p class="c-message__text">{{ flashMessage }}</p>
-      <i class="fas fa-times c-message__close" @click="closeMsgBox()"></i>
+      <p class="p-flash__text">{{ flashMessage }}</p>
+      <i class="fas fa-times p-flash__close" @click="closeMsgBox()"></i>
     </div>
   </transition>
 </template>
 
 <script>
-// VuexのmapState関数をインポート
-import { mapState } from "vuex";
-
 export default {
   computed: {
-    // ...mapState({
-    //   flashMessage: (state) => state.message.text,
-    //   messageType: (state) => state.message.type,
-    // }),
     flashMessage() {
       return this.$store.state.message.text;
     },
@@ -30,7 +23,6 @@ export default {
   },
   methods: {
     closeMsgBox() {
-      // this.$store.dispatch("message/closeMessage");
       this.$store.commit("message/clearMessage");
     },
   },
