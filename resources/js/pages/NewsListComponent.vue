@@ -3,7 +3,7 @@
     <section class="c-section">
       <h5 class="c-section__title">関連ニュース一覧</h5>
       <p class="c-section__text">
-        仮想通貨に関する最新ニュースをお届けします。<br />
+        仮想通貨に関する最新ニュースを<br class="u-sp--only">お届けします。<br />
       </p>
       <div class="p-news">
         <div class="p-news__item" v-for="item in news" :key="item.title">

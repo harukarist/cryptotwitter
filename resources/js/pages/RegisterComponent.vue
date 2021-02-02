@@ -18,19 +18,16 @@
             autocomplete="name"
             autofocus
           />
-          <ul v-if="nameErrors" class="c-error__item">
-            <li v-for="error in nameErrors" :key="error" class="c-error__text">
+          <ul v-if="nameErrors">
+            <li v-for="error in nameErrors" :key="error" class="c-valid__error">
               {{ error }}
             </li>
           </ul>
-          <ul
-            v-if="registerErrors && registerErrors.name"
-            class="c-error__item"
-          >
+          <ul v-if="registerErrors && registerErrors.name">
             <li
               v-for="error in registerErrors.name"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
@@ -47,19 +44,20 @@
             required
             autocomplete="email"
           />
-          <ul v-if="emailErrors" class="c-error__item">
-            <li v-for="error in emailErrors" :key="error" class="c-error__text">
+          <ul v-if="emailErrors">
+            <li
+              v-for="error in emailErrors"
+              :key="error"
+              class="c-valid__error"
+            >
               {{ error }}
             </li>
           </ul>
-          <ul
-            v-if="registerErrors && registerErrors.email"
-            class="c-error__item"
-          >
+          <ul v-if="registerErrors && registerErrors.email">
             <li
               v-for="error in registerErrors.email"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
@@ -79,23 +77,20 @@
             required
             autocomplete="new-password"
           />
-          <ul v-if="passwordErrors" class="c-error__item">
+          <ul v-if="passwordErrors">
             <li
               v-for="error in passwordErrors"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
           </ul>
-          <ul
-            v-if="registerErrors && registerErrors.password"
-            class="c-error__item"
-          >
+          <ul v-if="registerErrors && registerErrors.password">
             <li
               v-for="error in registerErrors.password"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
@@ -114,11 +109,11 @@
             required
             autocomplete="new-password"
           />
-          <ul v-if="confirmErrors" class="c-error__item">
+          <ul v-if="confirmErrors">
             <li
               v-for="error in confirmErrors"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
@@ -216,7 +211,7 @@ export default {
       if (!this.registerForm.password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.registerForm.password.length < 6) {
+      } else if (this.registerForm.password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       }

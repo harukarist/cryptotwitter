@@ -265,13 +265,35 @@ html, body {
   padding-top: 40px;
   padding-bottom: 20px;
   width: 100%;
-  height: 70px;
-  position: absolute;
-  bottom: 0; }
+  height: 70px; }
   @media screen and (max-width: 599px) {
     #footer {
       font-size: 12px;
       min-height: 70px; } }
+
+.c-alert {
+  padding: 10px 15px;
+  margin: 5px 10px;
+  border-radius: 4px;
+  text-align: center; }
+  .c-alert--success {
+    color: #FCFCFC;
+    background-color: rgba(90, 180, 189, 0.98); }
+  .c-alert--danger {
+    color: #FCFCFC;
+    background-color: rgba(187, 73, 38, 0.98); }
+  .c-alert--notice {
+    color: #FCFCFC;
+    background-color: rgba(153, 153, 153, 0.98); }
+  .c-alert__inline--success {
+    color: #247A83;
+    background-color: rgba(90, 180, 189, 0.1); }
+  .c-alert__inline--danger {
+    color: #DC5B34;
+    background-color: rgba(187, 73, 38, 0.1); }
+  .c-alert__inline--notice {
+    color: #999999;
+    background-color: rgba(153, 153, 153, 0.1); }
 
 .c-btn, .c-btn__accent, .c-btn__main, .c-btn__main-outline, .c-btn__twitter, .c-btn__twitter-outline, .c-btn__danger, .c-btn__muted-outline {
   border: none;
@@ -454,10 +476,6 @@ html, body {
       margin-top: 20px;
       margin-bottom: 20px; } }
 
-.c-error__text {
-  margin-left: 10px;
-  color: #DC5B34; }
-
 .c-form__wrapper {
   max-width: 600px;
   margin-left: auto;
@@ -466,6 +484,18 @@ html, body {
   padding-bottom: 40px;
   background: #FFFFFF;
   border-radius: 4px; }
+
+.c-form--large {
+  width: 80%;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box; }
+  @media screen and (max-width: 599px) {
+    .c-form--large {
+      width: 100%;
+      padding-left: 20px;
+      padding-right: 20px; } }
 
 .c-form--small {
   width: 60%;
@@ -481,6 +511,11 @@ html, body {
       width: 100%;
       padding-left: 20px;
       padding-right: 20px; } }
+
+.c-form__text {
+  text-align: left;
+  line-height: 1.8;
+  margin-bottom: 30px; }
 
 .c-form__label {
   color: #19465B;
@@ -612,33 +647,6 @@ html, body {
   40% {
     box-shadow: 0 -2em;
     height: 5em; } }
-
-.c-message {
-  padding: 10px 15px;
-  margin: 5px 10px;
-  border-radius: 4px;
-  text-align: center;
-  position: fixed;
-  top: 70px;
-  right: 10px;
-  z-index: 5; }
-  .c-message--success {
-    color: #FCFCFC;
-    background-color: rgba(90, 180, 189, 0.98); }
-  .c-message--danger {
-    color: #FCFCFC;
-    background-color: rgba(187, 73, 38, 0.98); }
-  .c-message--notice {
-    color: #FCFCFC;
-    background-color: rgba(153, 153, 153, 0.98); }
-  .c-message__text {
-    display: inline-block;
-    padding-right: 15px; }
-  .c-message__close {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%); }
 
 .c-pagination {
   text-align: center; }
@@ -772,6 +780,49 @@ html, body {
     @media screen and (max-width: 599px) {
       .c-table__tbody td {
         font-size: 0.8em; } }
+
+.c-valid__error {
+  margin-left: 10px;
+  color: #DC5B34;
+  font-weight: normal; }
+
+.c-valid__success {
+  margin-left: 10px;
+  color: #358558;
+  font-weight: normal; }
+
+.p-autofollow {
+  margin-bottom: 15px; }
+  .p-autofollow__guide {
+    color: #358558;
+    margin-bottom: 10px; }
+  .p-autofollow__status {
+    display: inline-block;
+    margin-bottom: 10px; }
+  .p-autofollow__total {
+    color: #358558;
+    margin-bottom: 10px; }
+  .p-autofollow__text.num {
+    font-weight: bold; }
+  .p-autofollow__text--small {
+    color: #707F89;
+    font-size: 14px; }
+  .p-autofollow__cancel {
+    font-size: 14px; }
+
+.p-flash {
+  position: fixed;
+  top: 70px;
+  right: 10px;
+  z-index: 5; }
+  .p-flash__text {
+    display: inline-block;
+    padding-right: 15px; }
+  .p-flash__close {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%); }
 
 .p-footer__list {
   display: flex;
@@ -1323,16 +1374,14 @@ html, body {
   .p-twitter-user__delete {
     font-size: 14px;
     color: #707F89; }
-
-.p-autofollow {
-  margin-bottom: 15px; }
-  .p-autofollow__guide {
-    color: #707F89;
-    margin-bottom: 5px; }
-  .p-autofollow__guide-text.num {
-    font-weight: bold; }
-  .p-autofollow__cancel {
-    font-size: 14px; }
+  .p-twitter-user__confirm {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #bb4926; }
+    .p-twitter-user__confirm-text {
+      margin-bottom: 15px; }
 
 .u-font__num {
   font-family: "Nunito Sans", sans-serif;

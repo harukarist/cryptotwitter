@@ -78,7 +78,7 @@
           v-if="isActiveDropdown && !isActiveSpMenu"
         >
           <ul>
-            <li class="p-nav-menu__dropdown-item">
+            <li class="p-nav-menu__dropdown-item" @click="closeDropdown">
               <RouterLink
                 :to="{ name: 'edit' }"
                 active-class="is-active"
@@ -87,7 +87,7 @@
                 アカウント設定
               </RouterLink>
             </li>
-            <li class="p-nav-menu__dropdown-item">
+            <li class="p-nav-menu__dropdown-item" @click="closeDropdown">
               <a class="p-nav-menu__dropdown-link" @click="logout"
                 >ログアウト</a
               >
@@ -217,6 +217,7 @@ export default {
     },
     closeSpMenu() {
       this.isActiveSpMenu = false;
+      this.isActiveDropdown = false;
     },
     toggleDropdown() {
       this.isActiveDropdown = !this.isActiveDropdown;

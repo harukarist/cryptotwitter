@@ -21,9 +21,13 @@ class AutoFollowController extends Controller
         $user_id = Auth::id();
         $twitter_user = TwitterUser::where('user_id', $user_id)
             ->update(['use_autofollow' => true]);
+        if (!$twitter_user) {
+            // 更新できなかった場合は404エラーを返却
+            return abort(404);
+        }
 
-        // Twitterアカウント情報を返却(更新できなかった場合は404エラーを返却)
-        return  $twitter_user ?? abort(404);
+        // Twitterアカウント情報を返却
+        return  $twitter_user;
     }
 
     // 自動フォローを解除
@@ -34,8 +38,13 @@ class AutoFollowController extends Controller
         $twitter_user = TwitterUser::where('user_id', $user_id)
             ->update(['use_autofollow' => false]);
 
-        // Twitterアカウント情報を返却(更新できなかった場合は404エラーを返却)
-        return  $twitter_user ?? abort(404);
+        if (!$twitter_user) {
+            // 更新できなかった場合は404エラーを返却
+            return abort(404);
+        }
+
+        // Twitterアカウント情報を返却
+        return  $twitter_user;
     }
 
     /**

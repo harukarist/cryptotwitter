@@ -18,14 +18,28 @@
 
         <AutoFollow />
 
-        <a class="p-twitter-user__delete" @click.stop="deleteTwitterAuth()">
+        <a class="p-twitter-user__delete" @click="showConfirm = !showConfirm">
           Twitterアカウント連携を解除する
         </a>
+        <div v-if="showConfirm" class="p-twitter-user__confirm">
+          <p class="p-twitter-user__confirm-text">
+            Twitterアカウント連携を解除すると<br />
+            これまでの自動フォロー履歴も<br
+              class="u-sp--only"
+            />削除されます。<br />
+            連携を解除しますか？<br />
+          </p>
+          <a class="c-btn__danger" @click.stop="deleteTwitterAuth()">
+            Twitterアカウント連携を解除
+          </a>
+        </div>
       </div>
     </div>
     <div v-if="!isLogin" class="p-twitter__login">
       <div class="p-twitter__welcome">
-        <p class="p-twitter__welcome-text">自動フォローをはじめる</p>
+        <p class="p-twitter__welcome-text">
+          Twitterアカウントを登録して<br />自動フォローを始める
+        </p>
       </div>
       <a class="c-btn__twitter" href="/auth/twitter/login">
         <i class="fab fa-twitter"></i>
@@ -49,6 +63,11 @@ export default {
       type: Boolean,
       required: true,
     },
+  },
+  data() {
+    return {
+      showConfirm: false,
+    };
   },
   computed: {
     ...mapState({

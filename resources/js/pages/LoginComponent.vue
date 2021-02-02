@@ -16,16 +16,20 @@
             autocomplete="email"
             autofocus
           />
-          <ul v-if="emailErrors" class="c-error__item">
-            <li v-for="error in emailErrors" :key="error" class="c-error__text">
+          <ul v-if="emailErrors">
+            <li
+              v-for="error in emailErrors"
+              :key="error"
+              class="c-valid__error"
+            >
               {{ error }}
             </li>
           </ul>
-          <ul v-if="loginErrors && loginErrors.email" class="c-error__item">
+          <ul v-if="loginErrors && loginErrors.email">
             <li
               v-for="error in loginErrors.email"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
@@ -41,20 +45,20 @@
             required
             autocomplete="current-password"
           />
-          <ul v-if="passwordErrors" class="c-error__item">
+          <ul v-if="passwordErrors">
             <li
               v-for="error in passwordErrors"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
           </ul>
-          <ul v-if="loginErrors && loginErrors.password" class="c-error__item">
+          <ul v-if="loginErrors && loginErrors.password">
             <li
               v-for="error in loginErrors.password"
               :key="error"
-              class="c-error__text"
+              class="c-valid__error"
             >
               {{ error }}
             </li>
@@ -137,7 +141,7 @@ export default {
       if (!this.loginForm.password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.loginForm.password.length < 6) {
+      } else if (this.loginForm.password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       }

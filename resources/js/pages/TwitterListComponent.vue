@@ -6,8 +6,8 @@
         Twitterの仮想通貨関連アカウントを<br
           class="u-sp--only"
         />集めました。<br />
-        自動フォロー機能を使うことで
-        {{ totalItems }}件以上の<br class="u-sp--only" />ユーザーを<br />
+        自動フォロー機能を使うことで<br class="u-sp--only" />
+        {{ totalItems }}件以上のユーザーを<br />
         まとめてフォローできます。<br />
       </p>
 
@@ -119,13 +119,13 @@ export default {
           // フォロー済みフラグをtrueにしてフォローボタンの表示を変更
           target.followed_by_user = true;
         }
-        // フラッシュメッセージを表示
-        this.$store.dispatch("message/showMessage", {
-          text: "フォローしました",
-          type: "success",
-          timeout: 2000,
-        });
         return target;
+      });
+      // フラッシュメッセージを表示
+      this.$store.dispatch("message/showMessage", {
+        text: "フォローしました",
+        type: "success",
+        timeout: 2000,
       });
     },
     // フォロー解除メソッド
@@ -142,13 +142,13 @@ export default {
           // フォロー済みフラグをfalseにしてフォローボタンの表示を変更
           target.followed_by_user = false;
         }
-        // フラッシュメッセージを表示
-        this.$store.dispatch("message/showMessage", {
-          text: "フォロー解除しました",
-          type: "success",
-          timeout: 2000,
-        });
         return target;
+      });
+      // フラッシュメッセージを表示
+      this.$store.dispatch("message/showMessage", {
+        text: "フォロー解除しました",
+        type: "success",
+        timeout: 2000,
       });
     },
   },

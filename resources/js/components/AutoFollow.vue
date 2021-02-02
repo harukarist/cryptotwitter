@@ -1,12 +1,24 @@
 <template>
   <div>
-    <div class="p-autofollow" v-if="usersTwitter.use_autofollow">
+    <div class="p-autofollow">
       <div class="p-autofollow__guide">
-        <p class="p-autofollow__guide-text">
-          自動フォロー機能を利用中です。<br />
-          15分ごとに最大15ユーザーまでフォローします。
+        <p
+          class="p-autofollow__status c-alert__inline--success"
+          v-if="usersTwitter.use_autofollow"
+        >
+          自動フォロー機能を利用中です
         </p>
-        <p v-if="totalAutoFollow" class="p-autofollow__guide-text">
+        <p
+          class="p-autofollow__status c-alert__inline--danger"
+          v-if="!usersTwitter.use_autofollow"
+        >
+          自動フォロー機能を利用していません
+        </p>
+
+        <p
+          v-if="totalAutoFollow"
+          class="p-autofollow__total c-alert__inline--notice"
+        >
           自動フォロー累計数：
           <span class="num">
             {{ totalAutoFollow }}
@@ -14,18 +26,27 @@
           件
         </p>
       </div>
-
-      <a class="c-btn__muted-outline" @click.stop="cancelAutoFollow()">
+      <div class="p-autofollow__guide" v-if="usersTwitter.use_autofollow">
+        <p class="p-autofollow__text--small">
+          15分毎に最大15ユーザー、1日最大1000ユーザーまで<br
+            class="u-sp--only"
+          />毎日ランダムに自動でフォローします。
+        </p>
+              <a class="c-btn__muted-outline" @click.stop="cancelAutoFollow()">
         自動フォロー機能を解除する
       </a>
+      </div>
+
     </div>
 
     <div class="p-autofollow" v-if="!usersTwitter.use_autofollow">
       <div class="p-autofollow__guide">
-        <p class="p-autofollow__guide-text">
-          自動フォロー機能を利用すると、<br />未フォローのユーザーをまとめてフォローできます。
+        <p class="p-autofollow__status">
+          自動フォロー機能を利用すると、<br />以下のユーザーを<br
+            class="u-sp--only"
+          />まとめてフォローできます。
         </p>
-        <p v-if="totalAutoFollow" class="p-autofollow__guide-text">
+        <p v-if="totalAutoFollow" class="p-autofollow__total">
           自動フォロー機能でこれまで{{ totalAutoFollow }}件フォローしました。
         </p>
       </div>

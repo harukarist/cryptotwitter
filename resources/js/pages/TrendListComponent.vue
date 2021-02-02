@@ -3,9 +3,9 @@
     <section class="c-section">
       <h5 class="c-section__title">トレンド一覧</h5>
       <p class="c-section__text">
-        銘柄名を含むツイートの数をランキング形式でお届けします。<br />
-        気になる銘柄がどのぐらいつぶやかれているか、チェックしてみましょう。<br />
-        銘柄名のリンクをクリックすると、Twitterで該当銘柄のツイートを検索できます。<br />
+        銘柄名を含むツイートの数を<br class="u-sp--only">ランキング形式でお届けします。<br />
+        気になる銘柄のツイート数を<br class="u-sp--only">チェックしてみましょう。<br />
+        銘柄名のリンクをクリックすると、<br class="u-sp--only">Twitterで該当銘柄のツイートを<br class="u-sp--only">検索できます。<br />
       </p>
       <div class="c-tab">
         <ul class="c-tab__list">

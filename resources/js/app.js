@@ -41,7 +41,6 @@ import '../sass/app.scss'; //Sassの起点ファイルをインポート
 const createApp = async () => {
     const userLogin = store.dispatch("auth/currentUser");
     const userTwitter = store.dispatch("twitter/checkAuth");
-    // await store.dispatch('auth/currentUser');
     await Promise.all([userLogin, userTwitter]);
 
     // Vueインスタンスを生成
