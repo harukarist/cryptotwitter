@@ -22,7 +22,6 @@ class AutoFollowController extends Controller
         $user_id = Auth::id();
         // ログインユーザーのレコードをユーザーIDで検索して取得
         $twitter_user = TwitterUser::where('user_id', $user_id)->first();
-        dd($twitter_user);
         // 更新できなかった場合は404エラーを返却
         if (!$twitter_user) {
             return abort(404);
@@ -67,7 +66,7 @@ class AutoFollowController extends Controller
 
         // ターゲット一覧（フォロー対象のTwitterアカウント一覧）を取得
         $target_users = TargetUser::select('id', 'twitter_id')->get();
-        // dd($target_users);
+        
         $max_requests = 15; //自動フォローするアカウント数の上限（15分に15回まで）
         $today = Carbon::today();
 
@@ -98,7 +97,6 @@ class AutoFollowController extends Controller
             $diff = $target_users->diff($follows);
             // オブジェクトからTwitterIDのみ抽出し、配列に変換
             $target_ids = $diff->pluck('twitter_id')->toArray();
-            // dd($targets_ids);
 
             for ($i = 1; $i <= $max_requests; $i++) {
                 // TwitterIDの配列からキーをランダムに1件抽出
