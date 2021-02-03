@@ -2,7 +2,7 @@
   <div>
     <div class="p-autofollow">
       <div class="p-autofollow__guide">
-        <p v-if="totalAutoFollow" class="c-alert__inline--notice">
+        <p v-if="totalAutoFollow" class="p-autofollow__total">
           自動フォロー累計数：
           <span class="num">
             {{ totalAutoFollow }}
@@ -13,20 +13,20 @@
           class="p-autofollow__status c-alert__inline--success"
           v-if="usersTwitter.use_autofollow"
         >
-          <i class="fas fa-mug-hot"></i>自動フォロー機能を利用中です
+          <i class="fas fa-mug-hot p-autofollow__icon"></i
+          >自動フォロー機能を利用中です
         </p>
         <p
           class="p-autofollow__status c-alert__inline--danger"
           v-if="!usersTwitter.use_autofollow"
         >
-          <i class="fas fa-ban"></i>自動フォロー機能を利用していません
+          <i class="fas fa-ban p-autofollow__icon"></i
+          >自動フォロー機能を利用していません
         </p>
       </div>
       <div class="p-autofollow__guide" v-if="usersTwitter.use_autofollow">
         <p class="p-autofollow__text--small">
-          15分毎に最大15ユーザー、1日最大1000ユーザーまで<br
-            class="u-sp--only"
-          />毎日ランダムに自動でフォローします。
+          15分毎に最大15ユーザー、1日最大1000ユーザーまで<br />毎日ランダムに自動でフォローします。
         </p>
         <a class="c-btn__muted--outline" @click.stop="cancelAutoFollow()">
           自動フォロー機能を解除する
@@ -36,8 +36,9 @@
 
     <div class="p-autofollow" v-if="!usersTwitter.use_autofollow">
       <div class="p-autofollow__guide">
-        <p class="p-autofollow__status">
-          自動フォロー機能を利用すると、<br />以下のユーザーを<br
+        <p class="p-autofollow__text--small">
+          自動フォロー機能を利用すると、<br />
+          仮想通貨関連アカウントを<br
             class="u-sp--only"
           />まとめてフォローできます。
         </p>

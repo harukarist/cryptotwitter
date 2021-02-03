@@ -13,7 +13,7 @@ const getters = {
   check: state => !!state.usersTwitter,  //ログインチェック（二重否定で確実に真偽値を返す）
   usersTwitter: state => state.usersTwitter ? state.usersTwitter : '',
   totalAutoFollow: state => state.totalAutoFollow ? state.totalAutoFollow : '',
-  usersAvatar: state => state.usersTwitter ? state.usersTwitter.twitter_avatar : '../img/avatar_noimage.png',
+  usersAvatar: state => state.usersTwitter ? state.usersTwitter.twitter_avatar : '/img/avatar_noimage.png',
 }
 
 // ステートの値を同期処理で更新するミューテーション
