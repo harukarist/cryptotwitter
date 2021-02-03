@@ -2,17 +2,21 @@
   <div>
     <div v-if="isLogin">
       <div class="p-twitter-user">
-        <p class="p-twitter-user__title">あなたのTwitterアカウント</p>
-        <div class="p-twitter-user__head">
+        <p class="p-twitter-user__head">
+          {{ userName }}さんのTwitterアカウント
+        </p>
+        <div class="p-twitter-user__contents">
           <img
             :src="usersTwitter.twitter_avatar"
             class="p-twitter-user__avatar"
             :alt="`${usersTwitter.user_name}'s avatar`"
             @error="noImage"
           />
-          <div class="p-twitter-user__name">
-            <p>{{ usersTwitter.user_name }}</p>
-            <p>@{{ usersTwitter.screen_name }}</p>
+          <div class="p-twitter-user__account">
+            <p class="p-twitter-user__name">{{ usersTwitter.user_name }}</p>
+            <p class="p-twitter-user__screen">
+              @{{ usersTwitter.screen_name }}
+            </p>
           </div>
         </div>
 
@@ -77,6 +81,8 @@ export default {
     ...mapGetters({
       // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
       usersTwitter: "twitter/usersTwitter",
+      // authストアのuserNameゲッターでユーザー名を取得
+      userName: "auth/userName",
     }),
   },
   methods: {

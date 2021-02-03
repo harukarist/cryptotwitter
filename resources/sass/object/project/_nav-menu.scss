@@ -3,10 +3,9 @@
   justify-content: space-between;
   align-items: center; //子要素を上下中央揃え
   color: $font-color--link;
-  // margin-right: $space--xxl;
 
   // スマホ用ドロワーメニュー
-  @include mq() {
+  @include mq(medium) {
     display: block;
     position: absolute;
     top: 0;
@@ -26,8 +25,9 @@
   &__list {
     display: flex;
     align-items: center;
+    margin-right: $space--l;
     // スマホ用ドロワーメニュー
-    @include mq() {
+    @include mq(medium) {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -43,11 +43,8 @@
     &:last-child {
       margin-right: $space--s;
     }
-    @include mq(medium) {
-      font-size: $font-size--m;
-    }
     // スマホ用ドロワーメニュー
-    @include mq(){
+    @include mq(medium){
       margin: $space--xl $space--l;
       &:first-child {
         margin-left: $space--l;
@@ -88,7 +85,7 @@
         border-bottom: 2px solid $bg-color--active;
       }
     }
-    @include mq() {
+    @include mq(medium) {
       text-align: center;
       padding: 0;
       height: 40px;
@@ -107,18 +104,16 @@
     }
   }
   &__dropdown {
-    margin-left: $space--xl;
     height: $header-height;
     display: flex;
     align-items: center;
-    padding-left: $space--xl;
-    padding-right: $space--xl;
+    padding-left: $space--m;
+    padding-right: $space--m;
     transition : all .5s ease-in-out;
     &:hover {
       background: rgba($bg-color--light, .95);
     }
-    @include mq(medium) {
-      margin-left: $space--s;
+    @include mq(large) {
       padding-left: $space--s;
       padding-right: $space--s;
     }
@@ -138,12 +133,6 @@
     font-size: $font-size--m;
     margin-right: $space--s;
     max-width: 200px;
-    @include mq(medium) {
-      font-size: $font-size--s;
-    }
-    @include mq(medium) {
-      max-width: 150px;
-    }
   }
   &__dropdown-icon {
     display: inline-block;
@@ -165,9 +154,6 @@
   }
   &__dropdown-item {
     padding: $space--l $space--xl;
-    @include mq(medium) {
-      font-size: $font-size--m;
-    }
   }
   &__dropdown-link {
     color: $font-color--main;

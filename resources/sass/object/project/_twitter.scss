@@ -39,13 +39,13 @@
     @include mq() {
       width: 100%;
     }
-    &__title {
+    &__head {
+      font-size: $font-size--m;
       margin-bottom: $space--m;
     }
-    &__head {
+    &__contents {
       display: inline-block;
       overflow: hidden;
-      margin-bottom: $space--m;
     }
     &__body {
       margin-bottom: $space--m;
@@ -59,10 +59,16 @@
       border-radius: 50%;
       float: left;
     }
-    &__name {
+    &__account {
       margin-left: $space--l;
       text-align: left;
       float: left;
+    }
+    &__name {
+      font-weight: bold;
+    }
+    &__screen {
+      font-size: $font-size--m;
     }
     &__delete {
       font-size: $font-size--m;

@@ -3,11 +3,12 @@
     <!-- active-class="is-active"で、該当ディレクトリ内にいる時のみis-activeクラスを付与 -->
     <!-- home '/'のみ、子のディレクトリは内包しないよう、exactオプションを使用 -->
     <!-- サイトロゴ -->
-    <h1 class="p-navbar__title">
+    <div class="p-navbar__title">
       <RouterLink :to="{ name: 'top' }" active-class="is-active" exact>
-        CryptoTrend
+        <img src="/img/logo.png" class="p-navbar__title-logo" />
+        <h1 class="p-navbar__title-text">CryptoTrend</h1>
       </RouterLink>
-    </h1>
+    </div>
 
     <!-- ログイン済みユーザー向けメニュー -->
     <div
@@ -128,7 +129,7 @@
           <RouterLink
             :to="{ name: 'login' }"
             active-class="is-active"
-            class="c-btn__main-outline p-nav-menu__btn"
+            class="c-btn__main--outline p-nav-menu__btn"
           >
             ログイン
           </RouterLink>

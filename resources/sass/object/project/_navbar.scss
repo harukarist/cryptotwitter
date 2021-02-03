@@ -2,42 +2,33 @@
   max-width: $site-width;
   margin-left: auto;
   margin-right: auto;
-  padding-left: $space--m;
-  padding-right: $space--m;
   height: $header-height;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  @include mq(medium) {
-    padding-left: $space--s;
-    padding-right: 0;
-  }
-
   &__title {
-    display: inline-block;
-    font-family: $font-family--theme;
-    font-size: $font-size--xl;
-    color: $font-color--main;
-    margin-left: $space--xxl;
-    margin-right: $space--xxl;
+    margin-left: $space--m;
     a {
       color: $font-color--main;
     }
-    @include mq(medium) {
-      margin-left: $space--s;
+    &-logo {
       margin-right: $space--s;
-      font-size: $font-size--default;
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      top: 2px;
     }
-    @include mq() {
-      margin-left: $space--xl;
-      margin-right: $space--xl;
+    &-text {
+      display: inline-block;
+      vertical-align: middle;
+      font-family: $font-family--theme;
       font-size: $font-size--l;
     }
   }
   &__toggle {
     display: none; //トグルメニューはPCサイトでは非表示
-    @include mq() {
+    @include mq(medium) {
       display: block; 
     }
     transition: all .4s;

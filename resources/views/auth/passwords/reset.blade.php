@@ -45,7 +45,7 @@
                         </div>
 
                         <div class="c-form__button">
-                            <button type="submit" class="c-btn__main-outline">
+                            <button type="submit" class="c-btn__main--outline">
                                 {{ __('Reset Password') }}
                             </button>
                         </div>

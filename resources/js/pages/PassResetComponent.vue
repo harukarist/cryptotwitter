@@ -81,7 +81,7 @@
         </div>
 
         <div class="c-form__button">
-          <button type="submit" class="c-btn__main-outline">送信する</button>
+          <button type="submit" class="c-btn__main--outline">送信する</button>
         </div>
       </form>
     </div>

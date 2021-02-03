@@ -3,9 +3,17 @@
     <section class="c-section">
       <h5 class="c-section__title">トレンド一覧</h5>
       <p class="c-section__text">
-        銘柄名を含むツイートの数を<br class="u-sp--only">ランキング形式でお届けします。<br />
-        気になる銘柄のツイート数を<br class="u-sp--only">チェックしてみましょう。<br />
-        銘柄名のリンクをクリックすると、<br class="u-sp--only">Twitterで該当銘柄のツイートを<br class="u-sp--only">検索できます。<br />
+        銘柄名を含むツイートの数を<br
+          class="u-sp--only"
+        />ランキング形式でお届けします。<br />
+        気になる銘柄のツイート数を<br
+          class="u-sp--only"
+        />チェックしてみましょう。<br />
+        銘柄名のリンクをクリックすると、<br
+          class="u-sp--only"
+        />Twitterで該当銘柄のツイートを<br
+          class="u-sp--only"
+        />検索できます。<br />
       </p>
       <div class="c-tab">
         <ul class="c-tab__list">
@@ -45,7 +53,7 @@
                 全{{ sorted.length }}銘柄を表示
               </span>
               <button
-                class="c-btn__muted-outline"
+                class="c-btn__muted--outline"
                 @click="isActive = !isActive"
               >
                 <i v-show="!isActive" class="fas fa-angle-down"></i>
@@ -55,7 +63,7 @@
             </div>
             <div class="p-trend__head-right">
               <span class="u-font__small u-font__muted">
-                更新日時 {{ items.updated_at }}
+                更新日時 <br class="u-sp--only" />{{ items.updated_at }}
               </span>
             </div>
           </div>

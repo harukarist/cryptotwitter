@@ -19,14 +19,14 @@
       <div v-if="isLogin" class="p-target__head-right">
         <button
           v-if="!item.followed_by_user"
-          class="c-btn__twitter-outline p-target__btn"
+          class="c-btn__twitter--outline p-target__btn"
           @click.prevent="follow()"
         >
           フォローする
         </button>
         <button
           v-if="item.followed_by_user"
-          class="c-btn__danger p-target__btn"
+          class="c-btn__danger--outline p-target__btn"
           @click.prevent="unfollow()"
         >
           フォロー解除

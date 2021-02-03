@@ -27,7 +27,7 @@
         </RouterLink>
         <RouterLink
           :to="{ name: 'login' }"
-          class="c-btn__main-outline p-hero__btn"
+          class="c-btn__main--outline p-hero__btn"
         >
           ログイン
         </RouterLink>

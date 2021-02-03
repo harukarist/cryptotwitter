@@ -1,30 +1,40 @@
-.c-alert {
+%alertBase {
   padding: $space--m $space--l;
   margin: $space--s $space--m;
   border-radius: 4px;
   text-align: center;
+}
+
+.c-alert {
+  @extend %alertBase;
   &--success {
+    @extend %alertBase;
     color: $font-color--white;
     background-color: rgba($bg-color--active, 0.98);
   }
   &--danger {
+    @extend %alertBase;
     color: $font-color--white;
     background-color: rgba($bg-color--danger, 0.98);
   }
   &--notice {
+    @extend %alertBase;
     color: $font-color--white;
     background-color: rgba($bg-color--notice, 0.98);
   }
   &__inline {
     &--success {
+      @extend %alertBase;
       color: $font-color--active;
       background-color: rgba($bg-color--active, 0.1);
     }
     &--danger {
+      @extend %alertBase;
       color: $font-color--danger;
       background-color: rgba($bg-color--danger, 0.1);
     }
     &--notice {
+      @extend %alertBase;
       color: $font-color--notice;
       background-color: rgba($bg-color--notice, 0.1);
     }

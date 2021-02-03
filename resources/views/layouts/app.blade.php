@@ -17,6 +17,11 @@
     <!-- preconnectで複数のリクエストを同時に実行 -->
     <link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/android-chrome-256x256.png">
     
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/f2d7c28546.js" crossorigin="anonymous"></script>
