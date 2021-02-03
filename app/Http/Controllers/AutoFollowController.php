@@ -21,7 +21,8 @@ class AutoFollowController extends Controller
         // ログインユーザーのIDを取得
         $user_id = Auth::id();
         // ログインユーザーのレコードをユーザーIDで検索して取得
-        $twitter_user = TwitterUser::where('user_id', $user_id);
+        $twitter_user = TwitterUser::where('user_id', $user_id)->first();
+        dd($twitter_user);
         // 更新できなかった場合は404エラーを返却
         if (!$twitter_user) {
             return abort(404);
@@ -43,7 +44,7 @@ class AutoFollowController extends Controller
         // ログインユーザーのIDを取得
         $user_id = Auth::id();
         // ログインユーザーのレコードをユーザーIDで検索して取得
-        $twitter_user = TwitterUser::where('user_id', $user_id);
+        $twitter_user = TwitterUser::where('user_id', $user_id)->first();
         // 更新できなかった場合は404エラーを返却
         if (!$twitter_user) {
             return abort(404);

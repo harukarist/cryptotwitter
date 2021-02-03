@@ -16,7 +16,7 @@ class TwitterUser extends Model
         'user_name',
         'screen_name',
         'twitter_avatar',
-        'use_autofollow'
+        'use_autofollow',
     ];
 
     /**
@@ -24,7 +24,7 @@ class TwitterUser extends Model
      * @var array
      */
     protected $hidden = [
-        self::CREATED_AT, self::UPDATED_AT,
+        'twitter_token', 'twitter_token_secret', self::CREATED_AT, self::UPDATED_AT,
     ];
 
     /**

@@ -19,8 +19,6 @@
 Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
 Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
 
-
-
 // バッチ処理の手動実行用
 Route::get('/getTweet', 'FetchTweetController@fetchAllTweets');
 Route::get('/getUser', 'FetchTwitterUserController@fetchUsers');
