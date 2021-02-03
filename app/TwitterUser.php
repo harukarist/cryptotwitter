@@ -16,6 +16,7 @@ class TwitterUser extends Model
         'user_name',
         'screen_name',
         'twitter_avatar',
+        'use_autofollow'
     ];
 
     /**
