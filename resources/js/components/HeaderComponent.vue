@@ -189,7 +189,7 @@ export default {
     // APIで取得したアバターがリンク切れの場合
     noImage(element) {
       // 代替画像を表示
-      element.target.src = "../img/avatar_noimage.png";
+      element.target.src = "/img/avatar_noimage.png";
     },
     async logout() {
       // dispatch()でauthストアのlogoutアクションを呼び出す
