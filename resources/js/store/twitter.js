@@ -126,6 +126,7 @@ const actions = {
 
     // サーバーのAPIを呼び出し
     const response = await axios.post('api/autofollow/cancel')
+    console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {

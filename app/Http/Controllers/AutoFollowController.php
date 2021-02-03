@@ -12,19 +12,23 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FollowListController;
 use App\Http\Controllers\FollowTargetController;
 
+// ユーザーからの自動フォロー適用・解除リクエストを受付
 class AutoFollowController extends Controller
 {
     // 自動フォローを適用
     public function applyAutoFollow()
     {
-        // ログインユーザーの自動フォロー利用フラグをtrueに更新
+        // ログインユーザーのIDを取得
         $user_id = Auth::id();
-        $twitter_user = TwitterUser::where('user_id', $user_id)
-            ->update(['use_autofollow' => true]);
+        // ログインユーザーのレコードをユーザーIDで検索して取得
+        $twitter_user = TwitterUser::where('user_id', $user_id);
+        // 更新できなかった場合は404エラーを返却
         if (!$twitter_user) {
-            // 更新できなかった場合は404エラーを返却
             return abort(404);
         }
+        // 自動フォロー利用フラグをtrueに更新
+        $twitter_user->use_autofollow = true;
+        $twitter_user->save();
 
         // Twitterアカウント情報を返却
         return  $twitter_user;
@@ -35,13 +39,18 @@ class AutoFollowController extends Controller
     {
         // ログインユーザーの自動フォロー利用フラグをfalseに更新
         $user_id = Auth::id();
-        $twitter_user = TwitterUser::where('user_id', $user_id)
-            ->update(['use_autofollow' => false]);
 
+        // ログインユーザーのIDを取得
+        $user_id = Auth::id();
+        // ログインユーザーのレコードをユーザーIDで検索して取得
+        $twitter_user = TwitterUser::where('user_id', $user_id);
+        // 更新できなかった場合は404エラーを返却
         if (!$twitter_user) {
-            // 更新できなかった場合は404エラーを返却
             return abort(404);
         }
+        // 自動フォロー利用フラグをfalseに更新
+        $twitter_user->use_autofollow = false;
+        $twitter_user->save();
 
         // Twitterアカウント情報を返却
         return  $twitter_user;
@@ -93,7 +102,9 @@ class AutoFollowController extends Controller
             for ($i = 1; $i <= $max_requests; $i++) {
                 // TwitterIDの配列からキーをランダムに1件抽出
                 $key = array_rand($target_ids);
+                // ターゲット配列から抽出したキーを持つTwitterIDを取得
                 $target_id = $target_ids[$key];
+                // 該当のTwitterIDをフォロー
                 $result = FollowTargetController::createFollow($twitter_user, $target_id);
                 logger()->info("{$result['message']}");
             }
