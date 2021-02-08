@@ -2,9 +2,10 @@
   <div class="c-container--bg">
     <h2 class="c-container__title">アカウントの削除</h2>
     <div class="c-form__wrapper">
-      <form class="c-form--small" @submit.prevent="checkForm">
+      <form class="c-form--large" @submit.prevent="withdraw">
         <p class="c-section__text">
-          アカウントを削除すると、これまでのデータは全て削除されます。<br />
+          アカウントを削除すると、<br />
+          これまでのデータは全て削除されます。<br />
           本当に削除しますか？<br />
         </p>
         <div class="c-form__button">
@@ -28,12 +29,8 @@ import { mapState } from "vuex"; // VuexのmapState関数をインポート
 export default {
   computed: {
     ...mapState({
-      // authストアのステートを参照し、ユーザーデータを取得
-      userData: (state) => state.auth.userData,
       // authストアのステートを参照し、API通信の成否ステータスを取得
       apiStatus: (state) => state.auth.apiStatus,
-      // authストアのステートを参照し、エラーメッセージを取得
-      editErrors: (state) => state.auth.editErrorMessages,
     }),
   },
   methods: {
