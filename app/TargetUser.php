@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -47,6 +48,13 @@ class TargetUser extends Model
     protected $hidden = [
         'tweet_id', self::CREATED_AT, self::UPDATED_AT,
     ];
+
+
+    // 日付のフォーマット
+    public function getTweetedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format("Y.m.d H:m");
+    }
 
     /**
      * アクセサ - followed_by_user

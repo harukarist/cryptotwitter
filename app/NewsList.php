@@ -27,6 +27,6 @@ class NewsList extends Model
     // 日付のフォーマット
     public function getPublishedDateAttribute($value)
     {
-        return Carbon::parse($value)->format("Y/m/d");
+        return Carbon::parse($value)->format("Y.m.d");
     }
 }
