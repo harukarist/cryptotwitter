@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Abraham\TwitterOAuth\TwitterOAuth;
 
+/**
+ * TwitterAPIで使用する共通メソッド
+ */
 class UsersTwitterOAuth
 {
   /**
-   * ログインユーザーのトークンでOAuth認証
+   * ログインユーザーのトークンでOAuth認証するメソッド
    */
   static public function userOAuth($twitter_user)
   {
@@ -16,26 +19,23 @@ class UsersTwitterOAuth
 
     // ヘルパー関数config()でconfig/twitter.phpを参照してインスタンスを作成
     $config = config('twitter');
-    //接続に必要な接続インスタンスを生成
+    //接続に必要なTwitterOAuth接続インスタンスを生成
     $connect = new TwitterOAuth(
       $config['api_key'],
       $config['secret_key'],
       $user_token,
       $user_secret,
     );
-    // dd($connect);
-    // dd($config['api_key']);
     return $connect;
   }
 
   /**
-   * ログインユーザーのTwitterAPIレートリミットを取得
+   * ログインユーザーのTwitterAPIレートリミットを取得するメソッド
    */
   static public function checkLimit($connect, $category, $endpoint)
   {
     // ログインユーザーのTwitterAPIレートリミットを取得
     $result = $connect->get("application/rate_limit_status");
-    // dd($result);
 
     // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {

@@ -14,27 +14,32 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class FollowListController extends Controller
 {
   /**
-   * ログインユーザーのフォロー一覧を作成
+   * ログインユーザーのフォロー一覧を更新
    */
-
   static public function loginUsersFollowList()
   {
+    // ログインユーザーに紐づくTwitterアカウント情報を取得
     $twitter_user = Auth::user()->twitter_user;
+    // Twitterアカウント情報が取得できない場合は何もせず返却
     if (!$twitter_user) {
       return;
     }
+    // Twitterアカウント情報があればフォロー済み一覧リストを更新
     self::createOrUpdateFollowList($twitter_user);
     return;
   }
 
-  // ユーザーTwitterアカウントのフォロー済み一覧リストをフォローテーブルに保存
+  /**
+   * ユーザーTwitterアカウントのフォロー済み一覧リストをフォローテーブルに保存
+   */
   static public function createOrUpdateFollowList($twitter_user)
   {
     // ユーザーのTwitterアカウントでoAuth認証
     $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
-    // ログインユーザーのフォロー済みID一覧をTwitterAPIから取得
+    // DBに保存されたTwitterアカウント情報のTwitterIDを格納
     $twitter_id = $twitter_user->twitter_id;
+    // ログインユーザーのフォロー済みID一覧をTwitterAPIから取得
     $follows = self::fetchFollowIds($twitter_id, $connect);
 
     // フォロー済みIDが取得できた場合
@@ -66,18 +71,21 @@ class FollowListController extends Controller
   static public function fetchFollowIds($twitter_id, $connect)
   {
     $cursor = '-1'; //初期値は-1
-    $follows = [];
+    $follows = []; //TwitterAPIから取得したフォロー済みIDを格納する配列
     $category = "friends";
     $endpoint = "/friends/ids";
 
     // ユーザーアカウントでのTwitterAPIのレートリミットをチェック
     $limit = UsersTwitterOAuth::checkLimit($connect, $category, $endpoint);
 
+    // リミット上限に達した場合はエラーログを出力
     if (!$limit) {
       logger()->info("フォロー済みID取得のリクエスト上限に達しました");
       return;
     }
 
+    // リミット残り回数がある場合はTwitterAPIから返却されるカーソルが0になるまで
+    // 対象ユーザーのフォローユーザーを取得
     while ($cursor !== 0) {
       $params = array(
         'user_id' => $twitter_id,
@@ -89,10 +97,14 @@ class FollowListController extends Controller
       // 対象ユーザーがフォローしているユーザーをTwitterIDの一覧で取得
       $result = $connect->get($endpoint, $params);
 
+      // フォローユーザーIDが返却された場合
       if (property_exists($result, 'ids')) {
+        // TwitterAPIから取得したフォロー済みIDを配列に格納
         $follows = array_merge($follows, $result->ids);
+        // 次の取得用カーソルを変数に格納
         $cursor = $result->next_cursor;
       } else {
+        // フォローユーザーIDが返却されなかった場合はカーソルを0にしてループを終了
         $cursor = 0;
       }
     }

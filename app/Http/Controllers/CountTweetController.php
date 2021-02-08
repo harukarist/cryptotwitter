@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Batch;
 use App\Trend;
 use App\Tweet;
 use Carbon\Carbon;

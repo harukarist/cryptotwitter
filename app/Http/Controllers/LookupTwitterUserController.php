@@ -16,7 +16,7 @@ class LookupTwitterUserController extends Controller
 
     public function addUsers()
     {
-        $this->screen_name = 'ShengRi,nicosokufx,bitcoinnews1234,daytorayda,prooselector123,bokujyuumai,1000crypto,ZARASOKU';
+        $this->screen_name = '';
 
         // 検索パラメータを生成
         $params = $this->getParams();
