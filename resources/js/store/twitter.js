@@ -4,7 +4,6 @@ import { OK } from '../utility'
 // データを格納するステート
 const state = {
   usersTwitter: null, //ログイン済みユーザーのTwitterアカウント情報を保持
-  totalAutoFollow: 0, //自動フォローでの合計フォロー数
   apiStatus: null, //API呼び出しの成否を格納
 }
 
@@ -12,7 +11,6 @@ const state = {
 const getters = {
   check: state => !!state.usersTwitter,  //ログインチェック（二重否定で確実に真偽値を返す）
   usersTwitter: state => state.usersTwitter ? state.usersTwitter : '',
-  totalAutoFollow: state => state.totalAutoFollow ? state.totalAutoFollow : '',
   usersAvatar: state => state.usersTwitter ? state.usersTwitter.twitter_avatar : '/img/avatar_noimage.png',
 }
 
@@ -22,10 +20,6 @@ const mutations = {
   // userDataステートの値を更新する処理
   setUsersTwitter(state, usersTwitter) {
     state.usersTwitter = usersTwitter
-  },
-  // userDataステートの値を更新する処理
-  setTotalAutoFollow(state, totalAutoFollow) {
-    state.totalAutoFollow = totalAutoFollow
   },
   // userDataステートの値を更新する処理
   setUseAutoFollow(state, isActive) {
@@ -38,27 +32,25 @@ const mutations = {
 }
 
 // 非同期処理を行い、ミューテーションにcommitするアクション
-// アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
 const actions = {
-
-  // Twitter認証チェック
+  /**
+   * Twitter認証チェック
+   */
+  // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
   async checkAuth(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
-
     // サーバーのAPIを呼び出し
-    const response = await axios.get('api/auth/twitter/check')
-
+    const response = await axios.get('/api/auth/twitter/check')
+    console.log('twitterCheck');
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
       context.commit('setApiStatus', true)
       // 返却されたユーザー情報（未ログインの場合はnull）を格納
-      const usersTwitter = response.data.twitter_user || null
-      const totalAutoFollow = response.data.follow_total || null
+      const usersTwitter = response.data || null
       // setUserDataミューテーションでuserDataステートを更新
       context.commit('setUsersTwitter', usersTwitter)
-      context.commit('setTotalAutoFollow', totalAutoFollow)
       return false //処理を終了
     }
     // API通信が失敗した場合
@@ -69,13 +61,15 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
 
-  // Twitterアカウント連携を削除
+  /**
+   * Twitterアカウント連携を削除
+   */
   async deleteAuth(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
 
     // サーバーのAPIを呼び出し
-    const response = await axios.post('api/auth/twitter/delete')
+    const response = await axios.post('/api/auth/twitter/delete')
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -83,7 +77,6 @@ const actions = {
       context.commit('setApiStatus', true)
       // ユーザー情報のステートをnullに初期化
       context.commit('setUsersTwitter', null)
-      context.commit('setTotalAutoFollow', null)
       return false
     }
     // API通信が失敗した場合
@@ -94,14 +87,16 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
 
-  // 自動フォロー利用開始
+  /**
+   * 自動フォロー利用開始
+   */
   async applyAutoFollow(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
 
     // サーバーのAPIを呼び出し
-    const response = await axios.post('api/autofollow/apply')
-    console.log(response);
+    const response = await axios.post('/api/autofollow/apply')
+    // console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -119,14 +114,16 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
 
-  // 自動フォロー利用解除
+  /**
+   * 自動フォロー利用解除
+   */
   async cancelAutoFollow(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
 
     // サーバーのAPIを呼び出し
-    const response = await axios.post('api/autofollow/cancel')
-    console.log(response);
+    const response = await axios.post('/api/autofollow/cancel')
+    // console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {
