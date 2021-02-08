@@ -9,8 +9,8 @@ const mutations = {
   setMessage(state, { text, type }) {
     state.text = text;
     state.type = type;
-    console.log('setMessage');
-    console.log(text);
+    // console.log('setMessage');
+    // console.log(text);
   },
   // フラッシュメッセージのテキストとcssクラスをクリア
   clearMessage(state) {
@@ -18,7 +18,9 @@ const mutations = {
     state.type = '';
     state.timeoutId = -1;
   },
+  // タイムアウトを管理するtimeoutIdをセット
   setTimeoutId(state, value) { state.timeoutId = value },
+  // timeoutIdをクリア
   clearTimeoutId(state) { state.timeoutId = -1 },
 }
 

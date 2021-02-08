@@ -28,14 +28,18 @@ $bg-color--main: #F8FBFE; //主にページ背景の塗りに使用
 $bg-color--light: #F0F4F7; //主にテキスト背景の塗りに使用
 $bg-color--border: #D3D9E0; //主に罫線に使用
 $bg-color--active: #5AB4BD; //主にアクティブな要素の塗りに使用
-
 $bg-color--accent: #5AB4BD;//主にボタンに使用
-// $bg-color--accent: #358558;//主にボタンに使用
+$bg-color--dark: #19465B;
 
 $bg-color--twitter: #1C91DA;
-$bg-color--danger: #bb4926;
+$bg-color--danger: #BB4926;
 $bg-color--notice: #999999;
 $bg-color--lucent-white: rgba(255, 255, 255, 0.9);
+
+$bg-color--gold: #FFD700;
+$bg-color--silver: #C0C0C0;
+$bg-color--bronze: #C47222;
+
 
 $font-size--s: 12px;
 $font-size--m: 14px;

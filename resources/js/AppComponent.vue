@@ -43,7 +43,6 @@ export default {
             timeout: 6000,
           });
         } else if (val === UNAUTHORIZED) {
-          console.log("認証エラー");
           // 認証エラーの場合はログインページへ移動
           // CSRFトークンをリフレッシュ
           await axios.get("/api/refresh-token");

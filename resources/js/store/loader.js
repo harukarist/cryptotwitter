@@ -7,11 +7,11 @@ export default {
   mutations: {
     start(state) {
       state.loading = true
-      console.log('ローディング中')
+      // console.log('ローディング中')
     },
     end(state) {
       state.loading = false
-      console.log('ローディング終了')
+      // console.log('ローディング終了')
     }
   }
 }

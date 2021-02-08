@@ -37,8 +37,8 @@ import '../sass/app.scss'; //Sassの起点ファイルをインポート
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// 画面リロード時にVueインスタンスを再生成してもユーザー情報が表示されるよう、生成前に非同期処理でログインチェックを行う
 const createApp = async () => {
+    // 画面リロード時にVueインスタンスを再生成してもユーザー情報が表示されるよう、生成前に非同期処理でログインチェックを行う
     const userLogin = store.dispatch("auth/currentUser");
     const userTwitter = store.dispatch("twitter/checkAuth");
     await Promise.all([userLogin, userTwitter]);

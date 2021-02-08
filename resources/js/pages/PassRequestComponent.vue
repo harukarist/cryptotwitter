@@ -105,7 +105,7 @@ export default {
         "/api/password/email",
         this.requestForm
       );
-      console.log(response);
+      // console.log(response);
       // API通信が成功した場合
       if (response.status === OK) {
         this.apiMessage = response.data.message;

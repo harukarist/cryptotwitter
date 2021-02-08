@@ -34,20 +34,17 @@
         <header id="header">
             <header-component />
         </header>
-        <!-- フラッシュメッセージを表示 -->
-        @if (session('flash_message'))
-            <message-component message="{{ session('flash_message') }}"></message-component>
-        @endif
-        @if (session('status'))
-            <message-component message="{{ session('status') }}"></message-component>
-        @endif
         <main id="main">
             @yield('content')
-            <app-component></app-component>
+            <app-component />
         </main>
         <footer id="footer">
             <footer-component />
         </footer>
+        <!-- フラッシュメッセージを表示 -->
+        @if (session('status'))
+            <message-component message="{{ session('status') }}" type="{{ session('type')}}" timeout="{{ session('timeout')}}" />
+        @endif
     </div>
 </body>
 </html>

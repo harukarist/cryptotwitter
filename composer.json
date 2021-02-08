@@ -12,6 +12,7 @@
         "abraham/twitteroauth": "^2.0",
         "doctrine/dbal": "2.*",
         "fideloper/proxy": "^4.4",
+        "itsgoingd/clockwork": "^5.0",
         "laravel/framework": "^6.20",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.5"

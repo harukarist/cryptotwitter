@@ -44,13 +44,16 @@
           <div class="p-trend__head">
             <div class="p-trend__head-left">
               <span
-                v-if="selectedItems.length"
+                v-if="
+                  !selectedItems.length ||
+                  items.trends.length === selectedItems.length
+                "
                 class="u-font__small u-font__muted"
               >
-                {{ selectedItems.length }}件を絞り込み表示
+                全{{ sorted.length }}銘柄を表示
               </span>
               <span v-else class="u-font__small u-font__muted">
-                全{{ sorted.length }}銘柄を表示
+                {{ selectedItems.length }}件を絞り込み表示
               </span>
               <button
                 class="c-btn__muted--outline"
@@ -88,6 +91,18 @@
                   </label>
                 </li>
               </ul>
+              <div class="p-trend__select-footer">
+                <a
+                  class="c-btn__muted--outline"
+                  v-if="selectedItems.length"
+                  @click="deselect()"
+                >
+                  選択をすべて解除
+                </a>
+                <a class="c-btn__muted--outline" v-else @click="selectAll()">
+                  すべてを選択
+                </a>
+              </div>
             </div>
           </transition>
 
@@ -111,15 +126,24 @@
                   :key="trend.id"
                   class="p-trend__item"
                 >
-                  <td class="p-trend__order">
-                    {{ index + 1 }}
+                  <td>
+                    <span
+                      class="p-trend__order"
+                      :class="{
+                        'p-trend__order--gold': index === 0,
+                        'p-trend__order--silver': index === 1,
+                        'p-trend__order--bronze': index === 2,
+                      }"
+                    >
+                      {{ index + 1 }}
+                    </span>
                   </td>
-                  <td class="p-trend__name">
+                  <td>
                     <a
                       :href="`https://twitter.com/search?q=${trend.currency_name}`"
                       target="_blank"
                     >
-                      <p class="p-trend__name--text">
+                      <p class="p-trend__name">
                         {{ trend.currency_name }}
                       </p>
                     </a>
@@ -133,13 +157,13 @@
                     </a>
                   </td>
                   <td>
-                    <p v-if="tabNum === 1" class="u-font__num">
+                    <p v-if="column === 'tweet_hour'" class="u-font__num">
                       {{ trend.tweet_hour | localeNum }}
                     </p>
-                    <p v-if="tabNum === 2" class="u-font__num">
+                    <p v-if="column === 'tweet_day'" class="u-font__num">
                       {{ trend.tweet_day | localeNum }}
                     </p>
-                    <p v-if="tabNum === 3" class="u-font__num">
+                    <p v-if="column === 'tweet_week'" class="u-font__num">
                       {{ trend.tweet_week | localeNum }}
                     </p>
                   </td>
@@ -177,7 +201,6 @@ import { OK } from "../utility";
 export default {
   data() {
     return {
-      tabNum: 1,
       column: "tweet_hour",
       items: [], //トレンド一覧を格納する配列を用意
       isActive: false,
@@ -201,12 +224,12 @@ export default {
       if (this.selectedItems.length) {
         // トレンド一覧の配列をlodashで展開し、絞り込み表示の配列と一致する要素のidをshowプロパティに代入
         var arr = this.selectedItems;
-        return _.each(this.items.trends, function (item) {
+        return _.forEach(this.items.trends, function (item) {
           item.show = arr.includes(item.id);
         });
       }
       // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
-      return _.each(this.items.trends, function (item) {
+      return _.forEach(this.items.trends, function (item) {
         item.show = true;
       });
     },
@@ -238,23 +261,33 @@ export default {
       // JSONのdata項目を格納
       this.items = response.data;
     },
+    // sorted()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour() {
-      this.tabNum = 1;
       this.column = "tweet_hour";
     },
     sortByDay() {
-      this.tabNum = 2;
       this.column = "tweet_day";
     },
     sortByWeek() {
-      this.tabNum = 3;
       this.column = "tweet_week";
     },
+    // 絞り込みを解除
+    deselect() {
+      // 絞り込み表示の配列を空にする
+      this.selectedItems = [];
+      // // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
+      // return _.each(this.items.trends, function (item) {
+      //   item.show = true;
+      // });
+    },
+    // 銘柄をすべて選択
+    selectAll() {
+      // 絞り込み表示の配列を一旦空にする
+      this.selectedItems = [];
+      // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
+      this.selectedItems = _.map(this.items.trends, "id");
+    },
   },
-  // mounted() {
-  //   // 画面描画時にgetNews()メソッドを実行してトレンドを取得
-  //   this.fetchTrends();
-  // },
   watch: {
     // $routeを監視し、ページ切り替え時にデータ取得を実行
     $route: {

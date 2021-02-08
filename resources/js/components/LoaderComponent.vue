@@ -1,6 +1,6 @@
 <template>
   <!-- <transition name="loading"> -->
-    <div class="c-loader" v-show="isLoading">
+    <div class="c-loader" v-if="isLoading">
       <div class="c-loader__icon"></div>
     </div>
   <!-- </transition> -->
@@ -10,7 +10,7 @@
 export default {
   computed: {
     isLoading() {
-      console.log("ローディングチェック");
+      // console.log("ローディングチェック");
       return this.$store.state.loader.loading;
     },
   },

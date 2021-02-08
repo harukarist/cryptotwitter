@@ -14,11 +14,11 @@ use Illuminate\Http\Request;
 */
 
 // ユーザー登録API
-Route::post('/register', 'Auth\RegisterController@register');
+Route::post('/register', 'Auth\RegisterController@register')->name('register');
 // ログインAPI
-Route::post('/login', 'Auth\LoginController@login');
+Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウトAPI
-Route::post('/logout', 'Auth\LoginController@logout');
+Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
 // パスワードリセットメール送信API
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -45,6 +45,9 @@ Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
 
 // authミドルウェア、CORSミドルウェアを使用するルート
 Route::group(['middleware' => ['auth', 'cors']], function () {
+  // ログインユーザーのTwitterアカウント情報を更新
+  Route::get('/auth/twitter/update', 'Auth\TwitterAuthController@updateTwitterUser');
+
   // 関連ニュース取得API
   Route::get('/news', 'NewsController@index')->name('news.index');
   // トレンド一覧取得API
@@ -59,6 +62,8 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   Route::post('/autofollow/apply', 'AutoFollowController@applyAutoFollow');
   // 自動フォロー解除API
   Route::post('/autofollow/cancel', 'AutoFollowController@cancelAutoFollow');
+  // 自動フォロー累計数取得API
+  Route::get('/autofollow/count', 'AutoFollowController@countAutoFollow');
 
   // Twitterアカウントの削除
   Route::post("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");
@@ -69,5 +74,5 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   Route::post('/account/change', 'Auth\ChangeAccountController@changeAccount')->name('account.change');
 
   // ユーザー退会API
-  Route::post('/account/withdraw', 'Auth\ChangeAccountController@withdraw')->name('account.withdraw');
+  Route::post('/account/withdraw', 'Auth\ChangeAccountController@withdrawAccount')->name('account.withdraw');
 });

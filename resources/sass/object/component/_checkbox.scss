@@ -4,9 +4,10 @@
     & + label {
         display: block;
         cursor: pointer;
+        padding: $space--s $space--m;
         color: $font-color--muted; //ラベルのテキスト
         &::before { // チェックボックス
-            content: '\f058';
+            content: '\f111';
             font-family: FontAwesome;
             color: $bg-color--border;
             font-size: 18px;
@@ -19,16 +20,20 @@
         }
         // ホバー時
         &:hover {
-          color: $bg-color--accent; //ラベルのテキスト
+          color: $font-color--default; //ラベルのテキスト
           &::before {
-            color: $bg-color--accent; //チェックボックス
+            color: $font-color--default; //チェックボックス
           }
         }
     }
     // チェック状態
     &:checked + label {
       color: $bg-color--active; //ラベルのテキスト
+      background-color: $bg-color--light;
+      border-radius: 100vh; //角丸
       &::before {
+          content: '\f058';
+          font-family: FontAwesome;
           color: $bg-color--active; //チェックボックス
       }
     }  

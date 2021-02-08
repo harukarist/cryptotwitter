@@ -42,6 +42,8 @@
     &-item {
       flex-grow: 1;
       margin-right: 10px;
+      margin-bottom: 10px;
+      line-height: 1.0;
       width: calc((100% - (10px * 5)) / 6 ); //1行に6銘柄を均等配置
       &:nth-child(6n) {
         margin-right: 0; //6番目の要素は右に余白を空けない
@@ -57,14 +59,37 @@
         }
       }
     }
+    &-footer {
+      text-align: right;
+      margin-right: $space--l;
+    }
   }
   &__order {
     text-align: center;
+    background: $bg-color--dark;
+    color: $font-color--white;
+    display: inline-block;
+    border-radius: 50%;
+    width: $font-size--l;
+    height: $font-size--l;
+    line-height: $font-size--l;
+    font-size: $font-size--s;
+    font-weight: bold;
+    &--gold {
+      background: $bg-color--gold;
+      color: $font-color--white;
+    }
+    &--silver {
+      background: $bg-color--silver;
+      color: $font-color--white;
+    }
+    &--bronze {
+      background: $bg-color--bronze;
+      color: $font-color--white;
+    }
   }
   &__name {
-    &--text{
-      font-weight: bold;
-    }
+    font-weight: bold;
     &--small {
       font-size: $font-size--s;
     }

@@ -1,25 +1,40 @@
 .p-nav-menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center; //子要素を上下中央揃え
   color: $font-color--link;
-
   // スマホ用ドロワーメニュー
   @include mq(medium) {
-    display: block;
     position: absolute;
     top: 0;
     right: -100%; //画面外の右端に配置
     background: rgba($bg-color--light, .95);
     width: 80vw;
     height: 100vh;
-    padding-top: 50px; //閉じるボタン分の高さ
+    padding-left: $space--l;
+    padding-top: $header-height; //閉じるボタン分の高さ
     transition : all .5s ease-in-out;
     // ハンバーガーアイコン押下時
     &.is-active {
       transform: translateX(-100%); //右端にあったメニューが100％左に移動
       -webkit-transform: translateX(-100%);
       z-index: 2;
+    }
+  }
+  &__sp-title { // スマホ用ドロワーメニュー用ロゴ
+    display: none;
+    @include mq(medium) {
+      display: block;
+      a {
+        color: $font-color--main;
+      }
+      margin-bottom: $space--xl;
+    }
+  }
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; //子要素を上下中央揃え
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      display: block;
     }
   }
   &__list {
@@ -32,7 +47,7 @@
       flex-direction: column;
       align-items: flex-start;
       border: none;
-      margin-left: $space--xl;
+      margin: 0;
     }
   }
   &__item {
@@ -45,7 +60,7 @@
     }
     // スマホ用ドロワーメニュー
     @include mq(medium){
-      margin: $space--xl $space--l;
+      margin: $space--m $space--l;
       &:first-child {
         margin-left: $space--l;
       }
@@ -85,13 +100,13 @@
         border-bottom: 2px solid $bg-color--active;
       }
     }
+    // スマホ用ドロワーメニュー
     @include mq(medium) {
       text-align: center;
       padding: 0;
       height: 40px;
       &::before {
-        margin: 0; //中央からスタート
-        // display: none; //スマホメニューは下線を表示しない
+        margin: 0; //左端からスタート
       }
     }
   }
@@ -117,6 +132,24 @@
       padding-left: $space--s;
       padding-right: $space--s;
     }
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      height: auto;
+      position: relative;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  &__dropdown-head {
+    display: flex;
+    align-items: center;
+    color: $font-color--main;
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      position: absolute;
+      top: 150px;
+      margin: $space--m $space--m;
+    }
   }
   &__avatar {
     width: 30px;
@@ -136,24 +169,44 @@
   }
   &__dropdown-icon {
     display: inline-block;
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      display: none;
+    }
   }
   &__dropdown-menu {
     position: absolute;
     top: $header-height;
-    background:$bg-color--white;
+    background: $bg-color--white;
     box-shadow: $shadow-color--s;
     min-width: 200px;
-    @include mq(large){
+    @include mq(xlarge){
       right: 10px;
     }
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      position: relative;
+      top: 20px;
+      left: 0;
+      border: none;
+      background: none;
+      box-shadow: none;
+    }
   }
-  &__dropdown-head {
-    display: flex;
-    align-items: center;
-    color: $font-color--main;
+  &__dropdown-list {
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
   &__dropdown-item {
-    padding: $space--l $space--xl;
+    margin: $space--l $space--xl;
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      margin: $space--m $space--l;
+    }
   }
   &__dropdown-link {
     color: $font-color--main;
@@ -163,6 +216,10 @@
     }
     &.is-active { //現在表示しているページのメニュー描画
       color: $font-color--active;
+    }
+    // スマホ用ドロワーメニュー
+    @include mq(medium) {
+      height: 40px;
     }
   }
 }
