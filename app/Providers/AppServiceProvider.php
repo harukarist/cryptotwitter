@@ -32,15 +32,15 @@ class AppServiceProvider extends ServiceProvider
         // varcharのデフォルト文字数を変更。
         Schema::defaultStringLength(191);
 
-        // // 商用環境以外の場合、storage/logs/の中にSQLログを出力する
-        // if (config('app.env') !== 'production') {
-        //     DB::listen(function ($query) {
-        //         \Log::info("Query Time:{$query->time}s] $query->sql");
+        // 商用環境以外の場合、storage/logs/の中にSQLログを出力する
+        if (config('app.env') !== 'production') {
+            DB::listen(function ($query) {
+                \Log::info("Query Time:{$query->time}s] $query->sql");
 
-        //         // プレースホルダの値をバインディングして出力する場合は以下を使用
-        //         // $sql = preg_replace_array('/\?/', $query->bindings, $query->sql);
-        //         // \Log::info("Query Time:{$query->time}s] {$sql}");
-        //     });
-        // }
+                // プレースホルダの値をバインディングして出力する場合は以下を使用
+                // $sql = preg_replace_array('/\?/', $query->bindings, $query->sql);
+                // \Log::info("Query Time:{$query->time}s] {$sql}");
+            });
+        }
     }
 }
