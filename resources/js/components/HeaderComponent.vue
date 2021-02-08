@@ -10,131 +10,121 @@
       </RouterLink>
     </div>
 
-    <!-- ログイン済みユーザー向けメニュー -->
-    <div
-      v-if="isLogin"
-      class="p-nav-menu"
-      :class="{ 'is-active': isActiveSpMenu }"
-    >
-      <ul class="p-nav-menu__list">
-        <li class="p-nav-menu__item" @click="closeSpMenu">
-          <RouterLink
-            :to="{ name: 'trend.index' }"
-            active-class="is-active"
-            class="p-nav-menu__link"
-          >
-            トレンド一覧
-          </RouterLink>
-        </li>
-        <li class="p-nav-menu__item" @click="closeSpMenu">
-          <RouterLink
-            :to="{ name: 'twitter.index' }"
-            active-class="is-active"
-            class="p-nav-menu__link"
-          >
-            Twitterフォロー
-          </RouterLink>
-        </li>
-        <li class="p-nav-menu__item" @click="closeSpMenu">
-          <RouterLink
-            :to="{ name: 'news.index' }"
-            active-class="is-active"
-            class="p-nav-menu__link"
-          >
-            関連ニュース
-          </RouterLink>
-        </li>
-      </ul>
-      <ul class="p-nav-menu__list" v-if="isActiveSpMenu">
-        <li class="p-nav-menu__item" @click="closeSpMenu">
-          <RouterLink
-            :to="{ name: 'edit' }"
-            active-class="is-active"
-            class="p-nav-menu__link"
-          >
-            アカウント設定
-          </RouterLink>
-        </li>
-        <li class="p-nav-menu__item">
-          <a class="p-nav-menu__link" @click="logout">ログアウト</a>
-        </li>
-      </ul>
+    <!-- ナビメニュー -->
+    <div class="p-nav-menu" :class="{ 'is-active': isActiveSpMenu }">
+      <div class="p-nav-menu__sp-title">
+        <RouterLink :to="{ name: 'home' }" active-class="is-active" exact>
+          <img src="/img/logo.png" class="p-navbar__title-logo" />
+          <h1 class="p-navbar__title-text">CryptoTrend</h1>
+        </RouterLink>
+      </div>
 
-      <ul class="p-nav-menu__dropdown" v-if="!isActiveSpMenu">
-        <li class="p-nav-menu__dropdown-head" @click="toggleDropdown">
-          <img
-            :src="usersAvatar"
-            class="p-nav-menu__avatar"
-            :alt="`${userName}'s avatar`"
-            @error="noImage"
-          />
-          <span class="p-nav-menu__username">{{ userName }}</span>
-          <i
-            class="fas fa-caret-down p-nav-menu__dropdown-icon"
-            v-if="!isActiveSpMenu"
-          ></i>
-        </li>
-        <div
-          class="p-nav-menu__dropdown-menu"
-          v-if="isActiveDropdown && !isActiveSpMenu"
-        >
-          <ul>
-            <li class="p-nav-menu__dropdown-item" @click="closeDropdown">
-              <RouterLink
-                :to="{ name: 'edit' }"
-                active-class="is-active"
-                class="p-nav-menu__dropdown-link"
-              >
-                アカウント設定
-              </RouterLink>
-            </li>
-            <li class="p-nav-menu__dropdown-item" @click="closeDropdown">
-              <a class="p-nav-menu__dropdown-link" @click="logout"
-                >ログアウト</a
-              >
-            </li>
-          </ul>
+      <!-- ログイン済みユーザー向けメニュー -->
+      <div v-if="isLogin" class="p-nav-menu__inner">
+        <ul class="p-nav-menu__list">
+          <li class="p-nav-menu__item" @click="closeSpMenu">
+            <RouterLink
+              :to="{ name: 'trend.index' }"
+              active-class="is-active"
+              class="p-nav-menu__link"
+            >
+              トレンド一覧
+            </RouterLink>
+          </li>
+          <li class="p-nav-menu__item" @click="closeSpMenu">
+            <RouterLink
+              :to="{ name: 'twitter.index' }"
+              active-class="is-active"
+              class="p-nav-menu__link"
+            >
+              Twitterフォロー
+            </RouterLink>
+          </li>
+          <li class="p-nav-menu__item" @click="closeSpMenu">
+            <RouterLink
+              :to="{ name: 'news.index' }"
+              active-class="is-active"
+              class="p-nav-menu__link"
+            >
+              関連ニュース
+            </RouterLink>
+          </li>
+        </ul>
+
+        <div class="p-nav-menu__dropdown">
+          <div class="p-nav-menu__dropdown-head" @click="toggleDropdown">
+            <img
+              :src="usersAvatar"
+              class="p-nav-menu__avatar"
+              :alt="`${userName}'s avatar`"
+              @error="noImage"
+            />
+            <span class="p-nav-menu__username">{{ userName }}</span>
+            <i
+              class="fas fa-caret-down p-nav-menu__dropdown-icon"
+              v-if="!isActiveSpMenu"
+            ></i>
+          </div>
+          <div
+            class="p-nav-menu__dropdown-menu"
+            v-if="isActiveDropdown || isActiveSpMenu"
+          >
+            <ul class="p-nav-menu__dropdown-list">
+              <li class="p-nav-menu__dropdown-item" @click="closeDropdown">
+                <RouterLink
+                  :to="{ name: 'edit' }"
+                  active-class="is-active"
+                  class="p-nav-menu__link p-nav-menu__dropdown-link"
+                >
+                  アカウント設定
+                </RouterLink>
+              </li>
+              <li class="p-nav-menu__dropdown-item" @click="closeDropdown">
+                <a
+                  class="p-nav-menu__link p-nav-menu__dropdown-link"
+                  @click="logout"
+                  >ログアウト</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-      </ul>
-    </div>
+      </div>
 
-    <!-- 未ログインユーザー向けメニュー -->
-    <div
-      v-if="!isLogin"
-      class="p-nav-menu"
-      :class="{ 'is-active': isActiveSpMenu }"
-    >
-      <ul class="p-nav-menu__list">
-        <li class="p-nav-menu__item">
-          <a href="#" class="p-nav-menu__link" @click="closeSpMenu"
-            >CryptoTrendとは</a
-          >
-        </li>
-        <li class="p-nav-menu__item">
-          <a href="#" class="p-nav-menu__link" @click="closeSpMenu"
-            >サービスの特長</a
-          >
-        </li>
+      <!-- 未ログインユーザー向けメニュー -->
+      <div v-if="!isLogin">
+        <ul class="p-nav-menu__list">
+          <li class="p-nav-menu__item">
+            <a href="#" class="p-nav-menu__link" @click="closeSpMenu"
+              >CryptoTrendとは</a
+            >
+          </li>
+          <li class="p-nav-menu__item">
+            <a href="#" class="p-nav-menu__link" @click="closeSpMenu"
+              >サービスの特長</a
+            >
+          </li>
 
-        <li class="p-nav-menu__item-btn" @click="closeSpMenu">
-          <RouterLink
-            :to="{ name: 'register' }"
-            active-class="is-active"
-            class="c-btn__accent p-nav-menu__btn"
-          >
-            新規ユーザー登録
-          </RouterLink>
-        </li>
-        <li class="p-nav-menu__item-btn" @click="closeSpMenu">
-          <RouterLink
-            :to="{ name: 'login' }"
-            active-class="is-active"
-            class="c-btn__main--outline p-nav-menu__btn"
-          >
-            ログイン
-          </RouterLink>
-        </li>
-      </ul>
+          <li class="p-nav-menu__item-btn" @click="closeSpMenu">
+            <RouterLink
+              :to="{ name: 'register' }"
+              active-class="is-active"
+              class="c-btn__accent p-nav-menu__btn"
+            >
+              新規ユーザー登録
+            </RouterLink>
+          </li>
+          <li class="p-nav-menu__item-btn" @click="closeSpMenu">
+            <RouterLink
+              :to="{ name: 'login' }"
+              active-class="is-active"
+              class="c-btn__main--outline p-nav-menu__btn"
+            >
+              ログイン
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <!-- ハンバーガーメニュー　spanタグで三本線を描写 -->
@@ -225,6 +215,7 @@ export default {
     },
     closeDropdown() {
       this.isActiveDropdown = false;
+      this.isActiveSpMenu = false;
     },
   },
   created() {
