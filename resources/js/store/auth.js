@@ -15,7 +15,7 @@ const state = {
 // ステートの値から状態を算出するゲッター
 const getters = {
   // ユーザーが認証済みかどうかをチェックする
-  check: state => !!state.userData, //ログインチェック（二重否定で確実に真偽値を返す）
+  check: state => !!state.userData, //ログインチェック（userDataが取得できていれば二重否定でtrueを返す）
   userName: state => state.userData ? state.userData.name : '', //ユーザー名を格納（nullの場合は空文字を返す）
 }
 
@@ -46,9 +46,11 @@ const mutations = {
 }
 
 // 非同期処理を行い、ミューテーションにcommitするアクション
-// アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
 const actions = {
-  // ユーザー登録処理
+  /**
+   * ユーザー登録処理
+   */
+  // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
   async register(context, data) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
@@ -79,22 +81,26 @@ const actions = {
     }
   },
 
-  // ログイン処理
+  /**
+   * ログイン処理
+   */
   async login(context, data) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
     const response = await axios.post('/api/login', data)
+    console.log(response);
+
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
       context.commit('setApiStatus', true)
       // setUserDataミューテーションでuserDataステートを更新
       context.commit('setUserData', response.data)
+
       // dispatch()でtwitterストアのcheckAuthアクションを呼び出す
       // 別モジュールのアクションを呼び出すため、第三引数にroot: trueを指定する
       context.dispatch("twitter/checkAuth", '', { root: true });
-
       return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
@@ -110,12 +116,15 @@ const actions = {
     }
   },
 
-  // ログアウト処理
+  /**
+   * ログアウト処理
+   */
   async logout(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
     const response = await axios.post('/api/logout')
+    // console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -125,8 +134,6 @@ const actions = {
       context.commit('setUserData', null)
       // twitterストアのステートをnullにする
       context.commit('twitter/setUsersTwitter', null, { root: true })
-      context.commit('twitter/setTotalAutoFollow', null, { root: true })
-
       return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
@@ -136,22 +143,25 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
 
-  // ログインチェック処理
+  /**
+   * ログインチェック処理
+   */
   async currentUser(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
     const response = await axios.post('/api/user')
+    // console.log(response);
+
     // 返却されたユーザー情報（未ログインの場合はnull）を格納
-    const data = response.data || null
-    console.log('currentUser')
-    console.log(response)
+    const userData = response.data || null
+
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
       context.commit('setApiStatus', true)
       // setUserDataミューテーションでuserDataステートを更新
-      context.commit('setUserData', data)
+      context.commit('setUserData', userData)
       return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
@@ -161,14 +171,17 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
 
-  // ユーザー情報編集処理
+  /**
+   * ユーザー情報編集処理
+   */
   async changeAccount(context, data) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
 
     // 非同期処理でサーバーのAPIを呼び出し
     const response = await axios.post('/api/account/change', data)
-    console.log(response)
+    // console.log(response)
+
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
@@ -189,13 +202,17 @@ const actions = {
       context.commit('error/setCode', response.status, { root: true })
     }
   },
-  // ユーザー退会処理
+
+  /**
+   * ユーザー退会処理
+   */
   async withdraw(context, data) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
 
     // 非同期処理でサーバーのAPIを呼び出し
     const response = await axios.post('/api/account/withdraw', data)
+    // console.log(response)
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -203,6 +220,8 @@ const actions = {
       context.commit('setApiStatus', true)
       // setUserDataミューテーションでuserDataステートを更新
       context.commit('setUserData', null)
+      // twitterストアのステートをnullにする
+      context.commit('twitter/setUsersTwitter', null, { root: true })
       return false  //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
@@ -210,7 +229,6 @@ const actions = {
     // errorモジュールのsetCodeミューテーションでステータスを更新
     // 別モジュールのミューテーションをcommitするためroot: trueを指定する
     context.commit('error/setCode', response.status, { root: true })
-
   },
 }
 

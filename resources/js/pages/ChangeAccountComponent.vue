@@ -179,7 +179,7 @@ export default {
     },
     // ユーザー情報変更WebAPI呼び出し
     async changeAccount() {
-      // dispatch()でauthストアのloginアクションを呼び出す
+      // dispatch()でauthストアのアクションを呼び出す
       await this.$store.dispatch("auth/changeAccount", this.editForm);
       // API通信が成功した場合
       if (this.apiStatus) {
@@ -189,18 +189,25 @@ export default {
           type: "success",
           timeout: 2000,
         });
+        // エラーメッセージをクリア
+        this.nameErrors = [];
+        this.emailErrors = [];
       }
     },
     clearError() {
+      // エラーメッセージをクリア
       this.$store.commit("auth/setEditErrorMessages", null);
     },
     setUserData() {
-      this.editForm = this.userData;
+      // DBに登録されたユーザー情報を編集フォームのv-modelに格納
+      this.editForm.name = this.userData.name;
+      this.editForm.email = this.userData.email;
     },
   },
   created() {
     // ページ読み込み時にエラーメッセージをクリア
     this.clearError();
+    // ページ読み込み時にユーザー情報を編集フォームに表示
     this.setUserData();
   },
 };
