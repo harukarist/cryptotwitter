@@ -52,9 +52,15 @@
 
 <script>
 import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
+import { OK } from "../utility";
 
 export default {
   name: "AutoFollow",
+  data() {
+    return {
+      totalAutoFollow: 0,
+    };
+  },
   computed: {
     ...mapState({
       // twitterストアのステートを参照し、API通信の成否ステータスを取得
@@ -63,11 +69,24 @@ export default {
     ...mapGetters({
       // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
       usersTwitter: "twitter/usersTwitter",
-      // twitterストアのtotalAutoFollowゲッターでユーザーのTwitterアカウント情報を取得
-      totalAutoFollow: "twitter/totalAutoFollow",
+      // // twitterストアのtotalAutoFollowゲッターでユーザーのTwitterアカウント情報を取得
+      // totalAutoFollow: "twitter/totalAutoFollow",
     }),
   },
   methods: {
+    // 自動フォロー累計数を取得
+    async fetchTotalAutoFollow() {
+      const response = await axios.get("/api/autofollow/count");
+      console.log(response);
+      // レスポンスのステータスが200以外の場合はエラーをストアにコミット
+      if (response.status !== OK) {
+        this.$store.commit("error/setCode", response.status);
+        return false; //処理を中断
+      }
+      // 自動フォロー累計数を格納
+      this.totalAutoFollow = response.data;
+    },
+
     // 自動フォロー適用処理
     async applyAutoFollow() {
       // dispatch()でtwitterストアのapplyAutoFollowアクションを呼び出す
@@ -96,6 +115,10 @@ export default {
         });
       }
     },
+  },
+  created() {
+    // ページ読み込み時に自動フォロー累計数を取得
+    this.fetchTotalAutoFollow();
   },
 };
 </script>
