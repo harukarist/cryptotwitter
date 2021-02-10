@@ -40,18 +40,6 @@ const router = new VueRouter({
       meta: { requiresAuth: true }, //認証必須
     },
     {
-      path: '/news',
-      name: 'news.index',
-      component: NewsListComponent,
-      meta: { requiresAuth: true }, //認証必須
-      // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
-      props: route => {
-        const page = route.query.page
-        // 整数以外が渡された場合は1に変換して返却
-        return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
-      }
-    },
-    {
       path: '/trend',
       name: 'trend.index',
       component: TrendListComponent,
@@ -62,6 +50,18 @@ const router = new VueRouter({
       name: 'twitter.index',
       component: TwitterListComponent,
       meta: { requiresAuth: true }, //認証必須,
+      // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
+      props: route => {
+        const page = route.query.page
+        // 整数以外が渡された場合は1に変換して返却
+        return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
+      }
+    },
+    {
+      path: '/news',
+      name: 'news.index',
+      component: NewsListComponent,
+      meta: { requiresAuth: true }, //認証必須
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
       props: route => {
         const page = route.query.page

@@ -1,10 +1,20 @@
 <template>
   <div>
-    <LoaderComponent />
-    <!-- メッセージ表示 -->
-    <InnerMessage />
-    <!-- VueRouterでコンポーネントを表示 -->
-    <RouterView />
+    <header id="header">
+      <HeaderComponent />
+    </header>
+
+    <main id="main">
+      <LoaderComponent />
+      <!-- Vuexでフラッシュメッセージを表示 -->
+      <InnerMessage />
+      <!-- VueRouterでコンポーネントを表示 -->
+      <RouterView />
+    </main>
+
+    <footer id="footer">
+      <FooterComponent />
+    </footer>
   </div>
 </template>
 

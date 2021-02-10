@@ -84,4 +84,17 @@
       color: $font-color--muted;
     }
   }
+  &__white {
+    @extend %btnBase;
+    border: none;
+    background: $bg-color--white;
+    color: $font-color--accent;
+    font-weight: bold;
+    font-size: $font-size--default;
+    padding: 5px 10px;
+    &:hover {
+      color: $font-color--accent;
+      background: $bg-color--white;
+    }
+  }
 }

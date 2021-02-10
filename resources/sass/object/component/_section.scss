@@ -2,6 +2,7 @@
   max-width: $site-width;
   background: $bg-color--white;
   margin-top: $space--xl;
+  margin-bottom: $space--xxxl;
   margin-left: auto;
   margin-right: auto;
   padding: $space--xl;
@@ -29,7 +30,7 @@
       left: 0;
       right: 0;
       bottom: -10px;
-      margin: 0 auto; // 中央からスタート
+      margin: 0 auto;
       width: 20px;
       border-bottom: 1px solid $bg-color--border;
     }

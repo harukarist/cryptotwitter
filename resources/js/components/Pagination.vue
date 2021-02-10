@@ -1,11 +1,13 @@
 <template>
   <ul class="c-pagination__list">
     <li class="c-pagination__item" v-if="!isFirstPage">
-      <RouterLink :to="`/${directory}?page=1`"> « </RouterLink>
+      <RouterLink :to="`/${directory}?page=1`">
+        <i class="fas fa-angle-double-left"></i>
+      </RouterLink>
     </li>
     <li class="c-pagination__item" v-if="!isFirstPage">
       <RouterLink :to="`/${directory}?page=${currentPage - 1}`">
-        &lt;
+        <i class="fas fa-angle-left"></i>
       </RouterLink>
     </li>
     <li
@@ -20,11 +22,13 @@
     </li>
     <li class="c-pagination__item" v-if="!isLastPage">
       <RouterLink :to="`/${directory}?page=${currentPage + 1}`">
-        &gt;
+        <i class="fas fa-angle-right"></i>
       </RouterLink>
     </li>
     <li class="c-pagination__item" v-if="!isLastPage">
-      <RouterLink :to="`/${directory}?page=${lastPage}`"> » </RouterLink>
+      <RouterLink :to="`/${directory}?page=${lastPage}`">
+        <i class="fas fa-angle-double-right"></i>
+      </RouterLink>
     </li>
   </ul>
 </template>

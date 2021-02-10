@@ -12,8 +12,8 @@
 
     <!-- ナビメニュー -->
     <div class="p-nav-menu" :class="{ 'is-active': isActiveSpMenu }">
-      <div class="p-nav-menu__sp-title">
-        <RouterLink :to="{ name: 'home' }" active-class="is-active" exact>
+      <div class="p-nav-menu__sp-title" @click="closeSpMenu">
+        <RouterLink :to="{ name: 'top' }" active-class="is-active" exact>
           <img src="/img/logo.png" class="p-navbar__title-logo" />
           <h1 class="p-navbar__title-text">CryptoTrend</h1>
         </RouterLink>
@@ -95,29 +95,31 @@
       <div v-if="!isLogin">
         <ul class="p-nav-menu__list">
           <li class="p-nav-menu__item">
-            <a href="#" class="p-nav-menu__link" @click="closeSpMenu"
-              >CryptoTrendとは</a
+            <a href="/#about" class="p-nav-menu__link" @click="closeSpMenu"
+              >CryptoTrendとは？</a
             >
           </li>
           <li class="p-nav-menu__item">
-            <a href="#" class="p-nav-menu__link" @click="closeSpMenu"
-              >サービスの特長</a
+            <a href="/#reason" class="p-nav-menu__link" @click="closeSpMenu"
+              >選ばれる理由</a
             >
           </li>
-
+          <li class="p-nav-menu__item">
+            <a href="/#faq" class="p-nav-menu__link" @click="closeSpMenu"
+              >よくあるご質問</a
+            >
+          </li>
           <li class="p-nav-menu__item-btn" @click="closeSpMenu">
             <RouterLink
               :to="{ name: 'register' }"
-              active-class="is-active"
               class="c-btn__accent p-nav-menu__btn"
             >
-              新規ユーザー登録
+              ユーザー登録
             </RouterLink>
           </li>
           <li class="p-nav-menu__item-btn" @click="closeSpMenu">
             <RouterLink
               :to="{ name: 'login' }"
-              active-class="is-active"
               class="c-btn__main--outline p-nav-menu__btn"
             >
               ログイン
@@ -149,6 +151,7 @@ export default {
     return {
       isActiveSpMenu: false,
       isActiveDropdown: false,
+      position: 0,
     };
   },
   computed: {

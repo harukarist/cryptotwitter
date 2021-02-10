@@ -1,0 +1,46 @@
+.p-readmore {
+  &__wrapper {
+    text-align: center;
+    margin: $space--l auto;
+    width: 100%;
+    @include mq(medium) {
+      width: 100%;
+    }
+  }
+  &__link {
+    cursor: pointer;
+    transition: all .3s;
+    padding: 10px 15px;
+    width: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    border: 1px solid $bg-color--border;
+    color: $font-color--main;
+    background: $bg-color--white;
+    &:hover {
+      color: $font-color--white;
+      border: none;
+      background: $bg-color--accent;
+      transform: scale(0.97); //ホバー時にボタンを縮める
+    }
+    &::after { // 矢印アイコン
+      content: '\f105';
+      font-family: FontAwesome;
+      color: $bg-color--border;
+      font-size: 18px;
+      padding: 0;
+      margin-left: $space--s;
+      position: relative;
+      top: 1px;
+      &:hover {
+        color: $font-color--white;
+      }
+    }
+
+  }
+}

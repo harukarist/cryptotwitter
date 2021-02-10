@@ -1,0 +1,76 @@
+.p-solution {
+  background: $bg-color--white;
+  padding: $header-height+$space--l $space--xl;
+  text-align: center;
+  @include mq(){
+    padding: $header-height+$space--l $space--m;
+  }
+  &__title {
+    color: $font-color--main;
+    font-size: $font-size--xl;
+    border-bottom: 3px solid $bg-color--accent;
+    display: inline-block;
+    padding-bottom: $space--m;
+    margin-bottom: $space--xxxl;
+    @include mq(){
+      font-size: $font-size--l;
+    }
+  }
+  &__contents {
+    display: flex;
+    margin: 0 auto;
+    width: $site-width;
+    justify-content: center;
+    @include mq(medium){
+      width: 100%;
+    }
+    @include mq(){
+      flex-direction: column;
+    }
+  }
+  &__item {
+    margin: 0 $space--s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(100%/3);
+    @include mq(){
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      margin: $space--l auto;
+    }
+  }
+  &__description {
+    text-align: left;
+    display: inline-block;
+    @include mq(){
+      margin-left: $space--s;
+    }
+  }
+  &__heading {
+    color: $font-color--main;
+    font-size: $font-size--l;
+    margin-bottom: $space--xl;
+    line-height: 1.7;
+  }
+  &__text {
+    color: $font-color--default;
+    font-size: $font-size--default;
+    @include mq(){
+      margin-bottom: $space--l;
+    }
+  }
+  &__img-wrapper {
+    width: 120px;
+    align-self: center; //画像の縦横比を維持
+    margin: 0 auto; //左右中央揃え
+    display: inline-block;
+    img {
+      min-width: 100%;
+      max-width: initial;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+  }
+}

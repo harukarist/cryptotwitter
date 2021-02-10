@@ -1,14 +1,11 @@
 #header {
   width: 100%;
   box-sizing: border-box;
-  min-height: $header-height;
+  height: $header-height;
+  background: $bg-color--white;
   margin: 0;
   padding: 0;
-  z-index: 2;
-  background: $bg-color--white;
   box-shadow: $shadow-color--m;
+  z-index: 2;  
   position: fixed;
-  @include mq() {
-    height: $header-height;
-  }
 }

@@ -31,7 +31,9 @@
 </head>
 <body>
     <div id="app">
-        <header id="header">
+        <app-component></app-component>
+
+        {{-- <header id="header">
             <header-component />
         </header>
         <main id="main">
@@ -40,8 +42,9 @@
         </main>
         <footer id="footer">
             <footer-component />
-        </footer>
-        <!-- フラッシュメッセージを表示 -->
+        </footer> --}}
+
+        <!-- セッション経由のフラッシュメッセージを表示 -->
         @if (session('status'))
             <message-component message="{{ session('status') }}" type="{{ session('type')}}" timeout="{{ session('timeout')}}" />
         @endif

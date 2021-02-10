@@ -1,0 +1,18 @@
+.p-about {
+  background: #004BB1;
+  padding: $header-height+$space--l $space--xl;
+  // padding: $space--xxxl $space--xl;
+  text-align: center;
+  &__logo-img {
+    margin-bottom: $space--l;
+  }
+  &__title {
+    color: $font-color--white;
+    font-size: $font-size--xl;
+    margin-bottom: $space--xl;
+  }
+  &__text {
+    color: $font-color--white;
+    font-size: $font-size--default;
+  }
+}

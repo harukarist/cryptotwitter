@@ -1,0 +1,83 @@
+.p-trouble {
+  background: $bg-color--light;
+  padding: $header-height+$space--l $space--xl;
+  text-align: center;
+  @include mq(){
+    padding: $header-height+$space--l $space--m;
+  }
+  &__title {
+    color: $font-color--main;
+    font-size: $font-size--xl;
+    margin-bottom: $space--xxl;
+    @include mq(){
+      font-size: $font-size--l;
+    }
+  }
+  &__contents {
+    display: flex;
+    margin: 0 auto;
+    width: $site-width;
+    justify-content: center;
+    @include mq(medium){
+      width: 100%;
+    }
+    @include mq(){
+      flex-direction: column;
+    }
+  }
+  &__item {
+    margin: 0 $space--s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(100%/3);
+    @include mq(){
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      margin: 0;
+    }
+  }
+  &__comment {
+    padding: $space--l;
+    background-color: $bg-color--white;
+    border-radius: 6px;
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-bottom: $space--l;
+    &:before { //下向きの吹き出し
+      content: "";
+      position: absolute;
+      top: 99%;
+      left: 50%;
+      margin-left: -10px;
+      border: 10px solid transparent; //border-top以外は罫線を透明に
+      border-top: 10px solid $bg-color--white; //吹き出し下の三角形
+    }
+    @include mq(){
+      width: 220px;
+      &:before { //右向きの吹き出し
+        top: 49%;
+        left: 100%;
+        margin-left: 0;
+        border-top: 10px solid transparent;
+        border-left: 10px solid $bg-color--white; //吹き出し右の三角形
+      }
+    }
+  }
+  &__img-wrapper {
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+    align-self: center; //画像の縦横比を維持
+    margin: 0 auto; //左右中央揃え
+    display: inline-block;
+    img {
+      min-width: 100%;
+      max-width: initial;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+  }
+}

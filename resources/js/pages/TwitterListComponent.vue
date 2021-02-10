@@ -62,7 +62,7 @@ export default {
   },
   data() {
     return {
-      targets: [],
+      targets: [], //仮想通貨関連アカウント一覧を格納する配列を用意
       currentPage: 0, //現在ページ
       lastPage: 0, //最終ページ
       perPage: 0, //1ページあたりの表示件数

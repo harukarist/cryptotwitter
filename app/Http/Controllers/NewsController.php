@@ -9,7 +9,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class NewsController extends Controller
 {
-    // ニュース画面表示処理
+    /**
+     * ニュース画面表示処理
+     */
     public function index()
     {
         // ニュース一覧をテーブルから取得してニュース公開日の近い順にページネーション 
@@ -17,6 +19,24 @@ class NewsController extends Controller
             ->paginate(10);
 
         // 取得できなかった場合はNotFoundエラーを返却
+        if (!$news) {
+            return abort(404);
+        }
+
+        // 自動でJSONに変換して返却される
+        return $news;
+    }
+
+    /**
+     * ホーム画面の最新データ表示処理
+     */
+    public function showLatest()
+    {
+        // ニュース一覧の最新レコードを5件取得
+        $news = NewsList::orderBy('published_date', 'DESC')
+            ->take(6)->get();
+
+        // 取得できなかった場合は NotFoundエラーを返却
         if (!$news) {
             return abort(404);
         }

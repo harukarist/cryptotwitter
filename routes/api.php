@@ -48,6 +48,12 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // ログインユーザーのTwitterアカウント情報を更新
   Route::get('/auth/twitter/update', 'Auth\TwitterAuthController@updateTwitterUser');
 
+  // ホーム画面の最新データ表示API
+  Route::get('/news/latest', 'NewsController@showLatest');
+  Route::get('/trend/latest', 'TrendController@showLatest');
+  Route::get('/twitter/latest', 'TwitterTargetListController@showLatest');
+
+
   // 関連ニュース取得API
   Route::get('/news', 'NewsController@index')->name('news.index');
   // トレンド一覧取得API

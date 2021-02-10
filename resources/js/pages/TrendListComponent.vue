@@ -65,9 +65,9 @@
               </button>
             </div>
             <div class="p-trend__head-right">
-              <span class="u-font__small u-font__muted">
+              <div class="u-font__small u-font__muted">
                 更新日時 <br class="u-sp--only" />{{ items.updated_at }}
-              </span>
+              </div>
             </div>
           </div>
           <transition name="pulldown">

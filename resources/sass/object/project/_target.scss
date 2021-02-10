@@ -78,7 +78,8 @@
     color: $font-color--muted;
     margin-bottom: $space--s;
     text-align: justify; //両端揃え
-    // text-align: left;
+    text-justify: inter-ideograph;  //IE,Edgeでの両端揃え
+    word-wrap: break-word; //ボックス幅をはみ出す長さの英文を折り返す
   }
   &__follow {
     color: $font-color--muted;
@@ -106,6 +107,8 @@
   &__tweeted-text {
     margin-bottom: $space--s;
     text-align: justify; //両端揃え
+    text-justify: inter-ideograph;  //IE,Edgeでの両端揃え
+    word-wrap: break-word; //ボックス幅をはみ出す長さの英文を折り返す
   }
   &__tweeted-at {
     color: $font-color--muted;

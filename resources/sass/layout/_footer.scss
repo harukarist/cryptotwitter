@@ -6,8 +6,6 @@
   padding-bottom: $space--xl;
   width: 100%;
   height: $footer-height;
-  // position:absolute;
-  // bottom:0;
   @include mq() {
     font-size: $font-size--s;
     min-height: $footer-height;

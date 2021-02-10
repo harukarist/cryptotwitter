@@ -9,7 +9,17 @@
       font-size: $font-size--s;
     }
   }
+  &__large {
+    font-size: $font-size--xxl;
+    margin: 0 4px;
+    @include mq() {
+      font-size: $font-size--xl;
+    }
+  }
   &__muted {
     color: $font-color--muted;
+  }
+  &__right {
+    text-align: right;
   }
 }

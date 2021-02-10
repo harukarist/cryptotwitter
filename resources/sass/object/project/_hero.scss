@@ -1,36 +1,74 @@
 .p-hero {
+  height: 60vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: $bg-color--main;
+  background-color: #D6E7FF;
   padding-left: $space--l;
   padding-right: $space--l;
-  
-  &__title {
-    font-size: $font-size--xxl;
-    color: $font-color--main;
-    text-align: center;
-    margin-bottom: $space--xl;
+  box-sizing: border-box;
+  @include mq(){
+    height: 100vh;
   }
-  &__text-wrap {
-    margin-bottom: $space--xl;
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: $site-width;
+    margin-left: auto;
+    margin-right: auto;
+    @include mq(){
+      flex-direction: column;
+      max-width: 100%;
+    }
+  }
+  &__contents {
+    flex-basis: 60%;
+    padding-left: $space--xxl;
+    @include mq(){
+      padding: 0;
+    }
+  }
+  &__img-wrapper {
+    flex-basis: 40%;
+    @include mq(){
+      max-width: 400px;
+    }
+  }
+  &__title {
+    font-size: $font-size--xxxl;
+    color: $font-color--main;
+    margin-bottom: $space--xxl;
+    @include mq(medium){
+      font-size: $font-size--xxl;
+    }
   }
   &__text {
-    text-align: center;
     letter-spacing: 0.02em;
     margin-bottom: $space--l;
+    color: $font-color--main;
   }
   &__action {
-    width: 100%;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    @include mq(){
+      width: 100%;
+    }
   }
   &__btn {
-    max-width: 300px;
-    width: 100%;
     margin: $space--l $space--s;
     padding-top: $space--l;
     padding-bottom: $space--l;
+    width: 100%;
+  }
+  &__link {
+    color: $font-color--main;
+    text-align: center;
+    &:hover {
+      color: rgba($font-color--main, 0.8);
+    }
+    @include mq(){
+      margin-bottom: $space--xxl;
+    }
   }
 }

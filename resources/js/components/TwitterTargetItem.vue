@@ -57,8 +57,6 @@
 </template>
 
 <script>
-import { OK } from "../utility";
-
 export default {
   name: "TwitterTargetItem",
   props: {

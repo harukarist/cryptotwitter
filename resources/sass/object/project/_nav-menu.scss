@@ -51,7 +51,7 @@
     }
   }
   &__item {
-    margin: 0 $space--l;
+    margin: 0 $space--m;
     &:first-child {
       margin-left: $space--s;
     }
@@ -60,17 +60,17 @@
     }
     // スマホ用ドロワーメニュー
     @include mq(medium){
-      margin: $space--m $space--l;
+      margin: $space--m $space--m;
       &:first-child {
-        margin-left: $space--l;
+        margin-left: $space--m;
       }
       &:last-child {
-        margin-right: $space--l;
+        margin-right: $space--m;
       }
     }
   }
   &__item-btn {
-    margin: 0 $space--l;
+    margin: 0 $space--s;
   }
   &__link {
     color: $font-color--main;

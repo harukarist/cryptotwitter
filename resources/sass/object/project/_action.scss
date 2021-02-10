@@ -1,0 +1,31 @@
+.p-action {
+  background: $bg-color--accent;
+  padding: $space--xxxl $space--xl;
+  text-align: center;
+  color: $font-color--white;
+  &__heading {
+    font-size: $font-size--l;
+    margin-bottom: $space--l;
+  }
+  &__logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: $space--l;
+    &-img {
+      margin-right: $space--m;
+      align-self: center; //画像の縦横比を維持
+    }
+    &-text {
+      font-size: $font-size--xl;
+      font-family: $font-family--theme;
+    }
+  }
+  &__copy {
+    font-size: $font-size--default;
+    margin-bottom: $space--l;
+    font-weight: bold;
+  }
+  &__btn {
+    padding: $space--l;
+  }
+}

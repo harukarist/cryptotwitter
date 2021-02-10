@@ -1,0 +1,91 @@
+.p-faq {
+  background: #F8FBFE;
+  // padding: $space--xxxl $space--xl;
+  padding: $header-height+$space--l $space--xl;
+  text-align: center;
+  &__title {
+    color: $font-color--main;
+    font-size: $font-size--xl;
+    margin-bottom: $space--xxl;
+  }
+  &__contents {
+    width: $site-width;
+    margin: 0 auto;
+    @include mq(medium){
+      width: 100%;
+      padding: $space--l;
+      box-sizing: border-box;
+    }
+    @include mq(){
+      padding: $space--l 0;
+    }
+  }
+  &__item {
+    margin: 0 $space--l;
+    display: flex;
+    flex-direction: column;
+    .is-show {
+      border-bottom: 1px solid $bg-color--border;
+    }
+    @include mq(){
+      margin: 0;
+    }
+  }
+  &__question {
+    color: $font-color--main;
+    font-size: $font-size--l;
+    font-weight: bold;
+    text-align: left;
+    position: relative; //擬似要素の配置基準
+    padding: 20px 60px;
+    @include mq(){
+      padding: 20px 40px;
+      font-size: $font-size--default;
+    }
+    a {
+      &:hover {
+        background-color: #EFEFEF;
+      }
+    }
+    &::before {
+      content: 'Q';
+      font-size: $font-size--xxl;
+      font-weight: bold;
+      color: #99CAE5;
+      display: block;
+      position: absolute;
+      top: 8px;
+      left: 15px;
+      @include mq(){
+        font-size: $font-size--xl;
+        top: 10px;
+        left: 10px;
+      }
+    }
+
+  }
+  &__answer {
+    text-align: left;
+    position: relative; //擬似要素の配置基準
+    padding: 30px 60px 40px 60px;
+    @include mq(){
+      padding: 20px 20px 20px 40px;
+      font-size: $font-size--default;
+    }
+    &::before {
+      content: 'A';
+      font-size: $font-size--xxl;
+      font-weight: bold;
+      color: $bg-color--accent;
+      display: block;
+      position: absolute;
+      top: 25px;
+      left: 17px;
+      @include mq(){
+        font-size: $font-size--xl;
+        top: 10px;
+        left: 10px;
+      }
+    }
+  }
+}
