@@ -40,9 +40,25 @@
       margin-bottom: $space--xl;
     }
   }
+  &__contents {
+    margin: $space--l;
+  }
   &__text {
     text-align: center;
     line-height: 1.8;
     margin-bottom: $space--xxl;
+  }
+  &__subtitle--left {
+    text-align: left;
+    margin-bottom: $space--m;
+  }
+  &__text--left {
+    text-align: left;
+    line-height: 1.8;
+    margin-bottom: $space--l;
+  }
+  &__list {
+    margin-left: $space--xxxl;
+    margin-bottom: $space--xl;
   }
 }

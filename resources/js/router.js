@@ -11,9 +11,11 @@ import TwitterListComponent from './pages/TwitterListComponent';
 import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import PassRequestComponent from './pages/PassRequestComponent';
-import PassResetComponent from './pages/PassResetComponent';
 import ChangeAccountComponent from './pages/ChangeAccountComponent';
 import WithdrawComponent from './pages/WithdrawComponent';
+import PrivacyPolicyComponent from './pages/PrivacyPolicyComponent';
+import TermsComponent from './pages/TermsComponent';
+import ContactComponent from './pages/ContactComponent';
 import SystemError from './errors/SystemError';
 import NotFound from './errors/NotFound';
 
@@ -104,11 +106,26 @@ const router = new VueRouter({
       name: 'errors.system',
       component: SystemError,
     },
-    // {
-    //   path: '*', //定義されたルート以外のパス
-    //   name: 'errors.notfound',
-    //   component: NotFound,
-    // },
+    {
+      path: '/terms',
+      name: 'terms',
+      component: TermsComponent,
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: PrivacyPolicyComponent,
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: ContactComponent,
+    },
+    {
+      path: '*', //定義されたルート以外のパス
+      name: 'errors.notfound',
+      component: NotFound,
+    },
   ]
 })
 

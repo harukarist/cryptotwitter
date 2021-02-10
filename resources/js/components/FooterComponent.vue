@@ -3,18 +3,23 @@
     <div class="p-footer">
       <ul class="p-footer__list">
         <li class="p-footer__item">
-          <a href="#" class="p-footer__link">利用規約</a>
+          <RouterLink :to="{ name: 'terms' }" class="p-footer__link">
+            利用規約
+          </RouterLink>
         </li>
         <li class="p-footer__item">
-          <a href="#" class="p-footer__link">プライバシーポリシー</a>
+          <RouterLink :to="{ name: 'privacy' }" class="p-footer__link">
+            プライバシーポリシー
+          </RouterLink>
         </li>
         <li class="p-footer__item">
-          <a href="#" class="p-footer__link">お問い合わせ</a>
+          <RouterLink :to="{ name: 'contact' }" class="p-footer__link">
+            お問い合わせ
+          </RouterLink>
         </li>
       </ul>
       <p class="p-footer__copyright">© 2021 CryptoTrend.</p>
     </div>
-    <!-- <p class="p-footer__copyright">Copyright (C) 2021 CryptoTrend All Rights Reserved. </p> -->
   </div>
 </template>
 
