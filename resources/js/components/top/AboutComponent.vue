@@ -1,6 +1,6 @@
 <template>
   <div class="p-about">
-    <fade-in-component>
+    <div class="c-fade--in">
       <img
         src="/img/img_logo_white.png"
         class="p-about__logo-img"
@@ -17,7 +17,7 @@
           class="u-sp--only"
         />あなたをサポートするサービスです。
       </p>
-    </fade-in-component>
+    </div>
   </div>
 </template>
 

@@ -1,18 +1,7 @@
+@charset "UTF-8";
+/* フェードインアニメーション */
 .js-fadeIn[data-v-408f38be] {
-  animation: fadeIn-data-v-408f38be 2s;
-}
-.js-fadeIn__target[data-v-408f38be] {
-    transition: height 0.3s ease-in-out;
-}
-.js-fadeIn-enter-active[data-v-408f38be] {
-    animation-duration: 2s;
-    animation-fill-mode: both;
-    animation-name: fadeIn-data-v-408f38be;
-}
-.js-fadeIn-leave-active[data-v-408f38be] {
-    animation-duration: 2s;
-    animation-fill-mode: both;
-    animation-name: fadeOut-data-v-408f38be;
+  animation: fadeIn-data-v-408f38be 1s;
 }
 @keyframes fadeIn-data-v-408f38be {
 0% {
@@ -21,16 +10,6 @@
 }
 100% {
     opacity: 1;
-    transform: translateY(0px);
-}
-}
-@keyframes fadeOut-data-v-408f38be {
-0% {
-    opacity: 1;
-    transform: translateY(100px);
-}
-100% {
-    opacity: 0;
     transform: translateY(0px);
 }
 }
@@ -257,7 +236,7 @@ html, body {
   color: #3B4043;
   background: #FFFFFF; }
 
-p, a, h1, h2, h3, h4, h5, h6 {
+p, a, h1, h2, h3, h4, h5, h6, li {
   -webkit-font-smoothing: antialiased; }
 
 a {
@@ -588,6 +567,18 @@ html, body {
       margin-top: 20px;
       margin-bottom: 20px; } }
 
+/* フェードインアニメーション */
+.c-fade--in {
+  animation: fadeIn 1s; }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(100px); }
+  100% {
+    opacity: 1;
+    transform: translateY(0px); } }
+
 .c-form__wrapper {
   max-width: 600px;
   margin-left: auto;
@@ -826,10 +817,22 @@ html, body {
         font-size: 20px;
         margin-top: 20px;
         margin-bottom: 20px; } }
+  .c-section__contents {
+    margin: 15px; }
   .c-section__text {
     text-align: center;
     line-height: 1.8;
     margin-bottom: 30px; }
+  .c-section__subtitle--left {
+    text-align: left;
+    margin-bottom: 10px; }
+  .c-section__text--left {
+    text-align: left;
+    line-height: 1.8;
+    margin-bottom: 15px; }
+  .c-section__list {
+    margin-left: 40px;
+    margin-bottom: 20px; }
 
 .c-tab {
   margin-top: 50px;
