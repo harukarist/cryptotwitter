@@ -1815,7 +1815,8 @@ html, body {
     height: 20px;
     line-height: 20px;
     font-size: 12px;
-    font-weight: bold; }
+    font-weight: bold;
+    letter-spacing: 0; }
     .p-trend__order--gold {
       background: #FFD700;
       color: #FCFCFC; }
