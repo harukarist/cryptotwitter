@@ -5,15 +5,15 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Controllers\FetchTweetController;
 
-class FetchWeeklyTweets extends Command
+class FetchTweetsWeekly extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    // Command名
-    protected $signature = 'fetch:weeklytweets';
+    // コマンド名を定義
+    protected $signature = 'fetch:weeklyTweets';
 
     /**
      * The console command description.

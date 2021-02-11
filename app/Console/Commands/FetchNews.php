@@ -12,7 +12,7 @@ class FetchNews extends Command
      *
      * @var string
      */
-    // Command名
+    // コマンド名を定義
     protected $signature = 'fetch:news';
 
     /**
