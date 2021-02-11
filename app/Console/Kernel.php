@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         Commands\AutoFollow::Class,
         Commands\UpdatePrices::Class,
         Commands\UpdateTweetNum::Class,
-        Commands\FetchWeeklyTweets::Class,
+        Commands\FetchTweetsLatest::Class,
+        Commands\FetchTweetsWeekly::Class,
         Commands\FetchTwpro::Class,
         Commands\FetchUsers::Class,
         Commands\FetchNews::Class,
@@ -41,11 +42,16 @@ class Kernel extends ConsoleKernel
             ->everyFifteenMinutes();
 
         // everyFifteenMinutes()で15分毎にツイート検索を実行する
-        $schedule->command('fetch:weeklytweets')
+        $schedule->command('fetch:latestTweets')
             ->everyFifteenMinutes();
-        // ->dailyAt('01:00');
+
+        // 1週間分のツイートをDBに保存する場合は以下のコマンドをコメントアウトする
+        // $schedule->command('fetch:weeklyTweets')
+        //     ->everyFifteenMinutes();
+
+
         $schedule->command('update:tweetNum')
-        ->everyFifteenMinutes();
+            ->everyFifteenMinutes();
 
         // everyFifteenMinutes()で15分毎にニュース検索を実行する
         $schedule->command('fetch:news')
