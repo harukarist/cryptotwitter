@@ -50,7 +50,7 @@ class FetchTweetController extends Controller
         return;
     }
 
-    // 今日の0:00までの１週間分のツイートを検索し、未取得の時間帯があればDBに保存する処理
+    // 現在時刻から1時間前までの１週間分のツイートのうち、未取得の時間帯があればDBに保存する処理
     public function fetchWeeklyTweets()
     {
         $MAX_REQUEST = 180; // ツイート検索の最大リクエスト回数の初期値（上限は15分間に180回）
@@ -64,18 +64,19 @@ class FetchTweetController extends Controller
         }
         // 今日の0:00の日時を取得
         $dt = Carbon::today();
+        // 現在日時を取得
         $carbon_now = Carbon::now();
-        // 7日前から1日ずつ処理
+        // 7日前から処理を開始
         $target_date = $dt->subDays(7);
 
-        // 0時から1時間毎に未取得のツイートがないかをチェックし、あれば取得、なければ次の時間帯へループする。
+        // 7日前の0時から1時間毎に未取得のツイートがないかをチェックし、あれば取得、なければ次の時間帯へループ
         for ($target_hour = 0; true; $target_hour++) {
             // 検索対象とする日時を生成
             $since_at = $target_date->copy()->addHours($target_hour);
             $until_at = $target_date->copy()->addHours($target_hour + 1);
 
-            // 取得対象の開始日時と現在時刻との差が2時間未満の場合は取得しない
-            if ($since_at->diffInHours($carbon_now) < 2) {
+            // 取得対象の開始日時と現在時刻との差が1時間未満の場合は取得しない
+            if ($since_at->diffInHours($carbon_now) < 1) {
                 break;
             }
 
