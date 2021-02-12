@@ -28,7 +28,7 @@
             </label>
             <input
               type="text"
-              class="c-input c-input--large c-input--box"
+              class="c-input c-input--large"
               id="username"
               v-model="editForm.name"
               required
@@ -58,7 +58,7 @@
             <label for="email" class="c-form__label">メールアドレス</label>
             <input
               type="email"
-              class="c-input c-input--large c-input--box"
+              class="c-input c-input--large"
               id="email"
               placeholder="例）your.email@example.com"
               v-model="editForm.email"
@@ -169,7 +169,7 @@ export default {
       const results = this.nameErrors.concat(this.emailErrors);
       // エラーメッセージがなければユーザー情報変更WebAPIを呼び出す
       if (!results.length) {
-        this.changeAccount();
+        this.EditAccount();
       }
     },
     // メールアドレス形式チェック
@@ -178,9 +178,9 @@ export default {
       return regex.test(email);
     },
     // ユーザー情報変更WebAPI呼び出し
-    async changeAccount() {
+    async EditAccount() {
       // dispatch()でauthストアのアクションを呼び出す
-      await this.$store.dispatch("auth/changeAccount", this.editForm);
+      await this.$store.dispatch("auth/EditAccount", this.editForm);
       // API通信が成功した場合
       if (this.apiStatus) {
         // フラッシュメッセージを表示

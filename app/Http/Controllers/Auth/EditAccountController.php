@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ChangeAccountRequest;
+use App\Http\Requests\EditAccountRequest;
 
-class ChangeAccountController extends Controller
+class EditAccountController extends Controller
 {
     public function __construct()
     {
@@ -17,8 +17,8 @@ class ChangeAccountController extends Controller
     }
 
     // ユーザー名、メールアドレスの変更
-    //ChangePasswordRequestでバリデーションチェック
-    public function changeAccount(ChangeAccountRequest $request)
+    // EditAccountRequestでバリデーションチェック
+    public function EditAccount(EditAccountRequest $request)
     {
         // ログインユーザーのユーザーIDを取得
         $user_id = Auth::id();
