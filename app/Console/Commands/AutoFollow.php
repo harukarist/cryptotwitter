@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\AutoFollowController;
+use App\Http\Controllers\FetchAutoFollowController;
 
 class AutoFollow extends Command
 {
@@ -42,7 +42,7 @@ class AutoFollow extends Command
     public function handle()
     {
         // コントローラーのタスクを実行する
-        $follow = new AutoFollowController;
+        $follow = new FetchAutoFollowController;
         logger()->info('>>>> 自動フォロー処理バッチを実行します');
         $follow->autoFollow();
         //ログファイルに書き込む
