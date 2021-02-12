@@ -18,7 +18,7 @@ class CreateTrendsTable extends Migration
             $table->string('currency_name')->unique();
             $table->string('currency_ja')->nullable();
             $table->string('currency_pair')->nullable();
-            $table->unsignedInteger('used_api_type')->default(0);
+            $table->unsignedInteger('use_api')->default(0);
             $table->double('high')->default(0);
             $table->double('low')->default(0);
             $table->unsignedBigInteger('tweet_hour')->default(0);
