@@ -27,6 +27,11 @@ Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetFor
 // パスワードリセット
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
+// お問い合わせフォーム確認ページ
+Route::post('/contact/confirm', 'ContactController@confirm')->name('contact.confirm');
+//送信完了ページ
+Route::post('/contact/thanks', 'ContactController@send')->name('contact.send');
+
 // ログインユーザー情報を返却
 Route::post('/user', function () {
   return Auth::user();
@@ -34,7 +39,7 @@ Route::post('/user', function () {
 
 
 // ログインユーザーのTwitter認証チェック（認証済みであればアカウント情報を返却）
-Route::get('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAuth');
+Route::post('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAuth');
 
 // トークンリフレッシュ
 Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
@@ -46,7 +51,7 @@ Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
 // authミドルウェア、CORSミドルウェアを使用するルート
 Route::group(['middleware' => ['auth', 'cors']], function () {
   // ログインユーザーのTwitterアカウント情報を更新
-  Route::get('/auth/twitter/update', 'Auth\TwitterAuthController@updateTwitterUser');
+  Route::post('/auth/twitter/update', 'Auth\TwitterAuthController@updateTwitterUser');
 
   // ホーム画面の最新データ表示API
   Route::get('/news/latest', 'NewsController@showLatest');
@@ -77,8 +82,8 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // パスワード変更
   Route::post('/password/change', 'Auth\ChangePasswordController@ChangePassword')->name('password.change');
   // ユーザー情報編集API
-  Route::post('/account/change', 'Auth\ChangeAccountController@changeAccount')->name('account.change');
+  Route::post('/account/change', 'Auth\EditAccountController@EditAccount')->name('account.change');
 
   // ユーザー退会API
-  Route::post('/account/withdraw', 'Auth\ChangeAccountController@withdrawAccount')->name('account.withdraw');
+  Route::post('/account/withdraw', 'Auth\EditAccountController@withdrawAccount')->name('account.withdraw');
 });
