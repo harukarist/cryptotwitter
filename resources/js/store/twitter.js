@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { OK } from '../utility'
 
 
@@ -41,8 +42,35 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    const response = await axios.get('/api/auth/twitter/check')
-    console.log('twitterCheck');
+    const response = await axios.post('/api/auth/twitter/check')
+    // API通信が成功した場合
+    if (response.status === OK) {
+      // setApiStatusミューテーションでステータスをtrueに変更
+      context.commit('setApiStatus', true)
+      // 返却されたユーザー情報（未ログインの場合はnull）を格納
+      const usersTwitter = response.data || null
+      // setUserDataミューテーションでuserDataステートを更新
+      context.commit('setUsersTwitter', usersTwitter)
+      return false //処理を終了
+    }
+    // API通信が失敗した場合
+    // ステータスをfalseに変更
+    context.commit('setApiStatus', false)
+    // errorモジュールのsetCodeミューテーションでステータスを更新
+    // 別モジュールのミューテーションをcommitするためroot: trueを指定する
+    context.commit('error/setCode', response.status, { root: true })
+  },
+
+  /**
+ * ログインユーザーのTwitterアカウント情報とフォロー済みリストを更新
+ */
+  // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
+  async updateTwitterUser(context) {
+    // setApiStatusミューテーションでステータスを初期化
+    context.commit('setApiStatus', null)
+    // サーバーのAPIを呼び出し
+    const response = await axios.post('/api/auth/twitter/update')
+    console.log('twitterUpdate');
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更

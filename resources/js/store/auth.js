@@ -89,7 +89,6 @@ const actions = {
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
     const response = await axios.post('/api/login', data)
-    console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -98,9 +97,9 @@ const actions = {
       // setUserDataミューテーションでuserDataステートを更新
       context.commit('setUserData', response.data)
 
-      // dispatch()でtwitterストアのcheckAuthアクションを呼び出す
+      // dispatch()でtwitterストアのupdateTwitterUserアクションを呼び出す
       // 別モジュールのアクションを呼び出すため、第三引数にroot: trueを指定する
-      context.dispatch("twitter/checkAuth", '', { root: true });
+      context.dispatch("twitter/updateTwitterUser", '', { root: true });
       return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更
@@ -174,7 +173,7 @@ const actions = {
   /**
    * ユーザー情報編集処理
    */
-  async changeAccount(context, data) {
+  async EditAccount(context, data) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
 
