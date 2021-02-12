@@ -13,10 +13,15 @@
             @error="noImage"
           />
           <div class="p-twitter-user__account">
-            <p class="p-twitter-user__name">{{ usersTwitter.user_name }}</p>
-            <p class="p-twitter-user__screen">
-              @{{ usersTwitter.screen_name }}
-            </p>
+            <a
+              :href="`https://twitter.com/${usersTwitter.screen_name}`"
+              target="_blank"
+            >
+              <p class="p-twitter-user__name">{{ usersTwitter.user_name }}</p>
+              <p class="p-twitter-user__screen">
+                @{{ usersTwitter.screen_name }}
+              </p>
+            </a>
           </div>
         </div>
 

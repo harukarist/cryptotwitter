@@ -13,7 +13,7 @@
           </label>
           <input
             type="text"
-            class="c-input c-input--large c-input--box"
+            class="c-input c-input--large"
             id="email"
             required
             v-model="requestForm.email"
@@ -62,7 +62,9 @@ export default {
       requestForm: {
         email: "",
       },
+      // フロントエンド側のバリデーションエラーメッセージ
       emailErrors: [],
+      // サーバー側からのメッセージとステータス
       apiMessage: "",
       apiResult: "",
     };
@@ -87,7 +89,7 @@ export default {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       }
-      // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      // エラーメッセージがなければパスワードリセットメール送信WebAPIを呼び出す
       if (!this.emailErrors.length) {
         this.sendResetLink();
       }

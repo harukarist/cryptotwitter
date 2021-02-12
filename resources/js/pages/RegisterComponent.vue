@@ -10,7 +10,7 @@
           </label>
           <input
             type="text"
-            class="c-input c-input--large c-input--box"
+            class="c-input c-input--large"
             id="username"
             placeholder="クリプト太郎"
             v-model="registerForm.name"
@@ -37,7 +37,7 @@
           <label for="email" class="c-form__label">メールアドレス</label>
           <input
             type="email"
-            class="c-input c-input--large c-input--box"
+            class="c-input c-input--large"
             id="email"
             placeholder="例）your.email@example.com"
             v-model="registerForm.email"
@@ -70,7 +70,7 @@
           </label>
           <input
             type="password"
-            class="c-input c-input--large c-input--box"
+            class="c-input c-input--large"
             id="password"
             placeholder="パスワードを入力"
             v-model="registerForm.password"
@@ -102,7 +102,7 @@
           >
           <input
             type="password"
-            class="c-input c-input--large c-input--box"
+            class="c-input c-input--large"
             id="password-confirmation"
             placeholder="パスワードを再度入力"
             v-model="registerForm.password_confirmation"
@@ -120,8 +120,12 @@
           </ul>
         </div>
         <div class="c-form__info">
-          <a href="#">利用規約</a> および
-          <a href="#">プライバシポリシー</a> に同意の上、ご登録ください。
+          <RouterLink :to="{ name: 'terms' }"> 利用規約 </RouterLink>
+          および
+          <RouterLink :to="{ name: 'privacy' }">
+            プライバシーポリシー
+          </RouterLink>
+          に同意の上、ご登録ください。
         </div>
         <div class="c-form__button">
           <button type="submit" class="c-btn__accent">ユーザー登録</button>

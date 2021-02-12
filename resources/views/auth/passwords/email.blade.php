@@ -20,7 +20,7 @@
                 <div class="form-group row">
                     <label for="email" class="c-form__label">{{ __('E-Mail Address') }}</label>
 
-                    <input id="email" type="email" class="form-control c-input c-input--large c-input--box @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="email" type="email" class="form-control c-input c-input--large @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">

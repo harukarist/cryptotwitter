@@ -46,6 +46,9 @@
     width: 95%;
     margin-bottom: 80px;
     box-sizing: border-box;
+    &:last-child {
+      margin-bottom: 10px;
+    }
     @include mq(){
       padding: $space--xxl;
       flex-direction: column;

@@ -1,6 +1,11 @@
 <template>
   <form class="c-form--small" @submit.prevent="checkChangePassForm">
-    <input name="username" v-model="changePassForm.username" autocomplete="username" style="display: none;" />
+    <input
+      name="username"
+      v-model="changePassForm.username"
+      autocomplete="username"
+      style="display: none"
+    />
     <div class="c-form__group">
       <label for="current_password" class="c-form__label">
         現在のパスワード
@@ -8,7 +13,7 @@
       </label>
       <input
         type="password"
-        class="c-input c-input--large c-input--box"
+        class="c-input c-input--large"
         id="current_password"
         placeholder="現在のパスワードを入力"
         v-model="changePassForm.current_password"
@@ -37,7 +42,7 @@
       </label>
       <input
         type="password"
-        class="c-input c-input--large c-input--box"
+        class="c-input c-input--large"
         id="new_password"
         placeholder="新しいパスワードを入力"
         v-model="changePassForm.new_password"
@@ -69,7 +74,7 @@
       >
       <input
         type="password"
-        class="c-input c-input--large c-input--box"
+        class="c-input c-input--large"
         id="new_password_confirmation"
         placeholder="新しいパスワードを再度入力"
         v-model="changePassForm.new_password_confirmation"

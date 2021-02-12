@@ -10,9 +10,9 @@
         />
         <div class="p-target__name">
           <a :href="`https://twitter.com/${item.screen_name}`" target="_blank">
-            {{ item.user_name }}</a
-          >
-          <p>@{{ item.screen_name }}</p>
+            {{ item.user_name }}
+            <p>@{{ item.screen_name }}</p>
+          </a>
         </div>
       </div>
 

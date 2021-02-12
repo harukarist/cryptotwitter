@@ -11,7 +11,7 @@ import TwitterListComponent from './pages/TwitterListComponent';
 import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import PassRequestComponent from './pages/PassRequestComponent';
-import ChangeAccountComponent from './pages/ChangeAccountComponent';
+import EditAccountComponent from './pages/EditAccountComponent';
 import WithdrawComponent from './pages/WithdrawComponent';
 import PrivacyPolicyComponent from './pages/PrivacyPolicyComponent';
 import TermsComponent from './pages/TermsComponent';
@@ -74,7 +74,7 @@ const router = new VueRouter({
     {
       path: '/edit',
       name: 'edit',
-      component: ChangeAccountComponent,
+      component: EditAccountComponent,
       meta: { requiresAuth: true }, //認証必須,
     },
     {

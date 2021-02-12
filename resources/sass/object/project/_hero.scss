@@ -41,6 +41,9 @@
     @include mq(medium){
       font-size: $font-size--xxl;
     }
+    @include mq(){
+      font-size: $font-size--xl;
+    }
   }
   &__text {
     letter-spacing: 0.02em;

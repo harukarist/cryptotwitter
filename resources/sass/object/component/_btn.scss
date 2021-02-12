@@ -14,6 +14,10 @@
   &:hover {
     transform: scale(0.97); //ホバー時にボタンを縮める
   }
+  @include mq(){
+    width: 80%;
+  }
+  
 }
 .c-btn {
   @extend %btnBase;

@@ -9,7 +9,7 @@
           </label>
           <input
             type="email"
-            class="c-input c-input--large c-input--box"
+            class="c-input c-input--large"
             id="login-email"
             v-model="loginForm.email"
             required
@@ -39,12 +39,17 @@
           <label for="login-password" class="c-form__label">パスワード</label>
           <input
             type="password"
-            class="c-input c-input--large c-input--box"
+            class="c-input c-input--large"
             id="login-password"
             v-model="loginForm.password"
             required
             autocomplete="current-password"
           />
+          <div class="u-font__right">
+            <RouterLink :to="{ name: 'password.request' }" class="c-form__link">
+              パスワードをお忘れですか？
+            </RouterLink>
+          </div>
           <ul v-if="passwordErrors">
             <li
               v-for="error in passwordErrors"
@@ -82,8 +87,8 @@
         </div>
       </form>
       <div class="c-form__link">
-        <RouterLink :to="{ name: 'password.request' }" class="c-form__link">
-          パスワードをお忘れの方はこちら
+        <RouterLink :to="{ name: 'register' }" class="c-form__link">
+          アカウントをお持ちでない方はこちら
         </RouterLink>
       </div>
     </div>
