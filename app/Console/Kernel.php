@@ -34,34 +34,36 @@ class Kernel extends ConsoleKernel
     // Commandを定期的に実行するタスクスケジュールの設定
     protected function schedule(Schedule $schedule)
     {
-        // hourlyAt()で毎時5分に仮想通貨の価格チェックを実行する
+        // 毎時5分に仮想通貨の価格チェックを実行する
         $schedule->command('update:prices')
             ->hourlyAt(5);
-        // everyFifteenMinutes()で15分毎に自動フォローを実行する
+        // 15分毎に自動フォローを実行する
         $schedule->command('follow:autofollow')
             ->everyFifteenMinutes();
 
-        // everyFifteenMinutes()で15分毎にツイート検索を実行する
+        // 10分毎に仮想通貨関連のツイート検索、各銘柄のツイート数の集計を実行する
         $schedule->command('fetch:latestTweets')
-            ->everyFifteenMinutes();
+            ->everyTenMinutes();
+        $schedule->command('update:tweetNum')
+            ->everyTenMinutes();
 
-        // 1週間分のツイートをDBに保存する場合は以下のコマンドをコメントアウトする
+        // 参考：初期導入時など、1週間分のツイートをまとめて保存する場合は以下を実行する
         // $schedule->command('fetch:weeklyTweets')
         //     ->everyFifteenMinutes();
 
-
-        $schedule->command('update:tweetNum')
-            ->everyFifteenMinutes();
-
-        // everyFifteenMinutes()で15分毎にニュース検索を実行する
+        // 15分毎にニュース検索を実行する
         $schedule->command('fetch:news')
             ->everyFifteenMinutes();
 
-        // dailyAt('01:00')で毎日深夜1:00にアカウント一覧を更新する
+        // 毎日深夜1:00にTwitterアカウント一覧を更新する
         $schedule->command('fetch:users')
             ->dailyAt('01:00');
         $schedule->command('fetch:twpro')
             ->dailyAt('01:00');
+
+        // 毎日深夜2:13に古いツイート及び取得ログレコードを削除する
+        $schedule->command('delete:records')
+            ->dailyAt('02:13');
 
         // daily()で毎日深夜12時に実行する
         // everyHour()で1時間毎に仮想通貨の価格チェックを実行する
