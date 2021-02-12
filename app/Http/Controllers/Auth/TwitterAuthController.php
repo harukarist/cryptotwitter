@@ -35,7 +35,7 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * ログイン時にログインユーザーのTwitterアカウント情報と自動フォロー累計数を返却
+     * ログイン時にログインユーザーのTwitterアカウント情報とフォロー済みリストを更新
      */
     public function updateTwitterUser()
     {
