@@ -41,7 +41,6 @@ class FollowTargetController extends Controller
 
     // ターゲットをフォロー済みかどうかをチェック
     $is_following = self::checkIsFollowing($twitter_id, $target_id, $connect);
-    // dd($is_following);
 
     // すでにターゲットをフォロー済みの場合は何もせずに返却
     if ($is_following) {
@@ -74,7 +73,6 @@ class FollowTargetController extends Controller
 
     // ユーザーアカウントでのTwitterAPIのレートリミットをチェック
     $limit = UsersTwitterOAuth::checkLimit($connect, $category, $endpoint);
-    // dd($limit);
 
     if (!$limit) {
       logger()->info("フォロー状況チェックのリクエスト上限に達しました");
@@ -83,15 +81,17 @@ class FollowTargetController extends Controller
 
     // TwitterAPIでフォロー状況を取得
     $result = $connect->get($endpoint, $params);
-    // dd($result);
 
     // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }
-    // TwitterAPIからの返却値からフォロー状況の値を取得
-    $is_following = $result->relationship->source->following;
-    return $is_following;
+    // TwitterAPIからの返却値に'relationship'プロパティがある場合
+    if (property_exists($result, 'relationship')) {
+      // フォロー状況の値を返却
+      $is_following = $result->relationship->source->following;
+      return $is_following;
+    }
   }
 
   /**
