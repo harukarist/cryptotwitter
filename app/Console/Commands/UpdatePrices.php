@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\PriceController;
+use App\Http\Controllers\FetchPriceController;
 
 class UpdatePrices extends Command
 {
@@ -42,7 +42,7 @@ class UpdatePrices extends Command
     public function handle()
     {
         // コントローラーのタスクを実行する
-        $trend = new PriceController;
+        $trend = new FetchPriceController;
         logger()->info('>>>> 取引価格の更新バッチ処理を実行します');
         $trend->getPrices();
         //ログファイルに書き込む
