@@ -69,20 +69,20 @@ class CountTweetController extends Controller
     // 各銘柄の検索キーワードで指定期間のツイートを検索し、キーワードを含むレコード数を取得
     public function countUpdate($column_name)
     {
-        echo  $column_name . ' カラムの値を更新<br>';
-        logger()->info($column_name . ' カラムの値を更新');
+        // 検索キーワードの配列をキー（銘柄名）とバリュー（検索キーワード）に展開して1つずつ処理
         foreach ($this->words_arr as $name => $keywords) {
+            // 指定期間内のツイートを集計
             $count_num = Tweet::whereBetween('tweeted_at', [$this->since_at, $this->until_at])
                 ->where(function ($query) use ($keywords) {
                     $i = 0;
                     foreach ($keywords as $keyword) {
-                        // 最初のキーワードはwhere、2つ目以降はorWhereをクエリとする
+                        // 1つ目のキーワードはwhere、2つ目以降はorWhereをクエリとしてLIKE句と"%キーワード%"で曖昧検索
                         $where = (!$i) ? 'where' : 'orWhere';
                         $i++;
                         $query->$where('tweet_text', 'LIKE', '%' . $keyword . '%');
-                        clock($query);
                     }
-                })->count();
+                    // 重複するツイートレコーを除いて集計
+                })->distinct('tweet_id')->count('tweet_id');
 
             // trendsテーブルの該当銘柄のカラム（1時間・1日・1週間のツイート数のいずれか）を更新
             Trend::where('currency_name', $name)->update([$column_name => $count_num]);
