@@ -124,13 +124,22 @@ class AutoFollowController extends Controller
                 $target_id = $target_ids[$key];
                 // 該当のTwitterIDをフォロー
                 $result = FollowTargetController::createFollow($twitter_user, $target_id);
+
+                $target = TargetUser::where('twitter_id', $target_id)->first();
+                // 自動フォローリストに保存
+                DB::table('autofollows')->insert([
+                    'twitter_user_id' => $twitter_user->id,
+                    'target_id' => $target->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
                 logger()->info("{$result['message']}");
             }
             logger()->info("{$twitter_user->user_name}さんのアカウントで {$max_requests}件自動フォローしました");
 
             $remain_num -= $i;
 
-            // ユーザー取得ログをDBに保存
+            // 自動フォローログをDBに保存
             DB::table('autofollow_logs')->insert([
                 'twitter_user_id' => $twitter_user->id,
                 'follow_total' => $max_requests,
