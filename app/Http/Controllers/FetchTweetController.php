@@ -32,23 +32,23 @@ class FetchTweetController extends Controller
         for ($i = 0; true; $i++) {
             // 最新日時のツイート取得ログデータ1件をDBから取得
             $log = DB::table('fetch_tweets_logs')->orderBy('until_at', 'DESC')->first();
-            // ログデータがない場合は以降の処理は行わず、1週間前からツイートを取得するメソッドを実行
+            // ログデータがない場合
             if (!$log) {
+                // 以降の処理は行わず、1週間前からツイートを取得するメソッドを実行
                 $this->fetchWeeklyTweets();
                 return;
             }
 
             // ログデータがある場合
-            // next_idカラムに値がある場合は、next_idをAPIのmax_id（取得開始id)に指定してその時間帯のツイートを取得
             if ($log->next_id) {
+                // next_idカラムに値がある場合は、next_idをAPIのmax_id（取得開始id)に指定して、同じ時間帯のツイートを取得
                 $since_at = new Carbon($log->since_at);
                 $until_at = new Carbon($log->until_at);
-                $max_id = $log->next_id;
-                // 検索パラメータを生成
+                // 検索開始日時、終了日時を指定して検索パラメータを生成
                 $params = $this->getParams($since_at, $until_at);
-                $params['max_id'] = $max_id;
+                $params['max_id'] = $log->next_id; //next_idをAPIのmax_id（取得開始id)に指定
             } else {
-                // next_idカラムが空の場合はuntil_atより後の10分間のツイートを取得する
+                // next_idカラムが空の場合はuntil_atより後の10分間を指定
                 $since_at = new Carbon($log->until_at);
                 $until_at = $since_at->copy()->addMinutes(10);
                 // 現在日時を取得
@@ -59,7 +59,7 @@ class FetchTweetController extends Controller
                     logger()->info("直近の未取得ツイートはありません");
                     break;
                 }
-                // 検索パラメータを生成
+                // 検索開始日時、終了日時を指定して検索パラメータを生成
                 $params = $this->getParams($since_at, $until_at);
             }
 
@@ -74,7 +74,7 @@ class FetchTweetController extends Controller
                 'since_at' => $since_at,
                 'until_at' => $until_at,
                 'total_count' => $total_count,
-                'begin_id' => $params['max_id'] ?? '',
+                'begin_id' => $log->next_id ?? '',
                 'next_id' => $max_id,
                 'created_at' => Carbon::now(),
             ]);
