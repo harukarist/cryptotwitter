@@ -11,51 +11,55 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 // フォロー対象となるTwitterの仮想通貨アカウントを取得
 class FetchTargetController extends Controller
 {
-    public $KEYWORDS = '仮想通貨 暗号資産'; //ユーザー検索キーワード
+    // 仮想通貨アカウントの検索キーワード
+    public $KEYWORDS = ['仮想通貨', '暗号資産', 'ビットコイン'];
 
+    // TwitterAPIで仮想通貨アカウントを検索し、保存する処理
     public function fetchUsers()
     {
-        $MAX_REQUEST = 100; // ユーザー検索の最大リクエスト回数の初期値（上限は15分間に900回）
-        // TwitterAPIのリクエスト残り回数を取得
-        $remain_count = $this->checkLimit($MAX_REQUEST);
-        // リクエスト残り回数が0の場合は処理を終了
-        if (!$remain_count) {
-            echo "Twitterアカウント取得のリクエスト上限に達しました";
-            logger()->info("Twitterアカウント取得のリクエスト上限に達しました");
-            return;
+        $max_request = 100; // ユーザー検索の最大リクエスト回数の初期値（上限は15分間に900回）
+
+        foreach ($this->KEYWORDS as $keyword) {
+            // TwitterAPIのリクエスト残り回数を取得
+            $remain_count = $this->checkLimit();
+
+            // リクエスト残り回数が0の場合は処理を終了
+            if (!$remain_count) {
+                echo "Twitterアカウント取得のリクエスト上限に達しました";
+                logger()->info("Twitterアカウント取得のリクエスト上限に達しました");
+                return;
+            }
+            // 残り回数が初期値より少なければ、残り回数を最大リクエスト回数とする
+            if ($remain_count < $max_request) {
+                $max_request = $remain_count;
+            }
+
+            // 検索パラメータを生成
+            // Twitterアカウント検索オプションを指定
+            $params = array(
+                'q' => $keyword,
+                'count' => 20, // 1ページ毎に取得するユーザー件数（上限は20件）
+            );
+
+            echo "「{$keyword}」でTwitterアカウントを検索<br>";
+            logger()->info("「{$keyword}」でTwitterアカウントを検索");
+
+            // TwitterAPIでTwitterアカウントを検索し、該当データを保存
+            $this->requestUsers($max_request, $params);
         }
-
-        // 検索パラメータを生成
-        $params = $this->getParams();
-
-        // // TwitterAPIでTwitterアカウントを検索し、該当データを保存
-        $this->requestUsers($remain_count, $params);
-        return;
-    }
-
-    // 検索用パラメーターを生成
-    public function getParams()
-    {
-        // Twitterアカウント検索オプションを指定
-        $params = array(
-            'q' => $this->KEYWORDS,
-            'count' => 20, // 1ページ毎に取得するユーザー件数（上限は20件）
-        );
-        return $params;
     }
 
     // TwitterAPIでレートリミットを取得
-    public function checkLimit($max_request)
+    public function checkLimit()
     {
         //残り使用可能回数をTwitterAPIでチェック
         $status = \Twitter::get("application/rate_limit_status");
 
         // APIから返ってきたオブジェクトにエラープロパティがあれば残り回数を0にする
         if (property_exists($status, 'errors')) {
-            $max_request = 0;
             echo "残り使用可能回数が取得できませんでした<br>";
             logger()->info("残り使用可能回数が取得できませんでした");
-            return $max_request;
+            return 0;
         }
 
         // 検索APIの残り使用可能回数が存在する場合は回数の値を取得
@@ -68,27 +72,23 @@ class FetchTargetController extends Controller
                     $remain_count = $limit_arr['/users/search']->remaining; // 残り使用回数
                     echo "残り" . $remain_count . "回<br>";
                     logger()->info("残り:{$remain_count}回");
-
-                    // 残り回数が初期値より少なければ、残り回数を最大リクエスト回数とする
-                    if ($remain_count < $max_request) {
-                        return $remain_count;
-                    }
+                    return $remain_count;
                 }
             }
         }
 
-        return $max_request;
+        return 0;
     }
 
     // TwitterAPIでTwitterアカウントを検索
-    public function requestUsers($remain_count, $params)
+    public function requestUsers($max_request, $params)
     {
         $create_total = 0;
         $update_total = 0;
         $page_num = 1;
 
         // 最大リクエスト回数までループ
-        for ($req_count = 1; $req_count <= $remain_count; $req_count++) {
+        for ($req_count = 1; $req_count <= $max_request; $req_count++) {
             $params['page'] = $page_num;
 
             // TwitterアカウントをTwitterAPIで検索し、返却された検索結果を変数に格納
@@ -116,24 +116,17 @@ class FetchTargetController extends Controller
             // 検索結果がある場合
             $users_count = count($users_arr);
             if ($users_count) {
-                // echo "ユーザー情報を" . $users_count . "件取得<br>";
-                // logger()->info("ユーザー情報を" . $users_count . "件取得");
-
                 // 検索結果から必要なデータを抽出し、DBに保存
                 $count = $this->createRecord($users_arr);
-
-                echo $count['create'] . "件のユーザー情報を保存しました<br>";
-                logger()->info($count['create'] . "件のユーザー情報を保存しました");
+                // 新規保存したレコード件数、更新したレコード件数を加算
                 $create_total += $count['create'];
-
-                echo $count['update'] . "件のユーザー情報を更新しました<br>";
-                logger()->info($count['update'] . "件のユーザー情報を更新しました");
                 $update_total += $count['update'];
             } else {
                 echo "検索結果は0件でした<br>";
                 logger()->info("検索結果は0件でした");
                 break;
             }
+            // 次のページにループを回す
             $page_num++;
         }
 
@@ -199,8 +192,9 @@ class FetchTargetController extends Controller
                     $update_count++;
                 }
             }
-            $count['create'] = $create_count;
-            $count['update'] = $update_count;
+            // 新規保存したレコード件数、更新したレコード件数を返却
+            $count['create'] = $create_count; // 新規保存したレコード件数
+            $count['update'] = $update_count; // 更新したレコード件数
             return $count;
         }
         return;
