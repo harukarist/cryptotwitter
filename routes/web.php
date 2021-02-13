@@ -24,8 +24,8 @@ Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
 // バッチ処理の手動実行用
 Route::get('/weekly', 'FetchTweetController@fetchWeeklyTweets');
 Route::get('/newTweet', 'FetchTweetController@fetchLatestTweets');
-Route::get('/getUser', 'FetchTwitterUserController@fetchUsers');
-Route::get('/latest', 'FetchTwitterUserController@fetchLatestTweet');
+Route::get('/getUser', 'FetchTargetController@fetchUsers');
+Route::get('/latest', 'FetchTargetTweetController@fetchLatestTweet');
 Route::get('/getNews', 'FetchNewsController@fetchNews');
 Route::get('/getTwpro', 'FetchTwproController@fetchUsers');
 Route::get('/addUser', 'LookupTwitterUserController@addUsers');

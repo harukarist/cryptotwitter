@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Controllers\FetchTwitterUserController;
+use App\Http\Controllers\FetchTargetController;
 
 class FetchUsers extends Command
 {
@@ -42,7 +42,7 @@ class FetchUsers extends Command
     public function handle()
     {
         // コントローラーのタスクを実行する
-        $user = new FetchTwitterUserController;
+        $user = new FetchTargetController;
         logger()->info('>>>> Twitterユーザー保存バッチを実行します');
         $user->fetchUsers();
         //ログファイルに書き込む

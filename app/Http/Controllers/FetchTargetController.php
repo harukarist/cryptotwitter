@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\TargetUser;
 use App\Facades\Twitter;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 // フォロー対象となるTwitterの仮想通貨アカウントを取得
-class FetchTwitterUserController extends Controller
+class FetchTargetController extends Controller
 {
     public $KEYWORDS = '仮想通貨 暗号資産'; //ユーザー検索キーワード
 
