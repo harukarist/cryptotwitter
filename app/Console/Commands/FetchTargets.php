@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Http\Controllers\FetchTargetController;
 
-class FetchUsers extends Command
+class FetchTargets extends Command
 {
     /**
      * The name and signature of the console command.
@@ -13,7 +13,7 @@ class FetchUsers extends Command
      * @var string
      */
     // コマンド名を定義
-    protected $signature = 'fetch:users';
+    protected $signature = 'fetch:targets';
 
     /**
      * The console command description.

@@ -50,7 +50,6 @@ class FetchTargetTweetController extends Controller
         if ($count === 0) {
             return;
         }
-
         // 未取得件数がリクエスト上限より多い場合はリクエスト上限までとする
         if ($count > $max_request) {
             $count = $max_request;
@@ -71,7 +70,7 @@ class FetchTargetTweetController extends Controller
             $result = \Twitter::get("statuses/user_timeline", $params);
 
             // 返却された検索結果が空の場合は次の処理へ
-            if (count($result) === 0) {
+            if (!$result) {
                 continue;
             }
 
