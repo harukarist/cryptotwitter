@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         Commands\FetchTweetsLatest::Class,
         Commands\FetchTweetsWeekly::Class,
         Commands\FetchTwpro::Class,
-        Commands\FetchUsers::Class,
+        Commands\FetchTargets::Class,
         Commands\FetchNews::Class,
     ];
 
@@ -56,7 +56,7 @@ class Kernel extends ConsoleKernel
             ->everyFifteenMinutes();
 
         // 毎日深夜1:00にTwitterアカウント一覧を更新する
-        $schedule->command('fetch:users')
+        $schedule->command('fetch:targets')
             ->dailyAt('01:00');
         $schedule->command('fetch:twpro')
             ->dailyAt('01:00');
