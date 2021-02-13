@@ -3,7 +3,7 @@
     <section class="c-section">
       <h5 class="c-section__title">自動フォロー履歴</h5>
       <p class="c-section__text">
-        自動フォロー機能したアカウントを一覧表示します。<br />
+        自動フォローしたアカウントを一覧表示します。<br />
       </p>
 
       <div class="p-target">
@@ -14,12 +14,14 @@
           <TwitterTargetItem
             v-for="target in targets"
             :key="target.id"
-            :item="target"
+            :item="target.target_user"
             :is-login="isTwitterLogin"
             @follow="createFollow"
             @unfollow="destroyFollow"
           >
-            <div class="p-faq__question" slot="follow_date">フォロー日時</div>
+            <div class="u-font__muted u-font__small u-mb--m" slot="follow_date">
+              フォロー日時: {{ target.created_at }}
+            </div>
           </TwitterTargetItem>
 
           <Pagination
@@ -43,14 +45,12 @@
 
 <script>
 import { OK } from "../utility";
-import TwitterLogin from "../components/TwitterLogin.vue";
 import TwitterTargetItem from "../components/TwitterTargetItem.vue";
 import Pagination from "../components/Pagination.vue";
 import PaginationInfo from "../components/PaginationInfo.vue";
 
 export default {
   components: {
-    TwitterLogin,
     TwitterTargetItem,
     Pagination,
     PaginationInfo,
@@ -58,11 +58,12 @@ export default {
   data() {
     return {
       targets: [], //仮想通貨関連アカウント一覧を格納する配列を用意
+      followed_at: "", //現在ページ
       currentPage: 0, //現在ページ
       lastPage: 0, //最終ページ
       perPage: 0, //1ページあたりの表示件数
       totalItems: 0, //トータル件数
-      directoryName: "twitter", //ページネーションリンクに付与するディレクトリ
+      directoryName: "autofollow/list", //ページネーションリンクに付与するディレクトリ
     };
   },
   // ページネーションのページ番号をrouter.jsから受け取る
@@ -82,7 +83,10 @@ export default {
   methods: {
     // Twitterアカウント一覧を取得
     async fetchTargets() {
-      const response = await axios.get(`/api/autofollow/list?page=${this.page}`);
+      const response = await axios.get(
+        `/api/autofollow/list?page=${this.page}`
+      );
+      console.log(response);
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
@@ -97,7 +101,6 @@ export default {
       // 1ページあたりの表示件数、トータル件数を格納
       this.perPage = response.data.per_page;
       this.totalItems = response.data.total;
-
       return;
     },
     // フォロー登録メソッド
@@ -110,9 +113,9 @@ export default {
       }
       // レスポンスがOKの場合は配列の該当項目を変更して返却
       this.targets = this.targets.map((target) => {
-        if (target.twitter_id === response.data.target_id) {
+        if (target.target_user.twitter_id === response.data.target_id) {
           // フォロー済みフラグをtrueにしてフォローボタンの表示を変更
-          target.followed_by_user = true;
+          target.target_user.followed_by_user = true;
         }
         return target;
       });
@@ -133,9 +136,9 @@ export default {
       }
       // レスポンスがOKの場合は配列の該当項目を変更して返却
       this.targets = this.targets.map((target) => {
-        if (target.twitter_id === response.data.target_id) {
+        if (target.target_user.twitter_id === response.data.target_id) {
           // フォロー済みフラグをfalseにしてフォローボタンの表示を変更
-          target.followed_by_user = false;
+          target.target_user.followed_by_user = false;
         }
         return target;
       });

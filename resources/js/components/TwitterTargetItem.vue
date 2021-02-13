@@ -1,5 +1,6 @@
 <template>
   <div class="p-target__item">
+    <slot name="follow_date"></slot>
     <div class="p-target__head">
       <div class="p-target__head-left">
         <img

@@ -75,6 +75,8 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   Route::post('/autofollow/cancel', 'AutoFollowController@cancelAutoFollow');
   // 自動フォロー累計数取得API
   Route::get('/autofollow/count', 'AutoFollowController@countAutoFollow');
+  // 自動フォロー一覧取得API
+  Route::get('/autofollow/list', 'AutoFollowController@showAutoFollowList');
 
   // Twitterアカウントの削除
   Route::post("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");

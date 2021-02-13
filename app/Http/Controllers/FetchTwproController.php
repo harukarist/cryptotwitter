@@ -233,6 +233,13 @@ class FetchTwproController extends FetchTwitterUserController
                     $record->update($query);
                     $update_total++;
                 }
+                if (isset($result->errors[0]->message) && $result->errors[0]->message === "Bad Authentication data.") {
+                    $query = [
+                        'tweet_text' => 'アカウントは凍結されています', //最新ツイートの文章
+                    ];
+                    $record->update($query);
+                    $update_total++;
+                }
                 continue; //次の処理へ
             }
             // 最新ツイートが取得できた場合t

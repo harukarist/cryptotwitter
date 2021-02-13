@@ -82,10 +82,9 @@ class TargetUser extends Model
         return $this->belongsToMany('App\TwitterUser', 'follows', 'target_id', 'twitter_user_id')
             ->withTimestamps();
     }
+
     public function autofollows()
     {
-        // TwitterUserとTargetUserは、autofollowsテーブルを中間テーブルとした多対多の関係
-        // 第３引数はリレーションを定義しているモデルの外部キー名、第４引数は結合するモデルの外部キー名
-        return $this->belongsToMany('App\TargetUser', 'autofollows', 'twitter_user_id', 'target_id');
+        return $this->hasMany('App\Autofollow', 'target_id');
     }
 }

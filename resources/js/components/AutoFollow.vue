@@ -3,11 +3,13 @@
     <div class="p-autofollow">
       <div class="p-autofollow__guide">
         <p v-if="totalAutoFollow" class="p-autofollow__total">
-          自動フォロー累計数：
-          <span class="num">
-            {{ totalAutoFollow }}
-          </span>
-          件
+          <RouterLink :to="{ name: 'autofollow.list' }">
+            自動フォロー累計数：
+            <span class="num">
+              {{ totalAutoFollow }}
+            </span>
+            件
+          </RouterLink>
         </p>
         <p
           class="p-autofollow__status c-alert__inline--success"
@@ -72,8 +74,6 @@ export default {
     ...mapGetters({
       // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
       usersTwitter: "twitter/usersTwitter",
-      // // twitterストアのtotalAutoFollowゲッターでユーザーのTwitterアカウント情報を取得
-      // totalAutoFollow: "twitter/totalAutoFollow",
     }),
   },
   methods: {
