@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Http\Controllers\Controller;
 
-// TwproAPIでTwitterアカウントを取得
+// 最新ツイートが取得できなかったTwitterアカウントの最新ツイートをTwitterAPIから取得
 class FetchTargetTweetController extends Controller
 {
-    // 最新ツイートが取得できなかったTwitterアカウントの最新ツイートをTwitterAPIから取得
-    static public function fetchLatestTweet()
+    
+    public static function fetchLatestTweet()
     {
         $max_request = 100; // ツイート取得の最大リクエスト回数の初期値（上限は15分間に900回）
 
