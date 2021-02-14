@@ -16,13 +16,13 @@ class Kernel extends ConsoleKernel
     // バッチ処理を実行するCommandクラスを登録する
     protected $commands = [
         Commands\AutoFollow::Class,
-        Commands\UpdatePrices::Class,
-        Commands\UpdateTweetNum::Class,
         Commands\FetchTweetsLatest::Class,
         Commands\FetchTweetsWeekly::Class,
         Commands\FetchTwpro::Class,
         Commands\FetchTargets::Class,
         Commands\FetchNews::Class,
+        Commands\UpdatePrices::Class,
+        Commands\UpdateTweetCount::Class,
     ];
 
     /**
@@ -34,9 +34,6 @@ class Kernel extends ConsoleKernel
     // Commandを定期的に実行するタスクスケジュールの設定
     protected function schedule(Schedule $schedule)
     {
-        // 毎時5分に仮想通貨の価格チェックを実行する
-        $schedule->command('update:prices')
-            ->hourlyAt(5);
         // 15分毎に自動フォローを実行する
         $schedule->command('follow:autofollow')
             ->everyFifteenMinutes();
@@ -44,12 +41,12 @@ class Kernel extends ConsoleKernel
         // 10分毎に仮想通貨関連のツイート検索、各銘柄のツイート数の集計を実行する
         $schedule->command('fetch:latestTweets')
             ->everyTenMinutes();
-        $schedule->command('update:tweetNum')
+        $schedule->command('update:tweetCount')
             ->everyTenMinutes();
 
-        // 参考：初期導入時など、1週間分のツイートをまとめて保存する場合は以下を実行する
-        // $schedule->command('fetch:weeklyTweets')
-        //     ->everyFifteenMinutes();
+        // 10分毎に仮想通貨の価格チェックを実行する
+        $schedule->command('update:prices')
+            ->everyTenMinutes();
 
         // 15分毎にニュース検索を実行する
         $schedule->command('fetch:news')
@@ -64,20 +61,6 @@ class Kernel extends ConsoleKernel
         // 毎日深夜2:13に古いツイート及び取得ログレコードを削除する
         $schedule->command('delete:records')
             ->dailyAt('02:13');
-
-        // daily()で毎日深夜12時に実行する
-        // everyHour()で1時間毎に仮想通貨の価格チェックを実行する
-        // everyMinute() 毎分
-        // everyFiveMinutes()
-        // everyTenMinutes()
-        // everyFifteenMinutes()
-        // everyThirtyMinutes()
-        // hourly()
-        // hourlyAt(17)
-        // daily(17)
-        // dailyAt('13:00')
-        // dailyAt('13:00')
-
     }
 
     /**
