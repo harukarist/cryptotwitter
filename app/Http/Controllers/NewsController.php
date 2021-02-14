@@ -12,8 +12,22 @@ class NewsController extends Controller
     /**
      * ニュース画面表示処理
      */
-    public function index()
+    public function index(Request $request)
     {
+        // 検索リクエストがあった場合は検索キーワードを格納
+        if ($request->search) {
+            $search_word = $request->search;
+        } else {
+            $search_word = '';
+        }
+
+        // 検索キーワードがある場合
+        if (isset($search_word)) {
+            $news = NewsList::where('title', 'LIKE', '%' . $search_word . '%')
+                ->orderBy('published_date', 'DESC')
+                ->paginate(10);
+            return $news;
+        }
         // ニュース一覧をテーブルから取得してニュース公開日の近い順にページネーション 
         $news = NewsList::orderBy('published_date', 'DESC')
             ->paginate(10);
