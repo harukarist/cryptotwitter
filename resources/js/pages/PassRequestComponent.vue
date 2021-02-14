@@ -122,11 +122,13 @@ export default {
      * パスワードリセットメール送信WebAPI呼び出し
      */
     async sendResetLink() {
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       // サーバーのAPIを呼び出し
       const response = await axios.post(
         "/api/password/email",
         this.requestForm
       );
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // API通信が成功した場合
       if (response.status === OK) {
         // Laravel側で設定したresultフラグを取得
@@ -146,9 +148,5 @@ export default {
       }
     },
   },
-  // created() {
-  //   // ページ読み込み時にエラーメッセージをクリア
-  //   this.clearError();
-  // },
 };
 </script>

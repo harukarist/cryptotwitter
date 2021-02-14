@@ -4,6 +4,7 @@
   transition: all 1s;
   background: rgba($bg-color--white, 0.5);
   position: fixed;
+  z-index: 2;
 }
 .c-loader__icon,
 .c-loader__icon:before,

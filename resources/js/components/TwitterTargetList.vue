@@ -1,6 +1,8 @@
 <template>
   <div class="p-target">
     <div class="p-target__list">
+      <SearchFormComponent @search="searchTargets" @clear="clearResult" />
+
       <h5 class="p-target__title">仮想通貨関連アカウント</h5>
       <TwitterTargetItem
         v-for="target in targets"
@@ -34,12 +36,14 @@ import { OK } from "../utility";
 import TwitterTargetItem from "../components/TwitterTargetItem.vue";
 import Pagination from "../components/Pagination.vue";
 import PaginationInfo from "../components/PaginationInfo.vue";
+import SearchFormComponent from "../components/SearchFormComponent.vue";
 
 export default {
   components: {
     TwitterTargetItem,
     Pagination, //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo, //ページネーションの件数表示
+    SearchFormComponent,
   },
   // ページネーションのページ番号を親コンポーネントTwitterListComponentから受け取る
   props: {
@@ -60,9 +64,24 @@ export default {
     };
   },
   methods: {
+    searchTargets(word) {
+      let params = {
+        params: {
+          search: word,
+        },
+      };
+      this.fetchTargets(params);
+    },
+    clearResult() {
+      let params = {};
+      this.fetchTargets(params);
+    },
     // Twitterアカウント一覧を取得
-    async fetchTargets() {
-      const response = await axios.get(`/api/twitter?page=${this.page}`);
+    async fetchTargets(params) {
+      const response = await axios.get(
+        `/api/twitter?page=${this.page}`,
+        params
+      );
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
@@ -131,7 +150,9 @@ export default {
     // $routeを監視し、ページ切り替え時にデータ取得を実行
     $route: {
       async handler() {
+        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
         await this.fetchTargets();
+        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       },
       immediate: true, //コンポーネント生成時も実行
     },

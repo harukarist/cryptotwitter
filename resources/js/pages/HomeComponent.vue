@@ -2,7 +2,7 @@
   <div class="c-container--bg">
     <section class="c-section">
       <h5 class="c-section__title">リアルタイムトレンド</h5>
-      <div class="p-home__contents c-fade--in">
+      <div class="p-home__contents c-fade-in">
         <div class="c-tab p-home__contents">
           <ul class="c-tab__list">
             <li
@@ -135,11 +135,14 @@
             :item="target"
             :is-login="false"
           />
-        <div class="p-readmore__wrapper">
-          <RouterLink :to="{ name: 'twitter.index' }" class="p-readmore__link">
-            もっと見る
-          </RouterLink>
-        </div>
+          <div class="p-readmore__wrapper">
+            <RouterLink
+              :to="{ name: 'twitter.index' }"
+              class="p-readmore__link"
+            >
+              もっと見る
+            </RouterLink>
+          </div>
         </div>
       </div>
     </section>
@@ -280,9 +283,11 @@ export default {
     // $routeを監視し、ページ切り替え時にデータ取得を実行
     $route: {
       async handler() {
+        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
         await this.fetchTrends();
         await this.fetchTargets();
         await this.fetchNews();
+        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       },
       immediate: true, //コンポーネント生成時も実行
     },

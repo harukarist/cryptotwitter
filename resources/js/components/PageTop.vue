@@ -1,6 +1,6 @@
 <template>
   <transition name="popup">
-    <div class="p-pagetop" v-show="currentHeight > 400" @click="scrollTop()">
+    <div class="p-pagetop" v-if="isVisible" @click="scrollTop()">
       <span class="p-pagetop__btn"><i class="fas fa-chevron-up"></i></span>
     </div>
   </transition>
@@ -11,18 +11,13 @@ export default {
   data() {
     return {
       currentHeight: 0,
-      isVisible: false,
     };
   },
-  // computed: {
-  //   getHeight() {
-  //     document.onscroll = (e) => {
-  //       // 現在の高さを取得
-  //       this.currentHeight =
-  //         document.documentElement.scrollTop || document.body.scrollTop;
-  //     };
-  //   },
-  // },
+  computed: {
+    isVisible() {
+      return this.currentHeight > 400;
+    },
+  },
   methods: {
     // ページの最上部までスクロールするメソッド
     scrollTop() {

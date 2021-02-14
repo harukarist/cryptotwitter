@@ -29,6 +29,12 @@
       font-size: $font-size--l;
     }
   }
+  &__sp {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
   &__toggle {
     display: none; //トグルメニューはPCサイトでは非表示
     @include mq(medium) {

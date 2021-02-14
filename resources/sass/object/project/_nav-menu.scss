@@ -16,7 +16,7 @@
     &.is-active {
       transform: translateX(-100%); //右端にあったメニューが100％左に移動
       -webkit-transform: translateX(-100%);
-      z-index: 2;
+      z-index: 4;
     }
   }
   &__sp-title { // スマホ用ドロワーメニュー用ロゴ
@@ -60,8 +60,12 @@
     &:last-child {
       margin-right: $space--s;
     }
+    @include mq(large){
+      font-size: $font-size--s;
+    }
     // スマホ用ドロワーメニュー
     @include mq(medium){
+      font-size: $font-size--default;
       margin: $space--m $space--m;
       &:first-child {
         margin-left: $space--m;
@@ -233,6 +237,25 @@
     // スマホ用ドロワーメニュー
     @include mq(medium) {
       height: 40px;
+    }
+  }
+  &__action {
+    display: none;
+    @include mq(medium) {
+      display: flex;
+      align-items: center;
+      margin-right: $space--l;
+      &-item-btn {
+        margin: 0 $space--s;
+      }
+      &-btn {
+        font-size: $font-size--default;
+        padding-top: $space--s;
+        padding-bottom: $space--s;
+      }
+    }
+    @include mq() {
+      display: none;
     }
   }
 }

@@ -7,7 +7,7 @@
           class="u-sp--only"
         />お届けします。<br />
       </p>
-      <div class="p-news c-fade--in">
+      <div class="p-news c-fade-in">
         <SearchFormComponent @search="searchNews" @clear="clearResult" />
 
         <transition-group tag="div" name="popup" class="p-news__item">
@@ -114,7 +114,9 @@ export default {
     // $routeを監視し、ページ切り替え時にデータ取得を実行
     $route: {
       async handler() {
+        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
         await this.fetchNews();
+        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       },
       immediate: true, //コンポーネント生成時も実行
     },

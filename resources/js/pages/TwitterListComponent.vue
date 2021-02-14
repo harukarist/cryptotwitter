@@ -12,7 +12,7 @@
 
       <TwitterLogin />
 
-      <div v-if="totalAutoFollow" class="c-tab c-fade--in p-twitter__list">
+      <div v-if="totalAutoFollow" class="c-tab c-fade-in p-twitter__list">
         <ul class="c-tab__list">
           <li
             class="c-tab__item c-tab__item--two"
@@ -96,8 +96,10 @@ export default {
     },
   },
   created() {
+    this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
     // ページ読み込み時に自動フォロー累計数を取得
     this.fetchTotalAutoFollow();
+    this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
   },
 };
 </script>

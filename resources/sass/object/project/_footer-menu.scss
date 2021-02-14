@@ -26,12 +26,4 @@
     color: $font-color--muted;
     font-size: $font-size--s;
   }
-  &__pagetop {
-      position: absolute;
-      z-index: 3;
-      top: -22px;
-      transform: translateX(-50%);
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-  }
 }

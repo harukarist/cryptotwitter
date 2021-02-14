@@ -1,6 +1,6 @@
 <template>
   <div class="p-about">
-    <div class="c-fade--in">
+    <div class="c-fade-in">
       <img
         src="/img/img_logo_white.png"
         class="p-about__logo-img"

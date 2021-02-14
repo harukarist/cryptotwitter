@@ -1,27 +1,11 @@
 <template>
-  <!-- <transition name="loading"> -->
-    <div class="c-loader" v-if="isLoading">
+  <transition name="loading">
+    <div class="c-loader">
       <div class="c-loader__icon"></div>
     </div>
-  <!-- </transition> -->
+  </transition>
 </template>
 
 <script>
-export default {
-  computed: {
-    isLoading() {
-      // console.log("ローディングチェック");
-      return this.$store.state.loader.loading;
-    },
-  },
-};
+export default {};
 </script>
-
-<style>
-.loading-enter-active {
-  transition: all 0.25s;
-}
-.loading-leave-active {
-  transition: all 0.5s ease 0.5s; /* ルータービューが終わった後に */
-}
-</style>

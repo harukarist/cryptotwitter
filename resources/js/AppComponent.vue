@@ -5,39 +5,42 @@
     </header> -->
 
     <main id="main">
-      <LoaderComponent />
-      <!-- Vuexでフラッシュメッセージを表示 -->
-      <InnerMessage />
-      <!-- VueRouterでコンポーネントを表示 -->
-      <RouterView />
+      <page-top />
+      <inner-message />
+      <loader-component v-show="isLoading" />
+      <router-view v-show="!isLoading" />
     </main>
     <footer id="footer">
-      <FooterComponent />
+      <footer-component />
     </footer>
-    <PageTopComponent />
   </div>
 </template>
 
 <script>
-import InnerMessage from "./components/InnerMessage";
+// app.blade.phpで読み込むvue.jsのルートコンポーネント
+// VueRouterでページコンポーネントを切り替える
+import { NOT_FOUND, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./utility";
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
 import LoaderComponent from "./components/LoaderComponent";
-import PageTopComponent from "./components/PageTopComponent";
-import { NOT_FOUND, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./utility";
+import PageTop from "./components/PageTop";
+import InnerMessage from "./components/InnerMessage";
 
 export default {
   components: {
-    InnerMessage,
-    HeaderComponent,
-    FooterComponent,
-    LoaderComponent,
-    PageTopComponent,
+    HeaderComponent, //ヘッダー
+    FooterComponent, //フッター
+    LoaderComponent, //ページ読み込み中のローディングアニメーション
+    PageTop, //ページトップへ戻るボタン
+    InnerMessage, //Vuexで管理するフラッシュメッセージ
   },
   computed: {
     errorCode() {
       // ストアのerrorモジュールのステートを参照
       return this.$store.state.error.code;
+    },
+    isLoading() {
+      return this.$store.state.loader.isLoading;
     },
   },
   watch: {

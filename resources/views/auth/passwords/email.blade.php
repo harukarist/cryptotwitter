@@ -5,7 +5,7 @@
     <h2 class="c-container__title">パスワードをお忘れの方</h2>
         <div class="c-form__wrapper">
             @if (session('status'))
-                <div class="c-alert--success c-fade--in" role="alert">
+                <div class="c-alert--success c-fade-in" role="alert">
                     {{ session('status') }}
                 </div>
             @endif

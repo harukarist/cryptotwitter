@@ -1,5 +1,5 @@
 <template>
-  <div class="c-fade--in">
+  <div class="c-fade-in--small">
     <div v-if="isTwitterLogin">
       <div class="p-twitter-user">
         <p class="p-twitter-user__head">

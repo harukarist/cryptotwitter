@@ -1,16 +1,12 @@
 const state = {
-  loading: false
+  isLoading: false
 }
 
 const mutations = {
-  start(state) {
-    state.loading = true
-    // console.log('ローディング中')
+  setIsLoading(state, status) {
+    state.isLoading = status;
+    console.log('ローディング', status);
   },
-  end(state) {
-    state.loading = false
-    // console.log('ローディング終了')
-  }
 }
 
 export default {

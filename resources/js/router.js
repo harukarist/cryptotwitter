@@ -17,6 +17,9 @@ import WithdrawComponent from './pages/WithdrawComponent';
 import PrivacyPolicyComponent from './pages/PrivacyPolicyComponent';
 import TermsComponent from './pages/TermsComponent';
 import ContactComponent from './pages/ContactComponent';
+import ContactForm from './components/ContactForm';
+import ContactConfirm from './components/ContactConfirm';
+import ContactSent from './components/ContactSent';
 import SystemError from './errors/SystemError';
 import NotFound from './errors/NotFound';
 
@@ -124,7 +127,7 @@ const router = new VueRouter({
       component: PrivacyPolicyComponent,
     },
     {
-      path: '/contact',
+      path: "/contact",
       name: 'contact',
       component: ContactComponent,
     },
@@ -138,6 +141,8 @@ const router = new VueRouter({
 
 // ルーターナビゲーションの前にフック（ページコンポーネントが切り替わる直前のナビゲーションガード）
 router.beforeEach((to, from, next) => {
+  // ローディング表示をオン
+  store.commit('loader/setIsLoading', true)
   // 認証必須のルートで認証チェックがfalseならログイン画面へ
   if (to.matched.some(record => record.meta.requiresAuth) && !store.getters['auth/check']) {
     next({ name: 'login' });
@@ -145,16 +150,16 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.onlyGuest) && store.getters['auth/check']) {
     next({ name: 'home' });
   } else {
-    // ローディング表示をオン
-    store.commit('loader/start')
+    // その他の場合はそのままルーティング先へ遷移
     next();
   }
 })
 // ルーターナビゲーションの後にフック
 router.afterEach(() => {
   // ローディング表示をオフ
-  store.commit('loader/end')
+  store.commit('loader/setIsLoading', false)
 })
+
 
 // VueRouterインスタンスをエクスポートし、app.jsでインポートする
 export default router

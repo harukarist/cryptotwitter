@@ -15,7 +15,7 @@
           class="u-sp--only"
         />検索できます。<br />
       </p>
-      <div class="c-tab c-fade--in">
+      <div class="c-tab c-fade-in">
         <ul class="c-tab__list">
           <li
             class="c-tab__item c-tab__item--three"
@@ -110,7 +110,7 @@
             </div>
           </slide-down-component>
 
-          <table class="c-table c-fade--in">
+          <table class="c-table c-fade-in">
             <thead class="c-table__thead">
               <tr>
                 <th>順位</th>
@@ -300,7 +300,9 @@ export default {
     // $routeを監視し、ページ切り替え時にデータ取得を実行
     $route: {
       async handler() {
+        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
         await this.fetchTrends();
+        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       },
       immediate: true, //コンポーネント生成時も実行
     },
