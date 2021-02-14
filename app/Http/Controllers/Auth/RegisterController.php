@@ -11,6 +11,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+/**
+ * ユーザー登録処理を行うコントローラー
+ */
 class RegisterController extends Controller
 {
     /*
@@ -24,6 +27,10 @@ class RegisterController extends Controller
     |
     */
 
+
+    /**
+     * vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php の RegistersUsersトレイトを使用
+     */
     use RegistersUsers;
 
     /**
@@ -45,7 +52,7 @@ class RegisterController extends Controller
 
     /**
      * Get a validator for an incoming registration request.
-     *
+     * ユーザー登録フォームのバリデーション
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -68,7 +75,7 @@ class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
+     * usersテーブルにユーザーレコードを登録する処理
      * @param  array  $data
      * @return \App\User
      */
@@ -83,10 +90,7 @@ class RegisterController extends Controller
 
     /**
      * The user has been registered.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed  $user
+     * ユーザ登録完了後の処理
      */
     protected function registered(Request $request, $user)
     {

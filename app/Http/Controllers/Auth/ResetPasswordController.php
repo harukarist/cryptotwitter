@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
+/**
+ * パスワードリマインダーメール送信後のパスワードリセットを行う
+ * コントローラー
+ */
 class ResetPasswordController extends Controller
 {
     /*
@@ -21,6 +26,10 @@ class ResetPasswordController extends Controller
     |
     */
 
+
+    /**
+     * vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php のResetsPasswordsトレイトを使用
+     */
     use ResetsPasswords;
 
     /**
@@ -30,36 +39,82 @@ class ResetPasswordController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    // リセットメールのURLからリクエストされるパスワードリセットフォームを表示
+    /**
+     * リセットメールのURLからリクエストされるパスワードリセットフォームを表示
+     */
     public function showResetForm(Request $request, $token = null)
     {
-        // return redirect("/test/reset")->with([
-        //     'token' => $token,
-        //     'email' => $request->email
-        // ]);
-
-        return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        // return view('auth.passwords.reset')->with(
+        //     ['token' => $token, 'email' => $request->email]
+        // );
+        return redirect("/pass/reset/{$token}?email={$request->email}");
     }
 
-    // public function reset(Request $request)
+    /**
+     * パスワードリセット処理を上書き
+     */
+    public function reset(Request $request)
+    {
+        $request->validate($this->rules(), $this->validationErrorMessages());
+
+        $response = $this->broker()->reset(
+            $this->credentials($request),
+            function ($user, $password) {
+                $this->resetPassword($user, $password);
+            }
+        );
+        return $response == Password::PASSWORD_RESET
+            ? $this->sendResetResponse($request, $response)
+            : $this->sendResetFailedResponse($request, $response);
+    }
+
+    /**
+     * パスワード変更が成功した時の処理
+     */
+    protected function sendResetResponse(Request $request, $response)
+    {
+        return ([
+            'status' => trans($response), //バリデーションメッセージ
+            'result' => 'success', //成否フラグ
+            'user' => Auth::user()
+        ]);
+    }
+
+    /**
+     * パスワード変更が失敗した時の処理
+     */
+    protected function sendResetFailedResponse(Request $request, $response)
+    {
+        return ([
+            'status' => trans($response), //バリデーションメッセージ
+            'result' => 'failed', //成否フラグ
+        ]);
+    }
+
+
+    // protected function rules()
     // {
-    //     $request->validate($this->rules(), $this->validationErrorMessages());
-    //     $response = $this->broker()->reset(
-    //         $this->credentials($request),
-    //         function ($user, $password) {
-    //             $this->resetPassword($user, $password);
-    //         }
+    //     return [
+    //         'token' => 'required',
+    //         'email' => 'required|email',
+    //         'password' => 'required|confirmed|min:8',
+    //     ];
+    // }
+    // protected function validationErrorMessages()
+    // {
+    //     return [];
+    // }
+    // protected function credentials(Request $request)
+    // {
+    //     return $request->only(
+    //         'email',
+    //         'password',
+    //         'password_confirmation',
+    //         'token'
     //     );
-    //     return $response == Password::PASSWORD_RESET
-    //         ? response()->json([
-    //             'message' => trans($response),
-    //             'result' => 'OK'
-    //         ])
-    //         : response()->json([
-    //             'message' => trans($response),
-    //             'result' => 'NG'
-    //         ]);
+    // }
+    // public function broker()
+    // {
+    //     return Password::broker();
     // }
 }

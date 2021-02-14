@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 use Laravel\Socialite\Facades\Socialite;
-use App\Http\Controllers\UsersTwitterOAuth;
+use App\Http\Controllers\Auth\UsersTwitterOAuth;
 use App\Http\Controllers\FollowListController;
 
 // TwitterAPIでのTwitterログイン処理を行うコントローラー

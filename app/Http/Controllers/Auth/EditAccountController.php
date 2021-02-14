@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EditAccountRequest;
 
+/**
+ * ユーザー名、メールアドレスの変更 及び
+ * 退会処理を行うコントローラー
+ */
 class EditAccountController extends Controller
 {
     public function __construct()
@@ -16,8 +20,11 @@ class EditAccountController extends Controller
         $this->middleware('auth');
     }
 
-    // ユーザー名、メールアドレスの変更
-    // EditAccountRequestでバリデーションチェック
+    /**
+     * ユーザー名、メールアドレスの変更処理
+     * EditAccountRequestでバリデーションチェックを行い
+     * バリデーションOKであればDBのユーザー情報を更新する
+     */
     public function EditAccount(EditAccountRequest $request)
     {
         // ログインユーザーのユーザーIDを取得
@@ -39,7 +46,10 @@ class EditAccountController extends Controller
         return $user;
     }
 
-    // ユーザーアカウント及び関連情報の削除
+    /**
+     * ユーザー情報とユーザーに紐づく関連情報を
+     * DBから削除する処理
+     */
     public function withdrawAccount()
     {
         // ログインユーザーのユーザーIDを取得

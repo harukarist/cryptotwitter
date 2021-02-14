@@ -7,6 +7,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
+
+/**
+ * パスワードリマインダーフォームの表示および
+ * パスワード再設定フォームへのURLを記載したメールの送信を
+ * 行うコントローラー
+ */
 class ForgotPasswordController extends Controller
 {
     /*
@@ -20,8 +26,25 @@ class ForgotPasswordController extends Controller
     |
     */
 
+    /**
+     * vendor/laravel/framework/src/Illuminate/Foundation/Auth/SendsPasswordResetEmails.php の
+     * SendsPasswordResetEmailsトレイトを使用
+     */
+
     use SendsPasswordResetEmails;
 
+    /**
+     * パスワードリマインダフォーム表示
+     */
+    public function showLinkRequestForm()
+    {
+        // return view('auth.passwords.email');
+        return redirect('/pass/request');
+    }
+
+    /**
+     * パスワードリセットメール送信
+     */
     public function sendResetLinkEmail(Request $request)
     {
         //パスワードリセットメール送信のリクエストをチェックする
@@ -33,11 +56,11 @@ class ForgotPasswordController extends Controller
         return $response == Password::RESET_LINK_SENT
             ? response()->json([
                 'message' => trans($response),
-                'result' => 'OK'
+                'result' => 'success'
             ])
             : response()->json([
                 'message' => trans($response),
-                'result' => 'NG'
+                'result' => 'failed'
             ]);
     }
 }
