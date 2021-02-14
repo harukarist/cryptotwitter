@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFetchUsersLogs extends Migration
+class CreateFetchTargetsLogs extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFetchUsersLogs extends Migration
      */
     public function up()
     {
-        Schema::create('fetch_users_logs', function (Blueprint $table) {
+        Schema::create('fetch_targets_logs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('create_total');
             $table->integer('update_total');
@@ -29,6 +29,6 @@ class CreateFetchUsersLogs extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fetch_users_logs');
+        Schema::dropIfExists('fetch_targets_logs');
     }
 }
