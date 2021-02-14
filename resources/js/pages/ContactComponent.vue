@@ -7,7 +7,9 @@
           下記の内容で送信してよろしいですか？<br />
         </p>
         <p v-else class="c-form__text">
-          CryptoTrendについて、ご不明な点がありましたら<br class="u-sp--hidden"/>
+          CryptoTrendについて、ご不明な点がありましたら<br
+            class="u-sp--hidden"
+          />
           <a href="/#faq">よくあるご質問</a>をご確認ください。<br />
           お問い合わせは下記のフォームにてお送りください。<br />
         </p>
@@ -28,15 +30,11 @@
               v-model="contactForm.name"
               required
             />
-            <ul v-if="nameErrors">
-              <li
-                v-for="error in nameErrors"
-                :key="error"
-                class="c-valid__error"
-              >
-                {{ error }}
-              </li>
-            </ul>
+            <invalid-component :messages="nameErrors" />
+            <invalid-component
+              v-if="apiMessages && apiMessages.name"
+              :messages="apiMessages.name"
+            />
           </div>
         </div>
         <div class="c-form__group">
@@ -57,15 +55,11 @@
               autocomplete="email"
               required
             />
-            <ul v-if="emailErrors">
-              <li
-                v-for="error in emailErrors"
-                :key="error"
-                class="c-valid__error"
-              >
-                {{ error }}
-              </li>
-            </ul>
+            <invalid-component :messages="emailErrors" />
+            <invalid-component
+              v-if="apiMessages && apiMessages.email"
+              :messages="apiMessages.email"
+            />
           </div>
         </div>
 
@@ -87,26 +81,22 @@
               required
             >
             </textarea>
-            <ul v-if="messageErrors">
-              <li
-                v-for="error in messageErrors"
-                :key="error"
-                class="c-valid__error"
-              >
-                {{ error }}
-              </li>
-            </ul>
+            <invalid-component :messages="messageErrors" />
+            <invalid-component
+              v-if="apiMessages && apiMessages.message"
+              :messages="apiMessages.message"
+            />
           </div>
         </div>
         <div v-if="isConfirm" class="c-form__button">
+          <button type="submit" class="c-btn__main u-mb--m">送信する</button>
           <button
             type="button"
-            class="c-btn__danger"
+            class="c-btn--danger"
             @click.prevent="isConfirm = false"
           >
             内容を修正する
           </button>
-          <button type="submit" class="c-btn__main">送信する</button>
         </div>
         <div v-else class="c-form__button">
           <button type="submit" class="c-btn__main">入力内容を確認</button>
@@ -119,8 +109,12 @@
 <script>
 import { OK, UNPROCESSABLE_ENTITY } from "../utility";
 import { mapState } from "vuex"; // VuexのmapState関数をインポート
+import InvalidComponent from "../components/InvalidComponent.vue";
 
 export default {
+  components: {
+    InvalidComponent,
+  },
   data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
@@ -134,9 +128,10 @@ export default {
       emailErrors: [],
       messageErrors: [],
       // サーバー側のバリデーションエラーメッセージ
-      apiMessage: "",
+      apiMessages: [],
       apiResult: "",
       isConfirm: false,
+      isSent: false,
     };
   },
   computed: {
@@ -187,10 +182,10 @@ export default {
       if (!results.length) {
         // 確認画面からの送信の場合は送信メソッドを実行
         if (this.isConfirm) {
-          this.sendConfirm();
+          this.sendContact();
         } else {
           // 入力フォームからの送信の場合は入力内容確認メソッドを実行
-          this.sendConfirm();
+          this.confirmContact();
         }
       }
     },
@@ -201,30 +196,69 @@ export default {
     },
 
     // お問い合わせフォーム確認WebAPI呼び出し
-    async sendConfirm() {
+    async confirmContact() {
+      // サーバー側バリデーションメッセージをクリア
+      this.apiMessages = [];
       // サーバーのAPIを呼び出し
       const response = await axios.post(
         "/api/contact/confirm",
         this.contactForm
       );
       console.log(response);
+
       // API通信が成功した場合
       if (response.status === OK) {
         // 確認フラグをtrueにしてフォームタイプをhiddenに変更
         this.isConfirm = true;
         // サーバーからの返却値をv-modelに格納してフォームに表示
-        this.contactForm.name = this.data.name;
-        this.contactForm.email = this.data.email;
-        this.contactForm.message = this.data.message;
-
-        // // VueRouterのpush()でホーム画面へ遷移
-        // this.$router.push({ name: "home" });
+        this.contactForm.name = response.data.name;
+        this.contactForm.email = response.data.email;
+        this.contactForm.message = response.data.message;
+        return;
+      }
+      // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
+      if (response.status === UNPROCESSABLE_ENTITY) {
+        // サーバーから返却されたエラーメッセージを格納
+        this.apiMessages = response.data.errors;
+        return;
       } else {
         // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
         // 別モジュールのミューテーションをcommitするためroot: trueを指定する
         this.$store.commit("error/setCode", response.status);
       }
     },
+
+    // お問い合わせフォーム送信WebAPI呼び出し
+    async sendContact() {
+      // サーバー側バリデーションメッセージをクリア
+      this.apiMessages = [];
+      // サーバーのAPIを呼び出し
+      const response = await axios.post("/api/contact/send", this.contactForm);
+      console.log(response);
+
+      // API通信が成功した場合
+      if (response.status === OK) {
+        // 送信完了フラグをtrueにして送信完了メッセージを表示
+        this.isConfirm = false;
+        this.isSent = true;
+        return;
+      }
+      // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
+      if (response.status === UNPROCESSABLE_ENTITY) {
+        // サーバーから返却されたエラーメッセージを格納
+        this.apiMessages = response.data.errors;
+        // 確認フラグをfalseにしてフォームを再表示
+        this.isConfirm = false;
+        return;
+      } else {
+        // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
+        // 別モジュールのミューテーションをcommitするためroot: trueを指定する
+        this.$store.commit("error/setCode", response.status);
+        // 確認フラグをfalseにしてフォームを再表示
+        this.isConfirm = false;
+      }
+    },
+    // ユーザー情報をお問い合わせフォームに表示
     setUserData() {
       // DBに登録されたユーザー情報があればお問い合わせフォームのv-modelに格納
       if (this.userData) {
