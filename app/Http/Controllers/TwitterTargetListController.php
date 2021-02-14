@@ -30,6 +30,7 @@ class TwitterTargetListController extends Controller
         ->orderBy('created_at', 'DESC')->paginate(10);
     }
 
+    clock($targets);
     // 取得できなかった場合は NotFoundエラーを返却
     if (!$targets) {
       return abort(404);

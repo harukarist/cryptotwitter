@@ -18,7 +18,14 @@
       font-size: $font-size--m;
     }
   }
-
+  &__twitter {
+    border: none;
+    width: 90%;
+    margin: 10px auto;
+    @include mq() {
+      width: 100%;
+    }
+  }
   &__item {
     margin-right: $space--xxl;
     margin-bottom: $space--l;

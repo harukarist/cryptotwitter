@@ -1,0 +1,10 @@
+.toggle-accordion {
+  &-enter-active {
+    overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
+    transition: height 0.4s ease;
+  }
+  &-leave-active {
+    overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
+    transition: height 0.4s ease;
+  }
+}

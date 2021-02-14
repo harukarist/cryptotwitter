@@ -22,7 +22,7 @@ p, a, h1, h2, h3, h4, h5, h6, li {
 a {
   color: $font-color--link;
   text-decoration: none;
-  transition: .3s;
+  transition: .3s ease-in-out;
   &:hover {
     color: $font-color--hover;
     transition: .3s;

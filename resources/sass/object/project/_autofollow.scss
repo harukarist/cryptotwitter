@@ -15,9 +15,6 @@
     margin-bottom: $space--m;
   }
   &__text {
-    &.num {
-      font-weight: bold;
-    }
     &--small {
       color: $font-color--muted;
       font-size: $font-size--m;

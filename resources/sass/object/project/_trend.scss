@@ -26,6 +26,8 @@
     margin-bottom: $space--l;
     border: 1px solid $bg-color--border;
     border-radius: 4px;
+    position: relative;
+    transition : all .5s ease-in-out;
     &-text {
       text-align: center;
       color: $font-color--muted;
@@ -35,9 +37,12 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      @include mq() {
-        padding-left: $space--l;
-      }
+    }
+    &-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: $bg-color--border
     }
     &-item {
       flex-grow: 1;
@@ -62,6 +67,10 @@
     &-footer {
       text-align: right;
       margin-right: $space--l;
+      @include mq() {
+        text-align: center;
+        margin-right: 0;
+      }
     }
   }
   

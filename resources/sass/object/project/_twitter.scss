@@ -2,87 +2,15 @@
   &__login {
     text-align: center;
   }
-  &__welcome{
-    margin-bottom: $space--l;
-    &-text {
-      position: relative;
-      display: inline-block;
-      padding: 0 45px;
-      &:before, &:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        display: inline-block;
-        width: 38px; //斜め線の長さ
-        height: 2px; //斜め線の太さ
-        background-color: $bg-color--accent;
-      }
-      &:before {
-        left:0;
-        transform: rotate(60deg);
-      }
-      &:after {
-        right: 0;
-        transform: rotate(-60deg);
-      }
-    }
-  }
-  &-user {
-    border:1px solid $bg-color--border;
-    padding: $space--l;
+  &__list {
     width: 60%;
-    box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
-    text-align: center;
-    margin-bottom: $space--xxxl;
+    @include mq(medium) {
+      width: 80%;
+    }
     @include mq() {
       width: 100%;
-    }
-    &__head {
-      font-size: $font-size--m;
-      margin-bottom: $space--m;
-    }
-    &__contents {
-      display: inline-block;
-      overflow: hidden;
-    }
-    &__body {
-      margin-bottom: $space--m;
-    }
-    &__bottom {
-      margin-bottom: $space--m;
-    }
-    &__avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      float: left;
-    }
-    &__account {
-      margin-left: $space--l;
-      text-align: left;
-      float: left;
-    }
-    &__name {
-      font-weight: bold;
-    }
-    &__screen {
-      font-size: $font-size--m;
-    }
-    &__delete {
-      font-size: $font-size--m;
-      color: $font-color--muted;
-    }
-    &__confirm {
-      padding-top: $space--l;
-      padding-bottom: $space--l;
-      margin-top: $space--l;
-      margin-bottom: $space--l;
-      border: 1px solid $bg-color--danger;
-      &-text {
-        margin-bottom: $space--l;
-      }
     }
   }
 }

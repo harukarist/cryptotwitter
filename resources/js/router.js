@@ -8,7 +8,6 @@ import HomeComponent from './pages/HomeComponent';
 import NewsListComponent from './pages/NewsListComponent';
 import TrendListComponent from './pages/TrendListComponent';
 import TwitterListComponent from './pages/TwitterListComponent';
-import AutoFollowListComponent from './pages/AutoFollowListComponent';
 import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import PassRequestComponent from './pages/PassRequestComponent';
@@ -53,18 +52,6 @@ const router = new VueRouter({
       path: '/twitter',
       name: 'twitter.index',
       component: TwitterListComponent,
-      meta: { requiresAuth: true }, //認証必須,
-      // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
-      props: route => {
-        const page = route.query.page
-        // 整数以外が渡された場合は1に変換して返却
-        return { page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1 }
-      }
-    },
-    {
-      path: '/autofollow/list',
-      name: 'autofollow.list',
-      component: AutoFollowListComponent,
       meta: { requiresAuth: true }, //認証必須,
       // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
       props: route => {

@@ -1,0 +1,22 @@
+.flip-list {
+  // 要素が表示中、非表示中、移動時のスタイル
+  &-enter-active, &-leave-active, &-move {
+    transition: all 0.5s ease-in-out;
+  }
+  // 非表示中
+  &-leave-active {
+    //enterの要素とleaveの要素を重ねて動作のがたつきを防ぐ
+    position: absolute;
+  }
+
+  // 表示開始前
+  &-enter {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  // 非表示後
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+}

@@ -11,7 +11,8 @@
     display: flex;
   }
   &__item {
-    height: 50px;
+    min-height: 50px;
+    padding: $space--s 0;
     border-bottom: 2px solid $bg-color--active;
     background-color: $bg-color--light;
     text-align: center;
