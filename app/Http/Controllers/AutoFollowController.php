@@ -13,6 +13,47 @@ use Illuminate\Support\Facades\Auth;
 // ユーザーの自動フォロー状況を表示、ユーザーからの自動フォロー適用・解除リクエスト受付
 class AutoFollowController extends Controller
 {
+    /**
+     * 自動フォロー履歴の一覧を表示
+     */
+    public function showAutoFollowList(Request $request)
+    {
+        // 検索リクエストがあった場合は検索キーワードを格納
+        if ($request->search) {
+            $search_word = $request->search;
+        } else {
+            $search_word = '';
+        }
+
+        // 検索キーワードがある場合
+        if (isset($search_word)) {
+
+            $whereHas = function ($q) use ($search_word) {
+                $q->where('twitter_user_id', Auth::user()->twitter_user->id)
+                    ->where('profile_text', 'LIKE', '%' . $search_word . '%')
+                    ->orwhere('tweet_text', 'LIKE', '%' . $search_word . '%')
+                    ->orwhere('screen_name', 'LIKE', '%' . $search_word . '%')
+                    ->orwhere('user_name', 'LIKE', '%' . $search_word . '%');
+            };
+
+            $items = Autofollow::with('target_user')
+                ->whereHas('target_user', $whereHas)
+                ->paginate(10);
+
+            clock($items);
+            return $items;
+        }
+
+
+        // ログインユーザーの自動フォロー履歴（autofollowsテーブルとリレーション先のtarget_userテーブルのレコード）を取得
+        $autofollow_list = Autofollow::with('target_user')
+            ->where('twitter_user_id', Auth::user()->twitter_user->id)
+            ->paginate(10);
+
+        // json形式で返却
+        return $autofollow_list;
+    }
+
     // 自動フォローを適用
     public function applyAutoFollow()
     {
@@ -66,20 +107,5 @@ class AutoFollowController extends Controller
             $follow_total = 0;
         }
         return $follow_total;
-    }
-
-
-    /**
-     * 自動フォロー履歴の一覧を表示
-     */
-    public function showAutoFollowList()
-    {
-        // ログインユーザーの自動フォロー履歴（autofollowsテーブルとリレーション先のtarget_userテーブルのレコード）を取得
-        $autofollow_list = Autofollow::with('target_user')
-            ->where('twitter_user_id', Auth::user()->twitter_user->id)
-            ->paginate(10);
-
-        // json形式で返却
-        return $autofollow_list;
     }
 }
