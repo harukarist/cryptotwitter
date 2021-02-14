@@ -12,6 +12,7 @@ import AutoFollowListComponent from './pages/AutoFollowListComponent';
 import RegisterComponent from './pages/RegisterComponent';
 import LoginComponent from './pages/LoginComponent';
 import PassRequestComponent from './pages/PassRequestComponent';
+import PassResetComponent from './pages/PassResetComponent';
 import EditAccountComponent from './pages/EditAccountComponent';
 import WithdrawComponent from './pages/WithdrawComponent';
 import PrivacyPolicyComponent from './pages/PrivacyPolicyComponent';
@@ -109,9 +110,15 @@ const router = new VueRouter({
       meta: { onlyGuest: true }, //ログイン前のみアクセス可能
     },
     {
-      path: '/password/request',
+      path: '/pass/request',
       name: 'password.request',
       component: PassRequestComponent,
+      meta: { onlyGuest: true }, //ログイン前のみアクセス可能
+    },
+    {
+      path: '/pass/reset/:token',
+      name: 'password.reset',
+      component: PassResetComponent,
       meta: { onlyGuest: true }, //ログイン前のみアクセス可能
     },
     {

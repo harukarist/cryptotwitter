@@ -31,23 +31,16 @@
 </head>
 <body>
     <div id="app">
-        <app-component></app-component>
-
-        {{-- <header id="header">
-            <header-component />
+        <header id="header">
+            <header-component></header-component>
         </header>
-        <main id="main">
-            @yield('content')
-            <app-component />
-        </main>
-        <footer id="footer">
-            <footer-component />
-        </footer> --}}
-
+        @yield('content')
+        <app-component></app-component>
         <!-- セッション経由のフラッシュメッセージを表示 -->
         @if (session('status'))
-            <message-component message="{{ session('status') }}" type="{{ session('type')}}" timeout="{{ session('timeout')}}" />
+        <message-component message="{{ session('status') }}" type="success" timeout="3000" />
         @endif
+        
     </div>
 </body>
 </html>

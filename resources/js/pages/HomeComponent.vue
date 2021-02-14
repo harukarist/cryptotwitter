@@ -93,18 +93,18 @@
                       <span class="u-font__num">{{
                         trend.high | round | localeNum
                       }}</span>
-                      <span class="u-font__small">円</span>
+                      <span class="u-font--small">円</span>
                     </p>
-                    <p v-else class="u-font__small u-font__muted">不明</p>
+                    <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
                   <td>
                     <p v-if="trend.low" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.low | round | localeNum
                       }}</span>
-                      <span class="u-font__small">円</span>
+                      <span class="u-font--small">円</span>
                     </p>
-                    <p v-else class="u-font__small u-font__muted">不明</p>
+                    <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
                 </tr>
               </tbody>
@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="p-home__contents">
-          <div class="u-font__small u-font__muted u-font__right">
+          <div class="u-font--small u-font--muted u-font--right">
             更新日時 {{ items.updated_at }}
           </div>
 

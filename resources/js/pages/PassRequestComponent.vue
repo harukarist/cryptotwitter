@@ -1,46 +1,59 @@
 <template>
   <div class="c-container--bg">
     <h2 class="c-container__title">パスワードをお忘れの方</h2>
+
     <div class="c-form__wrapper">
       <form class="c-form--large" @submit.prevent="checkForm">
-        <p class="c-form__text">
-          ユーザー登録時にご登録いただいたメールアドレスをご入力ください。<br />
-          メールアドレス宛に、パスワード変更ページのURLが記載されたメールが送信されます。<br />
-        </p>
-        <div class="c-form__group">
-          <label for="login-email" class="c-form__label">
-            メールアドレス
-          </label>
-          <input
-            type="text"
-            class="c-input c-input--large"
-            id="email"
-            required
-            v-model="requestForm.email"
-            autocomplete="email"
-          />
-          <ul v-if="emailErrors">
-            <li
-              v-for="error in emailErrors"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
-          <p
-            v-if="apiMessage"
-            :class="{
-              'c-valid__error': apiResult === 'NG',
-              'c-valid__success': apiResult === 'OK',
-            }"
-          >
-            {{ apiMessage }}
+        <div v-if="isSent">
+          <p class="c-form__text">
+            パスワード変更ページのURLを<br
+              class="u-sp--hidden"
+            />メールアドレスに送信しました。<br />
+            メールに記載された内容にしたがって、<br
+              class="u-sp--hidden"
+            />パスワードの再設定をお願いいたします。<br />
           </p>
         </div>
+        <div v-else>
+          <p class="c-form__text">
+            ユーザー登録時にご登録いただいたメールアドレスを<br
+              class="u-sp--hidden"
+            />ご入力ください。<br />
+            メールアドレス宛に、パスワード変更ページのURLが<br
+              class="u-sp--hidden"
+            />記載されたメールが送信されます。<br />
+          </p>
+          <div class="c-form__group">
+            <label for="login-email" class="c-form__label">
+              メールアドレス
+            </label>
+            <input
+              type="text"
+              class="c-input c-input--large"
+              id="email"
+              required
+              v-model="requestForm.email"
+              autocomplete="email"
+            />
+            <ul v-if="emailErrors">
+              <li
+                v-for="error in emailErrors"
+                :key="error"
+                class="c-valid__error"
+              >
+                {{ error }}
+              </li>
+            </ul>
+            <transition name="popup">
+              <p v-if="apiMessage" class="u-mb--l c-alert--danger">
+                {{ apiMessage }}
+              </p>
+            </transition>
+          </div>
 
-        <div class="c-form__button">
-          <button type="submit" class="c-btn__main--outline">送信する</button>
+          <div class="c-form__button">
+            <button type="submit" class="c-btn__main--outline">送信する</button>
+          </div>
         </div>
       </form>
       <div class="c-form__link">
@@ -66,11 +79,13 @@ export default {
       emailErrors: [],
       // サーバー側からのメッセージとステータス
       apiMessage: "",
-      apiResult: "",
+      isSent: false,
     };
   },
   methods: {
-    // フロントエンド側のバリデーションチェック
+    /**
+     * フロントエンド側のバリデーションチェック
+     */
     checkForm(e) {
       const MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
       const MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
@@ -94,26 +109,36 @@ export default {
         this.sendResetLink();
       }
     },
-    // メールアドレス形式チェック
+
+    /**
+     * メールアドレス形式チェック
+     */
     validEmail(email) {
       const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return regex.test(email);
     },
 
-    // パスワードリセットメール送信WebAPI呼び出し
+    /**
+     * パスワードリセットメール送信WebAPI呼び出し
+     */
     async sendResetLink() {
       // サーバーのAPIを呼び出し
       const response = await axios.post(
         "/api/password/email",
         this.requestForm
       );
-      // console.log(response);
       // API通信が成功した場合
       if (response.status === OK) {
-        this.apiMessage = response.data.message;
-        this.apiResult = response.data.result;
-        // // VueRouterのpush()でホーム画面へ遷移
-        // this.$router.push({ name: "home" });
+        // Laravel側で設定したresultフラグを取得
+        const result = response.data.result;
+        // メール送信が完了した場合
+        if (result === "success") {
+          this.isSent = true;
+          // メール送信が失敗した場合
+        } else if (result === "failed") {
+          // エラーメッセージを表示
+          this.apiMessage = response.data.message;
+        }
       } else {
         // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
         // 別モジュールのミューテーションをcommitするためroot: trueを指定する

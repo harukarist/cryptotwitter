@@ -7,7 +7,7 @@
         alt="CryptoTrend"
       />
       <h3 class="p-about__title">
-        <span class="u-font__large">CryptoTrend</span>とは
+        <span class="u-font--large">CryptoTrend</span>とは
       </h3>
       <p class="p-about__text">
         数多くの銘柄が存在し、<br

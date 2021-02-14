@@ -231,8 +231,8 @@
           </li>
         </ol>
 
-        <p class="u-font__right">以上</p>
-        <p class="u-font__right">2021年2月1日 制定</p>
+        <p class="u-font--right">以上</p>
+        <p class="u-font--right">2021年2月1日 制定</p>
       </div>
     </section>
   </div>

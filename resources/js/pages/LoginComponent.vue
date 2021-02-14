@@ -45,11 +45,16 @@
             required
             autocomplete="current-password"
           />
-          <div class="u-font__right">
+          <div class="u-font--right">
+            <a href="/password/reset" class="c-form__link">
+              パスワードをお忘れですか？
+            </a>
+          </div>
+          <!-- <div class="u-font--right">
             <RouterLink :to="{ name: 'password.request' }" class="c-form__link">
               パスワードをお忘れですか？
             </RouterLink>
-          </div>
+          </div> -->
           <ul v-if="passwordErrors">
             <li
               v-for="error in passwordErrors"

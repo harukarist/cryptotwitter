@@ -1,0 +1,16 @@
+.slide {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s ease-in-out;
+  }
+  // 右からスライドイン
+  &-enter {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  // 右にスライドアウト
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}

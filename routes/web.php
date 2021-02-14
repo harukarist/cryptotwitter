@@ -11,29 +11,18 @@
 |
 */
 
-// Auth::routes();
-// Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-// Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-// Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-// Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+// パスワードリマインダフォーム表示
+Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+
+// パスワードリセットフォーム表示
+Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+// パスワードリセット処理
+Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 // パスワード再設定フォーム
 Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
+// パスワード再設定処理
 Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
-
-// バッチ処理の手動実行用
-Route::get('/weekly', 'FetchTweetController@fetchWeeklyTweets');
-Route::get('/newTweet', 'FetchTweetController@fetchLatestTweets');
-Route::get('/getUser', 'FetchTargetController@fetchUsers');
-Route::get('/latest', 'FetchTargetTweetController@fetchLatestTweet');
-Route::get('/getNews', 'FetchNewsController@fetchNews');
-Route::get('/getTwpro', 'FetchTwproController@fetchUsers');
-Route::get('/addUser', 'LookupTwitterUserController@addUsers');
-Route::get('/countTweet', 'CountTweetController@countTweet');
-Route::get('/followList', 'FollowListController@loginUsersFollowList');
-Route::get('/autofollow', 'FetchAutoFollowController@autoFollow');
-Route::get('/deleteTweets', 'DeleteOldRecordsController@deleteTweets');
-Route::get('/deleteLogs', 'DeleteOldRecordsController@deleteFetchTweetsLogs');
 
 Route::group(['middleware' => 'auth'], function () {
     // Twitterログイン認証（TwitterAPIへのリダイレクト）

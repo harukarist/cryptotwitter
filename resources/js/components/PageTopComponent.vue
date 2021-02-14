@@ -1,0 +1,51 @@
+<template>
+  <transition name="popup">
+    <div class="p-pagetop" v-show="currentHeight > 400" @click="scrollTop()">
+      <span class="p-pagetop__btn"><i class="fas fa-chevron-up"></i></span>
+    </div>
+  </transition>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      currentHeight: 0,
+      isVisible: false,
+    };
+  },
+  // computed: {
+  //   getHeight() {
+  //     document.onscroll = (e) => {
+  //       // 現在の高さを取得
+  //       this.currentHeight =
+  //         document.documentElement.scrollTop || document.body.scrollTop;
+  //     };
+  //   },
+  // },
+  methods: {
+    // ページの最上部までスクロールするメソッド
+    scrollTop() {
+      // クリックしたらtop:0までスクロール
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    },
+    // visible() {
+    //   // ボタンが非表示の場合
+    //   if (!this.isVisible) {
+    //     this.isVisible = this.currentHeight > window.innerHeight + 100;
+    //   }
+    // },
+    // getHeight() {},
+  },
+  mounted() {
+    document.onscroll = (e) => {
+      // 現在のスクロール量を取得
+      this.currentHeight =
+        document.documentElement.scrollTop || document.body.scrollTop;
+    };
+  },
+};
+</script>

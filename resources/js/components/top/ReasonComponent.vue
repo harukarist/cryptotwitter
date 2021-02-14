@@ -3,7 +3,7 @@
     <fade-in-component>
       <h3 class="p-reason__title">
         CryptoTrendが選ばれる<br class="u-sp--only" /><span
-          class="u-font__large"
+          class="u-font--large"
           >3つの理由</span
         >
       </h3>

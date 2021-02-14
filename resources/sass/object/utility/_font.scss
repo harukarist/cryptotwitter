@@ -3,23 +3,23 @@
     font-family: $font-family--theme;
     font-weight: bold;
   }
-  &__small {
+  &--small {
     font-size: $font-size--m;
     @include mq() {
       font-size: $font-size--s;
     }
   }
-  &__large {
+  &--large {
     font-size: $font-size--xxl;
     margin: 0 4px;
     @include mq() {
       font-size: $font-size--xl;
     }
   }
-  &__muted {
+  &--muted {
     color: $font-color--muted;
   }
-  &__right {
+  &--right {
     text-align: right;
   }
 }

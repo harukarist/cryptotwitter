@@ -2,7 +2,7 @@
   <div class="p-solution">
     <fade-in-component>
       <h3 class="p-solution__title">
-        そんなお悩みを<br class="u-sp--only" /><span class="u-font__large"
+        そんなお悩みを<br class="u-sp--only" /><span class="u-font--large"
           >CryptoTrend</span
         >が<br class="u-sp--only" />解決します！
       </h3>

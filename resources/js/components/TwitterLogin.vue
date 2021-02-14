@@ -38,7 +38,7 @@
             />削除されます。<br />
             連携を解除しますか？<br />
           </p>
-          <a class="c-btn__danger" @click.stop="deleteTwitterAuth()">
+          <a class="c-btn--danger" @click.stop="deleteTwitterAuth()">
             Twitterアカウント連携を解除
           </a>
         </div>

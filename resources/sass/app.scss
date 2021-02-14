@@ -60,6 +60,7 @@
 @import "object/project/_nav-menu";
 @import "object/project/_navbar";
 @import "object/project/_news";
+@import "object/project/_pagetop";
 @import "object/project/_readmore";
 @import "object/project/_reason";
 @import "object/project/_solution";
@@ -72,7 +73,7 @@
 // -----------------------------------
 // Utility
 // -----------------------------------
-// 微妙なスタイル調整
+// 微妙なスタイル調整用のクラス
 // プレフィックスに「u-」
 
 @import "object/utility/_font";
@@ -80,3 +81,14 @@
 @import "object/utility/_md";
 @import "object/utility/_margin";
 @import "object/utility/_padding";
+
+
+// -----------------------------------
+// Transition
+// -----------------------------------
+// Transitionアニメーション用のクラス
+
+@import "object/transition/_fade";
+@import "object/transition/_popup";
+@import "object/transition/_pulldown";
+@import "object/transition/_slide";

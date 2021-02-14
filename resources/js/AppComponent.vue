@@ -1,8 +1,8 @@
 <template>
   <div>
-    <header id="header">
+    <!-- <header id="header">
       <HeaderComponent />
-    </header>
+    </header> -->
 
     <main id="main">
       <LoaderComponent />
@@ -11,10 +11,10 @@
       <!-- VueRouterでコンポーネントを表示 -->
       <RouterView />
     </main>
-
     <footer id="footer">
       <FooterComponent />
     </footer>
+    <PageTopComponent />
   </div>
 </template>
 
@@ -23,6 +23,7 @@ import InnerMessage from "./components/InnerMessage";
 import HeaderComponent from "./components/HeaderComponent";
 import FooterComponent from "./components/FooterComponent";
 import LoaderComponent from "./components/LoaderComponent";
+import PageTopComponent from "./components/PageTopComponent";
 import { NOT_FOUND, UNAUTHORIZED, INTERNAL_SERVER_ERROR } from "./utility";
 
 export default {
@@ -31,6 +32,7 @@ export default {
     HeaderComponent,
     FooterComponent,
     LoaderComponent,
+    PageTopComponent,
   },
   computed: {
     errorCode() {

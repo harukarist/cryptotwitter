@@ -1,35 +1,6 @@
 <template>
   <div class="c-container--fluid">
-    <div class="p-hero" ref="hero">
-      <div class="p-hero__wrapper">
-        <div class="p-hero__contents">
-          <h2 class="p-hero__title c-fade--in">
-            仮想通貨のトレンドを<br />
-            素早くキャッチ！
-          </h2>
-          <p class="p-hero__text c-fade--in">
-            仮想通貨のトレンド分析、自動フォロー、<br />
-            最新ニュースのチェックをサポートします
-          </p>
-
-          <div class="p-hero__action c-fade--in">
-            <RouterLink
-              :to="{ name: 'register' }"
-              class="c-btn__white p-hero__btn"
-            >
-              今すぐ無料ではじめる
-            </RouterLink>
-            <RouterLink :to="{ name: 'login' }" class="p-hero__link">
-              アカウントをお持ちの方はこちら
-            </RouterLink>
-          </div>
-        </div>
-        <div class="p-hero__img-wrapper">
-          <img src="/img/img_hero.png" class="p-hero__img" alt="CryptoTrend" />
-        </div>
-      </div>
-    </div>
-
+    <HeroComponent />
     <div id="about" ref="about">
       <AboutComponent />
     </div>
@@ -47,7 +18,7 @@
 </template>
 
 <script>
-import FadeInComponent from "../components/FadeInComponent.vue";
+import HeroComponent from "../components/top/HeroComponent.vue";
 import AboutComponent from "../components/top/AboutComponent.vue";
 import TroubleComponent from "../components/top/TroubleComponent.vue";
 import SolutionComponent from "../components/top/SolutionComponent.vue";
@@ -57,7 +28,7 @@ import ActionComponent from "../components/top/ActionComponent.vue";
 
 export default {
   components: {
-    FadeInComponent,
+    HeroComponent,
     AboutComponent,
     TroubleComponent,
     SolutionComponent,
@@ -67,53 +38,31 @@ export default {
   },
   data() {
     return {
-      currentHeight: 0,
-      heroHeight: 0,
-      hash: this.$route.hash, //URL中のハッシュを取得
+      //VueRouterで取得したURL中のハッシュを取得
+      hash: this.$route.hash,
     };
   },
   methods: {
-    // hashからアンカーポイントまでスクロール
+    // アンカーポイントまでスクロールするメソッド
     scrollToAnchorPoint(refName) {
+      // refNameと一致するref属性を持つ要素を取得
       const el = this.$refs[refName];
+      // その要素にスクロール（アニメーションはautoまたはsmooth）
       el.scrollIntoView({ behavior: "smooth" });
     },
   },
-  computed: {
-    getHeight() {
-      document.onscroll = (e) => {
-        this.currentHeight =
-          document.documentElement.scrollTop || document.body.scrollTop;
-      };
-    },
-  },
   mounted() {
-    this.heroHeight = this.$refs.hero.clientHeight; //ref属性heroのDOM要素の高さを取得
-
-    // document.onscroll = (e) => {
-    //   this.currentHeight =
-    //     document.documentElement.scrollTop || document.body.scrollTop;
-    // };
-
+    //this.$nextTick()でDOMの読み込み完了時に実行
     this.$nextTick(function () {
-      //this.$nextTick()でDOMの読み込み完了時に実行
+      // URL中にhashがある場合
       if (this.hash) {
+        // #を除いた文字列を取得
         const refName = this.hash.replace("#", "");
         console.log(refName);
+        // アンカーポイントまでスクロールするメソッドを実行
         this.scrollToAnchorPoint(refName);
       }
     });
-  },
-  watch: {
-    // watchプロパティでisFixedの値の変更を監視
-    getHeight: {
-      async handler(val) {
-        if (this.currentHeight > this.heroHeight) {
-          this.$emit("isFixed");
-          console.log("emit");
-        }
-      },
-    },
   },
 };
 </script>

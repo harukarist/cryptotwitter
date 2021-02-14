@@ -1,9 +1,9 @@
 <template>
   <div class="p-trouble">
     <fade-in-component>
-      <p class="u-font__muted u-font__small">仮想通貨に興味はあるけれど…</p>
+      <p class="u-font--muted u-font--small">仮想通貨に興味はあるけれど…</p>
       <h3 class="p-trouble__title">
-        こんな<span class="u-font__large">「お悩み」</span
+        こんな<span class="u-font--large">「お悩み」</span
         ><br class="u-sp--only" />抱えていませんか？
       </h3>
     </fade-in-component>

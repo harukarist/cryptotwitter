@@ -21,6 +21,11 @@
       </ul>
       <div class="c-form__wrapper" v-if="tabNum === 1">
         <form class="c-form--small" @submit.prevent="checkEditForm">
+          <transition name="popup">
+            <p v-if="successMessage" class="u-mb--xxxl c-alert--success">
+              {{ successMessage }}
+            </p>
+          </transition>
           <div class="c-form__group">
             <label for="username" class="c-form__label">
               お名前
@@ -123,6 +128,7 @@ export default {
       },
       nameErrors: [],
       emailErrors: [],
+      successMessage: "",
     };
   },
   computed: {
@@ -183,12 +189,8 @@ export default {
       await this.$store.dispatch("auth/EditAccount", this.editForm);
       // API通信が成功した場合
       if (this.apiStatus) {
-        // フラッシュメッセージを表示
-        this.$store.dispatch("message/showMessage", {
-          text: "アカウント情報を変更しました",
-          type: "success",
-          timeout: 2000,
-        });
+        // フォーム上にサクセスメッセージを表示
+        this.successMessage = "アカウント情報を変更しました";
         // エラーメッセージをクリア
         this.nameErrors = [];
         this.emailErrors = [];

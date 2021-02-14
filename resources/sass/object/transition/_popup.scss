@@ -1,0 +1,16 @@
+.popup {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.3s ease-in-out;
+  }
+  // 下からスライドイン
+  &-enter {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  // 下にスライドアウト
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide-item">
+  <transition name="slide">
     <div
       v-if="flashMessage"
       class="c-alert p-flash"
@@ -28,23 +28,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* フラッシュメッセージ表示アニメーション */
-.slide-item-enter-active,
-.slide-item-leave-active {
-  transition: all 0.5s ease-in-out;
-}
-/* 表示時 */
-.slide-item-enter {
-  /* 右からスライドイン */
-  opacity: 0;
-  transform: translateX(20px);
-}
-/* 非表示時 */
-.slide-item-leave-to {
-  /* 右にスライドアウト */
-  opacity: 0;
-  transform: translateX(20px);
-}
-</style>

@@ -1,0 +1,16 @@
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: all 2s ease-in-out;
+  }
+  // 下からフェードイン
+  &-enter {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  // 下にフェードアウト
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+}

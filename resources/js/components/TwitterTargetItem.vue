@@ -27,7 +27,7 @@
         </button>
         <button
           v-if="item.followed_by_user"
-          class="c-btn__danger--outline p-target__btn"
+          class="c-btn--danger--outline p-target__btn"
           @click.prevent="unfollow()"
         >
           フォロー解除

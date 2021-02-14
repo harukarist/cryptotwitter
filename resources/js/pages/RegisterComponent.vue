@@ -166,14 +166,6 @@ export default {
       // authストアのステートを参照し、WebAPIから返却されるエラーメッセージを取得
       registerErrors: (state) => state.auth.registerErrorMessages,
     }),
-    // apiStatus() {
-    //   // authストアのステートを参照し、API通信の成否ステータスを取得
-    //   return this.$store.state.auth.apiStatus;
-    // },
-    // registerErrors() {
-    //   // authストアのステートを参照し、エラーメッセージを取得
-    //   return this.$store.state.auth.registerErrorMessages;
-    // },
   },
   methods: {
     // フロントエンド側のバリデーションチェック

@@ -59,7 +59,7 @@ const actions = {
     const response = await axios.post('/api/register', data)
     // 通信失敗時のcatch処理はbootstrap.jsでaxiosのインターセプターにまとめて記載
     // .catch(err => err.response || err)
-
+    // console.log(response);
     // API通信が成功した場合
     if (response.status === CREATED) {
       // setApiStatusミューテーションでステータスをtrueに変更
@@ -89,6 +89,7 @@ const actions = {
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
     const response = await axios.post('/api/login', data)
+    console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {

@@ -1,5 +1,10 @@
 <template>
   <form class="c-form--small" @submit.prevent="checkChangePassForm">
+    <transition name="popup">
+      <p v-if="successMessage" class="u-mb--xxxl c-alert--success">
+        {{ successMessage }}
+      </p>
+    </transition>
     <input
       name="username"
       v-model="changePassForm.username"
@@ -25,9 +30,9 @@
           {{ error }}
         </li>
       </ul>
-      <ul v-if="apiErrors && apiErrors.current_password">
+      <ul v-if="apiMessages && apiMessages.current_password">
         <li
-          v-for="error in apiErrors.current_password"
+          v-for="error in apiMessages.current_password"
           :key="error"
           class="c-valid__error"
         >
@@ -58,9 +63,9 @@
           {{ error }}
         </li>
       </ul>
-      <ul v-if="apiErrors && apiErrors.new_password">
+      <ul v-if="apiMessages && apiMessages.new_password">
         <li
-          v-for="error in apiErrors.new_password"
+          v-for="error in apiMessages.new_password"
           :key="error"
           class="c-valid__error"
         >
@@ -86,9 +91,9 @@
           {{ error }}
         </li>
       </ul>
-      <ul v-if="apiErrors && apiErrors.new_password_confirmation">
+      <ul v-if="apiMessages && apiMessages.new_password_confirmation">
         <li
-          v-for="error in apiErrors.new_password_confirmation"
+          v-for="error in apiMessages.new_password_confirmation"
           :key="error"
           class="c-valid__error"
         >
@@ -119,7 +124,8 @@ export default {
       passwordErrors: [],
       newPasswordErrors: [],
       confirmErrors: [],
-      apiErrors: [],
+      apiMessages: [],
+      successMessage: "",
     };
   },
   methods: {
@@ -180,18 +186,14 @@ export default {
       );
       // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
       if (response.status === UNPROCESSABLE_ENTITY) {
-        this.apiErrors = response.data.errors;
+        this.apiMessages = response.data.errors;
         return false;
       } else if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
         return false;
       }
-      // レスポンスがOKの場合はフラッシュメッセージを表示
-      this.$store.dispatch("message/showMessage", {
-        text: "パスワードを変更しました",
-        type: "success",
-        timeout: 6000,
-      });
+      // レスポンスがOKの場合はフォーム上にサクセスメッセージを表示
+      this.successMessage = "パスワードを変更しました";
       // エラーメッセージをクリア
       this.passwordErrors = [];
       this.newPasswordErrors = [];

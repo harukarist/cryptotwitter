@@ -9,7 +9,7 @@
           本当に削除しますか？<br />
         </p>
         <div class="c-form__button">
-          <button type="submit" class="c-btn__danger">
+          <button type="submit" class="c-btn--danger">
             アカウントを削除する
           </button>
         </div>

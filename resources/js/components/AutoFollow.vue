@@ -33,7 +33,7 @@
             class="u-sp--only"
           />1日最大1000ユーザーまで<br />毎日ランダムに自動でフォローします。
         </p>
-        <a class="c-btn__muted--outline" @click.stop="cancelAutoFollow()">
+        <a class="c-btn--muted--outline" @click.stop="cancelAutoFollow()">
           自動フォロー機能を解除する
         </a>
       </div>

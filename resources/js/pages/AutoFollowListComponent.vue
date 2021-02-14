@@ -19,7 +19,7 @@
             @follow="createFollow"
             @unfollow="destroyFollow"
           >
-            <div class="u-font__muted u-font__small u-mb--m" slot="follow_date">
+            <div class="u-font--muted u-font--small u-mb--m" slot="follow_date">
               フォロー日時: {{ target.created_at }}
             </div>
           </TwitterTargetItem>

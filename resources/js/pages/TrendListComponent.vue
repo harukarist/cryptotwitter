@@ -48,15 +48,15 @@
                   !selectedItems.length ||
                   items.trends.length === selectedItems.length
                 "
-                class="u-font__small u-font__muted"
+                class="u-font--small u-font--muted"
               >
                 全{{ sorted.length }}銘柄を表示
               </span>
-              <span v-else class="u-font__small u-font__muted">
+              <span v-else class="u-font--small u-font--muted">
                 {{ selectedItems.length }}件を絞り込み表示
               </span>
               <button
-                class="c-btn__muted--outline"
+                class="c-btn--muted--outline"
                 @click="isActive = !isActive"
               >
                 <i v-show="!isActive" class="fas fa-angle-down"></i>
@@ -65,7 +65,7 @@
               </button>
             </div>
             <div class="p-trend__head-right">
-              <div class="u-font__small u-font__muted">
+              <div class="u-font--small u-font--muted">
                 更新日時 <br class="u-sp--only" />{{ items.updated_at }}
               </div>
             </div>
@@ -93,13 +93,13 @@
               </ul>
               <div class="p-trend__select-footer">
                 <a
-                  class="c-btn__muted--outline"
+                  class="c-btn--muted--outline"
                   v-if="selectedItems.length"
                   @click="deselect()"
                 >
                   選択をすべて解除
                 </a>
-                <a class="c-btn__muted--outline" v-else @click="selectAll()">
+                <a class="c-btn--muted--outline" v-else @click="selectAll()">
                   すべてを選択
                 </a>
               </div>
@@ -172,18 +172,18 @@
                       <span class="u-font__num">{{
                         trend.high | round | localeNum
                       }}</span>
-                      <span class="u-font__small">円</span>
+                      <span class="u-font--small">円</span>
                     </p>
-                    <p v-else class="u-font__small u-font__muted">不明</p>
+                    <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
                   <td>
                     <p v-if="trend.low" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.low | round | localeNum
                       }}</span>
-                      <span class="u-font__small">円</span>
+                      <span class="u-font--small">円</span>
                     </p>
-                    <p v-else class="u-font__small u-font__muted">不明</p>
+                    <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
                 </tr>
               </tbody>
@@ -299,41 +299,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* フラッシュメッセージ表示アニメーション */
-.pulldown-enter-active,
-.pulldown-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-/* 表示時 */
-.pulldown-enter {
-  /* 上からスライドイン */
-  opacity: 0;
-  transform: translateY(-10px);
-}
-/* 非表示時 */
-.pulldown-leave-to {
-  /* 上にスライドアウト */
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-/* フラッシュメッセージ表示アニメーション */
-.popup-enter-active,
-.popup-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-/* 表示時 */
-.popup-enter {
-  /* 下からスライドイン */
-  opacity: 0;
-  transform: translateY(10px);
-}
-/* 非表示時 */
-.popup-leave-to {
-  /* 下にスライドアウト */
-  opacity: 0;
-  transform: translateY(10px);
-}
-</style>

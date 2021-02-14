@@ -1,14 +1,15 @@
 <template>
-  <div :class="{ 'js-fadeIn': visible }">
-    <slot v-show="visible"></slot>
+  <div :class="{ 'js-fadeIn': isVisible }">
+    <slot v-show="isVisible"></slot>
   </div>
 </template>
 
 <script>
+// DOM要素がブラウザ表示領域に入ったらフェードイン表示するコンポーネント
 export default {
   data() {
     return {
-      visible: false,
+      isVisible: false,
     };
   },
   created() {
@@ -20,12 +21,15 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    // DOM要素がブラウザ表示領域に入ったらisVisibleをtrueにして表示するメソッド
     handleScroll() {
-      if (!this.visible) {
+      // 要素が非表示の場合
+      if (!this.isVisible) {
         // ブラウザ表示領域の左上から要素の上端までの値を取得
         var top = this.$el.getBoundingClientRect().top;
-        // 要素の上端までの高さがウィンドウ高さ+100pxよりも小さくなったらvisibleをtrueにして表示
-        this.visible = top < window.innerHeight + 100;
+        // 要素の上端までの高さがウィンドウ高さ+100pxよりも小さくなったら
+        // isVisibleをtrueにして表示
+        this.isVisible = top < window.innerHeight + 100;
       }
     },
   },

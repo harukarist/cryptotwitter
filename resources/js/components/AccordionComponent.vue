@@ -1,5 +1,5 @@
 <template>
-  <div class="js-accordion c-accordion">
+  <div class="c-accordion">
     <div
       class="c-accordion__title"
       :class="{ 'is-opened': isOpened, 'is-hovered': isHovered }"
@@ -11,7 +11,7 @@
     </div>
 
     <transition
-      name="js-accordion"
+      name="toggle-accordion"
       @before-enter="beforeEnter"
       @enter="enter"
       @before-leave="beforeLeave"
@@ -19,7 +19,7 @@
     >
       <div
         v-if="isOpened"
-        class="js-accordion__target c-accordion__body"
+        class="c-accordion__body"
         :class="{ 'is-show': isOpened }"
       >
         <slot name="body"></slot>
@@ -40,15 +40,19 @@ export default {
     toggleAccordion() {
       this.isOpened = !this.isOpened;
     },
+    // enter前はheightを0に指定
     beforeEnter: function (el) {
       el.style.height = "0";
     },
+    // enter前はheightを要素の高さに指定
     enter: function (el) {
-      el.style.height = el.scrollHeight + "px";
+      el.style.height = `${el.scrollHeight}px`;
     },
+    // leave前はheightを要素の高さに指定
     beforeLeave: function (el) {
-      el.style.height = el.scrollHeight + "px";
+      el.style.height = `${el.scrollHeight}px`;
     },
+    // leave前はheightを0に指定
     leave: function (el) {
       el.style.height = "0";
     },
@@ -57,37 +61,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.js-accordion {
-  &__target {
-    transition: height 0.3s ease-in-out;
-  }
+.toggle-accordion {
   &-enter-active {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    animation-name: openAccordion;
+    overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
+    transition: height 400ms ease;
   }
   &-leave-active {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    animation-name: closeAccordion;
-  }
-}
-
-@keyframes openAccordion {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-@keyframes closeAccordion {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
+    overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
+    transition: height 400ms ease;
   }
 }
 </style>

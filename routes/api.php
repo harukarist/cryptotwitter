@@ -20,17 +20,21 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 // ログアウトAPI
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-// パスワードリセットメール送信API
+// パスワードリセットメール送信
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-// パスワードリセットフォーム
-Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 // パスワードリセット
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-// お問い合わせフォーム確認ページ
+// // パスワードリセットメール送信API
+// Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+// // パスワードリセットフォーム表示
+// Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+
+
+// お問い合わせフォーム入力内容確認
 Route::post('/contact/confirm', 'ContactController@confirm')->name('contact.confirm');
-//送信完了ページ
-Route::post('/contact/thanks', 'ContactController@send')->name('contact.send');
+//お問い合わせフォーム送信
+Route::post('/contact/send', 'ContactController@send')->name('contact.send');
 
 // ログインユーザー情報を返却
 Route::post('/user', function () {
@@ -50,7 +54,7 @@ Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
 
 // authミドルウェア、CORSミドルウェアを使用するルート
 Route::group(['middleware' => ['auth', 'cors']], function () {
-  // ログインユーザーのTwitterアカウント情報を更新
+  // ログインユーザーのTwitterアカウント情報更新API
   Route::post('/auth/twitter/update', 'Auth\TwitterAuthController@updateTwitterUser');
 
   // ホーム画面の最新データ表示API
@@ -78,10 +82,10 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   // 自動フォロー一覧取得API
   Route::get('/autofollow/list', 'AutoFollowController@showAutoFollowList');
 
-  // Twitterアカウントの削除
+  // Twitterアカウントの登録削除API
   Route::post("/auth/twitter/delete", "Auth\TwitterAuthController@deleteTwitterUser");
 
-  // パスワード変更
+  // パスワード変更API
   Route::post('/password/change', 'Auth\ChangePasswordController@ChangePassword')->name('password.change');
   // ユーザー情報編集API
   Route::post('/account/change', 'Auth\EditAccountController@EditAccount')->name('account.change');
