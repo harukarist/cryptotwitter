@@ -15,7 +15,7 @@
           class="u-sp--only"
         />検索できます。<br />
       </p>
-      <div class="c-tab">
+      <div class="c-tab c-fade--in">
         <ul class="c-tab__list">
           <li
             class="c-tab__item c-tab__item--three"
@@ -70,9 +70,13 @@
               </div>
             </div>
           </div>
-          <transition name="pulldown">
+          <slide-down-component>
             <div v-show="isActive" class="p-trend__select">
               <p class="p-trend__select-text">表示する銘柄を選択</p>
+              <i
+                class="fas fa-times p-trend__select-close"
+                @click="isActive = false"
+              ></i>
               <ul class="p-trend__select-list">
                 <li
                   v-for="trend in items.trends"
@@ -104,91 +108,93 @@
                 </a>
               </div>
             </div>
-          </transition>
+          </slide-down-component>
 
-          <transition name="popup">
-            <table class="c-table">
-              <thead class="c-table__thead">
-                <tr>
-                  <th>順位</th>
-                  <th>銘柄名</th>
-                  <th>
-                    {{ activeColumn }}の<br class="u-sp-hidden" />ツイート数
-                  </th>
-                  <th>過去24時間の<br class="u-sp-hidden" />最高取引価格</th>
-                  <th>過去24時間の<br class="u-sp-hidden" />最低取引価格</th>
-                </tr>
-              </thead>
-              <tbody class="c-table__tbody">
-                <tr
-                  v-for="(trend, index) in sorted"
-                  v-show="trend.show"
-                  :key="trend.id"
-                  class="p-trend__item"
-                >
-                  <td>
-                    <span
-                      class="p-trend__order"
-                      :class="{
-                        'p-trend__order--gold': index === 0,
-                        'p-trend__order--silver': index === 1,
-                        'p-trend__order--bronze': index === 2,
-                      }"
-                    >
-                      {{ index + 1 }}
+          <table class="c-table c-fade--in">
+            <thead class="c-table__thead">
+              <tr>
+                <th>順位</th>
+                <th>銘柄名</th>
+                <th>
+                  {{ activeColumn }}の<br class="u-sp-hidden" />ツイート数
+                </th>
+                <th>過去24時間の<br class="u-sp-hidden" />最高取引価格</th>
+                <th>過去24時間の<br class="u-sp-hidden" />最低取引価格</th>
+              </tr>
+            </thead>
+            <transition-group
+              tag="tbody"
+              name="flip-list"
+              class="c-table__tbody"
+            >
+              <tr
+                v-for="(trend, index) in sorted"
+                v-show="trend.show"
+                :key="trend.id"
+                class="p-trend__item"
+              >
+                <td>
+                  <span
+                    class="p-trend__order"
+                    :class="{
+                      'p-trend__order--gold': index === 0,
+                      'p-trend__order--silver': index === 1,
+                      'p-trend__order--bronze': index === 2,
+                    }"
+                  >
+                    {{ index + 1 }}
+                  </span>
+                </td>
+                <td>
+                  <a
+                    :href="`https://twitter.com/search?q=${trend.currency_name}`"
+                    target="_blank"
+                  >
+                    <p class="p-trend__name">
+                      {{ trend.currency_name }}
+                    </p>
+                  </a>
+                  <a
+                    :href="`https://twitter.com/search?q=${trend.currency_ja}`"
+                    target="_blank"
+                  >
+                    <span class="p-trend__name--small">
+                      {{ trend.currency_ja }}
                     </span>
-                  </td>
-                  <td>
-                    <a
-                      :href="`https://twitter.com/search?q=${trend.currency_name}`"
-                      target="_blank"
-                    >
-                      <p class="p-trend__name">
-                        {{ trend.currency_name }}
-                      </p>
-                    </a>
-                    <a
-                      :href="`https://twitter.com/search?q=${trend.currency_ja}`"
-                      target="_blank"
-                    >
-                      <span class="p-trend__name--small">
-                        {{ trend.currency_ja }}
-                      </span>
-                    </a>
-                  </td>
-                  <td>
-                    <p v-if="column === 'tweet_hour'" class="u-font__num">
-                      {{ trend.tweet_hour | localeNum }}
-                    </p>
-                    <p v-if="column === 'tweet_day'" class="u-font__num">
-                      {{ trend.tweet_day | localeNum }}
-                    </p>
-                    <p v-if="column === 'tweet_week'" class="u-font__num">
-                      {{ trend.tweet_week | localeNum }}
-                    </p>
-                  </td>
-                  <td>
-                    <p v-if="trend.high" class="p-trend__price">
-                      <span class="u-font__num">{{
-                        trend.high | round | localeNum
-                      }}</span>
-                      <span class="u-font--small">円</span>
-                    </p>
-                    <p v-else class="u-font--small u-font--muted">不明</p>
-                  </td>
-                  <td>
-                    <p v-if="trend.low" class="p-trend__price">
-                      <span class="u-font__num">{{
-                        trend.low | round | localeNum
-                      }}</span>
-                      <span class="u-font--small">円</span>
-                    </p>
-                    <p v-else class="u-font--small u-font--muted">不明</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </transition>
+                  </a>
+                </td>
+                <td>
+                  <p v-if="column === 'tweet_hour'" class="u-font__num">
+                    {{ trend.tweet_hour | localeNum }}
+                  </p>
+                  <p v-if="column === 'tweet_day'" class="u-font__num">
+                    {{ trend.tweet_day | localeNum }}
+                  </p>
+                  <p v-if="column === 'tweet_week'" class="u-font__num">
+                    {{ trend.tweet_week | localeNum }}
+                  </p>
+                </td>
+                <td>
+                  <p v-if="trend.high" class="p-trend__price">
+                    <span class="u-font__num">{{
+                      trend.high | round | localeNum
+                    }}</span>
+                    <span class="u-font--small">円</span>
+                  </p>
+                  <p v-else class="u-font--small u-font--muted">不明</p>
+                </td>
+                <td>
+                  <p v-if="trend.low" class="p-trend__price">
+                    <span class="u-font__num">{{
+                      trend.low | round | localeNum
+                    }}</span>
+                    <span class="u-font--small">円</span>
+                  </p>
+                  <p v-else class="u-font--small u-font--muted">不明</p>
+                </td>
+              </tr>
+            </transition-group>
+          </table>
         </div>
       </div>
     </section>
@@ -197,8 +203,10 @@
 
 <script>
 import { OK } from "../utility";
+import SlideDownComponent from "../components/SlideDownComponent.vue";
 
 export default {
+  components: { SlideDownComponent },
   data() {
     return {
       column: "tweet_hour",

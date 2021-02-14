@@ -1,34 +1,50 @@
 <template>
   <ul class="c-pagination__list">
-    <li class="c-pagination__item" v-if="!isFirstPage">
+    <li class="c-pagination__item" v-show="!isFirstPage">
       <RouterLink :to="`/${directory}?page=1`">
         <i class="fas fa-angle-double-left"></i>
       </RouterLink>
     </li>
-    <li class="c-pagination__item" v-if="!isFirstPage">
+    <li class="c-pagination__item is-disabled" v-show="isFirstPage">
+      <i class="fas fa-angle-double-left"></i>
+    </li>
+
+    <li class="c-pagination__item" v-show="!isFirstPage">
       <RouterLink :to="`/${directory}?page=${currentPage - 1}`">
         <i class="fas fa-angle-left"></i>
       </RouterLink>
     </li>
+    <li class="c-pagination__item is-disabled" v-show="isFirstPage">
+      <i class="fas fa-angle-left"></i>
+    </li>
     <li
       v-for="page in pageRange"
       :key="page"
-      class="c-pagination__item"
+      class="c-pagination__item c-pagination__item--page"
       :class="isCurrent(page) ? 'is-active' : ''"
     >
       <RouterLink :to="`/${directory}?page=${page}`">
         {{ page }}
       </RouterLink>
     </li>
-    <li class="c-pagination__item" v-if="!isLastPage">
+    <!-- v-show="!isLastPage"
+v-show="!isLastPage" -->
+    <li class="c-pagination__item" v-show="!isLastPage">
       <RouterLink :to="`/${directory}?page=${currentPage + 1}`">
         <i class="fas fa-angle-right"></i>
       </RouterLink>
     </li>
-    <li class="c-pagination__item" v-if="!isLastPage">
+    <li class="c-pagination__item" v-show="!isLastPage">
       <RouterLink :to="`/${directory}?page=${lastPage}`">
         <i class="fas fa-angle-double-right"></i>
       </RouterLink>
+    </li>
+
+    <li class="c-pagination__item is-disabled" v-show="isLastPage">
+      <i class="fas fa-angle-right"></i>
+    </li>
+    <li class="c-pagination__item is-disabled" v-show="isLastPage">
+      <i class="fas fa-angle-double-right"></i>
     </li>
   </ul>
 </template>

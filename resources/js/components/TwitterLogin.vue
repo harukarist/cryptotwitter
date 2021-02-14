@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div v-if="isLogin">
+  <div class="c-fade--in">
+    <div v-if="isTwitterLogin">
       <div class="p-twitter-user">
         <p class="p-twitter-user__head">
           {{ userName }}さんのTwitterアカウント
@@ -25,31 +25,40 @@
           </div>
         </div>
 
-        <AutoFollow />
+        <AutoFollowApply />
+      </div>
 
-        <a class="p-twitter-user__delete" @click="showConfirm = !showConfirm">
+      <div class="p-twitter-user__delete">
+        <a
+          class="p-twitter-user__delete-link"
+          @click="showConfirm = !showConfirm"
+        >
           Twitterアカウント連携を解除する
         </a>
-        <div v-if="showConfirm" class="p-twitter-user__confirm">
-          <p class="p-twitter-user__confirm-text">
-            Twitterアカウント連携を解除すると<br />
-            これまでの自動フォロー履歴も<br
-              class="u-sp--only"
-            />削除されます。<br />
-            連携を解除しますか？<br />
-          </p>
-          <a class="c-btn--danger" @click.stop="deleteTwitterAuth()">
-            Twitterアカウント連携を解除
-          </a>
-        </div>
+        <transition name="slide-down">
+          <div v-if="showConfirm" class="p-twitter-user__confirm">
+            <i
+              class="fas fa-times p-twitter-user__confirm-close"
+              @click="showConfirm = false"
+            ></i>
+            <p class="p-twitter-user__confirm-text">
+              Twitterアカウント連携を解除すると<br />
+              これまでの自動フォロー履歴も<br
+                class="u-sp--only"
+              />削除されます。<br />
+              本当に連携を解除しますか？<br />
+            </p>
+            <a class="c-btn--danger" @click.stop="deleteTwitterAuth()">
+              Twitterアカウント連携を解除
+            </a>
+          </div>
+        </transition>
       </div>
     </div>
-    <div v-if="!isLogin" class="p-twitter__login">
-      <div class="p-twitter__welcome">
-        <p class="p-twitter__welcome-text">
-          Twitterアカウントを登録して<br />自動フォローを始める
-        </p>
-      </div>
+    <div v-if="!isTwitterLogin" class="p-twitter__login">
+      <p class="c-catch u-mb--l">
+        Twitterアカウントを登録して<br />自動フォローを始める
+      </p>
       <a class="c-btn__twitter" href="/auth/twitter/login">
         <i class="fab fa-twitter"></i>
         Twitterアカウント連携
@@ -60,18 +69,12 @@
 
 <script>
 import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
-import AutoFollow from "../components/AutoFollow.vue";
+import AutoFollowApply from "../components/AutoFollowApply.vue";
 
 export default {
   name: "TwitterLogin",
   components: {
-    AutoFollow,
-  },
-  props: {
-    isLogin: {
-      type: Boolean,
-      required: true,
-    },
+    AutoFollowApply,
   },
   data() {
     return {
@@ -86,6 +89,8 @@ export default {
     ...mapGetters({
       // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
       usersTwitter: "twitter/usersTwitter",
+      // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
+      isTwitterLogin: "twitter/check",
       // authストアのuserNameゲッターでユーザー名を取得
       userName: "auth/userName",
     }),

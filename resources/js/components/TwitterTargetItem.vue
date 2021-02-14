@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div v-if="isLogin" class="p-target__head-right">
+      <div v-if="isTwitterLogin" class="p-target__head-right">
         <button
           v-if="!item.followed_by_user"
           class="c-btn__twitter--outline p-target__btn"
@@ -65,9 +65,11 @@ export default {
       type: Object,
       required: true,
     },
-    isLogin: {
-      type: Boolean,
-      required: true,
+  },
+  computed: {
+    isTwitterLogin() {
+      // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
+      return this.$store.getters["twitter/check"];
     },
   },
   methods: {

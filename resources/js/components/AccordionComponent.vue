@@ -59,16 +59,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.toggle-accordion {
-  &-enter-active {
-    overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
-    transition: height 400ms ease;
-  }
-  &-leave-active {
-    overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
-    transition: height 400ms ease;
-  }
-}
-</style>

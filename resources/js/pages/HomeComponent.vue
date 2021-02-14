@@ -2,7 +2,7 @@
   <div class="c-container--bg">
     <section class="c-section">
       <h5 class="c-section__title">リアルタイムトレンド</h5>
-      <div class="p-home__contents">
+      <div class="p-home__contents c-fade--in">
         <div class="c-tab p-home__contents">
           <ul class="c-tab__list">
             <li
@@ -128,19 +128,18 @@
     <section class="c-section">
       <h5 class="c-section__title">仮想通貨 最新Twitterアカウント</h5>
       <div class="p-target p-home__contents">
-        <div class="p-target__list p-home__row">
+        <div class="p-target__list p-home__twitter">
           <TwitterTargetItem
             v-for="target in targets"
             :key="target.id"
             :item="target"
             :is-login="false"
-            class="p-home__item"
           />
-        </div>
         <div class="p-readmore__wrapper">
           <RouterLink :to="{ name: 'twitter.index' }" class="p-readmore__link">
             もっと見る
           </RouterLink>
+        </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 <template>
-  <transition name="slide">
+  <transition name="slide-left">
     <div
       v-if="flashMessage && isShow"
       class="c-alert p-flash"

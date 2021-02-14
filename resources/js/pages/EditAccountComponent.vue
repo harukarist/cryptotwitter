@@ -9,7 +9,7 @@
           :class="{ 'c-tab__item--active': tabNum === 1 }"
           @click="tabNum = 1"
         >
-          お名前・メールアドレスの変更
+          お名前・メールアドレスの<br class="u-sp--only" />変更
         </li>
         <li
           class="c-tab__item c-tab__item--two"

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'js-fadeIn': isVisible }">
+  <div :class="{ 'c-fade--in': isVisible }">
     <slot v-show="isVisible"></slot>
   </div>
 </template>
@@ -35,20 +35,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* フェードインアニメーション */
-.js-fadeIn {
-  animation: fadeIn 1s;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(100px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-}
-</style>
