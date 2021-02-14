@@ -2,7 +2,10 @@
 
 namespace App\Console\Commands;
 
+use App\Tweet;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\FetchPriceController;
 use App\Http\Controllers\DeleteOldRecordsController;
 
@@ -22,7 +25,12 @@ class DeleteOldRecords extends Command
      * @var string
      */
     // php artisan listに表示されるコマンドの説明
-    protected $description = '保管期間を過ぎた古いツイート及び取得ログレコードをDBから削除';
+    protected $description = '所定の保管期間を過ぎた古いレコードをDBから削除';
+
+    /**
+     * 削除処理に使用するプロパティ
+     */
+    protected $today;
 
     /**
      * Create a new command instance.
@@ -32,6 +40,8 @@ class DeleteOldRecords extends Command
     public function __construct()
     {
         parent::__construct();
+        // バッチ実行日の0:00の日時を取得
+        $this->today = Carbon::today();
     }
 
     /**
@@ -39,14 +49,41 @@ class DeleteOldRecords extends Command
      *
      * @return mixed
      */
-    // 実行したい処理
+    // コマンドで実行する処理
     public function handle()
     {
-        // コントローラーのタスクを実行する
-        $deleteRecords = new DeleteOldRecordsController;
         logger()->info('>>>> レコード削除処理を実行します');
-        $deleteRecords->deleteTweets();
-        $deleteRecords->deleteFetchTweetsLogs();
+        $this->deleteTweets();
+        $this->deleteFetchTweetsLogs();
+        $this->deleteFetchUsersLogs();
         logger()->info('レコード削除処理を実行しました <<<<');
+    }
+
+    // 保存期間を過ぎた古いツイートレコードをテーブルから削除する処理
+    public function deleteTweets()
+    {
+        $STORAGE_DAYS = 8; //レコードを保存しておく日数
+        $storage_started = $this->today->copy()->subDays($STORAGE_DAYS);
+        $deleted = Tweet::where('tweeted_at', '<', $storage_started)->delete();
+        dump("{$storage_started}以前のツイートレコードを{$deleted}件削除しました");
+        logger()->info("{$storage_started}以前のツイートレコードを{$deleted}件削除しました");
+    }
+    // 保存期間を過ぎた古いツイート取得ログレコードをテーブルから削除する処理
+    public function deleteFetchTweetsLogs()
+    {
+        $STORAGE_DAYS = 8; //レコードを保存しておく日数
+        $storage_started = $this->today->copy()->subDays($STORAGE_DAYS);
+        $deleted = DB::table('fetch_tweets_logs')->where('since_at', '<', $storage_started)->delete();
+        dump("{$storage_started}以前のツイート取得ログレコードを{$deleted}件削除しました");
+        logger()->info("{$storage_started}以前のツイート取得ログレコードを{$deleted}件削除しました");
+    }
+    // 保存期間を過ぎた古いターゲットユーザー取得ログレコードをテーブルから削除する処理
+    public function deleteFetchUsersLogs()
+    {
+        $STORAGE_DAYS = 30; //レコードを保存しておく日数
+        $storage_started = $this->today->copy()->subDays($STORAGE_DAYS);
+        $deleted = DB::table('fetch_targets_logs')->where('created_at', '<', $storage_started)->delete();
+        dump("{$storage_started}以前のターゲットユーザー取得ログレコードを{$deleted}件削除しました");
+        logger()->info("{$storage_started}以前のターゲットユーザー取得ログレコードを{$deleted}件削除しました");
     }
 }

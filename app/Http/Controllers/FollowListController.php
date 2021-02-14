@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\TargetUser;
-use App\TwitterUser;
 use App\Facades\Twitter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Http\Controllers\Auth\UsersTwitterOAuth;
 
+
+/**
+ * ログインユーザーTwitterアカウントのフォロー済み一覧を
+ * 管理するクラス
+ * 他のコントローラーから呼び出して使用する
+ */
 class FollowListController extends Controller
 {
   /**

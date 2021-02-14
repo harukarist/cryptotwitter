@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\TargetUser;
-use App\TwitterUser;
 use App\Facades\Twitter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Http\Controllers\Auth\UsersTwitterOAuth;
 
 class UnfollowTargetController extends Controller
 {

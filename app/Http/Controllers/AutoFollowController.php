@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Autofollow;
-use App\TargetUser;
 use App\TwitterUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\FollowListController;
-use App\Http\Controllers\FollowTargetController;
 
 // ユーザーの自動フォロー状況を表示、ユーザーからの自動フォロー適用・解除リクエスト受付
 class AutoFollowController extends Controller
@@ -78,11 +75,11 @@ class AutoFollowController extends Controller
     public function showAutoFollowList()
     {
         // ログインユーザーの自動フォロー履歴（autofollowsテーブルとリレーション先のtarget_userテーブルのレコード）を取得
-        $autofollows = Autofollow::with('target_user')
+        $autofollow_list = Autofollow::with('target_user')
             ->where('twitter_user_id', Auth::user()->twitter_user->id)
             ->paginate(10);
 
         // json形式で返却
-        return $autofollows;
+        return $autofollow_list;
     }
 }
