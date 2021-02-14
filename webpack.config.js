@@ -1,12 +1,23 @@
 const path = require("path"); // Node.jsのpath モジュールを読み込み
 const VueLoaderPlugin = require("vue-loader/lib/plugin"); // vue-loader@15から必要
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //CSSファイル出力プラグイン
+
+// 'production'か'development'を指定
+const MODE = process.env.NODE_ENV || 'production';
+
+// ソースマップの利用有無(productionのときはソースマップを利用しない)
+const enabledSourceMap = true;
 
 module.exports = {
-  mode: process.env.NODE_ENV || 'production',
+  mode: MODE,
+  devtool: "source-map", // CSSの元ソースを追跡できるようsource-map方式にする
   entry: "./resources/js/app.js", // エントリポイントのファイル
+  plugins: [
+    // CSSファイルの出力先とファイル名
+    new MiniCssExtractPlugin({ filename: './public/css/app.css' }),
+  ],
   output: {
-    // 出力先のディレクトリ
+    // jsファイルの出力先ディレクトリ
     path: path.resolve(__dirname, "./public/js"),
     // 出力ファイル名
     filename: "app.js",
@@ -29,37 +40,61 @@ module.exports = {
       // Babelの設定
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: /node_modules/, //node_modulesは除く
         loader: "babel-loader",
       },
       // Sassの設定
       {
         test: /\.(sa|sc|c)ss$/,
-        exclude: /node_modules/,
-        use: [  //後ろのモジュールから順に適用
-          // CSSファイルを分離する
-          MiniCssExtractPlugin.loader,
+        exclude: /node_modules/, //node_modulesは除く
+        use: [  //後ろのモジュールから順に適用する
+          // MiniCssExtractPluginでCSSファイルを分離する
           {
-            // css-loaderでCSSをJSモジュールに変換
-            loader: 'css-loader',
-            options: { url: false } //画像ファイルのurlは除く
+            loader: MiniCssExtractPlugin.loader
           },
-          {
-            // sass-loaderでCSSに変換
-            loader: 'sass-loader',
-          },
+          // style-loaderでlinkタグにCSSを展開
           // {
-          //   // 旧バージョンのブラウザにモダンCSSを適用
-          //   loader: "postcss-loader",
-          //   options: {
-          //     plugins: [
-          //       // ベンダープレフィックス自動付与
-          //       require("autoprefixer")({
-          //         grid: true,
-          //       })
-          //     ]
-          //   }
+          //   loader: 'style-loader'
           // },
+          // css-loaderでCSSをJSモジュールに変換
+          {
+            loader: "css-loader",
+            options: {
+              // CSS内のurl()メソッドの取り込みを禁止する
+              url: false,
+              // ソースマップの利用有無
+              sourceMap: enabledSourceMap,
+
+              // importLoadersで使用するloaderを指定
+              // loaderを使わない場合は0,
+              // postcss-loaderの使う場合は1,
+              // postcss-loaderとsass-loaderを使う場合は2を指定
+              importLoaders: 2
+            }
+          },
+          // postcss-loaderで旧バージョンのブラウザにモダンCSSを適用
+          {
+            loader: "postcss-loader",
+            options: {
+              // ソースマップの利用有無
+              sourceMap: enabledSourceMap,
+              postcssOptions: {
+                plugins: [
+                  // Autoprefixerを有効に
+                  // ベンダープレフィックスを自動付与する
+                  ["autoprefixer", { grid: true }],
+                ],
+              },
+            },
+          },
+          // sass-loaderでSassをCSSに変換
+          {
+            loader: "sass-loader",
+            options: {
+              // ソースマップの利用有無
+              sourceMap: enabledSourceMap
+            },
+          },
         ]
       },
     ],
