@@ -45,8 +45,7 @@
             <div class="p-trend__head-left">
               <span
                 v-if="
-                  !selectedItems.length ||
-                  items.trends.length === selectedItems.length
+                  !selectedItems.length || items.length === selectedItems.length
                 "
                 class="u-font--small u-font--muted"
               >
@@ -66,7 +65,7 @@
             </div>
             <div class="p-trend__head-right">
               <div class="u-font--small u-font--muted">
-                更新日時 <br class="u-sp--only" />{{ items.updated_at }}
+                更新日時 <br class="u-sp--only" />{{ updatedAt }}
               </div>
             </div>
           </div>
@@ -79,7 +78,7 @@
               ></i>
               <ul class="p-trend__select-list">
                 <li
-                  v-for="trend in items.trends"
+                  v-for="trend in items"
                   :key="trend.id"
                   class="p-trend__select-item"
                 >
@@ -113,13 +112,19 @@
           <table class="c-table c-fade-in">
             <thead class="c-table__thead">
               <tr>
-                <th>順位</th>
-                <th>銘柄名</th>
-                <th>
+                <th class="c-table--left">順位</th>
+                <th class="c-table--left">銘柄名</th>
+                <th class="c-table--center">
                   {{ activeColumn }}の<br class="u-sp-hidden" />ツイート数
                 </th>
-                <th>過去24時間の<br class="u-sp-hidden" />最高取引価格</th>
-                <th>過去24時間の<br class="u-sp-hidden" />最低取引価格</th>
+                <th class="c-table--right">
+                  過去24時間の<br class="u-sp-hidden" />最高取引価格<br />
+                  （円）
+                </th>
+                <th class="c-table--right">
+                  過去24時間の<br class="u-sp-hidden" />最低取引価格<br />
+                  （円）
+                </th>
               </tr>
             </thead>
             <transition-group
@@ -129,7 +134,6 @@
             >
               <tr
                 v-for="(trend, index) in sorted"
-                v-show="trend.show"
                 :key="trend.id"
                 class="p-trend__item"
               >
@@ -163,7 +167,7 @@
                     </span>
                   </a>
                 </td>
-                <td>
+                <td class="c-table--center">
                   <p v-if="column === 'tweet_hour'" class="u-font__num">
                     {{ trend.tweet_hour | localeNum }}
                   </p>
@@ -174,21 +178,19 @@
                     {{ trend.tweet_week | localeNum }}
                   </p>
                 </td>
-                <td>
+                <td class="c-table--right">
                   <p v-if="trend.high" class="p-trend__price">
                     <span class="u-font__num">{{
                       trend.high | round | localeNum
                     }}</span>
-                    <span class="u-font--small">円</span>
                   </p>
                   <p v-else class="u-font--small u-font--muted">不明</p>
                 </td>
-                <td>
+                <td class="c-table--right">
                   <p v-if="trend.low" class="p-trend__price">
                     <span class="u-font__num">{{
                       trend.low | round | localeNum
                     }}</span>
-                    <span class="u-font--small">円</span>
                   </p>
                   <p v-else class="u-font--small u-font--muted">不明</p>
                 </td>
@@ -210,9 +212,10 @@ export default {
   data() {
     return {
       column: "tweet_hour",
-      items: [], //トレンド一覧を格納する配列を用意
-      isActive: false,
-      selectedItems: [], // 絞り込み表示する銘柄のidを格納する
+      items: [], //トレンド一覧を格納
+      updatedAt: "", //更新日時を格納
+      isActive: false, //絞り込みメニューの表示有無
+      selectedItems: [], // 絞り込み表示する銘柄のidを格納
     };
   },
   filters: {
@@ -228,18 +231,18 @@ export default {
   computed: {
     // 銘柄名を指定して絞り込み表示
     matched() {
-      // 絞り込み表示の配列に要素が入っている場合
+      // コールバック関数内で使用するため、thisを変数に格納
+      const _self = this;
+      // 絞り込み指定がある場合(フォームのv-modelにトレンド一覧のidが入っている場合）
       if (this.selectedItems.length) {
-        // トレンド一覧の配列をlodashで展開し、絞り込み表示の配列と一致する要素のidをshowプロパティに代入
-        var arr = this.selectedItems;
-        return _.forEach(this.items.trends, function (item) {
-          item.show = arr.includes(item.id);
+        // トレンド一覧のオブジェクトitemsをlodashで展開し、第二引数がtrueの要素のみ返却
+        return _.filter(this.items, function (value) {
+          //絞り込み選択された配列の中に、展開した要素のidが含まれるかどうか(true/false)を返却
+          return _.includes(_self.selectedItems, value.id);
         });
       }
-      // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
-      return _.forEach(this.items.trends, function (item) {
-        item.show = true;
-      });
+      // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧を返却
+      return this.items;
     },
     // ツイート数の大きい順に並べ替えて表示
     sorted() {
@@ -266,8 +269,10 @@ export default {
         this.$store.commit("error/setCode", response.status);
         return false; //処理を中断
       }
-      // JSONのdata項目を格納
-      this.items = response.data;
+      // トレンド一覧を格納
+      this.items = response.data.trends;
+      // 更新日時を格納
+      this.updatedAt = response.data.updated_at;
     },
     // sorted()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour() {
@@ -284,7 +289,7 @@ export default {
       // 絞り込み表示の配列を空にする
       this.selectedItems = [];
       // // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
-      // return _.each(this.items.trends, function (item) {
+      // return _.each(this.items, function (item) {
       //   item.show = true;
       // });
     },
@@ -292,8 +297,8 @@ export default {
     selectAll() {
       // 絞り込み表示の配列を一旦空にする
       this.selectedItems = [];
-      // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
-      this.selectedItems = _.map(this.items.trends, "id");
+      // APIで取得したトレンド一覧の配列からidのみを絞り込み表示の配列に格納
+      this.selectedItems = _.map(this.items, "id");
     },
   },
   watch: {
