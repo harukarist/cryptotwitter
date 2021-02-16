@@ -42,7 +42,7 @@ export default {
       if (this.apiStatus) {
         // フラッシュメッセージを表示
         this.$store.dispatch("message/showMessage", {
-          text: "退会手続きが完了しました。ご利用ありがとうございました。",
+          text: "退会手続きが完了しました",
           type: "success",
           timeout: 6000,
         });
