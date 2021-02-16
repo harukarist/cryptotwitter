@@ -46,7 +46,6 @@
 
 <script>
 import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
-import { OK } from "../utility";
 
 export default {
   computed: {
