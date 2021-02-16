@@ -10,21 +10,21 @@
               :class="{ 'c-tab__item--active': column === 'tweet_hour' }"
               @click="sortByHour"
             >
-              過去1時間の<br class="u-sp--only" />ツイート
+              過去1時間の<br class="u-md--only" />ツイート
             </li>
             <li
               class="c-tab__item c-tab__item--three"
               :class="{ 'c-tab__item--active': column === 'tweet_day' }"
               @click="sortByDay"
             >
-              過去24時間の<br class="u-sp--only" />ツイート
+              過去24時間の<br class="u-md--only" />ツイート
             </li>
             <li
               class="c-tab__item c-tab__item--three"
               :class="{ 'c-tab__item--active': column === 'tweet_week' }"
               @click="sortByWeek"
             >
-              過去1週間の<br class="u-sp--only" />ツイート
+              過去1週間の<br class="u-md--only" />ツイート
             </li>
           </ul>
 
@@ -115,7 +115,7 @@
         </div>
         <div class="p-home__contents">
           <div class="u-font--small u-font--muted u-font--right">
-            更新日時 {{ items.updated_at }}
+            更新日時 {{ updatedAt }}
           </div>
 
           <div class="p-readmore__wrapper">
