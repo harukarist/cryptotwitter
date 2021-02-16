@@ -3,10 +3,10 @@
 // =================================================
 //  サイト全体のデフォルトスタイルを定義
 
-@import "foundation/_reset";
 @import "foundation/_variables";
-@import "foundation/_base";
+@import "foundation/_reset";
 @import "foundation/_mixin";
+@import "foundation/_base";
 
 // =================================================
 // Layout
