@@ -1,5 +1,5 @@
 .p-reason {
-  background: #004BB1;
+  background: $bg-color--main;
   // padding: $space--xxxl $space--xl;
   padding: $header-height+$space--l $space--xl;
   text-align: center;
@@ -73,14 +73,14 @@
     top: -1.2em;
     left: 0;
     font-size: $space--xxxl;
-    color: #99CAE5;
+    color: $bg-color--main-light;
     font-weight: bold;
     @include mq(){
       right: 0;
     }
   }
   &__heading {
-    color: $font-color--main;
+    color: $font-color--dark;
     font-size: $font-size--l;
     font-weight: bold;
     margin-bottom: $space--l;

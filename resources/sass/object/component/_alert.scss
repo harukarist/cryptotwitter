@@ -10,7 +10,7 @@
   &--success {
     @extend %alertBase;
     color: $font-color--white;
-    background-color: rgba($bg-color--active, 0.98);
+    background-color: rgba($bg-color--accent, 0.98);
   }
   &--danger {
     @extend %alertBase;
@@ -25,8 +25,8 @@
   &__inline {
     &--success {
       @extend %alertBase;
-      color: $font-color--active;
-      background-color: rgba($bg-color--active, 0.1);
+      color: $font-color--accent;
+      background-color: rgba($bg-color--accent, 0.1);
     }
     &--danger {
       @extend %alertBase;

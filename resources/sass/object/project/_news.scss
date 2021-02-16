@@ -17,12 +17,12 @@
 
   &__title {
     margin-bottom: $space--m;
-    a {
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+    // a {
+    //   text-decoration: none;
+    //   &:hover {
+    //     text-decoration: underline;
+    //   }
+    // }
   }
   &__info {
     display: flex;

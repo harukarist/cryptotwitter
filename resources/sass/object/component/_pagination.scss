@@ -18,7 +18,7 @@
     font-weight: bold;
     a {
       display: block;
-      color: $font-color--main;
+      color: $font-color--dark;
       background: rgba($bg-color--light, 0.8);
       display: block; //クリック可能範囲を広げる
       border-radius: 50%; //PC、タブレットは正円の背景
@@ -43,7 +43,7 @@
     }
     &.is-active {
       a {
-        background: $bg-color--active;
+        background: $bg-color--accent;
         color: $font-color--white;
       }
     }

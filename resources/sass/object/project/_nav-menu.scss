@@ -24,7 +24,7 @@
     @include mq(medium) {
       display: block;
       a {
-        color: $font-color--main;
+        color: $font-color--dark;
       }
       margin-top: $space--l;
       margin-bottom: $space--xl;
@@ -84,7 +84,7 @@
     }
   }
   &__link {
-    color: $font-color--main;
+    color: $font-color--dark;
     height: $header-height; //擬似要素の下線をヘッダー下と合わせる
     display: flex;
     align-items: center; //リンク文字を上下中央に揃える
@@ -105,10 +105,10 @@
       transform: scale(0.97, 1); //ホバー時に文字を縮める
     }
     &.is-active { //現在表示しているページのメニュー描画
-      color: $font-color--active;
+      color: $font-color--accent;
       &::before {
         width: 100%; //擬似要素の下線幅を0から100%に伸ばす
-        border-bottom: 2px solid $bg-color--active;
+        border-bottom: 2px solid $bg-color--accent;
       }
     }
     // スマホ用ドロワーメニュー
@@ -160,7 +160,7 @@
   &__dropdown-head {
     display: flex;
     align-items: center;
-    color: $font-color--main;
+    color: $font-color--dark;
     // スマホ用ドロワーメニュー
     @include mq(medium) {
       position: absolute;
@@ -226,13 +226,13 @@
     }
   }
   &__dropdown-link {
-    color: $font-color--main;
+    color: $font-color--dark;
     &:hover {
       color: $font-color--hover;
       transform: scale(0.97, 1); //ホバー時に文字を縮める
     }
     &.is-active { //現在表示しているページのメニュー描画
-      color: $font-color--active;
+      color: $font-color--accent;
     }
     // スマホ用ドロワーメニュー
     @include mq(medium) {

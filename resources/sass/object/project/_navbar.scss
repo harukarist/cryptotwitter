@@ -10,7 +10,7 @@
   &__title {
     margin-left: $space--m;
     a {
-      color: $font-color--main;
+      color: $font-color--dark;
       &:hover {
         transform: scale(0.97); //ホバー時にボタンを縮める
       }
@@ -58,7 +58,7 @@
       transform: translateX(-50%);
       width: 70%;
       height: 3px;
-      background-color: $font-color--main;
+      background-color: $font-color--dark;
       border-radius: 3px;
       &:nth-of-type(1) {
         top: 10px;
@@ -74,7 +74,7 @@
     &--text {
       transition: all .4s;
       font-size: $font-size--s;
-      color: $font-color--main;
+      color: $font-color--dark;
       position: absolute;
       transform: translateX(-50%);
       bottom : 0;

@@ -12,34 +12,37 @@ $shadow-color--l: 0 2px 5px rgba(0, 0, 0, .1);
 $shadow-color--xl: 0 2px 10px rgba(0, 0, 0, .1);
 
 $font-color--default: #3B4043;
-$font-color--main: #19465B; //主に見出し、ナビの文字色に使用
-$font-color--active: #247A83; //主にアクティブな要素の文字色に使用
-$font-color--accent: #247A83;
+$font-color--dark: #19465B; //主に見出し、ナビの文字色に使用
+$font-color--main: #004BB1; //主にボタンや強調したい見出しに使用
+
+$font-color--accent: #3999AA; //主にボタンやアクティブな要素の文字色に使用
+$font-color--accent-light: #5AB4BD;
+
+$font-color--link: #1D6DD8; //主にリンクの文字色に使用
+$font-color--hover: #559BED; //主にリンクホバー時の文字色に使用
+
+$font-color--muted: #707F89;
+$font-color--white: #FCFCFC;
 $font-color--danger: #DC5B34;
 $font-color--notice: #999999;
 
-$font-color--link: #1D6DD8;
-$font-color--hover: #5AB4BD;
-$font-color--muted: #707F89;
-$font-color--white: #FCFCFC;
-
-$bg-color--white: #FFFFFF;
-$bg-color--main: #F8FBFE; //主にページ背景の塗りに使用
-$bg-color--light: #F0F4F7; //主にテキスト背景の塗りに使用
+$bg-color--white: #FCFCFC;
+$bg-color--default: #F0F4F7; 
+$bg-color--light: #F0F4F7; //主にページ背景,テキスト背景の塗りに使用
 $bg-color--border: #D3D9E0; //主に罫線に使用
-$bg-color--active: #5AB4BD; //主にアクティブな要素の塗りに使用
-$bg-color--accent: #5AB4BD;//主にボタンに使用
+$bg-color--accent: #3999AA; //主にボタンやアクティブな要素の塗りに使用
+$bg-color--accent-light: #5AB4BD;
+$bg-color--main: #004BB1;
+$bg-color--main-light: #C4DDFF;
 $bg-color--dark: #19465B;
 
 $bg-color--twitter: #1C91DA;
 $bg-color--danger: #DC5B34;
 $bg-color--notice: #999999;
-$bg-color--lucent-white: rgba(255, 255, 255, 0.9);
 
 $bg-color--gold: #FFD700;
 $bg-color--silver: #C0C0C0;
 $bg-color--bronze: #C47222;
-
 
 $font-size--s: 12px;
 $font-size--m: 14px;

@@ -13,7 +13,7 @@
   &__item {
     min-height: 50px;
     padding: $space--s 0;
-    border-bottom: 2px solid $bg-color--active;
+    border-bottom: 2px solid $bg-color--accent;
     background-color: $bg-color--light;
     text-align: center;
     color: $font-color--default;
@@ -35,10 +35,10 @@
       background-color: rgba($bg-color--light, 0.3);
     }
     &--active {
-      background-color: $bg-color--active;
+      background-color: $bg-color--accent;
       color: $font-color--white;
       &:hover {
-        background-color: rgba($bg-color--active, 0.8);
+        background-color: rgba($bg-color--accent, 0.8);
       }
     }
   }

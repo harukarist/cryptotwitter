@@ -14,9 +14,9 @@
 }
 
 .c-fade-in--small {
-  animation: fadeIn 0.5s;
+  animation: fadeInSmall 0.5s;
 }
-@keyframes fadeIn {
+@keyframes fadeInSmall {
   0% {
     opacity: 0;
     transform: translateY(20px);

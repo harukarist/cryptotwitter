@@ -1,7 +1,6 @@
 .p-about {
-  background: #004BB1;
+  background: $bg-color--main;
   padding: $header-height+$space--l $space--xl;
-  // padding: $space--xxxl $space--xl;
   text-align: center;
   &__logo-img {
     margin-bottom: $space--l;

@@ -28,13 +28,13 @@
     }
     // チェック状態
     &:checked + label {
-      color: $bg-color--active; //ラベルのテキスト
+      color: $bg-color--accent; //ラベルのテキスト
       background-color: $bg-color--light;
       border-radius: 100vh; //角丸
       &::before {
           content: '\f058';
           font-family: FontAwesome;
-          color: $bg-color--active; //チェックボックス
+          color: $bg-color--accent; //チェックボックス
       }
     }  
   }
@@ -69,7 +69,7 @@
   border-radius: 2px;
   transform: translate(-6px, 5px) rotateZ(-135deg);
   transform-origin: 2px 2px;
-  background: #FFFFFF;
+  background: $bg-color--white;
 }
 //チェック時のチェックマーク右側
 .c-checkbox__input:checked + .c-checkbox__dummyInput::after {
@@ -83,7 +83,7 @@
   border-radius: 2px;
   transform: translate(-6px, 5px) rotateZ(-45deg);
   transform-origin: 2px 2px;
-  background: #FFFFFF;
+  background: $bg-color--white;
 }
 //未チェック時のチェックボックス背景
 .c-checkbox__dummyInput {

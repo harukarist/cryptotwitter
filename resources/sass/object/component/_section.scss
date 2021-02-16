@@ -14,11 +14,11 @@
     padding: $space--l;
   }
   &--bg {
-    background: $bg-color--main;
+    background: $bg-color--default;
   }
   &__title {
     text-align: center;
-    color: $font-color--main;
+    color: $font-color--dark;
     font-size: $font-size--xl;
     margin-top: $space--l;
     margin-bottom: $space--xxxl;

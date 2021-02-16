@@ -29,20 +29,32 @@
       color: $font-color--white;
     }
   }
+  &__accent--outline {
+    @extend %btnBase;
+    border: 2px solid $bg-color--accent;
+    color: $font-color--accent;
+    background-color: $bg-color--white;
+    &:hover {
+      color: $font-color--white;
+      background-color: $bg-color--accent;
+    }
+  }
   &__main {
     @extend %btnBase;
-    background-color: $font-color--main;
     color: $font-color--white;
+    background-color: $bg-color--dark;
     &:hover {
       color: $font-color--white;
     }
   }
   &__main--outline {
     @extend %btnBase;
-    border: 2px solid $bg-color--border;
+    border: 2px solid $bg-color--main;
     color: $font-color--main;
+    background-color: $bg-color--white;
     &:hover {
-      color: $font-color--main;
+      color: $font-color--white;
+      background-color: $bg-color--main;
     }
   }
   &__twitter {
@@ -92,13 +104,13 @@
     @extend %btnBase;
     border: none;
     background: $bg-color--white;
-    color: $font-color--accent;
+    color: $font-color--dark;
     font-weight: bold;
     font-size: $font-size--default;
     padding: 5px 10px;
     &:hover {
-      color: $font-color--accent;
-      background: $bg-color--white;
+      color: $font-color--white;
+      background: $bg-color--dark;
     }
   }
 }

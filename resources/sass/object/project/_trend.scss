@@ -11,15 +11,6 @@
     }
   }
 
-  &__item {
-    a {
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-
   //銘柄選択メニュー
   &__select {
     padding: $space--l;
@@ -37,6 +28,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      margin-bottom: $space--m;
     }
     &-close {
       position: absolute;
@@ -47,7 +39,6 @@
     &-item {
       flex-grow: 1;
       margin-right: 10px;
-      margin-bottom: 10px;
       line-height: 1.0;
       width: calc((100% - (10px * 5)) / 6 ); //1行に6銘柄を均等配置
       &:nth-child(6n) {
@@ -102,6 +93,8 @@
   }
   &__name {
     font-weight: bold;
+    font-size: $font-size--l;
+    font-family: $font-family--theme;
     &--small {
       font-size: $font-size--s;
     }

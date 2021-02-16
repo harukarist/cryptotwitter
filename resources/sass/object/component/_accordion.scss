@@ -23,7 +23,7 @@
       }
     }
     &.is-hovered {
-      background: $bg-color--light;
+      background: rgba($bg-color--accent, 0.3);
     }
   }
 }

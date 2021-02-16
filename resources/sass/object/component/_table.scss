@@ -5,15 +5,23 @@
   @include mq(){
     width: 100%;
   }
+  &--left {
+    text-align: left;
+  }
+  &--center {
+    text-align: center;
+  }
+  &--right {
+    text-align: right;
+  }
   &__thead {
     tr {
       border-bottom: 1px solid $bg-color--border;
     }
     th {
-      padding: $space--m $space--s;
+      padding: $space--s;
       vertical-align: middle;
-      font-size: $font-size--m;
-      text-align: left;
+      font-size: $font-size--s;
       @include mq(){
         padding: $space--m 2px;
         // font-size: $font-size--s;

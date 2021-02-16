@@ -1,10 +1,10 @@
 .p-faq {
-  background: #F8FBFE;
-  // padding: $space--xxxl $space--xl;
+  background: $bg-color--default;
   padding: $header-height+$space--l $space--xl;
   text-align: center;
+  box-shadow: $shadow-color--m;  
   &__title {
-    color: $font-color--main;
+    color: $font-color--dark;
     font-size: $font-size--xl;
     margin-bottom: $space--xxl;
   }
@@ -32,7 +32,7 @@
     }
   }
   &__question {
-    color: $font-color--main;
+    color: $font-color--dark;
     font-size: $font-size--l;
     font-weight: bold;
     text-align: left;
@@ -42,16 +42,11 @@
       padding: 20px 40px;
       font-size: $font-size--default;
     }
-    a {
-      &:hover {
-        background-color: #EFEFEF;
-      }
-    }
     &::before {
       content: 'Q';
       font-size: $font-size--xxl;
       font-weight: bold;
-      color: #99CAE5;
+      color: $font-color--accent-light;
       display: block;
       position: absolute;
       top: 8px;
@@ -76,10 +71,10 @@
       content: 'A';
       font-size: $font-size--xxl;
       font-weight: bold;
-      color: $bg-color--accent;
+      color: rgba($font-color--main, 0.8);
       display: block;
       position: absolute;
-      top: 25px;
+      top: 17px;
       left: 17px;
       @include mq(){
         font-size: $font-size--xl;

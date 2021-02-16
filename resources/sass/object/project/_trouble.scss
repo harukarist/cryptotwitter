@@ -6,7 +6,7 @@
     padding: $header-height+$space--l $space--m;
   }
   &__title {
-    color: $font-color--main;
+    color: $font-color--dark;
     font-size: $font-size--xl;
     margin-bottom: $space--xxl;
     @include mq(){
