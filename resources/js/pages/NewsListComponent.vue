@@ -8,9 +8,12 @@
         />お届けします。<br />
       </p>
       <div class="p-news c-fade-in">
-        <SearchFormComponent @search="searchNews" @clear="clearResult" />
+        <search-form-component @search="searchNews" @clear="clearResult" />
+        <p v-if="totalItems === 0" class="u-font--center">
+          ニュースが存在しません
+        </p>
 
-        <transition-group tag="div" name="popup" class="p-news__item">
+        <transition-group tag="div" name="popup" appear class="p-news__item">
           <div class="p-news__item" v-for="item in news" :key="item.title">
             <div class="p-news__info">
               <span class="p-news__date">
@@ -29,14 +32,14 @@
         </transition-group>
 
         <div class="c-pagination">
-          <Pagination
+          <pagination-link
             :directory="directoryName"
             :current-page="currentPage"
             :last-page="lastPage"
             :per-page="perPage"
             :total-items="totalItems"
           />
-          <PaginationInfo
+          <pagination-info
             :current-page="currentPage"
             :per-page="perPage"
             :total-items="totalItems"
@@ -50,13 +53,13 @@
 
 <script>
 import { OK } from "../utility";
-import Pagination from "../components/Pagination.vue";
+import PaginationLink from "../components/PaginationLink.vue";
 import PaginationInfo from "../components/PaginationInfo.vue";
 import SearchFormComponent from "../components/SearchFormComponent.vue";
 
 export default {
   components: {
-    Pagination, //ページ番号付きページネーション（PC、タブレットで表示）
+    PaginationLink, //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo, //ページネーションの件数表示
     SearchFormComponent,
   },
@@ -79,21 +82,28 @@ export default {
     },
   },
   methods: {
+    // ニュースをキーワード検索
     searchNews(word) {
       let params = {
+        // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {
           search: word,
         },
       };
+      // クエリパラメータを渡してTwitterアカウント一覧を取得
       this.fetchNews(params);
     },
+    // 検索結果の表示を解除
     clearResult() {
+      // 検索用のクエリパラメータを指定しない
       let params = {};
       this.fetchNews(params);
     },
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews(params) {
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       const response = await axios.get(`/api/news?page=${this.page}`, params);
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       if (response.status !== OK) {
         // 通信失敗の場合
         this.$store.commit("error/setCode", response.status);
@@ -110,16 +120,9 @@ export default {
       return;
     },
   },
-  watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
-    $route: {
-      async handler() {
-        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-        await this.fetchNews();
-        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-      },
-      immediate: true, //コンポーネント生成時も実行
-    },
+  created() {
+    // ページ読み込み時にニュースを取得
+    this.fetchNews();
   },
 };
 </script>

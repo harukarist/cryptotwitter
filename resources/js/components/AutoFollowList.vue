@@ -1,11 +1,15 @@
 <template>
   <div class="p-target">
     <div class="p-target__list">
-      <SearchFormComponent @search="searchTargets" @clear="clearResult" />
+      <search-form-component
+        @search="searchTargets"
+        @clear="clearResult"
+        class="u-mt--xl u-mb--xxxl"
+      />
 
       <h5 class="p-target__title">自動フォロー履歴</h5>
 
-      <TwitterTargetItem
+      <twitter-target-item
         v-for="target in targets"
         :key="target.id"
         :item="target.target_user"
@@ -15,16 +19,20 @@
         <div class="u-font--muted u-font--small u-mb--m" slot="follow_date">
           フォロー日時: {{ target.created_at }}
         </div>
-      </TwitterTargetItem>
+      </twitter-target-item>
 
-      <Pagination
+      <p v-if="totalItems === 0" class="u-font--center">
+        アカウントが存在しません
+      </p>
+
+      <pagination-link
         :directory="directoryName"
         :current-page="currentPage"
         :last-page="lastPage"
         :per-page="perPage"
         :total-items="totalItems"
       />
-      <PaginationInfo
+      <pagination-info
         :current-page="currentPage"
         :per-page="perPage"
         :total-items="totalItems"
@@ -37,14 +45,14 @@
 <script>
 import { OK } from "../utility";
 import TwitterTargetItem from "../components/TwitterTargetItem.vue";
-import Pagination from "../components/Pagination.vue";
+import PaginationLink from "../components/PaginationLink.vue";
 import PaginationInfo from "../components/PaginationInfo.vue";
 import SearchFormComponent from "../components/SearchFormComponent.vue";
 
 export default {
   components: {
     TwitterTargetItem,
-    Pagination, //ページ番号付きページネーション（PC、タブレットで表示）
+    PaginationLink, //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo, //ページネーションの件数表示
     SearchFormComponent,
   },
@@ -74,15 +82,20 @@ export default {
     },
   },
   methods: {
+    // 自動フォロー履歴の仮想通貨アカウントを検索
     searchTargets(word) {
       let params = {
+        // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {
           search: word,
         },
       };
+      // クエリパラメータを渡してTwitterアカウント一覧を取得
       this.fetchTargets(params);
     },
+    // 検索結果の表示を解除
     clearResult() {
+      // 検索用のクエリパラメータを指定しない
       let params = {};
       this.fetchTargets(params);
     },
@@ -92,8 +105,6 @@ export default {
         `/api/autofollow/list?page=${this.page}`,
         params
       );
-      console.log(response);
-
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);

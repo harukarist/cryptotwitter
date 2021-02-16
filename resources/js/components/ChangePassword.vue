@@ -1,6 +1,6 @@
 <template>
   <form class="c-form--small" @submit.prevent="checkChangePassForm">
-    <transition name="popup">
+    <transition name="popup" appear>
       <p v-if="successMessage" class="u-mb--xxxl c-alert--success">
         {{ successMessage }}
       </p>
@@ -102,7 +102,7 @@
       </ul>
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn__accent">パスワードを変更</button>
+      <button type="submit" class="c-btn--accent c-btn--large">パスワードを変更</button>
     </div>
   </form>
 </template>

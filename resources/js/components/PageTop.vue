@@ -1,5 +1,5 @@
 <template>
-  <transition name="popup">
+  <transition name="popup" appear>
     <div class="p-pagetop" v-if="isVisible" @click="scrollTop()">
       <span class="p-pagetop__btn"><i class="fas fa-chevron-up"></i></span>
     </div>

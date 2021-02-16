@@ -141,8 +141,8 @@ const router = new VueRouter({
 
 // ルーターナビゲーションの前にフック（ページコンポーネントが切り替わる直前のナビゲーションガード）
 router.beforeEach((to, from, next) => {
-  // ローディング表示をオン
-  store.commit('loader/setIsLoading', true)
+  // // ローディング表示をオン
+  // store.commit('loader/setIsLoading', true)
   // 認証必須のルートで認証チェックがfalseならログイン画面へ
   if (to.matched.some(record => record.meta.requiresAuth) && !store.getters['auth/check']) {
     next({ name: 'login' });
@@ -156,8 +156,8 @@ router.beforeEach((to, from, next) => {
 })
 // ルーターナビゲーションの後にフック
 router.afterEach(() => {
-  // ローディング表示をオフ
-  store.commit('loader/setIsLoading', false)
+  // // ローディング表示をオフ
+  // store.commit('loader/setIsLoading', false)
 })
 
 

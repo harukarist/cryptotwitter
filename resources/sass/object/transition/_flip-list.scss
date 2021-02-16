@@ -12,11 +12,9 @@
   // 表示開始前
   &-enter {
     opacity: 0;
-    transform: translateX(30px);
   }
   // 非表示後
   &-leave-to {
     opacity: 0;
-    transform: translateX(30px);
   }
 }

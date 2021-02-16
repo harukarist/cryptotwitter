@@ -55,7 +55,7 @@
                 {{ selectedItems.length }}件を絞り込み表示
               </span>
               <button
-                class="c-btn--muted--outline"
+                class="c-btn--muted-outline"
                 @click="isActive = !isActive"
               >
                 <i v-show="!isActive" class="fas fa-angle-down"></i>
@@ -96,13 +96,13 @@
               </ul>
               <div class="p-trend__select-footer">
                 <a
-                  class="c-btn--muted--outline"
+                  class="c-btn--muted-outline"
                   v-if="selectedItems.length"
                   @click="deselect()"
                 >
                   選択をすべて解除
                 </a>
-                <a class="c-btn--muted--outline" v-else @click="selectAll()">
+                <a class="c-btn--muted-outline" v-else @click="selectAll()">
                   すべてを選択
                 </a>
               </div>
@@ -114,9 +114,7 @@
               <tr>
                 <th class="c-table--left">順位</th>
                 <th class="c-table--left">銘柄名</th>
-                <th class="c-table--center">
-                  {{ activeColumn }}の<br class="u-sp-hidden" />ツイート数
-                </th>
+                <th class="c-table--center">ツイート数</th>
                 <th class="c-table--right">
                   過去24時間の<br class="u-sp-hidden" />最高取引価格<br />
                   （円）
@@ -128,6 +126,7 @@
               </tr>
             </thead>
             <transition-group
+              appear
               tag="tbody"
               name="flip-list"
               class="c-table__tbody"
@@ -263,7 +262,9 @@ export default {
   methods: {
     // axiosでトレンド一覧取得APIにリクエスト
     async fetchTrends() {
+      // this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       const response = await axios.get("/api/trend");
+      // this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       if (response.status !== OK) {
         // 通信失敗の場合
         this.$store.commit("error/setCode", response.status);
@@ -288,16 +289,12 @@ export default {
     deselect() {
       // 絞り込み表示の配列を空にする
       this.selectedItems = [];
-      // // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
-      // return _.each(this.items, function (item) {
-      //   item.show = true;
-      // });
     },
     // 銘柄をすべて選択
     selectAll() {
       // 絞り込み表示の配列を一旦空にする
       this.selectedItems = [];
-      // APIで取得したトレンド一覧の配列からidのみを絞り込み表示の配列に格納
+      // APIで取得したトレンド一覧の配列からidのみを取り出し、絞り込み表示の配列に格納
       this.selectedItems = _.map(this.items, "id");
     },
   },
@@ -305,9 +302,7 @@ export default {
     // $routeを監視し、ページ切り替え時にデータ取得を実行
     $route: {
       async handler() {
-        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
         await this.fetchTrends();
-        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       },
       immediate: true, //コンポーネント生成時も実行
     },

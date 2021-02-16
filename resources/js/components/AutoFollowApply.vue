@@ -24,22 +24,22 @@
             class="u-sp--only"
           />1日最大1000ユーザーまで<br />毎日ランダムに自動でフォローします。
         </p>
-        <a class="c-btn--muted--outline" @click.stop="cancelAutoFollow()">
+        <a class="c-btn--muted-outline" @click.stop="cancelAutoFollow()">
           自動フォロー機能を解除する
         </a>
       </div>
-    </div>
 
-    <div class="p-autofollow" v-if="!usersTwitter.use_autofollow">
-      <p class="c-catch u-mb--l p-autofollow__text--small">
-        自動フォロー機能を利用すると<br />
-        仮想通貨関連アカウントを<br
-          class="u-sp--only"
-        />まとめてフォローできます
-      </p>
-      <button class="c-btn__accent" @click="applyAutoFollow()">
-        自動フォロー機能をON
-      </button>
+      <div class="p-autofollow__guide" v-if="!usersTwitter.use_autofollow">
+        <p class="c-catch u-mb--l p-autofollow__text--small">
+          自動フォロー機能を利用すると<br />
+          仮想通貨関連アカウントを<br
+            class="u-sp--only"
+          />まとめてフォローできます
+        </p>
+        <button class="c-btn--accent c-btn--large" @click="applyAutoFollow()">
+          自動フォロー機能をON
+        </button>
+      </div>
     </div>
   </div>
 </template>

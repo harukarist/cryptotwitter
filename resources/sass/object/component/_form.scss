@@ -7,6 +7,10 @@
     padding-bottom: $space--xxxl;
     background: $bg-color--white;
     border-radius: 4px;
+    @include mq(){
+      padding-left: $space--xl;
+      padding-right: $space--xl;
+    }
   }
   &--large {
     width: 80%;
@@ -35,8 +39,6 @@
     // スマホサイトは横幅いっぱい
     @include mq() {
       width: 100%;
-      padding-left: $space--xl;
-      padding-right: $space--xl;
     }
   }
   &__text {

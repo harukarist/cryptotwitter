@@ -1,5 +1,5 @@
 <template>
-  <transition
+  <transition appear
     name="slide-down"
     @before-enter="beforeEnter"
     @enter="enter"

@@ -2228,7 +2228,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
 /* harmony import */ var _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/TwitterTargetItem.vue */ "./resources/js/components/TwitterTargetItem.vue");
-/* harmony import */ var _components_Pagination_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Pagination.vue */ "./resources/js/components/Pagination.vue");
+/* harmony import */ var _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/PaginationLink.vue */ "./resources/js/components/PaginationLink.vue");
 /* harmony import */ var _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/PaginationInfo.vue */ "./resources/js/components/PaginationInfo.vue");
 /* harmony import */ var _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/SearchFormComponent.vue */ "./resources/js/components/SearchFormComponent.vue");
 
@@ -2277,6 +2277,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2285,7 +2293,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     TwitterTargetItem: _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_6__.default,
-    Pagination: _components_Pagination_vue__WEBPACK_IMPORTED_MODULE_7__.default,
+    PaginationLink: _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_7__.default,
     //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__.default,
     //ページネーションの件数表示
@@ -2324,15 +2332,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    // 自動フォロー履歴の仮想通貨アカウントを検索
     searchTargets: function searchTargets(word) {
       var params = {
+        // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {
           search: word
         }
-      };
+      }; // クエリパラメータを渡してTwitterアカウント一覧を取得
+
       this.fetchTargets(params);
     },
+    // 検索結果の表示を解除
     clearResult: function clearResult() {
+      // 検索用のクエリパラメータを指定しない
       var params = {};
       this.fetchTargets(params);
     },
@@ -2351,10 +2364,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 2:
                 response = _context.sent;
-                console.log(response); // レスポンスのステータスが200以外の場合はエラーをストアにコミット
 
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
-                  _context.next = 7;
+                  _context.next = 6;
                   break;
                 }
 
@@ -2362,7 +2374,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 7:
+              case 6:
                 // JSONのdata項目を格納
                 _this.targets = response.data.data; // console.log(response);
                 // ページネーションの現在ページ、最終ページの値を格納
@@ -2374,7 +2386,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.totalItems = response.data.total;
                 return _context.abrupt("return");
 
-              case 13:
+              case 12:
               case "end":
                 return _context.stop();
             }
@@ -2549,7 +2561,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -3061,7 +3072,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
  // VuexのmapState関数をインポート
 
@@ -3111,27 +3121,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 // サーバー側バリデーションメッセージをクリア
-                _this.apiMessages = []; // サーバーのAPIを呼び出し
+                _this.apiMessages = [];
 
-                _context.next = 3;
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+                // サーバーのAPIを呼び出し
+
+
+                _context.next = 4;
                 return axios.post("/api/contact/send", _this.formData);
 
-              case 3:
+              case 4:
                 response = _context.sent;
 
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+                // API通信が成功した場合
+
+
                 if (!(response.status === _utility__WEBPACK_IMPORTED_MODULE_3__.OK)) {
-                  _context.next = 7;
+                  _context.next = 9;
                   break;
                 }
 
                 // $emitで親コンポーネントに通知して送信完了画面へ遷移
-                _this.$emit("sent");
+                _this.$emit("sent", _this.formData);
 
                 return _context.abrupt("return");
 
-              case 7:
+              case 9:
                 if (!(response.status === _utility__WEBPACK_IMPORTED_MODULE_3__.UNPROCESSABLE_ENTITY)) {
-                  _context.next = 13;
+                  _context.next = 15;
                   break;
                 }
 
@@ -3142,7 +3160,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return");
 
-              case 13:
+              case 15:
                 // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
                 // 別モジュールのミューテーションをcommitするためroot: trueを指定する
                 _this.$store.commit("error/setCode", response.status); // $emitで親コンポーネントに通知してフォームを再表示
@@ -3150,7 +3168,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$emit("back");
 
-              case 15:
+              case 17:
               case "end":
                 return _context.stop();
             }
@@ -3158,11 +3176,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     }
-  } // mounted() {
-  //   //画面上で改行表示できるよう、お問い合わせ本文の改行コード \n を <br>に置換する
-  //   this.replacedMessage = this.formData.message.replace(/\n/g, "<br>");
-  // },
-
+  }
 });
 
 /***/ }),
@@ -3197,6 +3211,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
 //
 //
 //
@@ -3368,14 +3384,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 // サーバー側バリデーションメッセージをクリア
-                _this.apiMessages = []; // 引数にv-modelの値を渡してサーバーのAPIを呼び出し
+                _this.apiMessages = [];
 
-                _context.next = 3;
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+                // 引数にv-modelの値を渡してサーバーのAPIを呼び出し
+
+
+                _context.next = 4;
                 return axios.post("/api/contact/confirm", _this.formData);
 
-              case 3:
+              case 4:
                 response = _context.sent;
-                console.log(response); // API通信が成功した場合
+
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+                // API通信が成功した場合
+
 
                 if (response.status === _utility__WEBPACK_IMPORTED_MODULE_5__.OK) {
                   // サーバーからの返却値をv-modelに格納してフォームに表示
@@ -3383,13 +3406,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.formData.email = response.data.email;
                   _this.formData.message = response.data.message; // $emitで親コンポーネントに通知して確認画面を表示
 
-                  _this.$emit("confirm", _this.formData); // this.$router.push({ name: "contact.confirm" });
-
+                  _this.$emit("confirm", _this.formData);
                 } // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
 
 
                 if (!(response.status === _utility__WEBPACK_IMPORTED_MODULE_5__.UNPROCESSABLE_ENTITY)) {
-                  _context.next = 11;
+                  _context.next = 12;
                   break;
                 }
 
@@ -3397,12 +3419,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.apiMessages = response.data.errors;
                 return _context.abrupt("return");
 
-              case 11:
+              case 12:
                 // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
                 // 別モジュールのミューテーションをcommitするためroot: trueを指定する
                 _this.$store.commit("error/setCode", response.status);
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
@@ -3430,7 +3452,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    // v-modelでフォームの入力値と紐付けるデータ変数
+    formData: {
+      type: Object,
+      required: true,
+      //オブジェクトの初期値を関数で指定する
+      default: function _default() {
+        return {
+          name: "",
+          email: "",
+          message: ""
+        };
+      }
+    }
+  }
+});
 
 /***/ }),
 
@@ -3533,8 +3598,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -3769,6 +3832,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
  // VuexのmapState関数,mapGetters関数をインポート
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3825,10 +3897,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     root: true
                   });
 
-                  _this.closeDropdown(); //ドロップダウンメニューが開いていたら閉じる
-
-
-                  _this.closeDrawerMenu(); //ドロワーメニューが開いていたら閉じる
+                  _this.closeMenu(); //ドロワーメニュー、ドロップダウンメニューが開いていたら閉じる
                   // VueRouterのpush()でトップ画面に遷移
 
 
@@ -3846,26 +3915,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     // スマホ用ドロワーメニューを閉じる
-    closeDrawerMenu: function closeDrawerMenu() {
-      // 親コンポーネントに通知して親コンポーネント側のdataを変更する
-      this.$emit("close");
-    },
-    // ドロップダウンメニューの開閉を切り替え
-    toggleDropdown: function toggleDropdown() {
-      this.isActiveDropdown = !this.isActiveDropdown;
-    },
-    // ドロップダウンメニューを閉じる
-    closeDropdown: function closeDropdown(event) {
-      this.isActiveDropdown = false; // ドロワーメニュー上でリンクがクリックされた場合はドロワーメニューも閉じる
-
+    closeMenu: function closeMenu() {
+      // ドロワーメニュー表示中にクリックされた場合はドロワーメニューを閉じる
       if (this.isActiveDrawerMenu) {
+        // 親コンポーネントに通知して親コンポーネント側のdataを変更する
         this.$emit("close");
+      } // ドロップダウンメニューが開いている場合はドロップダウンメニューを閉じる
+
+
+      if (this.isActiveDropdown) {
+        this.isActiveDropdown = false;
       }
+    },
+    // ドロップダウンメニューの初期表示部分をクリックした時
+    clickDropdownHead: function clickDropdownHead() {
+      // ドロワーメニュー表示中にクリックされた場合はアカウント設定画面へ遷移して
+      // ドロワーメニューを閉じる
+      if (this.isActiveDrawerMenu) {
+        this.$router.push({
+          name: "edit"
+        });
+        this.$emit("close");
+      } // その他の場合はドロップダウンメニューの開閉を切り替える
+
+
+      this.isActiveDropdown = !this.isActiveDropdown;
     }
   },
   created: function created() {
     // ページ読み込み時にフラグを初期化
-    this.closeDropdown();
+    this.isActiveDropdown = false;
   }
 });
 
@@ -4100,10 +4179,76 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pagination.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pagination.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.number.constructor.js */ "./node_modules/core-js/modules/es.number.constructor.js");
+/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__);
+
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    // 現在ページ
+    currentPage: {
+      type: Number,
+      required: true
+    },
+    //1ページあたりの表示件数
+    perPage: {
+      type: Number,
+      required: true
+    },
+    //トータル件数
+    totalItems: {
+      type: Number,
+      required: true
+    },
+    //表示中の件数
+    itemsLength: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    // 表示している1つ目の件数
+    startNum: function startNum() {
+      // 合計件数が0件の場合は0を返却
+      if (this.totalItems === 0) {
+        return 0;
+      } // その他の場合は（1ページあたりの表示件数 × 1つ前のページ番号）＋1
+
+
+      return this.perPage * (this.currentPage - 1) + 1;
+    },
+    // 表示している最後の件数
+    endNum: function endNum() {
+      // 合計件数が0件の場合は0を返却
+      if (this.totalItems === 0) {
+        return 0;
+      } // その他の場合は（1ページあたりの表示件数 × 1つ前のページ番号）＋1
+
+
+      return this.perPage * (this.currentPage - 1) + this.itemsLength;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationLink.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationLink.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4260,60 +4405,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************************************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.number.constructor.js */ "./node_modules/core-js/modules/es.number.constructor.js");
-/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__);
-
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    // 現在ページ
-    currentPage: {
-      type: Number,
-      required: true
-    },
-    //1ページあたりの表示件数
-    perPage: {
-      type: Number,
-      required: true
-    },
-    //トータル件数
-    totalItems: {
-      type: Number,
-      required: true
-    },
-    //表示中の件数
-    itemsLength: {
-      type: Number,
-      required: true
-    }
-  },
-  computed: {
-    // 表示している最初の件数
-    startNum: function startNum() {
-      return this.perPage * (this.currentPage - 1) + 1;
-    },
-    // 表示している最後の件数
-    endNum: function endNum() {
-      return this.perPage * (this.currentPage - 1) + this.itemsLength;
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SearchFormComponent.vue?vue&type=script&lang=js&":
 /*!**************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SearchFormComponent.vue?vue&type=script&lang=js& ***!
@@ -4412,8 +4503,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
 /* harmony import */ var _components_AutoFollowApply_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/AutoFollowApply.vue */ "./resources/js/components/AutoFollowApply.vue");
+/* harmony import */ var _components_ModalComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ModalComponent.vue */ "./resources/js/components/ModalComponent.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4494,26 +4586,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
  // VuexのmapState関数,mapGetters関数をインポート
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "TwitterLogin",
   components: {
-    AutoFollowApply: _components_AutoFollowApply_vue__WEBPACK_IMPORTED_MODULE_1__.default
+    AutoFollowApply: _components_AutoFollowApply_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+    ModalComponent: _components_ModalComponent_vue__WEBPACK_IMPORTED_MODULE_2__.default
   },
   data: function data() {
     return {
       showConfirm: false
     };
   },
-  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)({
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)({
     // twitterストアのステートを参照し、API通信の成否ステータスを取得
     apiStatus: function apiStatus(state) {
       return state.twitter.apiStatus;
     }
-  })), (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapGetters)({
     // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
     usersTwitter: "twitter/usersTwitter",
     // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
@@ -4682,7 +4775,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
 /* harmony import */ var _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/TwitterTargetItem.vue */ "./resources/js/components/TwitterTargetItem.vue");
-/* harmony import */ var _components_Pagination_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Pagination.vue */ "./resources/js/components/Pagination.vue");
+/* harmony import */ var _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/PaginationLink.vue */ "./resources/js/components/PaginationLink.vue");
 /* harmony import */ var _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/PaginationInfo.vue */ "./resources/js/components/PaginationInfo.vue");
 /* harmony import */ var _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/SearchFormComponent.vue */ "./resources/js/components/SearchFormComponent.vue");
 
@@ -4728,6 +4821,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4736,7 +4836,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     TwitterTargetItem: _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_6__.default,
-    Pagination: _components_Pagination_vue__WEBPACK_IMPORTED_MODULE_7__.default,
+    PaginationLink: _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_7__.default,
     //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__.default,
     //ページネーションの件数表示
@@ -4767,15 +4867,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
+    // 仮想通貨アカウントを検索
     searchTargets: function searchTargets(word) {
       var params = {
+        // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {
           search: word
         }
-      };
+      }; // クエリパラメータを渡してTwitterアカウント一覧を取得
+
       this.fetchTargets(params);
     },
+    // 検索結果の表示を解除
     clearResult: function clearResult() {
+      // 検索用のクエリパラメータを指定しない
       var params = {};
       this.fetchTargets(params);
     },
@@ -5598,15 +5703,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     formConfirm: function formConfirm(contactForm) {
-      Object.assign(this.formData, contactForm);
+      // 子コンポーネントから受け取ったフォーム入力内容をv-modelの各プロパティに格納
+      Object.assign(this.formData, contactForm); //確認画面を表示
+
       this.isConfirm = true;
       this.isSent = false;
     },
     formSent: function formSent() {
+      //送信完了画面を表示
       this.isSent = true;
       this.isConfirm = false;
     },
     formBack: function formBack() {
+      //フォーム画面を表示
       this.isSent = false;
       this.isConfirm = false;
     }
@@ -5630,8 +5739,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ChangeNameOrEmail_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ChangeNameOrEmail.vue */ "./resources/js/components/ChangeNameOrEmail.vue");
 /* harmony import */ var _components_ChangePassword_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/ChangePassword.vue */ "./resources/js/components/ChangePassword.vue");
 /* harmony import */ var _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/TwitterLogin.vue */ "./resources/js/components/TwitterLogin.vue");
-//
-//
 //
 //
 //
@@ -5904,6 +6011,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5914,10 +6023,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       column: "tweet_hour",
       items: [],
-      //トレンド一覧を格納する配列を用意
+      //トレンド一覧を格納
+      updatedAt: "",
+      //更新日時を格納
       targets: [],
-      //仮想通貨関連アカウント一覧を格納する配列
-      news: [] //ニュース一覧を格納する配列
+      //仮想通貨関連アカウント一覧を格納
+      news: [] //ニュース一覧を格納
 
     };
   },
@@ -5942,14 +6053,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return "1週間";
       }
     },
-    // ツイート数の大きい順に並べ替えて表示
-    sorted: function sorted() {
-      // 絞り込み処理を行った後の配列を、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
+    // クリックされたタブに応じてデータを返却
+    clicked: function clicked() {
       if (this.column === "tweet_hour") {
+        // 過去1時間のトレンド上位3件を返却
         return this.items.trend_hour;
       } else if (this.column === "tweet_day") {
+        // 過去1日のトレンド上位3件を返却
         return this.items.trend_day;
       } else if (this.column === "tweet_week") {
+        // 過去1週間のトレンド上位3件を返却
         return this.items.trend_week;
       }
     }
@@ -5982,10 +6095,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 6:
-                // JSONのdata項目を格納
-                _this.items = response.data;
+                // トレンド一覧を格納
+                _this.items = response.data.trends; // 更新日時を格納
 
-              case 7:
+                _this.updatedAt = response.data.updated_at;
+
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -6071,7 +6186,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee3);
       }))();
     },
-    // sorted()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
+    // clicked()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour: function sortByHour() {
       this.column = "tweet_hour";
     },
@@ -6388,7 +6503,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
-/* harmony import */ var _components_Pagination_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Pagination.vue */ "./resources/js/components/Pagination.vue");
+/* harmony import */ var _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/PaginationLink.vue */ "./resources/js/components/PaginationLink.vue");
 /* harmony import */ var _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/PaginationInfo.vue */ "./resources/js/components/PaginationInfo.vue");
 /* harmony import */ var _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/SearchFormComponent.vue */ "./resources/js/components/SearchFormComponent.vue");
 
@@ -6450,13 +6565,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Pagination: _components_Pagination_vue__WEBPACK_IMPORTED_MODULE_5__.default,
+    PaginationLink: _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_5__.default,
     //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_6__.default,
     //ページネーションの件数表示
@@ -6487,15 +6605,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    // ニュースをキーワード検索
     searchNews: function searchNews(word) {
       var params = {
+        // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {
           search: word
         }
-      };
+      }; // クエリパラメータを渡してTwitterアカウント一覧を取得
+
       this.fetchNews(params);
     },
+    // 検索結果の表示を解除
     clearResult: function clearResult() {
+      // 検索用のクエリパラメータを指定しない
       var params = {};
       this.fetchNews(params);
     },
@@ -6509,14 +6632,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+
+
+                _context.next = 3;
                 return axios.get("/api/news?page=".concat(_this.page), params);
 
-              case 2:
+              case 3:
                 response = _context.sent;
 
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+
+
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
-                  _context.next = 6;
+                  _context.next = 8;
                   break;
                 }
 
@@ -6525,7 +6654,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 6:
+              case 8:
                 // JSONのdata項目を格納
                 _this.news = response.data.data; // ページネーションの現在ページ、最終ページの値を格納
 
@@ -6536,7 +6665,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.totalItems = response.data.total;
                 return _context.abrupt("return");
 
-              case 12:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -6545,38 +6674,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   },
-  watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
-    $route: {
-      handler: function handler() {
-        var _this2 = this;
-
-        return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-          return regeneratorRuntime.wrap(function _callee2$(_context2) {
-            while (1) {
-              switch (_context2.prev = _context2.next) {
-                case 0:
-                  _this2.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-
-
-                  _context2.next = 3;
-                  return _this2.fetchNews();
-
-                case 3:
-                  _this2.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-
-
-                case 4:
-                case "end":
-                  return _context2.stop();
-              }
-            }
-          }, _callee2);
-        }))();
-      },
-      immediate: true //コンポーネント生成時も実行
-
-    }
+  created: function created() {
+    // ページ読み込み時にニュースを取得
+    this.fetchNews();
   }
 });
 
@@ -8157,7 +8257,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8275,15 +8374,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // 絞り込みを解除
     deselect: function deselect() {
       // 絞り込み表示の配列を空にする
-      this.selectedItems = []; // // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
-      // return _.each(this.items, function (item) {
-      //   item.show = true;
-      // });
+      this.selectedItems = [];
     },
     // 銘柄をすべて選択
     selectAll: function selectAll() {
       // 絞り込み表示の配列を一旦空にする
-      this.selectedItems = []; // APIで取得したトレンド一覧の配列からidのみを絞り込み表示の配列に格納
+      this.selectedItems = []; // APIで取得したトレンド一覧の配列からidのみを取り出し、絞り込み表示の配列に格納
 
       this.selectedItems = _.map(this.items, "id");
     }
@@ -8299,17 +8395,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  _this2.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-
-
-                  _context2.next = 3;
+                  _context2.next = 2;
                   return _this2.fetchTrends();
 
-                case 3:
-                  _this2.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-
-
-                case 4:
+                case 2:
                 case "end":
                   return _context2.stop();
               }
@@ -8476,11 +8565,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   created: function created() {
-    this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
     // ページ読み込み時に自動フォロー累計数を取得
-
     this.fetchTotalAutoFollow();
-    this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
   }
 });
 
@@ -8977,9 +9063,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_22__.default({
 }); // ルーターナビゲーションの前にフック（ページコンポーネントが切り替わる直前のナビゲーションガード）
 
 router.beforeEach(function (to, from, next) {
-  // ローディング表示をオン
-  _store__WEBPACK_IMPORTED_MODULE_1__.default.commit('loader/setIsLoading', true); // 認証必須のルートで認証チェックがfalseならログイン画面へ
-
+  // // ローディング表示をオン
+  // store.commit('loader/setIsLoading', true)
+  // 認証必須のルートで認証チェックがfalseならログイン画面へ
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   }) && !_store__WEBPACK_IMPORTED_MODULE_1__.default.getters["auth/check"]) {
@@ -8998,9 +9084,8 @@ router.beforeEach(function (to, from, next) {
   }
 }); // ルーターナビゲーションの後にフック
 
-router.afterEach(function () {
-  // ローディング表示をオフ
-  _store__WEBPACK_IMPORTED_MODULE_1__.default.commit('loader/setIsLoading', false);
+router.afterEach(function () {// // ローディング表示をオフ
+  // store.commit('loader/setIsLoading', false)
 }); // VueRouterインスタンスをエクスポートし、app.jsでインポートする
 
 /* harmony default export */ __webpack_exports__["default"] = (router);
@@ -51039,6 +51124,40 @@ component.options.__file = "resources/js/components/MessageComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/ModalComponent.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/ModalComponent.vue ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModalComponent.vue?vue&type=template&id=4b2d100a& */ "./resources/js/components/ModalComponent.vue?vue&type=template&id=4b2d100a&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__.default)(
+  script,
+  _ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ModalComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/PageTop.vue":
 /*!*********************************************!*\
   !*** ./resources/js/components/PageTop.vue ***!
@@ -51075,42 +51194,6 @@ component.options.__file = "resources/js/components/PageTop.vue"
 
 /***/ }),
 
-/***/ "./resources/js/components/Pagination.vue":
-/*!************************************************!*\
-  !*** ./resources/js/components/Pagination.vue ***!
-  \************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Pagination_vue_vue_type_template_id_d7acf176___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Pagination.vue?vue&type=template&id=d7acf176& */ "./resources/js/components/Pagination.vue?vue&type=template&id=d7acf176&");
-/* harmony import */ var _Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Pagination.vue?vue&type=script&lang=js& */ "./resources/js/components/Pagination.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
-  _Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
-  _Pagination_vue_vue_type_template_id_d7acf176___WEBPACK_IMPORTED_MODULE_0__.render,
-  _Pagination_vue_vue_type_template_id_d7acf176___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Pagination.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
 /***/ "./resources/js/components/PaginationInfo.vue":
 /*!****************************************************!*\
   !*** ./resources/js/components/PaginationInfo.vue ***!
@@ -51143,6 +51226,42 @@ var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__
 /* hot reload */
 if (false) { var api; }
 component.options.__file = "resources/js/components/PaginationInfo.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/PaginationLink.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/PaginationLink.vue ***!
+  \****************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PaginationLink_vue_vue_type_template_id_3b05efdf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PaginationLink.vue?vue&type=template&id=3b05efdf& */ "./resources/js/components/PaginationLink.vue?vue&type=template&id=3b05efdf&");
+/* harmony import */ var _PaginationLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PaginationLink.vue?vue&type=script&lang=js& */ "./resources/js/components/PaginationLink.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _PaginationLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _PaginationLink_vue_vue_type_template_id_3b05efdf___WEBPACK_IMPORTED_MODULE_0__.render,
+  _PaginationLink_vue_vue_type_template_id_3b05efdf___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/PaginationLink.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
@@ -52385,19 +52504,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Pagination.vue?vue&type=script&lang=js&":
-/*!*************************************************************************!*\
-  !*** ./resources/js/components/Pagination.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pagination.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pagination.vue?vue&type=script&lang=js&");
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
-
-/***/ }),
-
 /***/ "./resources/js/components/PaginationInfo.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/PaginationInfo.vue?vue&type=script&lang=js& ***!
@@ -52408,6 +52514,19 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationInfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaginationInfo.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=script&lang=js&");
  /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationInfo_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/PaginationLink.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/PaginationLink.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaginationLink.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationLink.vue?vue&type=script&lang=js&");
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationLink_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -53038,6 +53157,23 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/ModalComponent.vue?vue&type=template&id=4b2d100a&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/ModalComponent.vue?vue&type=template&id=4b2d100a& ***!
+  \***********************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__.render; },
+/* harmony export */   "staticRenderFns": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns; }
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModalComponent_vue_vue_type_template_id_4b2d100a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./ModalComponent.vue?vue&type=template&id=4b2d100a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalComponent.vue?vue&type=template&id=4b2d100a&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/PageTop.vue?vue&type=template&id=4e063eab&":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/PageTop.vue?vue&type=template&id=4e063eab& ***!
@@ -53055,23 +53191,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Pagination.vue?vue&type=template&id=d7acf176&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/Pagination.vue?vue&type=template&id=d7acf176& ***!
-  \*******************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_template_id_d7acf176___WEBPACK_IMPORTED_MODULE_0__.render; },
-/* harmony export */   "staticRenderFns": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_template_id_d7acf176___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns; }
-/* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Pagination_vue_vue_type_template_id_d7acf176___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Pagination.vue?vue&type=template&id=d7acf176& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pagination.vue?vue&type=template&id=d7acf176&");
-
-
-/***/ }),
-
 /***/ "./resources/js/components/PaginationInfo.vue?vue&type=template&id=0319aada&":
 /*!***********************************************************************************!*\
   !*** ./resources/js/components/PaginationInfo.vue?vue&type=template&id=0319aada& ***!
@@ -53085,6 +53204,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationInfo_vue_vue_type_template_id_0319aada___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns; }
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationInfo_vue_vue_type_template_id_0319aada___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaginationInfo.vue?vue&type=template&id=0319aada& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=template&id=0319aada&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/PaginationLink.vue?vue&type=template&id=3b05efdf&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/PaginationLink.vue?vue&type=template&id=3b05efdf& ***!
+  \***********************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationLink_vue_vue_type_template_id_3b05efdf___WEBPACK_IMPORTED_MODULE_0__.render; },
+/* harmony export */   "staticRenderFns": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationLink_vue_vue_type_template_id_3b05efdf___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns; }
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PaginationLink_vue_vue_type_template_id_3b05efdf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./PaginationLink.vue?vue&type=template&id=3b05efdf& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationLink.vue?vue&type=template&id=3b05efdf&");
 
 
 /***/ }),
@@ -53753,7 +53889,7 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "c-btn--muted--outline",
+                staticClass: "c-btn--muted-outline",
                 on: {
                   click: function($event) {
                     $event.stopPropagation()
@@ -53764,27 +53900,27 @@ var render = function() {
               [_vm._v("\n        自動フォロー機能を解除する\n      ")]
             )
           ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    !_vm.usersTwitter.use_autofollow
-      ? _c("div", { staticClass: "p-autofollow" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "c-btn__accent",
-              on: {
-                click: function($event) {
-                  return _vm.applyAutoFollow()
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.usersTwitter.use_autofollow
+        ? _c("div", { staticClass: "p-autofollow__guide" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "c-btn--accent c-btn--large",
+                on: {
+                  click: function($event) {
+                    return _vm.applyAutoFollow()
+                  }
                 }
-              }
-            },
-            [_vm._v("\n      自動フォロー機能をON\n    ")]
-          )
-        ])
-      : _vm._e()
+              },
+              [_vm._v("\n        自動フォロー機能をON\n      ")]
+            )
+          ])
+        : _vm._e()
+    ])
   ])
 }
 var staticRenderFns = [
@@ -53808,11 +53944,11 @@ var staticRenderFns = [
       "p",
       { staticClass: "c-catch u-mb--l p-autofollow__text--small" },
       [
-        _vm._v("\n      自動フォロー機能を利用すると"),
+        _vm._v("\n        自動フォロー機能を利用すると"),
         _c("br"),
-        _vm._v("\n      仮想通貨関連アカウントを"),
+        _vm._v("\n        仮想通貨関連アカウントを"),
         _c("br", { staticClass: "u-sp--only" }),
-        _vm._v("まとめてフォローできます\n    ")
+        _vm._v("まとめてフォローできます\n      ")
       ]
     )
   }
@@ -53844,7 +53980,8 @@ var render = function() {
       "div",
       { staticClass: "p-target__list" },
       [
-        _c("SearchFormComponent", {
+        _c("search-form-component", {
+          staticClass: "u-mt--xl u-mb--xxxl",
           on: { search: _vm.searchTargets, clear: _vm.clearResult }
         }),
         _vm._v(" "),
@@ -53854,7 +53991,7 @@ var render = function() {
         _vm._v(" "),
         _vm._l(_vm.targets, function(target) {
           return _c(
-            "TwitterTargetItem",
+            "twitter-target-item",
             {
               key: target.id,
               attrs: { item: target.target_user },
@@ -53880,7 +54017,13 @@ var render = function() {
           )
         }),
         _vm._v(" "),
-        _c("Pagination", {
+        _vm.totalItems === 0
+          ? _c("p", { staticClass: "u-font--center" }, [
+              _vm._v("\n      アカウントが存在しません\n    ")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("pagination-link", {
           attrs: {
             directory: _vm.directoryName,
             "current-page": _vm.currentPage,
@@ -53890,7 +54033,7 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("PaginationInfo", {
+        _c("pagination-info", {
           attrs: {
             "current-page": _vm.currentPage,
             "per-page": _vm.perPage,
@@ -53938,7 +54081,7 @@ var render = function() {
       }
     },
     [
-      _c("transition", { attrs: { name: "popup" } }, [
+      _c("transition", { attrs: { name: "popup", appear: "" } }, [
         _vm.successMessage
           ? _c("p", { staticClass: "u-mb--xxxl c-alert--success" }, [
               _vm._v("\n      " + _vm._s(_vm.successMessage) + "\n    ")
@@ -53963,8 +54106,7 @@ var render = function() {
             type: "text",
             id: "username",
             required: "",
-            autocomplete: "name",
-            autofocus: ""
+            autocomplete: "name"
           },
           domProps: { value: _vm.editForm.name },
           on: {
@@ -54086,7 +54228,10 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn__accent", attrs: { type: "submit" } },
+        {
+          staticClass: "c-btn--accent c-btn--large",
+          attrs: { type: "submit" }
+        },
         [_vm._v("アカウント情報を変更")]
       )
     ])
@@ -54126,7 +54271,7 @@ var render = function() {
       }
     },
     [
-      _c("transition", { attrs: { name: "popup" } }, [
+      _c("transition", { attrs: { name: "popup", appear: "" } }, [
         _vm.successMessage
           ? _c("p", { staticClass: "u-mb--xxxl c-alert--success" }, [
               _vm._v("\n      " + _vm._s(_vm.successMessage) + "\n    ")
@@ -54384,7 +54529,10 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn__accent", attrs: { type: "submit" } },
+        {
+          staticClass: "c-btn--accent c-btn--large",
+          attrs: { type: "submit" }
+        },
         [_vm._v("パスワードを変更")]
       )
     ])
@@ -54446,16 +54594,7 @@ var render = function() {
         _vm._m(3),
         _vm._v(" "),
         _c("div", { staticClass: "c-form__confirm-text" }, [
-          _c(
-            "p",
-            {
-              staticStyle: {
-                "white-space": "pre-wrap",
-                "word-wrap": "break-word"
-              }
-            },
-            [_vm._v(_vm._s(_vm.formData.message) + "\n      ")]
-          )
+          _c("p", { staticStyle: {} }, [_vm._v(_vm._s(_vm.formData.message))])
         ])
       ]),
       _vm._v(" "),
@@ -54476,7 +54615,7 @@ var render = function() {
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "c-btn__main u-mb--m", attrs: { type: "submit" } },
+          { staticClass: "c-btn--main u-mb--m", attrs: { type: "submit" } },
           [_vm._v("送信する")]
         )
       ])
@@ -54772,9 +54911,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "c-form__button" }, [
-      _c("button", { staticClass: "c-btn__main", attrs: { type: "submit" } }, [
-        _vm._v("入力内容を確認")
-      ])
+      _c(
+        "button",
+        { staticClass: "c-btn--main c-btn--large", attrs: { type: "submit" } },
+        [_vm._v("\n      入力内容を確認\n    ")]
+      )
     ])
   }
 ]
@@ -54800,21 +54941,56 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("p", { staticClass: "c-form__text" }, [
-        _vm._v("お問い合わせを送信しました"),
-        _c("br")
+  return _c("div", { staticClass: "c-form--large" }, [
+    _c("p", { staticClass: "u-font--center u-mb--xxl" }, [
+      _vm._v("\n    下記の内容でお問い合わせを送信しました\n  ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "c-form__group" }, [
+      _c("label", { staticClass: "c-form__label", attrs: { for: "name" } }, [
+        _vm._v(" お名前 ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-form__confirm-text" }, [
+        _vm._v("\n      " + _vm._s(_vm.formData.name) + "\n    ")
       ])
-    ])
-  }
-]
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "c-form__group" }, [
+      _c("label", { staticClass: "c-form__label", attrs: { for: "email" } }, [
+        _vm._v(" メールアドレス ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-form__confirm-text" }, [
+        _vm._v("\n      " + _vm._s(_vm.formData.email) + "\n    ")
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "c-form__group" }, [
+      _c("label", { staticClass: "c-form__label", attrs: { for: "message" } }, [
+        _vm._v(" お問い合わせ内容 ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "c-form__confirm-text" }, [
+        _c("p", { staticStyle: {} }, [_vm._v(_vm._s(_vm.formData.message))])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "c-form__link" },
+      [
+        _c(
+          "RouterLink",
+          { staticClass: "c-form__link", attrs: { to: { name: "top" } } },
+          [_vm._v("\n      トップページへ戻る\n    ")]
+        )
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54956,34 +55132,19 @@ var render = function() {
         "div",
         { staticClass: "p-navbar__title" },
         [
-          _c(
-            "RouterLink",
-            {
-              attrs: {
-                to: { name: "top" },
-                "active-class": "is-active",
-                exact: ""
-              }
-            },
-            [
-              _c("img", {
-                staticClass: "p-navbar__title-logo",
-                attrs: { src: "/img/logo.png" }
-              }),
-              _vm._v(" "),
-              _c("h1", { staticClass: "p-navbar__title-text" }, [
-                _vm._v("CryptoTrend")
-              ])
-            ]
-          )
+          _c("RouterLink", { attrs: { to: { name: "top" } } }, [
+            _c("img", {
+              staticClass: "p-navbar__title-logo",
+              attrs: { src: "/img/logo.png" }
+            }),
+            _vm._v(" "),
+            _c("h1", { staticClass: "p-navbar__title-text" }, [
+              _vm._v("CryptoTrend")
+            ])
+          ])
         ],
         1
       ),
-      _vm._v(" "),
-      _c("header-nav-menu", {
-        attrs: { "is-active-drawer-menu": _vm.isActiveDrawerMenu },
-        on: { close: _vm.closeDrawerMenu }
-      }),
       _vm._v(" "),
       _c("div", { staticClass: "p-navbar__sp" }, [
         !_vm.isLogin
@@ -54998,7 +55159,7 @@ var render = function() {
                   _c(
                     "RouterLink",
                     {
-                      staticClass: "c-btn__accent p-nav-menu__action-btn",
+                      staticClass: "c-btn--accent p-nav-menu__action-btn",
                       attrs: { to: { name: "register" } }
                     },
                     [_vm._v("\n          ユーザー登録\n        ")]
@@ -55017,8 +55178,7 @@ var render = function() {
                   _c(
                     "RouterLink",
                     {
-                      staticClass:
-                        "c-btn__main--outline p-nav-menu__action-btn",
+                      staticClass: "c-btn--main-outline p-nav-menu__action-btn",
                       attrs: { to: { name: "login" } }
                     },
                     [_vm._v("\n          ログイン\n        ")]
@@ -55047,7 +55207,12 @@ var render = function() {
             _c("span", { staticClass: "p-navbar__toggle--text" })
           ]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c("header-nav-menu", {
+        attrs: { "is-active-drawer-menu": _vm.isActiveDrawerMenu },
+        on: { close: _vm.closeDrawerMenu }
+      })
     ],
     1
   )
@@ -55079,275 +55244,282 @@ var render = function() {
     "div",
     {
       staticClass: "p-nav-menu",
-      class: { "is-active": _vm.isActiveDrawerMenu }
+      class: { "is-visible": _vm.isActiveDrawerMenu },
+      on: {
+        click: function($event) {
+          if ($event.target !== $event.currentTarget) {
+            return null
+          }
+          return _vm.closeMenu($event)
+        }
+      }
     },
     [
-      _c(
-        "div",
-        {
-          staticClass: "p-nav-menu__sp-title",
-          on: { click: _vm.closeDrawerMenu }
-        },
-        [
+      _c("transition", { attrs: { name: "drawer-menu", appear: "" } }, [
+        _c("div", { staticClass: "p-nav-menu__contents" }, [
           _c(
-            "RouterLink",
+            "div",
             {
-              attrs: {
-                to: { name: "top" },
-                "active-class": "is-active",
-                exact: ""
-              }
+              staticClass: "p-nav-menu__sp-title",
+              on: { click: _vm.closeMenu }
             },
             [
-              _c("img", {
-                staticClass: "p-navbar__title-logo",
-                attrs: { src: "/img/logo.png" }
-              }),
-              _vm._v(" "),
-              _c("h1", { staticClass: "p-navbar__title-text" }, [
-                _vm._v("CryptoTrend")
+              _c("RouterLink", { attrs: { to: { name: "top" } } }, [
+                _c("img", {
+                  staticClass: "p-navbar__title-logo",
+                  attrs: { src: "/img/logo.png" }
+                }),
+                _vm._v(" "),
+                _c("h1", { staticClass: "p-navbar__title-text" }, [
+                  _vm._v("CryptoTrend")
+                ])
               ])
-            ]
-          )
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _vm.isLogin
-        ? _c("div", { staticClass: "p-nav-menu__inner" }, [
-            _c("ul", { staticClass: "p-nav-menu__list" }, [
-              _c(
-                "li",
-                {
-                  staticClass: "p-nav-menu__item",
-                  on: { click: _vm.closeDrawerMenu }
-                },
-                [
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.isLogin
+            ? _c("div", { staticClass: "p-nav-menu__inner" }, [
+                _c("ul", { staticClass: "p-nav-menu__list" }, [
                   _c(
-                    "RouterLink",
+                    "li",
                     {
-                      staticClass: "p-nav-menu__link",
-                      attrs: {
-                        to: { name: "trend.index" },
-                        "active-class": "is-active"
-                      }
+                      staticClass: "p-nav-menu__item",
+                      on: { click: _vm.closeMenu }
                     },
-                    [_vm._v("\n          トレンド一覧\n        ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticClass: "p-nav-menu__item",
-                  on: { click: _vm.closeDrawerMenu }
-                },
-                [
-                  _c(
-                    "RouterLink",
-                    {
-                      staticClass: "p-nav-menu__link",
-                      attrs: {
-                        to: { name: "twitter.index" },
-                        "active-class": "is-active"
-                      }
-                    },
-                    [_vm._v("\n          Twitterフォロー\n        ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticClass: "p-nav-menu__item",
-                  on: { click: _vm.closeDrawerMenu }
-                },
-                [
-                  _c(
-                    "RouterLink",
-                    {
-                      staticClass: "p-nav-menu__link",
-                      attrs: {
-                        to: { name: "news.index" },
-                        "active-class": "is-active"
-                      }
-                    },
-                    [_vm._v("\n          関連ニュース\n        ")]
-                  )
-                ],
-                1
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "p-nav-menu__dropdown" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "p-nav-menu__dropdown-head",
-                  on: { click: _vm.toggleDropdown }
-                },
-                [
-                  _c("img", {
-                    staticClass: "p-nav-menu__avatar",
-                    attrs: {
-                      src: _vm.usersAvatar,
-                      alt: _vm.userName + "'s avatar"
-                    },
-                    on: { error: _vm.noImage }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "p-nav-menu__username" }, [
-                    _vm._v(_vm._s(_vm.userName))
-                  ]),
-                  _vm._v(" "),
-                  !_vm.isActiveDrawerMenu
-                    ? _c("i", {
-                        staticClass:
-                          "fas fa-caret-down p-nav-menu__dropdown-icon"
-                      })
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _vm.isActiveDropdown || _vm.isActiveDrawerMenu
-                ? _c("div", { staticClass: "p-nav-menu__dropdown-menu" }, [
-                    _c("ul", { staticClass: "p-nav-menu__dropdown-list" }, [
+                    [
                       _c(
-                        "li",
+                        "RouterLink",
                         {
-                          staticClass: "p-nav-menu__dropdown-item",
-                          on: { click: _vm.closeDropdown }
+                          staticClass: "p-nav-menu__link",
+                          attrs: {
+                            to: { name: "trend.index" },
+                            "active-class": "is-active"
+                          }
+                        },
+                        [_vm._v("\n              トレンド一覧\n            ")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "p-nav-menu__item",
+                      on: { click: _vm.closeMenu }
+                    },
+                    [
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "p-nav-menu__link",
+                          attrs: {
+                            to: { name: "twitter.index" },
+                            "active-class": "is-active"
+                          }
                         },
                         [
-                          _c(
-                            "RouterLink",
-                            {
-                              staticClass:
-                                "p-nav-menu__link p-nav-menu__dropdown-link",
-                              attrs: {
-                                to: { name: "edit" },
-                                "active-class": "is-active"
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n              アカウント設定\n            "
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "li",
-                        {
-                          staticClass: "p-nav-menu__dropdown-item",
-                          on: { click: _vm.closeDropdown }
-                        },
-                        [
-                          _c(
-                            "a",
-                            {
-                              staticClass:
-                                "p-nav-menu__link p-nav-menu__dropdown-link",
-                              on: { click: _vm.logout }
-                            },
-                            [_vm._v("ログアウト")]
+                          _vm._v(
+                            "\n              Twitterフォロー\n            "
                           )
                         ]
                       )
-                    ])
-                  ])
-                : _vm._e()
-            ])
-          ])
-        : _vm._e(),
-      _vm._v(" "),
-      !_vm.isLogin
-        ? _c("div", [
-            _c("ul", { staticClass: "p-nav-menu__list" }, [
-              _c("li", { staticClass: "p-nav-menu__item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "p-nav-menu__link",
-                    attrs: { href: "/#about" },
-                    on: { click: _vm.closeDrawerMenu }
-                  },
-                  [_vm._v("CryptoTrendとは？")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "p-nav-menu__item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "p-nav-menu__link",
-                    attrs: { href: "/#reason" },
-                    on: { click: _vm.closeDrawerMenu }
-                  },
-                  [_vm._v("選ばれる理由")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "p-nav-menu__item" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "p-nav-menu__link",
-                    attrs: { href: "/#faq" },
-                    on: { click: _vm.closeDrawerMenu }
-                  },
-                  [_vm._v("よくあるご質問")]
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticClass: "p-nav-menu__item-btn",
-                  on: { click: _vm.closeDrawerMenu }
-                },
-                [
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _c(
-                    "RouterLink",
+                    "li",
                     {
-                      staticClass: "c-btn__accent p-nav-menu__btn",
-                      attrs: { to: { name: "register" } }
+                      staticClass: "p-nav-menu__item",
+                      on: { click: _vm.closeMenu }
                     },
-                    [_vm._v("\n          ユーザー登録\n        ")]
+                    [
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "p-nav-menu__link",
+                          attrs: {
+                            to: { name: "news.index" },
+                            "active-class": "is-active"
+                          }
+                        },
+                        [_vm._v("\n              関連ニュース\n            ")]
+                      )
+                    ],
+                    1
                   )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                {
-                  staticClass: "p-nav-menu__item-btn",
-                  on: { click: _vm.closeDrawerMenu }
-                },
-                [
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-nav-menu__dropdown" }, [
                   _c(
-                    "RouterLink",
+                    "div",
                     {
-                      staticClass: "c-btn__main--outline p-nav-menu__btn",
-                      attrs: { to: { name: "login" } }
+                      staticClass: "p-nav-menu__dropdown-head",
+                      on: { click: _vm.clickDropdownHead }
                     },
-                    [_vm._v("\n          ログイン\n        ")]
+                    [
+                      _c("img", {
+                        staticClass: "p-nav-menu__avatar",
+                        attrs: {
+                          src: _vm.usersAvatar,
+                          alt: _vm.userName + "'s avatar"
+                        },
+                        on: { error: _vm.noImage }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "p-nav-menu__username" }, [
+                        _vm._v(_vm._s(_vm.userName))
+                      ]),
+                      _vm._v(" "),
+                      !_vm.isActiveDrawerMenu
+                        ? _c("i", {
+                            staticClass:
+                              "fas fa-caret-down p-nav-menu__dropdown-icon"
+                          })
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.isActiveDropdown || _vm.isActiveDrawerMenu
+                    ? _c("div", { staticClass: "p-nav-menu__dropdown-menu" }, [
+                        _c("ul", { staticClass: "p-nav-menu__dropdown-list" }, [
+                          _c(
+                            "li",
+                            {
+                              staticClass: "p-nav-menu__dropdown-item",
+                              on: { click: _vm.closeMenu }
+                            },
+                            [
+                              _c(
+                                "RouterLink",
+                                {
+                                  staticClass:
+                                    "p-nav-menu__link p-nav-menu__dropdown-link",
+                                  attrs: {
+                                    to: { name: "edit" },
+                                    "active-class": "is-active"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                  アカウント設定\n                "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            {
+                              staticClass: "p-nav-menu__dropdown-item",
+                              on: { click: _vm.closeMenu }
+                            },
+                            [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "p-nav-menu__link p-nav-menu__dropdown-link",
+                                  on: { click: _vm.logout }
+                                },
+                                [_vm._v("ログアウト")]
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    : _vm._e()
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.isLogin
+            ? _c("div", [
+                _c("ul", { staticClass: "p-nav-menu__list" }, [
+                  _c("li", { staticClass: "p-nav-menu__item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "p-nav-menu__link",
+                        attrs: { href: "/#about" },
+                        on: { click: _vm.closeMenu }
+                      },
+                      [_vm._v("CryptoTrendとは？")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "p-nav-menu__item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "p-nav-menu__link",
+                        attrs: { href: "/#reason" },
+                        on: { click: _vm.closeMenu }
+                      },
+                      [_vm._v("選ばれる理由")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "p-nav-menu__item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "p-nav-menu__link",
+                        attrs: { href: "/#faq" },
+                        on: { click: _vm.closeMenu }
+                      },
+                      [_vm._v("よくあるご質問")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "p-nav-menu__item-btn",
+                      on: { click: _vm.closeMenu }
+                    },
+                    [
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "c-btn--accent p-nav-menu__btn",
+                          attrs: { to: { name: "register" } }
+                        },
+                        [_vm._v("\n              ユーザー登録\n            ")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "p-nav-menu__item-btn",
+                      on: { click: _vm.closeMenu }
+                    },
+                    [
+                      _c(
+                        "RouterLink",
+                        {
+                          staticClass: "c-btn--main-outline p-nav-menu__btn",
+                          attrs: { to: { name: "login" } }
+                        },
+                        [_vm._v("\n              ログイン\n            ")]
+                      )
+                    ],
+                    1
                   )
-                ],
-                1
-              )
-            ])
-          ])
-        : _vm._e()
-    ]
+                ])
+              ])
+            : _vm._e()
+        ])
+      ])
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -55519,6 +55691,84 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalComponent.vue?vue&type=template&id=4b2d100a&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/ModalComponent.vue?vue&type=template&id=4b2d100a& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": function() { return /* binding */ render; },
+/* harmony export */   "staticRenderFns": function() { return /* binding */ staticRenderFns; }
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("transition", { attrs: { name: "modal", appear: "" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "c-modal__wrapper",
+        on: {
+          click: function($event) {
+            if ($event.target !== $event.currentTarget) {
+              return null
+            }
+            return _vm.$emit("close")
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "c-modal__dialog" }, [
+          _c("div", { staticClass: "c-modal__header" }, [
+            _c("i", {
+              staticClass: "fas fa-times c-modal__close",
+              on: {
+                click: function($event) {
+                  return _vm.$emit("close")
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "c-modal__body" }, [_vm._t("text")], 2),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "c-modal__footer" },
+            [
+              _vm._t("btn"),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "c-btn--main c-modal__footer-btn",
+                  on: {
+                    click: function($event) {
+                      return _vm.$emit("close")
+                    }
+                  }
+                },
+                [_vm._v("\n          取り消し\n        ")]
+              )
+            ],
+            2
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PageTop.vue?vue&type=template&id=4e063eab&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PageTop.vue?vue&type=template&id=4e063eab& ***!
@@ -55535,7 +55785,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("transition", { attrs: { name: "popup" } }, [
+  return _c("transition", { attrs: { name: "popup", appear: "" } }, [
     _vm.isVisible
       ? _c(
           "div",
@@ -55563,10 +55813,47 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pagination.vue?vue&type=template&id=d7acf176&":
-/*!**********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Pagination.vue?vue&type=template&id=d7acf176& ***!
-  \**********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=template&id=0319aada&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=template&id=0319aada& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": function() { return /* binding */ render; },
+/* harmony export */   "staticRenderFns": function() { return /* binding */ staticRenderFns; }
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.totalItems
+    ? _c("p", { staticClass: "c-pagination__info" }, [
+        _vm._v(
+          "\n  全" +
+            _vm._s(_vm.totalItems) +
+            "件中 " +
+            _vm._s(_vm.startNum) +
+            " - " +
+            _vm._s(_vm.endNum) +
+            "件を表示\n"
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationLink.vue?vue&type=template&id=3b05efdf&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationLink.vue?vue&type=template&id=3b05efdf& ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55774,41 +56061,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=template&id=0319aada&":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/PaginationInfo.vue?vue&type=template&id=0319aada& ***!
-  \**************************************************************************************************************************************************************************************************************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "render": function() { return /* binding */ render; },
-/* harmony export */   "staticRenderFns": function() { return /* binding */ staticRenderFns; }
-/* harmony export */ });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("p", { staticClass: "c-pagination__info" }, [
-    _vm._v(
-      "\n  全" +
-        _vm._s(_vm.totalItems) +
-        "件中 " +
-        _vm._s(_vm.startNum) +
-        " - " +
-        _vm._s(_vm.endNum) +
-        "件を表示\n"
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SearchFormComponent.vue?vue&type=template&id=a266d594&":
 /*!*******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/SearchFormComponent.vue?vue&type=template&id=a266d594& ***!
@@ -55927,7 +56179,7 @@ var render = function() {
   return _c(
     "transition",
     {
-      attrs: { name: "slide-down" },
+      attrs: { appear: "", name: "slide-down" },
       on: {
         "before-enter": _vm.beforeEnter,
         enter: _vm.enter,
@@ -56029,59 +56281,61 @@ var render = function() {
                   staticClass: "p-twitter-user__delete-link",
                   on: {
                     click: function($event) {
-                      _vm.showConfirm = !_vm.showConfirm
+                      _vm.showConfirm = true
                     }
                   }
                 },
                 [_vm._v("\n        Twitterアカウント連携を解除する\n      ")]
               ),
               _vm._v(" "),
-              _c("transition", { attrs: { name: "slide-down" } }, [
-                _vm.showConfirm
-                  ? _c("div", { staticClass: "p-twitter-user__confirm" }, [
-                      _c("i", {
-                        staticClass:
-                          "fas fa-times p-twitter-user__confirm-close",
-                        on: {
-                          click: function($event) {
-                            _vm.showConfirm = false
-                          }
+              _vm.showConfirm
+                ? _c(
+                    "modal-component",
+                    {
+                      on: {
+                        close: function($event) {
+                          _vm.showConfirm = false
                         }
-                      }),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "p-twitter-user__confirm-text" }, [
-                        _vm._v(
-                          "\n            Twitterアカウント連携を解除すると"
-                        ),
-                        _c("br"),
-                        _vm._v("\n            これまでの自動フォロー履歴も"),
-                        _c("br", { staticClass: "u-sp--only" }),
-                        _vm._v("削除されます。"),
-                        _c("br"),
-                        _vm._v("\n            本当に連携を解除しますか？"),
-                        _c("br")
+                      }
+                    },
+                    [
+                      _c("template", { slot: "text" }, [
+                        _c("p", [
+                          _vm._v(
+                            "\n            Twitterアカウント連携を解除すると"
+                          ),
+                          _c("br"),
+                          _vm._v("\n            これまでの自動フォロー履歴も"),
+                          _c("br", { staticClass: "u-sp--only" }),
+                          _vm._v("削除されます。\n          ")
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [_vm._v("本当に連携を解除しますか？")])
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "c-btn--danger",
-                          on: {
-                            click: function($event) {
-                              $event.stopPropagation()
-                              return _vm.deleteTwitterAuth()
+                      _c("template", { slot: "btn" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "c-btn--danger c-modal__footer-btn",
+                            on: {
+                              click: function($event) {
+                                $event.stopPropagation()
+                                return _vm.deleteTwitterAuth()
+                              }
                             }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n            Twitterアカウント連携を解除\n          "
-                          )
-                        ]
-                      )
-                    ])
-                  : _vm._e()
-              ])
+                          },
+                          [
+                            _vm._v(
+                              "\n            Twitterアカウント連携を解除\n          "
+                            )
+                          ]
+                        )
+                      ])
+                    ],
+                    2
+                  )
+                : _vm._e()
             ],
             1
           )
@@ -56114,7 +56368,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "a",
-      { staticClass: "c-btn__twitter", attrs: { href: "/auth/twitter/login" } },
+      { staticClass: "c-btn--twitter", attrs: { href: "/auth/twitter/login" } },
       [
         _c("i", { staticClass: "fab fa-twitter" }),
         _vm._v("\n      Twitterアカウント連携\n    ")
@@ -56186,7 +56440,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "c-btn__twitter--outline p-target__btn",
+                      staticClass: "c-btn--twitter-outline p-target__btn",
                       on: {
                         click: function($event) {
                           $event.preventDefault()
@@ -56202,7 +56456,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "c-btn--danger--outline p-target__btn",
+                      staticClass: "c-btn--danger-outline p-target__btn",
                       on: {
                         click: function($event) {
                           $event.preventDefault()
@@ -56280,7 +56534,8 @@ var render = function() {
       "div",
       { staticClass: "p-target__list" },
       [
-        _c("SearchFormComponent", {
+        _c("search-form-component", {
+          staticClass: "u-mt--xl u-mb--xxxl",
           on: { search: _vm.searchTargets, clear: _vm.clearResult }
         }),
         _vm._v(" "),
@@ -56289,18 +56544,24 @@ var render = function() {
         ]),
         _vm._v(" "),
         _vm._l(_vm.targets, function(target) {
-          return _c("TwitterTargetItem", {
+          return _c("twitter-target-item", {
             key: target.id,
             attrs: { item: target },
             on: { follow: _vm.createFollow, unfollow: _vm.destroyFollow }
           })
         }),
         _vm._v(" "),
+        _vm.totalItems === 0
+          ? _c("p", { staticClass: "u-font--center" }, [
+              _vm._v("\n      アカウントが存在しません\n    ")
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "c-pagination" },
           [
-            _c("Pagination", {
+            _c("pagination-link", {
               attrs: {
                 directory: _vm.directoryName,
                 "current-page": _vm.currentPage,
@@ -56310,7 +56571,7 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _c("PaginationInfo", {
+            _c("pagination-info", {
               attrs: {
                 "current-page": _vm.currentPage,
                 "per-page": _vm.perPage,
@@ -56440,7 +56701,7 @@ var render = function() {
           _c(
             "RouterLink",
             {
-              staticClass: "c-btn__white p-action__btn",
+              staticClass: "c-btn--white p-action__btn",
               attrs: { to: { name: "register" } }
             },
             [_vm._v("\n      今すぐ無料ではじめる\n    ")]
@@ -56791,7 +57052,7 @@ var render = function() {
             _c(
               "RouterLink",
               {
-                staticClass: "c-btn__white p-hero__btn",
+                staticClass: "c-btn--white p-hero__btn",
                 attrs: { to: { name: "register" } }
               },
               [_vm._v("\n          今すぐ無料ではじめる\n        ")]
@@ -57498,7 +57759,9 @@ var render = function() {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.isSent ? _c("ContactSent") : _vm._e()
+        _vm.isSent
+          ? _c("ContactSent", { attrs: { "form-data": _vm.formData } })
+          : _vm._e()
       ],
       1
     )
@@ -57546,9 +57809,9 @@ var render = function() {
           [
             _vm._v("\n        お名前・"),
             _c("br", { staticClass: "u-sp--only" }),
-            _vm._v("メールアドレスの"),
-            _c("br", { staticClass: "u-sp--only" }),
-            _vm._v("変更\n      ")
+            _vm._v("メールアドレス"),
+            _c("br"),
+            _vm._v("の変更\n      ")
           ]
         ),
         _vm._v(" "),
@@ -57582,7 +57845,9 @@ var render = function() {
             }
           },
           [
-            _vm._v("\n        Twitterアカウント"),
+            _vm._v("\n        Twitter"),
+            _c("br", { staticClass: "u-sp--only" }),
+            _vm._v("アカウント"),
             _c("br", { staticClass: "u-sp--only" }),
             _vm._v("連携\n      ")
           ]
@@ -57703,30 +57968,12 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "p-trend" }, [
             _c("table", { staticClass: "c-table" }, [
-              _c("thead", { staticClass: "c-table__thead" }, [
-                _c("tr", [
-                  _c("th", [_vm._v("順位")]),
-                  _vm._v(" "),
-                  _c("th", [_vm._v("銘柄名")]),
-                  _vm._v(" "),
-                  _c("th", [
-                    _vm._v(
-                      "\n                  " + _vm._s(_vm.activeColumn) + "の"
-                    ),
-                    _c("br", { staticClass: "u-sp-hidden" }),
-                    _vm._v("ツイート数\n                ")
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._m(1)
-                ])
-              ]),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
                 { staticClass: "c-table__tbody" },
-                _vm._l(_vm.sorted, function(trend, index) {
+                _vm._l(_vm.clicked, function(trend, index) {
                   return _c(
                     "tr",
                     { key: trend.id, staticClass: "p-trend__item" },
@@ -57847,10 +58094,6 @@ var render = function() {
                                     )
                                   )
                                 )
-                              ]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "u-font--small" }, [
-                                _vm._v("円")
                               ])
                             ])
                           : _c(
@@ -57871,10 +58114,6 @@ var render = function() {
                                     )
                                   )
                                 )
-                              ]),
-                              _vm._v(" "),
-                              _c("span", { staticClass: "u-font--small" }, [
-                                _vm._v("円")
                               ])
                             ])
                           : _c(
@@ -58023,20 +58262,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", [
-      _vm._v("過去24時間の"),
-      _c("br", { staticClass: "u-sp-hidden" }),
-      _vm._v("最高取引価格")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", [
-      _vm._v("過去24時間の"),
-      _c("br", { staticClass: "u-sp-hidden" }),
-      _vm._v("最低取引価格")
+    return _c("thead", { staticClass: "c-table__thead" }, [
+      _c("tr", [
+        _c("th", { staticClass: "c-table--left" }, [_vm._v("順位")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--left" }, [_vm._v("銘柄名")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--center" }, [_vm._v("ツイート数")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--right" }, [
+          _vm._v("\n                  過去24時間の"),
+          _c("br", { staticClass: "u-sp-hidden" }),
+          _vm._v("最高取引価格"),
+          _c("br"),
+          _vm._v("\n                  （円）\n                ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--right" }, [
+          _vm._v("\n                  過去24時間の"),
+          _c("br", { staticClass: "u-sp-hidden" }),
+          _vm._v("最低取引価格"),
+          _c("br"),
+          _vm._v("\n                  （円）\n                ")
+        ])
+      ])
     ])
   }
 ]
@@ -58328,7 +58577,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn__main--outline", attrs: { type: "submit" } },
+        { staticClass: "c-btn--main-outline", attrs: { type: "submit" } },
         [_vm._v("ログイン")]
       )
     ])
@@ -58372,11 +58621,17 @@ var render = function() {
             on: { search: _vm.searchNews, clear: _vm.clearResult }
           }),
           _vm._v(" "),
+          _vm.totalItems === 0
+            ? _c("p", { staticClass: "u-font--center" }, [
+                _vm._v("\n        ニュースが存在しません\n      ")
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "transition-group",
             {
               staticClass: "p-news__item",
-              attrs: { tag: "div", name: "popup" }
+              attrs: { tag: "div", name: "popup", appear: "" }
             },
             _vm._l(_vm.news, function(item) {
               return _c(
@@ -58420,7 +58675,7 @@ var render = function() {
             "div",
             { staticClass: "c-pagination" },
             [
-              _c("Pagination", {
+              _c("pagination-link", {
                 attrs: {
                   directory: _vm.directoryName,
                   "current-page": _vm.currentPage,
@@ -58430,7 +58685,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("PaginationInfo", {
+              _c("pagination-info", {
                 attrs: {
                   "current-page": _vm.currentPage,
                   "per-page": _vm.perPage,
@@ -58642,7 +58897,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn__main--outline", attrs: { type: "submit" } },
+        { staticClass: "c-btn--main-outline", attrs: { type: "submit" } },
         [_vm._v("送信する")]
       )
     ])
@@ -58938,7 +59193,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn__main--outline", attrs: { type: "submit" } },
+        { staticClass: "c-btn--main-outline", attrs: { type: "submit" } },
         [_vm._v("送信する")]
       )
     ])
@@ -59655,7 +59910,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn__accent", attrs: { type: "submit" } },
+        { staticClass: "c-btn--accent", attrs: { type: "submit" } },
         [_vm._v("ユーザー登録")]
       )
     ])
@@ -60285,7 +60540,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "c-btn--muted--outline",
+                    staticClass: "c-btn--muted-outline",
                     on: {
                       click: function($event) {
                         _vm.isActive = !_vm.isActive
@@ -60425,7 +60680,7 @@ var render = function() {
                       ? _c(
                           "a",
                           {
-                            staticClass: "c-btn--muted--outline",
+                            staticClass: "c-btn--muted-outline",
                             on: {
                               click: function($event) {
                                 return _vm.deselect()
@@ -60441,7 +60696,7 @@ var render = function() {
                       : _c(
                           "a",
                           {
-                            staticClass: "c-btn--muted--outline",
+                            staticClass: "c-btn--muted-outline",
                             on: {
                               click: function($event) {
                                 return _vm.selectAll()
@@ -60463,35 +60718,13 @@ var render = function() {
               "table",
               { staticClass: "c-table c-fade-in" },
               [
-                _c("thead", { staticClass: "c-table__thead" }, [
-                  _c("tr", [
-                    _c("th", { staticClass: "c-table--left" }, [
-                      _vm._v("順位")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "c-table--left" }, [
-                      _vm._v("銘柄名")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "c-table--center" }, [
-                      _vm._v(
-                        "\n                " + _vm._s(_vm.activeColumn) + "の"
-                      ),
-                      _c("br", { staticClass: "u-sp-hidden" }),
-                      _vm._v("ツイート数\n              ")
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _vm._m(2)
-                  ])
-                ]),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "transition-group",
                   {
                     staticClass: "c-table__tbody",
-                    attrs: { tag: "tbody", name: "flip-list" }
+                    attrs: { appear: "", tag: "tbody", name: "flip-list" }
                   },
                   _vm._l(_vm.sorted, function(trend, index) {
                     return _c(
@@ -60685,24 +60918,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", { staticClass: "c-table--right" }, [
-      _vm._v("\n                過去24時間の"),
-      _c("br", { staticClass: "u-sp-hidden" }),
-      _vm._v("最高取引価格"),
-      _c("br"),
-      _vm._v("\n                （円）\n              ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("th", { staticClass: "c-table--right" }, [
-      _vm._v("\n                過去24時間の"),
-      _c("br", { staticClass: "u-sp-hidden" }),
-      _vm._v("最低取引価格"),
-      _c("br"),
-      _vm._v("\n                （円）\n              ")
+    return _c("thead", { staticClass: "c-table__thead" }, [
+      _c("tr", [
+        _c("th", { staticClass: "c-table--left" }, [_vm._v("順位")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--left" }, [_vm._v("銘柄名")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--center" }, [_vm._v("ツイート数")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--right" }, [
+          _vm._v("\n                過去24時間の"),
+          _c("br", { staticClass: "u-sp-hidden" }),
+          _vm._v("最高取引価格"),
+          _c("br"),
+          _vm._v("\n                （円）\n              ")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "c-table--right" }, [
+          _vm._v("\n                過去24時間の"),
+          _c("br", { staticClass: "u-sp-hidden" }),
+          _vm._v("最低取引価格"),
+          _c("br"),
+          _vm._v("\n                （円）\n              ")
+        ])
+      ])
     ])
   }
 ]
@@ -60787,7 +61026,7 @@ var render = function() {
                     [
                       _c(
                         "transition",
-                        { attrs: { name: "popup" } },
+                        { attrs: { name: "popup", appear: "" } },
                         [_c("AutoFollowList", { attrs: { page: _vm.page } })],
                         1
                       )
@@ -60799,7 +61038,7 @@ var render = function() {
                     [
                       _c(
                         "transition",
-                        { attrs: { name: "popup" } },
+                        { attrs: { name: "popup", appear: "" } },
                         [
                           _c("TwitterTargetList", { attrs: { page: _vm.page } })
                         ],
@@ -60835,7 +61074,7 @@ var staticRenderFns = [
       _c("br"),
       _vm._v("\n      自動フォロー機能を使うことで"),
       _c("br", { staticClass: "u-sp--only" }),
-      _vm._v("\n      まとめてフォローできます。"),
+      _vm._v("\n      アカウントをまとめてフォローできます。"),
       _c("br")
     ])
   }

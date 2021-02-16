@@ -14,7 +14,7 @@
         <div class="p-hero__action c-fade-in">
           <RouterLink
             :to="{ name: 'register' }"
-            class="c-btn__white p-hero__btn"
+            class="c-btn--white p-hero__btn"
           >
             今すぐ無料ではじめる
           </RouterLink>

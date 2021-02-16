@@ -9,9 +9,14 @@ class Trend extends Model
 {
     // ソフトデリート用のトレイトを追加
     use SoftDeletes;
-    
+
     // 書き込みを許可するカラムの指定
     protected $fillable = [
         'currency_name', 'currency_ja', 'currency_pair', 'used_api'
+    ];
+
+    // サーバーから返却するJSONに含めないカラム
+    protected $hidden = [
+        'deleted_at', 'created_at', 'updated_at', 'use_api', 'tweet_words'
     ];
 }

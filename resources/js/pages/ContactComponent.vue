@@ -13,7 +13,7 @@
         @sent="formSent"
         @back="formBack"
       />
-      <ContactSent v-if="isSent" />
+      <ContactSent v-if="isSent" :form-data="formData" />
     </div>
   </div>
 </template>
@@ -60,15 +60,19 @@ export default {
       }
     },
     formConfirm(contactForm) {
+      // 子コンポーネントから受け取ったフォーム入力内容をv-modelの各プロパティに格納
       Object.assign(this.formData, contactForm);
+      //確認画面を表示
       this.isConfirm = true;
       this.isSent = false;
     },
     formSent() {
+      //送信完了画面を表示
       this.isSent = true;
       this.isConfirm = false;
     },
     formBack() {
+      //フォーム画面を表示
       this.isSent = false;
       this.isConfirm = false;
     },

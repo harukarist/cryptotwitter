@@ -1,6 +1,6 @@
 <template>
   <form class="c-form--small" @submit.prevent="checkEditForm">
-    <transition name="popup">
+    <transition name="popup" appear>
       <p v-if="successMessage" class="u-mb--xxxl c-alert--success">
         {{ successMessage }}
       </p>
@@ -17,7 +17,6 @@
         v-model="editForm.name"
         required
         autocomplete="name"
-        autofocus
       />
       <ul v-if="nameErrors">
         <li v-for="error in nameErrors" :key="error" class="c-valid__error">
@@ -61,7 +60,7 @@
       </ul>
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn__accent">アカウント情報を変更</button>
+      <button type="submit" class="c-btn--accent c-btn--large">アカウント情報を変更</button>
     </div>
   </form>
 </template>

@@ -47,20 +47,21 @@ class TrendController extends Controller
         $trend_day = Trend::orderBy('tweet_day', 'DESC')->take(3)->get();
         $trend_week = Trend::orderBy('tweet_week', 'DESC')->take(3)->get();
 
-        // バッチの最終実行日時をバッチテーブルから取得
-        $batch =  Batch::select('batch_finished_at')->where('batch_name', 'update_prices')->first();
+        // trendsテーブルの全レコードから最新の更新日時を取得
+        $trend_updated =  Trend::select('updated_at')
+            ->orderBy('updated_at', 'desc')->first();
 
         // 取得できなかった場合は NotFoundエラーを返却
-        if (!$trend_hour || !$batch) {
+        if (!$trend_hour || !$trend_updated) {
             return abort(404);
         }
 
         // 日時形式を変換（Batchモデルの$datesプロパティに'batch_finished_at'カラムを指定する）
-        $updated_at = $batch->batch_finished_at->format('Y.m.d H:i');
-        // 各通貨の情報と更新日時を配列に格納
-        $items['trend_hour'] = $trend_hour;
-        $items['trend_day'] = $trend_day;
-        $items['trend_week'] = $trend_week;
+        $updated_at = $trend_updated->updated_at->format('Y.m.d H:i');
+        // 上位3件の通貨情報と更新日時を配列に格納
+        $items['trends']['trend_hour'] = $trend_hour;
+        $items['trends']['trend_day'] = $trend_day;
+        $items['trends']['trend_week'] = $trend_week;
         $items['updated_at'] = $updated_at;
 
         // JSON形式に変換してビューに渡す

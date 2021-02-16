@@ -88,7 +88,7 @@
         </div>
 
         <div class="c-form__button">
-          <button type="submit" class="c-btn__main--outline">ログイン</button>
+          <button type="submit" class="c-btn--main-outline">ログイン</button>
         </div>
       </form>
       <div class="c-form__link">

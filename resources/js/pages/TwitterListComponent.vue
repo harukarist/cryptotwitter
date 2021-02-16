@@ -7,7 +7,7 @@
           class="u-sp--only"
         />集めました。<br />
         自動フォロー機能を使うことで<br class="u-sp--only" />
-        まとめてフォローできます。<br />
+        アカウントをまとめてフォローできます。<br />
       </p>
 
       <TwitterLogin />
@@ -31,12 +31,12 @@
         </ul>
 
         <div v-if="showAutoFollow">
-          <transition name="popup">
+          <transition name="popup" appear>
             <AutoFollowList :page="page" />
           </transition>
         </div>
         <div v-else>
-          <transition name="popup">
+          <transition name="popup" appear>
             <TwitterTargetList :page="page" />
           </transition>
         </div>
@@ -96,10 +96,8 @@ export default {
     },
   },
   created() {
-    this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
     // ページ読み込み時に自動フォロー累計数を取得
     this.fetchTotalAutoFollow();
-    this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
   },
 };
 </script>

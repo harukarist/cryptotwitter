@@ -32,18 +32,22 @@
             <table class="c-table">
               <thead class="c-table__thead">
                 <tr>
-                  <th>順位</th>
-                  <th>銘柄名</th>
-                  <th>
-                    {{ activeColumn }}の<br class="u-sp-hidden" />ツイート数
+                  <th class="c-table--left">順位</th>
+                  <th class="c-table--left">銘柄名</th>
+                  <th class="c-table--center">ツイート数</th>
+                  <th class="c-table--right">
+                    過去24時間の<br class="u-sp-hidden" />最高取引価格<br />
+                    （円）
                   </th>
-                  <th>過去24時間の<br class="u-sp-hidden" />最高取引価格</th>
-                  <th>過去24時間の<br class="u-sp-hidden" />最低取引価格</th>
+                  <th class="c-table--right">
+                    過去24時間の<br class="u-sp-hidden" />最低取引価格<br />
+                    （円）
+                  </th>
                 </tr>
               </thead>
               <tbody class="c-table__tbody">
                 <tr
-                  v-for="(trend, index) in sorted"
+                  v-for="(trend, index) in clicked"
                   :key="trend.id"
                   class="p-trend__item"
                 >
@@ -93,7 +97,6 @@
                       <span class="u-font__num">{{
                         trend.high | round | localeNum
                       }}</span>
-                      <span class="u-font--small">円</span>
                     </p>
                     <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
@@ -102,7 +105,6 @@
                       <span class="u-font__num">{{
                         trend.low | round | localeNum
                       }}</span>
-                      <span class="u-font--small">円</span>
                     </p>
                     <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
@@ -190,9 +192,10 @@ export default {
   data() {
     return {
       column: "tweet_hour",
-      items: [], //トレンド一覧を格納する配列を用意
-      targets: [], //仮想通貨関連アカウント一覧を格納する配列
-      news: [], //ニュース一覧を格納する配列
+      items: [], //トレンド一覧を格納
+      updatedAt: "", //更新日時を格納
+      targets: [], //仮想通貨関連アカウント一覧を格納
+      news: [], //ニュース一覧を格納
     };
   },
   filters: {
@@ -216,14 +219,16 @@ export default {
         return "1週間";
       }
     },
-    // ツイート数の大きい順に並べ替えて表示
-    sorted() {
-      // 絞り込み処理を行った後の配列を、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
+    // クリックされたタブに応じてデータを返却
+    clicked() {
       if (this.column === "tweet_hour") {
+        // 過去1時間のトレンド上位3件を返却
         return this.items.trend_hour;
       } else if (this.column === "tweet_day") {
+        // 過去1日のトレンド上位3件を返却
         return this.items.trend_day;
       } else if (this.column === "tweet_week") {
+        // 過去1週間のトレンド上位3件を返却
         return this.items.trend_week;
       }
     },
@@ -237,8 +242,10 @@ export default {
         this.$store.commit("error/setCode", response.status);
         return false; //処理を中断
       }
-      // JSONのdata項目を格納
-      this.items = response.data;
+      // トレンド一覧を格納
+      this.items = response.data.trends;
+      // 更新日時を格納
+      this.updatedAt = response.data.updated_at;
     },
 
     // Twitterアカウント一覧を取得
@@ -268,7 +275,7 @@ export default {
       return;
     },
 
-    // sorted()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
+    // clicked()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour() {
       this.column = "tweet_hour";
     },

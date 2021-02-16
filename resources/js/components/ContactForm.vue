@@ -72,7 +72,9 @@
       </div>
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn__main">入力内容を確認</button>
+      <button type="submit" class="c-btn--main c-btn--large">
+        入力内容を確認
+      </button>
     </div>
   </form>
 </template>
@@ -166,9 +168,10 @@ export default {
     async confirmContact() {
       // サーバー側バリデーションメッセージをクリア
       this.apiMessages = [];
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       // 引数にv-modelの値を渡してサーバーのAPIを呼び出し
       const response = await axios.post("/api/contact/confirm", this.formData);
-      console.log(response);
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
 
       // API通信が成功した場合
       if (response.status === OK) {
@@ -178,7 +181,6 @@ export default {
         this.formData.message = response.data.message;
         // $emitで親コンポーネントに通知して確認画面を表示
         this.$emit("confirm", this.formData);
-        // this.$router.push({ name: "contact.confirm" });
       }
       // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
       if (response.status === UNPROCESSABLE_ENTITY) {

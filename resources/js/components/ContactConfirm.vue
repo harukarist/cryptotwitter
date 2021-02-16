@@ -23,15 +23,14 @@
         お問い合わせ内容<span class="c-form__label--required">必須</span>
       </label>
       <div class="c-form__confirm-text">
-        <p style="white-space: pre-wrap; word-wrap: break-word">{{ formData.message }}
-        </p>
+        <p style="u-font__br">{{ formData.message }}</p>
       </div>
     </div>
     <div class="c-form__button">
       <div class="c-btn--danger u-mb--m" @click.prevent="goBack">
         内容を修正する
       </div>
-      <button type="submit" class="c-btn__main u-mb--m">送信する</button>
+      <button type="submit" class="c-btn--main u-mb--m">送信する</button>
     </div>
   </form>
 </template>
@@ -78,13 +77,14 @@ export default {
     async sendContact() {
       // サーバー側バリデーションメッセージをクリア
       this.apiMessages = [];
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       // サーバーのAPIを呼び出し
       const response = await axios.post("/api/contact/send", this.formData);
-
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // API通信が成功した場合
       if (response.status === OK) {
         // $emitで親コンポーネントに通知して送信完了画面へ遷移
-        this.$emit("sent");
+        this.$emit("sent", this.formData);
         return;
       }
       // バリデーションエラーの場合はエラーメッセージを表示
@@ -103,9 +103,5 @@ export default {
       }
     },
   },
-  // mounted() {
-  //   //画面上で改行表示できるよう、お問い合わせ本文の改行コード \n を <br>に置換する
-  //   this.replacedMessage = this.formData.message.replace(/\n/g, "<br>");
-  // },
 };
 </script>

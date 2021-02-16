@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="c-form__button">
-                        <button type="submit" class="c-btn__main--outline">
+                        <button type="submit" class="c-btn--main-outline">
                             送信する
                         </button>
                 </div>

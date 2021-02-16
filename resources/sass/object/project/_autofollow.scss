@@ -1,11 +1,14 @@
 .p-autofollow {
   margin-bottom: $space--l;
+  display: flex;
+  flex-direction: column;
+  width: 480px;
+  margin: 0 auto;
+  @include mq(){
+    width: 100%;
+  }
   &__guide {
     margin-bottom: $space--s;
-  }
-  &__status {
-    display: inline-block;
-    margin: $space--m 0 ;
   }
   &__icon {
     margin-right: $space--s;

@@ -3,7 +3,7 @@
   cursor: pointer;
   box-sizing: border-box;
   transition: all .3s;
-  padding:10px 15px;
+  padding: 10px 15px;
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -14,14 +14,17 @@
   &:hover {
     transform: scale(0.97); //ホバー時にボタンを縮める
   }
-  @include mq(){
-    width: 80%;
-  }
-  
 }
 .c-btn {
   @extend %btnBase;
-  &__accent {
+  &--large {
+    min-width: 300px;
+    @include mq(){
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+  &--accent {
     @extend %btnBase;
     background-color: $bg-color--accent;
     color: $font-color--white;
@@ -29,7 +32,7 @@
       color: $font-color--white;
     }
   }
-  &__accent--outline {
+  &--accent-outline {
     @extend %btnBase;
     border: 2px solid $bg-color--accent;
     color: $font-color--accent;
@@ -39,7 +42,7 @@
       background-color: $bg-color--accent;
     }
   }
-  &__main {
+  &--main {
     @extend %btnBase;
     color: $font-color--white;
     background-color: $bg-color--dark;
@@ -47,7 +50,7 @@
       color: $font-color--white;
     }
   }
-  &__main--outline {
+  &--main-outline {
     @extend %btnBase;
     border: 2px solid $bg-color--main;
     color: $font-color--main;
@@ -57,7 +60,7 @@
       background-color: $bg-color--main;
     }
   }
-  &__twitter {
+  &--twitter {
     @extend %btnBase;
     background-color: $bg-color--twitter;
     color: $font-color--white;
@@ -65,7 +68,7 @@
       color: $font-color--white;
     }
   }
-  &__twitter--outline {
+  &--twitter-outline {
     @extend %btnBase;
     border: 2px solid $bg-color--twitter;
     color: $bg-color--twitter;
@@ -81,7 +84,7 @@
       color: $font-color--white;
     }
   }
-  &--danger--outline {
+  &--danger-outline {
     @extend %btnBase;
     border: 2px solid $bg-color--danger;
     color: $bg-color--danger;
@@ -89,7 +92,7 @@
       color: $bg-color--danger;
     }
   }
-  &--muted--outline {
+  &--muted-outline {
     @extend %btnBase;
     border: 1px solid $bg-color--border;
     color: $font-color--muted;
@@ -100,7 +103,7 @@
       color: $font-color--muted;
     }
   }
-  &__white {
+  &--white {
     @extend %btnBase;
     border: none;
     background: $bg-color--white;

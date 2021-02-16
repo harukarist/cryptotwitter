@@ -105,7 +105,7 @@ class TwitterAuthController extends Controller
         if (!$twitterUser) {
             return redirect('/twitter')->with(
                 [
-                    'status' => __('そのTwitterアカウントはすでに登録されています。'),
+                    'status' => __('そのTwitterアカウントはすでに登録されています'),
                     'type' => 'danger',
                     'timeout' => 4000,
                 ]
@@ -116,7 +116,7 @@ class TwitterAuthController extends Controller
         // return redirect('/twitter');
         return redirect('/twitter')->with(
             [
-                'status' => __('Twitterアカウントを連携しました。自動フォローを利用する場合は、以下のボタンで自動フォローをONにしてください。'),
+                'status' => __('Twitterアカウントを連携しました'),
                 'type' => 'success',
                 'timeout' => 3000,
             ]

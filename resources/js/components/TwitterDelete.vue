@@ -29,29 +29,39 @@
       </div>
 
       <div class="p-twitter-user__delete">
-        <a class="p-twitter-user__delete-link" @click="showConfirm = true">
+        <a class="p-twitter-user__delete-link" @click="openModal">
           Twitterアカウント連携を解除する
         </a>
 
-        <modal-component @close="showConfirm = false" v-if="showConfirm">
-          <template slot="text">
-            <p>
-              Twitterアカウント連携を解除すると<br />
-              これまでの自動フォロー履歴も<br
-                class="u-sp--only"
-              />削除されます。
-            </p>
-            <p>本当に連携を解除しますか？</p>
+        <!-- コンポーネント ModalComponent -->
+        <ModalComponent @close="closeModal" v-if="modal">
+          <!-- default スロットコンテンツ -->
+          <p>Vue.js Modal Window!</p>
+          <div><input v-model="message" /></div>
+          <!-- /default -->
+          <!-- footer スロットコンテンツ -->
+          <template slot="footer">
+            <button @click="doSend">送信</button>
           </template>
-          <template slot="btn">
-            <button
-              class="c-btn--danger c-modal__footer-btn"
-              @click.stop="deleteTwitterAuth()"
-            >
-              Twitterアカウント連携を解除
-            </button>
-          </template>
-        </modal-component>
+          <!-- /footer -->
+        </ModalComponent>
+
+        <div v-if="showConfirm" class="p-twitter-user__confirm">
+          <i
+            class="fas fa-times p-twitter-user__confirm-close"
+            @click="showConfirm = false"
+          ></i>
+          <p class="p-twitter-user__confirm-text">
+            Twitterアカウント連携を解除すると<br />
+            これまでの自動フォロー履歴も<br
+              class="u-sp--only"
+            />削除されます。<br />
+            本当に連携を解除しますか？<br />
+          </p>
+          <a class="c-btn--danger" @click.stop="deleteTwitterAuth()">
+            Twitterアカウント連携を解除
+          </a>
+        </div>
       </div>
     </div>
     <div v-if="!isTwitterLogin" class="p-twitter__login">
@@ -69,13 +79,11 @@
 <script>
 import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
 import AutoFollowApply from "../components/AutoFollowApply.vue";
-import ModalComponent from "../components/ModalComponent.vue";
 
 export default {
   name: "TwitterLogin",
   components: {
     AutoFollowApply,
-    ModalComponent,
   },
   data() {
     return {

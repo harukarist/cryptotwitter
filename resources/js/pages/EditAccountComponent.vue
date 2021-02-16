@@ -9,9 +9,7 @@
           :class="{ 'c-tab__item--active': tabNum === 1 }"
           @click="tabNum = 1"
         >
-          お名前・<br class="u-sp--only" />メールアドレスの<br
-            class="u-sp--only"
-          />変更
+          お名前・<br class="u-sp--only" />メールアドレス<br />の変更
         </li>
         <li
           class="c-tab__item c-tab__item--three"
@@ -25,7 +23,7 @@
           :class="{ 'c-tab__item--active': tabNum === 3 }"
           @click="tabNum = 3"
         >
-          Twitterアカウント<br class="u-sp--only" />連携
+          Twitter<br class="u-sp--only" />アカウント<br class="u-sp--only" />連携
         </li>
       </ul>
       <div class="c-form__wrapper" v-if="tabNum === 1">

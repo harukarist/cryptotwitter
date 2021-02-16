@@ -28,4 +28,8 @@
   &--right {
     text-align: right;
   }
+  &__br {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
 }

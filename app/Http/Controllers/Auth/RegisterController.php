@@ -64,7 +64,7 @@ class RegisterController extends Controller
                 'required', 'string', 'email', 'max:50',
                 // 'unique:users'
                 Rule::unique('users')->where(function ($query) {
-                    // existカラムが1（論理削除されていない）レコードのみ、emailカラムのunique制約を指定
+                    // existカラムが1（論理削除されていない）のレコードのみ、emailカラムのunique制約を指定
                     return $query->where('exist', 1);
                 }),
 
