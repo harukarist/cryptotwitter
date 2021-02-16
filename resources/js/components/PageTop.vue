@@ -14,8 +14,9 @@ export default {
     };
   },
   computed: {
+    // スクロール量が
     isVisible() {
-      return this.currentHeight > 400;
+      return this.currentHeight > 200;
     },
   },
   methods: {
@@ -27,13 +28,6 @@ export default {
         behavior: "smooth",
       });
     },
-    // visible() {
-    //   // ボタンが非表示の場合
-    //   if (!this.isVisible) {
-    //     this.isVisible = this.currentHeight > window.innerHeight + 100;
-    //   }
-    // },
-    // getHeight() {},
   },
   mounted() {
     document.onscroll = (e) => {
