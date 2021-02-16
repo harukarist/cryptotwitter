@@ -52,7 +52,6 @@ class TwitterTargetListController extends Controller
       //     ->orderBy('created_at', 'DESC')
       //     ->paginate(10);
       // }
-      clock($targets);
       return $targets;
     }
 

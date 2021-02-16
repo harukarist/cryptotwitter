@@ -23,7 +23,6 @@ class ContactController extends Controller
     {
         //フォームから受け取ったすべてのinputの値を取得
         $inputs = $request->all();
-        clock($inputs);
         //入力内容確認ページのvueに変数を渡して表示
         return $inputs;
     }

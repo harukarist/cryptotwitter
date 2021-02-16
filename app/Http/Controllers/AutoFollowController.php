@@ -40,7 +40,6 @@ class AutoFollowController extends Controller
                 ->whereHas('target_user', $whereHas)
                 ->paginate(10);
 
-            clock($items);
             return $items;
         }
 
