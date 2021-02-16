@@ -3525,6 +3525,115 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _HeaderNavMenu_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeaderNavMenu.vue */ "./resources/js/components/HeaderNavMenu.vue");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+ // VuexのmapState関数,mapGetters関数をインポート
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    HeaderNavMenu: _HeaderNavMenu_vue__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  data: function data() {
+    return {
+      isActiveDrawerMenu: false
+    };
+  },
+  computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)({
+    // authストアのステートを参照し、API通信の成否ステータスを取得
+    apiStatus: function apiStatus(state) {
+      return state.auth.apiStatus;
+    }
+  })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
+    // authストアのcheckゲッターでユーザーのログイン状態をチェック
+    isLogin: "auth/check"
+  })),
+  methods: {
+    toggleDrawerMenu: function toggleDrawerMenu() {
+      this.isActiveDrawerMenu = !this.isActiveDrawerMenu;
+    },
+    closeDrawerMenu: function closeDrawerMenu() {
+      // ドロワーメニューを閉じる
+      this.isActiveDrawerMenu = false;
+    }
+  },
+  created: function created() {
+    // ページ読み込み時にフラグを初期化
+    this.closeDrawerMenu();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HeaderNavMenu.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HeaderNavMenu.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
@@ -3660,60 +3769,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
  // VuexのmapState関数,mapGetters関数をインポート
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    isActiveDrawerMenu: {
+      type: Boolean,
+      required: true
+    }
+  },
   data: function data() {
     return {
-      isActiveSpMenu: false,
-      isActiveDropdown: false,
-      position: 0
+      isActiveDropdown: false
     };
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)({
@@ -3751,14 +3818,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 if (_this.apiStatus) {
                   // フラッシュメッセージを表示
                   _this.$store.dispatch("message/showMessage", {
-                    text: "ログアウトしました。ご利用ありがとうございました。",
+                    text: "ログアウトしました",
                     type: "success",
                     timeout: 3000
                   }, {
                     root: true
                   });
 
-                  _this.closeDropdown(); //スマホメニューが開いていたら閉じる
+                  _this.closeDropdown(); //ドロップダウンメニューが開いていたら閉じる
+
+
+                  _this.closeDrawerMenu(); //ドロワーメニューが開いていたら閉じる
                   // VueRouterのpush()でトップ画面に遷移
 
 
@@ -3775,24 +3845,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }, _callee);
       }))();
     },
-    toggleSpMenu: function toggleSpMenu() {
-      this.isActiveSpMenu = !this.isActiveSpMenu;
+    // スマホ用ドロワーメニューを閉じる
+    closeDrawerMenu: function closeDrawerMenu() {
+      // 親コンポーネントに通知して親コンポーネント側のdataを変更する
+      this.$emit("close");
     },
-    closeSpMenu: function closeSpMenu() {
-      this.isActiveSpMenu = false;
-      this.isActiveDropdown = false;
-    },
+    // ドロップダウンメニューの開閉を切り替え
     toggleDropdown: function toggleDropdown() {
       this.isActiveDropdown = !this.isActiveDropdown;
     },
-    closeDropdown: function closeDropdown() {
-      this.isActiveDropdown = false;
-      this.isActiveSpMenu = false;
+    // ドロップダウンメニューを閉じる
+    closeDropdown: function closeDropdown(event) {
+      this.isActiveDropdown = false; // ドロワーメニュー上でリンクがクリックされた場合はドロワーメニューも閉じる
+
+      if (this.isActiveDrawerMenu) {
+        this.$emit("close");
+      }
     }
   },
   created: function created() {
     // ページ読み込み時にフラグを初期化
-    this.closeSpMenu();
     this.closeDropdown();
   }
 });
@@ -4001,8 +4073,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
+    // スクロール量が
     isVisible: function isVisible() {
-      return this.currentHeight > 400;
+      return this.currentHeight > 200;
     }
   },
   methods: {
@@ -4013,14 +4086,7 @@ __webpack_require__.r(__webpack_exports__);
         top: 0,
         behavior: "smooth"
       });
-    } // visible() {
-    //   // ボタンが非表示の場合
-    //   if (!this.isVisible) {
-    //     this.isVisible = this.currentHeight > window.innerHeight + 100;
-    //   }
-    // },
-    // getHeight() {},
-
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -7859,8 +7925,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var core_js_modules_es_array_for_each_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.for-each.js */ "./node_modules/core-js/modules/es.array.for-each.js");
-/* harmony import */ var core_js_modules_es_array_for_each_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_for_each_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.filter.js */ "./node_modules/core-js/modules/es.array.filter.js");
+/* harmony import */ var core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_filter_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.array.includes.js */ "./node_modules/core-js/modules/es.array.includes.js");
 /* harmony import */ var core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_includes_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.array.map.js */ "./node_modules/core-js/modules/es.array.map.js");
@@ -7871,13 +7937,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! core-js/modules/es.string.includes.js */ "./node_modules/core-js/modules/es.string.includes.js");
 /* harmony import */ var core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_includes_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each.js */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each_js__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
-/* harmony import */ var _components_SlideDownComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/SlideDownComponent.vue */ "./resources/js/components/SlideDownComponent.vue");
-
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
+/* harmony import */ var _components_SlideDownComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/SlideDownComponent.vue */ "./resources/js/components/SlideDownComponent.vue");
 
 
 
@@ -8093,19 +8156,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    SlideDownComponent: _components_SlideDownComponent_vue__WEBPACK_IMPORTED_MODULE_9__.default
+    SlideDownComponent: _components_SlideDownComponent_vue__WEBPACK_IMPORTED_MODULE_8__.default
   },
   data: function data() {
     return {
       column: "tweet_hour",
       items: [],
-      //トレンド一覧を格納する配列を用意
+      //トレンド一覧を格納
+      updatedAt: "",
+      //更新日時を格納
       isActive: false,
-      selectedItems: [] // 絞り込み表示する銘柄のidを格納する
+      //絞り込みメニューの表示有無
+      selectedItems: [] // 絞り込み表示する銘柄のidを格納
 
     };
   },
@@ -8122,19 +8190,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     // 銘柄名を指定して絞り込み表示
     matched: function matched() {
-      // 絞り込み表示の配列に要素が入っている場合
+      // コールバック関数内で使用するため、thisを変数に格納
+      var _self = this; // 絞り込み指定がある場合(フォームのv-modelにトレンド一覧のidが入っている場合）
+
+
       if (this.selectedItems.length) {
-        // トレンド一覧の配列をlodashで展開し、絞り込み表示の配列と一致する要素のidをshowプロパティに代入
-        var arr = this.selectedItems;
-        return _.forEach(this.items.trends, function (item) {
-          item.show = arr.includes(item.id);
+        // トレンド一覧のオブジェクトitemsをlodashで展開し、第二引数がtrueの要素のみ返却
+        return _.filter(this.items, function (value) {
+          //絞り込み選択された配列の中に、展開した要素のidが含まれるかどうか(true/false)を返却
+          return _.includes(_self.selectedItems, value.id);
         });
-      } // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
+      } // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧を返却
 
 
-      return _.forEach(this.items.trends, function (item) {
-        item.show = true;
-      });
+      return this.items;
     },
     // ツイート数の大きい順に並べ替えて表示
     sorted: function sorted() {
@@ -8169,7 +8238,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context.sent;
 
-                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_8__.OK)) {
+                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_7__.OK)) {
                   _context.next = 6;
                   break;
                 }
@@ -8180,10 +8249,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 6:
-                // JSONのdata項目を格納
-                _this.items = response.data;
+                // トレンド一覧を格納
+                _this.items = response.data.trends; // 更新日時を格納
 
-              case 7:
+                _this.updatedAt = response.data.updated_at;
+
+              case 8:
               case "end":
                 return _context.stop();
             }
@@ -8205,16 +8276,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     deselect: function deselect() {
       // 絞り込み表示の配列を空にする
       this.selectedItems = []; // // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
-      // return _.each(this.items.trends, function (item) {
+      // return _.each(this.items, function (item) {
       //   item.show = true;
       // });
     },
     // 銘柄をすべて選択
     selectAll: function selectAll() {
       // 絞り込み表示の配列を一旦空にする
-      this.selectedItems = []; // APIで取得したトレンド一覧の配列を展開し、showプロパティにtrueを指定
+      this.selectedItems = []; // APIで取得したトレンド一覧の配列からidのみを絞り込み表示の配列に格納
 
-      this.selectedItems = _.map(this.items.trends, "id");
+      this.selectedItems = _.map(this.items, "id");
     }
   },
   watch: {
@@ -8490,7 +8561,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 if (_this.apiStatus) {
                   // フラッシュメッセージを表示
                   _this.$store.dispatch("message/showMessage", {
-                    text: "退会手続きが完了しました。ご利用ありがとうございました。",
+                    text: "退会手続きが完了しました",
                     type: "success",
                     timeout: 6000
                   }); // VueRouterのpush()でトップ画面に遷移
@@ -17747,6 +17818,35 @@ $({ target: 'Array', proto: true, forced: FORCED }, {
     }
     A.length = n;
     return A;
+  }
+});
+
+
+/***/ }),
+
+/***/ "./node_modules/core-js/modules/es.array.filter.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/core-js/modules/es.array.filter.js ***!
+  \*********************************************************/
+/***/ (function(__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
+
+"use strict";
+
+var $ = __webpack_require__(/*! ../internals/export */ "./node_modules/core-js/internals/export.js");
+var $filter = __webpack_require__(/*! ../internals/array-iteration */ "./node_modules/core-js/internals/array-iteration.js").filter;
+var arrayMethodHasSpeciesSupport = __webpack_require__(/*! ../internals/array-method-has-species-support */ "./node_modules/core-js/internals/array-method-has-species-support.js");
+var arrayMethodUsesToLength = __webpack_require__(/*! ../internals/array-method-uses-to-length */ "./node_modules/core-js/internals/array-method-uses-to-length.js");
+
+var HAS_SPECIES_SUPPORT = arrayMethodHasSpeciesSupport('filter');
+// Edge 14- issue
+var USES_TO_LENGTH = arrayMethodUsesToLength('filter');
+
+// `Array.prototype.filter` method
+// https://tc39.es/ecma262/#sec-array.prototype.filter
+// with adding support of @@species
+$({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT || !USES_TO_LENGTH }, {
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
 
@@ -50759,6 +50859,42 @@ component.options.__file = "resources/js/components/HeaderComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/HeaderNavMenu.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/HeaderNavMenu.vue ***!
+  \***************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HeaderNavMenu_vue_vue_type_template_id_b291820c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeaderNavMenu.vue?vue&type=template&id=b291820c& */ "./resources/js/components/HeaderNavMenu.vue?vue&type=template&id=b291820c&");
+/* harmony import */ var _HeaderNavMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeaderNavMenu.vue?vue&type=script&lang=js& */ "./resources/js/components/HeaderNavMenu.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _HeaderNavMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _HeaderNavMenu_vue_vue_type_template_id_b291820c___WEBPACK_IMPORTED_MODULE_0__.render,
+  _HeaderNavMenu_vue_vue_type_template_id_b291820c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/HeaderNavMenu.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/InnerMessage.vue":
 /*!**************************************************!*\
   !*** ./resources/js/components/InnerMessage.vue ***!
@@ -52171,6 +52307,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/HeaderNavMenu.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/HeaderNavMenu.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderNavMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HeaderNavMenu.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HeaderNavMenu.vue?vue&type=script&lang=js&");
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderNavMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/InnerMessage.vue?vue&type=script&lang=js&":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/InnerMessage.vue?vue&type=script&lang=js& ***!
@@ -52800,6 +52949,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderComponent_vue_vue_type_template_id_153bfd55___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns; }
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderComponent_vue_vue_type_template_id_153bfd55___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HeaderComponent.vue?vue&type=template&id=153bfd55& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HeaderComponent.vue?vue&type=template&id=153bfd55&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/HeaderNavMenu.vue?vue&type=template&id=b291820c&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/HeaderNavMenu.vue?vue&type=template&id=b291820c& ***!
+  \**********************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderNavMenu_vue_vue_type_template_id_b291820c___WEBPACK_IMPORTED_MODULE_0__.render; },
+/* harmony export */   "staticRenderFns": function() { return /* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderNavMenu_vue_vue_type_template_id_b291820c___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns; }
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HeaderNavMenu_vue_vue_type_template_id_b291820c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HeaderNavMenu.vue?vue&type=template&id=b291820c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HeaderNavMenu.vue?vue&type=template&id=b291820c&");
 
 
 /***/ }),
@@ -54782,369 +54948,407 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("nav", { staticClass: "p-navbar" }, [
-    _c(
-      "div",
-      { staticClass: "p-navbar__title" },
-      [
-        _c(
-          "RouterLink",
-          {
-            attrs: {
-              to: { name: "top" },
-              "active-class": "is-active",
-              exact: ""
-            }
-          },
-          [
-            _c("img", {
-              staticClass: "p-navbar__title-logo",
-              attrs: { src: "/img/logo.png" }
-            }),
-            _vm._v(" "),
-            _c("h1", { staticClass: "p-navbar__title-text" }, [
-              _vm._v("CryptoTrend")
-            ])
-          ]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "p-navbar__sp" }, [
-      !_vm.isLogin
-        ? _c("ul", { staticClass: "p-nav-menu__action" }, [
-            _c(
-              "li",
-              {
-                staticClass: "p-nav-menu__action-item-btn",
-                on: { click: _vm.closeSpMenu }
-              },
-              [
-                _c(
-                  "RouterLink",
-                  {
-                    staticClass: "c-btn__accent p-nav-menu__action-btn",
-                    attrs: { to: { name: "register" } }
-                  },
-                  [_vm._v("\n            ユーザー登録\n          ")]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              {
-                staticClass: "p-nav-menu__action-item-btn",
-                on: { click: _vm.closeSpMenu }
-              },
-              [
-                _c(
-                  "RouterLink",
-                  {
-                    staticClass: "c-btn__main--outline p-nav-menu__action-btn",
-                    attrs: { to: { name: "login" } }
-                  },
-                  [_vm._v("\n            ログイン\n          ")]
-                )
-              ],
-              1
-            )
-          ])
-        : _vm._e(),
-      _vm._v(" "),
+  return _c(
+    "nav",
+    { staticClass: "p-navbar" },
+    [
       _c(
         "div",
-        {
-          staticClass: "p-navbar__toggle",
-          class: { "is-active": _vm.isActiveSpMenu },
-          on: { click: _vm.toggleSpMenu }
-        },
+        { staticClass: "p-navbar__title" },
         [
-          _c("span", { staticClass: "p-navbar__toggle--line" }),
-          _vm._v(" "),
-          _c("span", { staticClass: "p-navbar__toggle--line" }),
-          _vm._v(" "),
-          _c("span", { staticClass: "p-navbar__toggle--line" }),
-          _vm._v(" "),
-          _c("span", { staticClass: "p-navbar__toggle--text" })
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "p-nav-menu", class: { "is-active": _vm.isActiveSpMenu } },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "p-nav-menu__sp-title",
-            on: { click: _vm.closeSpMenu }
-          },
-          [
-            _c(
-              "RouterLink",
-              {
-                attrs: {
-                  to: { name: "top" },
-                  "active-class": "is-active",
-                  exact: ""
-                }
-              },
-              [
-                _c("img", {
-                  staticClass: "p-navbar__title-logo",
-                  attrs: { src: "/img/logo.png" }
-                }),
-                _vm._v(" "),
-                _c("h1", { staticClass: "p-navbar__title-text" }, [
-                  _vm._v("CryptoTrend")
-                ])
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm.isLogin
-          ? _c("div", { staticClass: "p-nav-menu__inner" }, [
-              _c("ul", { staticClass: "p-nav-menu__list" }, [
-                _c(
-                  "li",
-                  {
-                    staticClass: "p-nav-menu__item",
-                    on: { click: _vm.closeSpMenu }
-                  },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "p-nav-menu__link",
-                        attrs: {
-                          to: { name: "trend.index" },
-                          "active-class": "is-active"
-                        }
-                      },
-                      [_vm._v("\n              トレンド一覧\n            ")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "p-nav-menu__item",
-                    on: { click: _vm.closeSpMenu }
-                  },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "p-nav-menu__link",
-                        attrs: {
-                          to: { name: "twitter.index" },
-                          "active-class": "is-active"
-                        }
-                      },
-                      [_vm._v("\n              Twitterフォロー\n            ")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "p-nav-menu__item",
-                    on: { click: _vm.closeSpMenu }
-                  },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "p-nav-menu__link",
-                        attrs: {
-                          to: { name: "news.index" },
-                          "active-class": "is-active"
-                        }
-                      },
-                      [_vm._v("\n              関連ニュース\n            ")]
-                    )
-                  ],
-                  1
-                )
-              ]),
+          _c(
+            "RouterLink",
+            {
+              attrs: {
+                to: { name: "top" },
+                "active-class": "is-active",
+                exact: ""
+              }
+            },
+            [
+              _c("img", {
+                staticClass: "p-navbar__title-logo",
+                attrs: { src: "/img/logo.png" }
+              }),
               _vm._v(" "),
-              _c("div", { staticClass: "p-nav-menu__dropdown" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "p-nav-menu__dropdown-head",
-                    on: { click: _vm.toggleDropdown }
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "p-nav-menu__avatar",
-                      attrs: {
-                        src: _vm.usersAvatar,
-                        alt: _vm.userName + "'s avatar"
-                      },
-                      on: { error: _vm.noImage }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "p-nav-menu__username" }, [
-                      _vm._v(_vm._s(_vm.userName))
-                    ]),
-                    _vm._v(" "),
-                    !_vm.isActiveSpMenu
-                      ? _c("i", {
-                          staticClass:
-                            "fas fa-caret-down p-nav-menu__dropdown-icon"
-                        })
-                      : _vm._e()
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.isActiveDropdown || _vm.isActiveSpMenu
-                  ? _c("div", { staticClass: "p-nav-menu__dropdown-menu" }, [
-                      _c("ul", { staticClass: "p-nav-menu__dropdown-list" }, [
-                        _c(
-                          "li",
-                          {
-                            staticClass: "p-nav-menu__dropdown-item",
-                            on: { click: _vm.closeDropdown }
-                          },
-                          [
-                            _c(
-                              "RouterLink",
-                              {
-                                staticClass:
-                                  "p-nav-menu__link p-nav-menu__dropdown-link",
-                                attrs: {
-                                  to: { name: "edit" },
-                                  "active-class": "is-active"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                  アカウント設定\n                "
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "li",
-                          {
-                            staticClass: "p-nav-menu__dropdown-item",
-                            on: { click: _vm.closeDropdown }
-                          },
-                          [
-                            _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "p-nav-menu__link p-nav-menu__dropdown-link",
-                                on: { click: _vm.logout }
-                              },
-                              [_vm._v("ログアウト")]
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  : _vm._e()
+              _c("h1", { staticClass: "p-navbar__title-text" }, [
+                _vm._v("CryptoTrend")
               ])
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("header-nav-menu", {
+        attrs: { "is-active-drawer-menu": _vm.isActiveDrawerMenu },
+        on: { close: _vm.closeDrawerMenu }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "p-navbar__sp" }, [
+        !_vm.isLogin
+          ? _c("ul", { staticClass: "p-nav-menu__action" }, [
+              _c(
+                "li",
+                {
+                  staticClass: "p-nav-menu__action-item-btn",
+                  on: { click: _vm.closeDrawerMenu }
+                },
+                [
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "c-btn__accent p-nav-menu__action-btn",
+                      attrs: { to: { name: "register" } }
+                    },
+                    [_vm._v("\n          ユーザー登録\n        ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "p-nav-menu__action-item-btn",
+                  on: { click: _vm.closeDrawerMenu }
+                },
+                [
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass:
+                        "c-btn__main--outline p-nav-menu__action-btn",
+                      attrs: { to: { name: "login" } }
+                    },
+                    [_vm._v("\n          ログイン\n        ")]
+                  )
+                ],
+                1
+              )
             ])
           : _vm._e(),
         _vm._v(" "),
-        !_vm.isLogin
-          ? _c("div", [
-              _c("ul", { staticClass: "p-nav-menu__list" }, [
-                _c("li", { staticClass: "p-nav-menu__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "p-nav-menu__link",
-                      attrs: { href: "/#about" },
-                      on: { click: _vm.closeSpMenu }
-                    },
-                    [_vm._v("CryptoTrendとは？")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "p-nav-menu__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "p-nav-menu__link",
-                      attrs: { href: "/#reason" },
-                      on: { click: _vm.closeSpMenu }
-                    },
-                    [_vm._v("選ばれる理由")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("li", { staticClass: "p-nav-menu__item" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "p-nav-menu__link",
-                      attrs: { href: "/#faq" },
-                      on: { click: _vm.closeSpMenu }
-                    },
-                    [_vm._v("よくあるご質問")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "p-nav-menu__item-btn",
-                    on: { click: _vm.closeSpMenu }
-                  },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "c-btn__accent p-nav-menu__btn",
-                        attrs: { to: { name: "register" } }
-                      },
-                      [_vm._v("\n              ユーザー登録\n            ")]
-                    )
-                  ],
-                  1
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
-                    staticClass: "p-nav-menu__item-btn",
-                    on: { click: _vm.closeSpMenu }
-                  },
-                  [
-                    _c(
-                      "RouterLink",
-                      {
-                        staticClass: "c-btn__main--outline p-nav-menu__btn",
-                        attrs: { to: { name: "login" } }
-                      },
-                      [_vm._v("\n              ログイン\n            ")]
-                    )
-                  ],
-                  1
-                )
+        _c(
+          "div",
+          {
+            ref: "toggleIcon",
+            staticClass: "p-navbar__toggle",
+            class: { "is-active": _vm.isActiveDrawerMenu },
+            on: { click: _vm.toggleDrawerMenu }
+          },
+          [
+            _c("span", { staticClass: "p-navbar__toggle--line" }),
+            _vm._v(" "),
+            _c("span", { staticClass: "p-navbar__toggle--line" }),
+            _vm._v(" "),
+            _c("span", { staticClass: "p-navbar__toggle--line" }),
+            _vm._v(" "),
+            _c("span", { staticClass: "p-navbar__toggle--text" })
+          ]
+        )
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HeaderNavMenu.vue?vue&type=template&id=b291820c&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/HeaderNavMenu.vue?vue&type=template&id=b291820c& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": function() { return /* binding */ render; },
+/* harmony export */   "staticRenderFns": function() { return /* binding */ staticRenderFns; }
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "p-nav-menu",
+      class: { "is-active": _vm.isActiveDrawerMenu }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "p-nav-menu__sp-title",
+          on: { click: _vm.closeDrawerMenu }
+        },
+        [
+          _c(
+            "RouterLink",
+            {
+              attrs: {
+                to: { name: "top" },
+                "active-class": "is-active",
+                exact: ""
+              }
+            },
+            [
+              _c("img", {
+                staticClass: "p-navbar__title-logo",
+                attrs: { src: "/img/logo.png" }
+              }),
+              _vm._v(" "),
+              _c("h1", { staticClass: "p-navbar__title-text" }, [
+                _vm._v("CryptoTrend")
               ])
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm.isLogin
+        ? _c("div", { staticClass: "p-nav-menu__inner" }, [
+            _c("ul", { staticClass: "p-nav-menu__list" }, [
+              _c(
+                "li",
+                {
+                  staticClass: "p-nav-menu__item",
+                  on: { click: _vm.closeDrawerMenu }
+                },
+                [
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "p-nav-menu__link",
+                      attrs: {
+                        to: { name: "trend.index" },
+                        "active-class": "is-active"
+                      }
+                    },
+                    [_vm._v("\n          トレンド一覧\n        ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "p-nav-menu__item",
+                  on: { click: _vm.closeDrawerMenu }
+                },
+                [
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "p-nav-menu__link",
+                      attrs: {
+                        to: { name: "twitter.index" },
+                        "active-class": "is-active"
+                      }
+                    },
+                    [_vm._v("\n          Twitterフォロー\n        ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "p-nav-menu__item",
+                  on: { click: _vm.closeDrawerMenu }
+                },
+                [
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "p-nav-menu__link",
+                      attrs: {
+                        to: { name: "news.index" },
+                        "active-class": "is-active"
+                      }
+                    },
+                    [_vm._v("\n          関連ニュース\n        ")]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-nav-menu__dropdown" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "p-nav-menu__dropdown-head",
+                  on: { click: _vm.toggleDropdown }
+                },
+                [
+                  _c("img", {
+                    staticClass: "p-nav-menu__avatar",
+                    attrs: {
+                      src: _vm.usersAvatar,
+                      alt: _vm.userName + "'s avatar"
+                    },
+                    on: { error: _vm.noImage }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "p-nav-menu__username" }, [
+                    _vm._v(_vm._s(_vm.userName))
+                  ]),
+                  _vm._v(" "),
+                  !_vm.isActiveDrawerMenu
+                    ? _c("i", {
+                        staticClass:
+                          "fas fa-caret-down p-nav-menu__dropdown-icon"
+                      })
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _vm.isActiveDropdown || _vm.isActiveDrawerMenu
+                ? _c("div", { staticClass: "p-nav-menu__dropdown-menu" }, [
+                    _c("ul", { staticClass: "p-nav-menu__dropdown-list" }, [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "p-nav-menu__dropdown-item",
+                          on: { click: _vm.closeDropdown }
+                        },
+                        [
+                          _c(
+                            "RouterLink",
+                            {
+                              staticClass:
+                                "p-nav-menu__link p-nav-menu__dropdown-link",
+                              attrs: {
+                                to: { name: "edit" },
+                                "active-class": "is-active"
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n              アカウント設定\n            "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass: "p-nav-menu__dropdown-item",
+                          on: { click: _vm.closeDropdown }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "p-nav-menu__link p-nav-menu__dropdown-link",
+                              on: { click: _vm.logout }
+                            },
+                            [_vm._v("ログアウト")]
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm._e()
             ])
-          : _vm._e()
-      ]
-    )
-  ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.isLogin
+        ? _c("div", [
+            _c("ul", { staticClass: "p-nav-menu__list" }, [
+              _c("li", { staticClass: "p-nav-menu__item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "p-nav-menu__link",
+                    attrs: { href: "/#about" },
+                    on: { click: _vm.closeDrawerMenu }
+                  },
+                  [_vm._v("CryptoTrendとは？")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "p-nav-menu__item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "p-nav-menu__link",
+                    attrs: { href: "/#reason" },
+                    on: { click: _vm.closeDrawerMenu }
+                  },
+                  [_vm._v("選ばれる理由")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "p-nav-menu__item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "p-nav-menu__link",
+                    attrs: { href: "/#faq" },
+                    on: { click: _vm.closeDrawerMenu }
+                  },
+                  [_vm._v("よくあるご質問")]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "p-nav-menu__item-btn",
+                  on: { click: _vm.closeDrawerMenu }
+                },
+                [
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "c-btn__accent p-nav-menu__btn",
+                      attrs: { to: { name: "register" } }
+                    },
+                    [_vm._v("\n          ユーザー登録\n        ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "p-nav-menu__item-btn",
+                  on: { click: _vm.closeDrawerMenu }
+                },
+                [
+                  _c(
+                    "RouterLink",
+                    {
+                      staticClass: "c-btn__main--outline p-nav-menu__btn",
+                      attrs: { to: { name: "login" } }
+                    },
+                    [_vm._v("\n          ログイン\n        ")]
+                  )
+                ],
+                1
+              )
+            ])
+          ])
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -58164,7 +58368,7 @@ var render = function() {
         "div",
         { staticClass: "p-news c-fade-in" },
         [
-          _c("SearchFormComponent", {
+          _c("search-form-component", {
             on: { search: _vm.searchNews, clear: _vm.clearResult }
           }),
           _vm._v(" "),
@@ -60062,7 +60266,7 @@ var render = function() {
             _c("div", { staticClass: "p-trend__head" }, [
               _c("div", { staticClass: "p-trend__head-left" }, [
                 !_vm.selectedItems.length ||
-                _vm.items.trends.length === _vm.selectedItems.length
+                _vm.items.length === _vm.selectedItems.length
                   ? _c("span", { staticClass: "u-font--small u-font--muted" }, [
                       _vm._v(
                         "\n              全" +
@@ -60121,7 +60325,7 @@ var render = function() {
                 _c("div", { staticClass: "u-font--small u-font--muted" }, [
                   _vm._v("\n              更新日時 "),
                   _c("br", { staticClass: "u-sp--only" }),
-                  _vm._v(_vm._s(_vm.items.updated_at) + "\n            ")
+                  _vm._v(_vm._s(_vm.updatedAt) + "\n            ")
                 ])
               ])
             ]),
@@ -60157,7 +60361,7 @@ var render = function() {
                   _c(
                     "ul",
                     { staticClass: "p-trend__select-list" },
-                    _vm._l(_vm.items.trends, function(trend) {
+                    _vm._l(_vm.items, function(trend) {
                       return _c(
                         "li",
                         { key: trend.id, staticClass: "p-trend__select-item" },
@@ -60261,11 +60465,15 @@ var render = function() {
               [
                 _c("thead", { staticClass: "c-table__thead" }, [
                   _c("tr", [
-                    _c("th", [_vm._v("順位")]),
+                    _c("th", { staticClass: "c-table--left" }, [
+                      _vm._v("順位")
+                    ]),
                     _vm._v(" "),
-                    _c("th", [_vm._v("銘柄名")]),
+                    _c("th", { staticClass: "c-table--left" }, [
+                      _vm._v("銘柄名")
+                    ]),
                     _vm._v(" "),
-                    _c("th", [
+                    _c("th", { staticClass: "c-table--center" }, [
                       _vm._v(
                         "\n                " + _vm._s(_vm.activeColumn) + "の"
                       ),
@@ -60288,18 +60496,7 @@ var render = function() {
                   _vm._l(_vm.sorted, function(trend, index) {
                     return _c(
                       "tr",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: trend.show,
-                            expression: "trend.show"
-                          }
-                        ],
-                        key: trend.id,
-                        staticClass: "p-trend__item"
-                      },
+                      { key: trend.id, staticClass: "p-trend__item" },
                       [
                         _c("td", [
                           _c(
@@ -60370,7 +60567,7 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("td", [
+                        _c("td", { staticClass: "c-table--center" }, [
                           _vm.column === "tweet_hour"
                             ? _c("p", { staticClass: "u-font__num" }, [
                                 _vm._v(
@@ -60408,7 +60605,7 @@ var render = function() {
                             : _vm._e()
                         ]),
                         _vm._v(" "),
-                        _c("td", [
+                        _c("td", { staticClass: "c-table--right" }, [
                           trend.high
                             ? _c("p", { staticClass: "p-trend__price" }, [
                                 _c("span", { staticClass: "u-font__num" }, [
@@ -60419,10 +60616,6 @@ var render = function() {
                                       )
                                     )
                                   )
-                                ]),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "u-font--small" }, [
-                                  _vm._v("円")
                                 ])
                               ])
                             : _c(
@@ -60432,7 +60625,7 @@ var render = function() {
                               )
                         ]),
                         _vm._v(" "),
-                        _c("td", [
+                        _c("td", { staticClass: "c-table--right" }, [
                           trend.low
                             ? _c("p", { staticClass: "p-trend__price" }, [
                                 _c("span", { staticClass: "u-font__num" }, [
@@ -60443,10 +60636,6 @@ var render = function() {
                                       )
                                     )
                                   )
-                                ]),
-                                _vm._v(" "),
-                                _c("span", { staticClass: "u-font--small" }, [
-                                  _vm._v("円")
                                 ])
                               ])
                             : _c(
@@ -60496,20 +60685,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", [
-      _vm._v("過去24時間の"),
+    return _c("th", { staticClass: "c-table--right" }, [
+      _vm._v("\n                過去24時間の"),
       _c("br", { staticClass: "u-sp-hidden" }),
-      _vm._v("最高取引価格")
+      _vm._v("最高取引価格"),
+      _c("br"),
+      _vm._v("\n                （円）\n              ")
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", [
-      _vm._v("過去24時間の"),
+    return _c("th", { staticClass: "c-table--right" }, [
+      _vm._v("\n                過去24時間の"),
       _c("br", { staticClass: "u-sp-hidden" }),
-      _vm._v("最低取引価格")
+      _vm._v("最低取引価格"),
+      _c("br"),
+      _vm._v("\n                （円）\n              ")
     ])
   }
 ]
