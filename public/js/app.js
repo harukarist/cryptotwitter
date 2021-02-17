@@ -2356,14 +2356,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+
+
+                _context.next = 3;
                 return axios.get("/api/autofollow/list?page=".concat(_this.page), params);
 
-              case 2:
+              case 3:
                 response = _context.sent;
 
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+                // レスポンスのステータスが200以外の場合はエラーをストアにコミット
+
+
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
-                  _context.next = 6;
+                  _context.next = 8;
                   break;
                 }
 
@@ -2371,7 +2378,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 6:
+              case 8:
                 // JSONのdata項目を格納
                 _this.targets = response.data.data; // console.log(response);
                 // ページネーションの現在ページ、最終ページの値を格納
@@ -2383,7 +2390,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.totalItems = response.data.total;
                 return _context.abrupt("return");
 
-              case 12:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -2504,17 +2511,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
-                  _this4.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-
-
-                  _context4.next = 3;
+                  _context4.next = 2;
                   return _this4.fetchTargets();
 
-                case 3:
-                  _this4.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-
-
-                case 4:
+                case 2:
                 case "end":
                   return _context4.stop();
               }
@@ -4909,14 +4909,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+
+
+                _context.next = 3;
                 return axios.get("/api/twitter?page=".concat(_this.page), params);
 
-              case 2:
+              case 3:
                 response = _context.sent;
 
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+                // レスポンスのステータスが200以外の場合はエラーをストアにコミット
+
+
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
-                  _context.next = 6;
+                  _context.next = 8;
                   break;
                 }
 
@@ -4924,7 +4931,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 6:
+              case 8:
                 // JSONのdata項目を格納
                 _this.targets = response.data.data; // ページネーションの現在ページ、最終ページの値を格納
 
@@ -4935,7 +4942,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.totalItems = response.data.total;
                 return _context.abrupt("return");
 
-              case 12:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -5056,17 +5063,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context4.prev = _context4.next) {
                 case 0:
-                  _this4.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-
-
-                  _context4.next = 3;
+                  _context4.next = 2;
                   return _this4.fetchTargets();
 
-                case 3:
-                  _this4.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-
-
-                case 4:
+                case 2:
                 case "end":
                   return _context4.stop();
               }
@@ -6645,14 +6645,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return axios.get("/api/news?page=".concat(_this.page));
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
 
-              case 2:
+
+                _context.next = 3;
+                return axios.get("/api/news?page=".concat(_this.page), params);
+
+              case 3:
                 response = _context.sent;
 
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+
+
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
-                  _context.next = 6;
+                  _context.next = 8;
                   break;
                 }
 
@@ -6661,7 +6667,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 6:
+              case 8:
                 // JSONのdata項目を格納
                 _this.news = response.data.data; // ページネーションの現在ページ、最終ページの値を格納
 
@@ -6672,7 +6678,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.totalItems = response.data.total;
                 return _context.abrupt("return");
 
-              case 12:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -6681,10 +6687,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   },
-  // created() {
-  //   // ページ読み込み時にニュースを取得
-  //   this.fetchNews();
-  // },
   watch: {
     // ページネーション遷移時にコンポーネントの再生成が必要になるため、
     // $routeを監視し、ページ切り替え時にデータ取得を実行する
@@ -6697,17 +6699,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context2.prev = _context2.next) {
                 case 0:
-                  _this2.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-
-
-                  _context2.next = 3;
+                  _context2.next = 2;
                   return _this2.fetchNews();
 
-                case 3:
-                  _this2.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-
-
-                case 4:
+                case 2:
                 case "end":
                   return _context2.stop();
               }

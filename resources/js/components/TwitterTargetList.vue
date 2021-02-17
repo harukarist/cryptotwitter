@@ -90,10 +90,12 @@ export default {
     },
     // Twitterアカウント一覧を取得
     async fetchTargets(params) {
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       const response = await axios.get(
         `/api/twitter?page=${this.page}`,
         params
       );
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
@@ -162,9 +164,7 @@ export default {
     // $routeを監視し、ページ切り替え時にデータ取得を実行する
     $route: {
       async handler() {
-        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
         await this.fetchTargets();
-        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       },
       immediate: true, //コンポーネント生成時も実行
     },

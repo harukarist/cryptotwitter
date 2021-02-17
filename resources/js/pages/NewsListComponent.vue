@@ -101,10 +101,9 @@ export default {
     },
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews(params) {
-      // this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-      const response = await axios.get(`/api/news?page=${this.page}`);
-      // const response = await axios.get(`/api/news?page=${this.page}`, params);
-      // this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+      const response = await axios.get(`/api/news?page=${this.page}`, params);
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       if (response.status !== OK) {
         // 通信失敗の場合
         this.$store.commit("error/setCode", response.status);
@@ -121,18 +120,12 @@ export default {
       return;
     },
   },
-  // created() {
-  //   // ページ読み込み時にニュースを取得
-  //   this.fetchNews();
-  // },
   watch: {
     // ページネーション遷移時にコンポーネントの再生成が必要になるため、
     // $routeを監視し、ページ切り替え時にデータ取得を実行する
     $route: {
       async handler() {
-        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
         await this.fetchNews();
-        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       },
       immediate: true, //コンポーネント生成時も実行
     },
