@@ -1,6 +1,6 @@
 .u-md {
   &--hidden {
-  display: block; //通常サイズでは表示
+  display: inline-block; //通常サイズでは表示
     @include mq(medium) {
       display: none; //スマホ,タブレットサイズでは非表示
     }
@@ -8,7 +8,7 @@
   &--only {
   display: none; //通常サイズでは非表示
     @include mq(medium) {
-      display: block; //スマホ,タブレットサイズでのみ表示
+      display: inline-block; //スマホ,タブレットサイズでのみ表示
     }
   }
 }

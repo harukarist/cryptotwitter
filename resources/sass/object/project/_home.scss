@@ -30,7 +30,7 @@
     margin-right: $space--xxl;
     margin-bottom: $space--l;
     flex-grow: 1;
-    width: calc((100% - (#{$space--xxl} * 2)) / 3 ); //1行に3アイテムを均等配置
+    width: calc(100% / 3  - ((#{$space--xxl} * 2) / 3) ); //1行に3アイテムを均等配置
     &:nth-child(3n) {
       margin-right: 0; //3番目の要素は右に余白を空けない
     }

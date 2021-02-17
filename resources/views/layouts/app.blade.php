@@ -29,7 +29,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body ontouchstart="">
+<body>
     <div id="app">
         <header id="header">
             <header-component></header-component>

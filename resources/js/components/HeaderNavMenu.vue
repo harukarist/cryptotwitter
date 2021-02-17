@@ -46,8 +46,8 @@
             </li>
           </ul>
           <!--  -->
-          <div class="p-nav-menu__dropdown">
-            <div class="p-nav-menu__dropdown-head" @click="clickDropdownHead">
+          <div class="p-nav-menu__dropdown" @click.self="clickDropdownHead">
+            <div class="p-nav-menu__dropdown-head">
               <img
                 :src="usersAvatar"
                 class="p-nav-menu__avatar"

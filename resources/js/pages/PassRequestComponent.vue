@@ -135,7 +135,13 @@ export default {
         const result = response.data.result;
         // メール送信が完了した場合
         if (result === "success") {
+          // フラグをtrueにして送信完了メッセージを表示
           this.isSent = true;
+          // ページ最上部までスクロール
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
           // メール送信が失敗した場合
         } else if (result === "failed") {
           // エラーメッセージを表示

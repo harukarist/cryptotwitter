@@ -15,22 +15,20 @@
           <span class="p-reason__num">01</span>
           <fade-in-component>
             <h4 class="p-reason__heading">
-              仮想通貨の各銘柄が<br class="u-sp--only" />どのぐらいツイート<br
-                class="u-sp--only"
-              />されているかを<br />
-              過去1時間・24時間・<br class="u-sp--only" />1週間でランキング表示
+              仮想通貨の各銘柄がどのぐらいツイートされているかを<br
+                class="u-md--hidden"
+              />過去1時間・24時間・1週間でランキング表示
             </h4>
             <p class="p-reason__text">
-              Coincheckにて取り扱われている<br
-                class="u-sp--only"
-              />全18銘柄の仮想通貨について<br />
-              仮想通貨の銘柄名をキーワードに<br
-                class="u-sp--only"
-              />含むツイート数を集計し、<br />
-              最新データをランキングで表示。<br />
-              変化の激しい仮想通貨の<br
-                class="u-sp--only"
-              />最新トレンドを手軽に<br class="u-sp--only" />チェックできます。
+              Coincheckにて取り扱われている全18銘柄の仮想通貨について<br
+                class="u-md--hidden"
+              />
+              仮想通貨の銘柄名をキーワードに含むツイート数を集計し、<br
+                class="u-md--hidden"
+              />
+              最新データをランキングで表示。<br
+                class="u-md--hidden"
+              />変化の激しい仮想通貨の最新トレンドを手軽にチェックできます。
             </p>
           </fade-in-component>
         </div>
@@ -50,26 +48,23 @@
           <span class="p-reason__num">02</span>
           <fade-in-component>
             <h4 class="p-reason__heading">
-              仮想通貨関連の<br class="u-sp--only" />Twitterユーザーに<br />
-              ターゲットを絞った<br class="u-sp--only" />自動フォロー
+              仮想通貨関連のTwitterユーザーに<br
+                class="u-sp--hidden"
+              />ターゲットを絞った自動フォロー
             </h4>
             <p class="p-reason__text">
-              仮想通貨に関心を持っている<br
-                class="u-sp--only"
-              />1,500以上のTwitterアカウントを<br />
-              自動でフォロー。<br
-                class="u-sp--only"
-              />お使いのTwitterアカウントを<br
-                class="u-sp--only"
-              />登録するだけで<br />
-              手間なくフォロー数を<br
-                class="u-sp--only"
-              />増やすことができます。<br />
-              個別のアカウントフォロー、<br
-                class="u-sp--only"
-              />最新ツイートのチェックも<br
-                class="u-sp--only"
-              />可能です。<br />
+              仮想通貨に関心を持っている1,500以上のTwitterアカウントを<br
+                class="u-md--hidden"
+              />
+              自動でフォロー。お使いのTwitterアカウントを登録するだけで<br
+                class="u-md--hidden"
+              />
+              手間なくフォロー数を増やすことができます。<br
+                class="u-md--hidden"
+              />
+              個別のアカウントフォロー、最新ツイートのチェックも可能です。<br
+                class="u-md--hidden"
+              />
             </p>
           </fade-in-component>
         </div>
@@ -89,20 +84,17 @@
           <span class="p-reason__num">03</span>
           <fade-in-component>
             <h4 class="p-reason__heading">
-              仮想通貨関連の<br class="u-sp--only" />キーワードを含む<br />
-              最新ニュースを<br class="u-sp--only" />厳選してお届け
+              仮想通貨関連のキーワードを含む<br
+                class="u-sp--hidden"
+              />最新ニュースを厳選してお届け
             </h4>
             <p class="p-reason__text">
-              仮想通貨に関する最新ニュースを<br
-                class="u-sp--only"
-              />Googleから随時お届けします。<br />
-              膨大な情報の中から<br
-                class="u-sp--only"
-              />仮想通貨のみにテーマを絞って、<br
-                class="u-sp--only"
-              />いつでも<br class="u-sp--hidden" />必要な情報だけを<br
-                class="u-sp--only"
-              />効率良くチェックできます。
+              仮想通貨に関する最新ニュースをGoogleから随時お届けします。<br
+                class="u-md--hidden"
+              />
+              膨大な情報の中から仮想通貨のみにテーマを絞って、いつでも<br
+                class="u-md--hidden"
+              />必要な情報だけを効率良くチェックできます。
             </p>
           </fade-in-component>
         </div>

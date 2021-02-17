@@ -22,6 +22,12 @@ module.exports = {
     // 出力ファイル名
     filename: "app.js",
   },
+  // ローカル開発用環境を立ち上げる
+  // 実行時にブラウザが自動的に localhost を開く
+  devServer: {
+    contentBase: "public",
+    open: true // 自動的にブラウザが立ち上がる
+  },
   target: ['web', 'es5'], //IE対応
   module: {
     rules: [

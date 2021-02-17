@@ -63,6 +63,14 @@ export default {
     PaginationInfo, //ページネーションの件数表示
     SearchFormComponent,
   },
+  // ページネーションのページ番号をrouter.jsから受け取る
+  props: {
+    page: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+  },
   data() {
     return {
       news: [], //ニュース一覧を格納する配列を用意
@@ -73,14 +81,6 @@ export default {
       directoryName: "news", //ページネーションリンクに付与するディレクトリ
     };
   },
-  // ページネーションのページ番号をrouter.jsから受け取る
-  props: {
-    page: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
-  },
   methods: {
     // ニュースをキーワード検索
     searchNews(word) {
@@ -90,7 +90,7 @@ export default {
           search: word,
         },
       };
-      // クエリパラメータを渡してTwitterアカウント一覧を取得
+      // クエリパラメータを渡してニュース一覧を取得
       this.fetchNews(params);
     },
     // 検索結果の表示を解除
@@ -101,9 +101,10 @@ export default {
     },
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews(params) {
-      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-      const response = await axios.get(`/api/news?page=${this.page}`, params);
-      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+      // this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+      const response = await axios.get(`/api/news?page=${this.page}`);
+      // const response = await axios.get(`/api/news?page=${this.page}`, params);
+      // this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       if (response.status !== OK) {
         // 通信失敗の場合
         this.$store.commit("error/setCode", response.status);
@@ -120,9 +121,20 @@ export default {
       return;
     },
   },
-  created() {
-    // ページ読み込み時にニュースを取得
-    this.fetchNews();
+  // created() {
+  //   // ページ読み込み時にニュースを取得
+  //   this.fetchNews();
+  // },
+  watch: {
+    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    $route: {
+      async handler() {
+        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+        await this.fetchNews();
+        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+      },
+      immediate: true, //コンポーネント生成時も実行
+    },
   },
 };
 </script>

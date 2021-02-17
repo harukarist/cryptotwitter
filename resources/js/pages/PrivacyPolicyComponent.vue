@@ -160,7 +160,9 @@
 
         <h3 class="c-section__subtitle--left">第10条（お問い合わせ窓口）</h3>
         <p class="c-section__text--left">
-          本ポリシーに関するお問い合わせは、お問い合わせフォームまでお願いいたします。
+          本ポリシーに関するお問い合わせは、
+          <RouterLink :to="{ name: 'contact' }">お問い合わせフォーム</RouterLink
+          >へお願いいたします。
         </p>
 
         <p class="u-font--right">以上</p>

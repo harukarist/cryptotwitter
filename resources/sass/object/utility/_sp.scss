@@ -3,7 +3,7 @@
   // br要素の直後に改行を入れて非表示にすると半角スペースが表示されてしまうため
   // 非表示にするbr要素の直後は改行しないこと。
   &--hidden {
-  display: block; //通常サイズでは表示
+  display: inline-block; //通常サイズでは表示
     @include mq() {
       display: none; //スマホサイズでは非表示
     }
@@ -11,7 +11,7 @@
   &--only {
     display: none; //通常サイズでは非表示
       @include mq() {
-        display: block; //スマホサイズでのみ表示
+        display: inline-block; //スマホサイズでのみ表示
       }
     }
 }

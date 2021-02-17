@@ -16,7 +16,8 @@
   &__contents {
     display: flex;
     margin: 0 auto;
-    width: $site-width;
+    width: 100%;
+    max-width: $site-width;
     justify-content: center;
     @include mq(medium){
       width: 100%;
@@ -26,11 +27,14 @@
     }
   }
   &__item {
-    margin: 0 $space--s;
+    margin-right: $space--l;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(100%/3);
+    width: calc(100% / 3  - ((#{$space--l} * 2) / 3) ); //1行に3アイテムを均等配置
+    &:nth-child(3n) {
+      margin-right: 0; //3番目の要素は右に余白を空けない
+    }
     @include mq(){
       flex-direction: row;
       justify-content: center;
@@ -46,6 +50,7 @@
     display: inline-block;
     box-sizing: border-box;
     margin-bottom: $space--l;
+    width: 100%;
     &:before { //下向きの吹き出し
       content: "";
       position: absolute;

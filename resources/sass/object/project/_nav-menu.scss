@@ -73,7 +73,8 @@
       margin-right: $space--s;
     }
     @include mq(large){
-      font-size: $font-size--s;
+      margin: 0 $space--m;
+      font-size: $font-size--default;
     }
     // ドロワーメニュー
     @include mq(medium){

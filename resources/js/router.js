@@ -17,9 +17,6 @@ import WithdrawComponent from './pages/WithdrawComponent';
 import PrivacyPolicyComponent from './pages/PrivacyPolicyComponent';
 import TermsComponent from './pages/TermsComponent';
 import ContactComponent from './pages/ContactComponent';
-import ContactForm from './components/ContactForm';
-import ContactConfirm from './components/ContactConfirm';
-import ContactSent from './components/ContactSent';
 import SystemError from './errors/SystemError';
 import NotFound from './errors/NotFound';
 

@@ -101,7 +101,6 @@ export default {
       }
       // JSONのdata項目を格納
       this.targets = response.data.data;
-      // console.log(response);
 
       // ページネーションの現在ページ、最終ページの値を格納
       this.currentPage = response.data.current_page;

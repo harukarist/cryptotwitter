@@ -38,18 +38,19 @@
     }
     &-item {
       flex-grow: 1;
-      margin-right: 10px;
+      margin-right: $space--m;
       line-height: 1.0;
-      width: calc((100% - (10px * 5)) / 6 ); //1行に6銘柄を均等配置
+      width: calc(100% / 6 - ((#{$space--m} * 5) / 6)); //1行に6銘柄を均等配置
       &:nth-child(6n) {
         margin-right: 0; //6番目の要素は右に余白を空けない
       }
       @include mq(medium) {
-        margin-right: 5px;
+        margin-right: $space--s;
+        width: calc(100% / 6 - ((#{$space--s} * 5) / 6));
       }
       @include mq() {
-        margin-right: 5px;
-        width: calc((100% - (5px * 2)) / 3 ); //スマホ表示時は1行に2銘柄を均等配置
+        margin-right: $space--s;
+        width: calc(100% / 3 - ((#{$space--s} * 2) / 3)); //スマホ表示時は1行に2銘柄を均等配置
         &:nth-child(3n) {
           margin-right: 0; //2番目の要素は右に余白を空けない
         }
@@ -93,8 +94,9 @@
   }
   &__name {
     font-weight: bold;
-    font-size: $font-size--l;
+    font-size: $font-size--default;
     font-family: $font-family--theme;
+    letter-spacing: 0.15em;
     &--small {
       font-size: $font-size--s;
     }
