@@ -8357,27 +8357,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   computed: {
+    // ツイート数の大きい順に配列を並べ替え
+    sortedItems: function sortedItems() {
+      // トレンド一覧のオブジェクトitemsを、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
+      return _.orderBy(this.items, this.column, "desc");
+    },
+    addRankNum: function addRankNum() {
+      return _.each(this.sortedItems, function (item, index) {
+        item.ranking = index + 1; //0から始まるインデックス番号に+1して順位のプロパティを作成
+      });
+    },
     // 銘柄名を指定して絞り込み表示
-    matched: function matched() {
+    matchedItems: function matchedItems() {
       // コールバック関数内で使用するため、thisを変数に格納
       var _self = this; // 絞り込み指定がある場合(フォームのv-modelにトレンド一覧のidが入っている場合）
 
 
       if (this.selectedItems.length) {
-        // トレンド一覧のオブジェクトitemsをlodashで展開し、第二引数がtrueの要素のみ返却
-        return _.filter(this.items, function (value) {
+        // sortedでツイート数順に並べ替えた配列をlodashで展開し、第二引数がtrueの要素のみ返却
+        return _.filter(this.addRankNum, function (value) {
           //絞り込み選択された配列の中に、展開した要素のidが含まれるかどうか(true/false)を返却
           return _.includes(_self.selectedItems, value.id);
         });
-      } // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧を返却
+      } // 絞り込み表示の指定がない場合は、sortedでツイート数順に並べ替えた配列を返却
 
 
-      return this.items;
-    },
-    // ツイート数の大きい順に並べ替えて表示
-    sorted: function sorted() {
-      // 絞り込み処理を行った後の配列を、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
-      return _.orderBy(this.matched, this.column, "desc");
+      return this.addRankNum;
     },
     // 表示中のトレンド
     activeColumn: function activeColumn() {
@@ -8431,7 +8436,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee);
       }))();
     },
-    // sorted()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
+    // sortedItems()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour: function sortByHour() {
       this.column = "tweet_hour";
     },
@@ -60521,13 +60526,7 @@ var render = function() {
               _c("div", { staticClass: "p-trend__head-left" }, [
                 !_vm.selectedItems.length ||
                 _vm.items.length === _vm.selectedItems.length
-                  ? _c("span", { staticClass: "u-font--small u-font--muted" }, [
-                      _vm._v(
-                        "\n              全" +
-                          _vm._s(_vm.sorted.length) +
-                          "銘柄を表示\n            "
-                      )
-                    ])
+                  ? _c("span", { staticClass: "u-font--small u-font--muted" })
                   : _c("span", { staticClass: "u-font--small u-font--muted" }, [
                       _vm._v(
                         "\n              " +
@@ -60615,10 +60614,10 @@ var render = function() {
                   _c(
                     "ul",
                     { staticClass: "p-trend__select-list" },
-                    _vm._l(_vm.items, function(trend) {
+                    _vm._l(_vm.items, function(item) {
                       return _c(
                         "li",
-                        { key: trend.id, staticClass: "p-trend__select-item" },
+                        { key: item.id, staticClass: "p-trend__select-item" },
                         [
                           _c("input", {
                             directives: [
@@ -60630,11 +60629,11 @@ var render = function() {
                               }
                             ],
                             staticClass: "c-checkbox__icon",
-                            attrs: { type: "checkbox", id: trend.id },
+                            attrs: { type: "checkbox", id: item.id },
                             domProps: {
-                              value: trend.id,
+                              value: item.id,
                               checked: Array.isArray(_vm.selectedItems)
-                                ? _vm._i(_vm.selectedItems, trend.id) > -1
+                                ? _vm._i(_vm.selectedItems, item.id) > -1
                                 : _vm.selectedItems
                             },
                             on: {
@@ -60643,7 +60642,7 @@ var render = function() {
                                   $$el = $event.target,
                                   $$c = $$el.checked ? true : false
                                 if (Array.isArray($$a)) {
-                                  var $$v = trend.id,
+                                  var $$v = item.id,
                                     $$i = _vm._i($$a, $$v)
                                   if ($$el.checked) {
                                     $$i < 0 &&
@@ -60661,10 +60660,10 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _c("label", { attrs: { for: trend.id } }, [
+                          _c("label", { attrs: { for: item.id } }, [
                             _vm._v(
                               "\n                  " +
-                                _vm._s(trend.currency_name) +
+                                _vm._s(item.currency_name) +
                                 "\n                "
                             )
                           ])
@@ -60717,7 +60716,27 @@ var render = function() {
               "table",
               { staticClass: "c-table c-fade-in" },
               [
-                _vm._m(1),
+                _c("thead", { staticClass: "c-table__thead" }, [
+                  _c("tr", [
+                    _c("th", { staticClass: "c-table--left" }, [
+                      _vm._v("順位")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "c-table--left" }, [
+                      _vm._v("銘柄名")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "c-table--center" }, [
+                      _vm._v(_vm._s(_vm.activeColumn) + "の"),
+                      _c("br"),
+                      _vm._v("ツイート数")
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2)
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "transition-group",
@@ -60725,7 +60744,7 @@ var render = function() {
                     staticClass: "c-table__tbody",
                     attrs: { appear: "", tag: "tbody", name: "flip-list" }
                   },
-                  _vm._l(_vm.sorted, function(trend, index) {
+                  _vm._l(_vm.matchedItems, function(trend) {
                     return _c(
                       "tr",
                       { key: trend.id, staticClass: "p-trend__item" },
@@ -60736,15 +60755,15 @@ var render = function() {
                             {
                               staticClass: "p-trend__order",
                               class: {
-                                "p-trend__order--gold": index === 0,
-                                "p-trend__order--silver": index === 1,
-                                "p-trend__order--bronze": index === 2
+                                "p-trend__order--gold": trend.ranking === 1,
+                                "p-trend__order--silver": trend.ranking === 2,
+                                "p-trend__order--bronze": trend.ranking === 3
                               }
                             },
                             [
                               _vm._v(
                                 "\n                  " +
-                                  _vm._s(index + 1) +
+                                  _vm._s(trend.ranking) +
                                   "\n                "
                               )
                             ]
@@ -60917,30 +60936,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "c-table__thead" }, [
-      _c("tr", [
-        _c("th", { staticClass: "c-table--left" }, [_vm._v("順位")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "c-table--left" }, [_vm._v("銘柄名")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "c-table--center" }, [_vm._v("ツイート数")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "c-table--right" }, [
-          _vm._v("\n                過去24時間の"),
-          _c("br", { staticClass: "u-sp-hidden" }),
-          _vm._v("最高取引価格"),
-          _c("br"),
-          _vm._v("\n                （円）\n              ")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "c-table--right" }, [
-          _vm._v("\n                過去24時間の"),
-          _c("br", { staticClass: "u-sp-hidden" }),
-          _vm._v("最低取引価格"),
-          _c("br"),
-          _vm._v("\n                （円）\n              ")
-        ])
-      ])
+    return _c("th", { staticClass: "c-table--right" }, [
+      _vm._v("\n                過去24時間の"),
+      _c("br", { staticClass: "u-sp-hidden" }),
+      _vm._v("最高取引価格"),
+      _c("br"),
+      _vm._v("\n                （円）\n              ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", { staticClass: "c-table--right" }, [
+      _vm._v("\n                過去24時間の"),
+      _c("br", { staticClass: "u-sp-hidden" }),
+      _vm._v("最低取引価格"),
+      _c("br"),
+      _vm._v("\n                （円）\n              ")
     ])
   }
 ]

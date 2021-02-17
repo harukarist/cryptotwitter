@@ -49,7 +49,7 @@
                 "
                 class="u-font--small u-font--muted"
               >
-                全{{ sorted.length }}銘柄を表示
+                <!-- 全{{ matchedItems.length }}銘柄を表示 -->
               </span>
               <span v-else class="u-font--small u-font--muted">
                 {{ selectedItems.length }}件を絞り込み表示
@@ -78,19 +78,19 @@
               ></i>
               <ul class="p-trend__select-list">
                 <li
-                  v-for="trend in items"
-                  :key="trend.id"
+                  v-for="item in items"
+                  :key="item.id"
                   class="p-trend__select-item"
                 >
                   <input
                     type="checkbox"
                     class="c-checkbox__icon"
-                    v-bind:id="trend.id"
-                    v-bind:value="trend.id"
+                    v-bind:id="item.id"
+                    v-bind:value="item.id"
                     v-model="selectedItems"
                   />
-                  <label v-bind:for="trend.id">
-                    {{ trend.currency_name }}
+                  <label v-bind:for="item.id">
+                    {{ item.currency_name }}
                   </label>
                 </li>
               </ul>
@@ -118,7 +118,7 @@
               <tr>
                 <th class="c-table--left">順位</th>
                 <th class="c-table--left">銘柄名</th>
-                <th class="c-table--center">ツイート数</th>
+                <th class="c-table--center">{{ activeColumn }}の<br>ツイート数</th>
                 <th class="c-table--right">
                   過去24時間の<br class="u-sp-hidden" />最高取引価格<br />
                   （円）
@@ -136,7 +136,7 @@
               class="c-table__tbody"
             >
               <tr
-                v-for="(trend, index) in sorted"
+                v-for="trend in matchedItems"
                 :key="trend.id"
                 class="p-trend__item"
               >
@@ -144,12 +144,12 @@
                   <span
                     class="p-trend__order"
                     :class="{
-                      'p-trend__order--gold': index === 0,
-                      'p-trend__order--silver': index === 1,
-                      'p-trend__order--bronze': index === 2,
+                      'p-trend__order--gold': trend.ranking === 1,
+                      'p-trend__order--silver': trend.ranking === 2,
+                      'p-trend__order--bronze': trend.ranking === 3,
                     }"
                   >
-                    {{ index + 1 }}
+                    {{ trend.ranking }}
                   </span>
                 </td>
                 <td>
@@ -232,26 +232,32 @@ export default {
     },
   },
   computed: {
+    // ツイート数の大きい順に配列を並べ替え
+    sortedItems() {
+      // トレンド一覧のオブジェクトitemsを、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
+      return _.orderBy(this.items, this.column, "desc");
+    },
+    addRankNum() {
+      return _.each(this.sortedItems, (item, index) => {
+        item.ranking = index + 1; //0から始まるインデックス番号に+1して順位のプロパティを作成
+      });
+    },
     // 銘柄名を指定して絞り込み表示
-    matched() {
+    matchedItems() {
       // コールバック関数内で使用するため、thisを変数に格納
       const _self = this;
       // 絞り込み指定がある場合(フォームのv-modelにトレンド一覧のidが入っている場合）
       if (this.selectedItems.length) {
-        // トレンド一覧のオブジェクトitemsをlodashで展開し、第二引数がtrueの要素のみ返却
-        return _.filter(this.items, function (value) {
+        // sortedでツイート数順に並べ替えた配列をlodashで展開し、第二引数がtrueの要素のみ返却
+        return _.filter(this.addRankNum, function (value) {
           //絞り込み選択された配列の中に、展開した要素のidが含まれるかどうか(true/false)を返却
           return _.includes(_self.selectedItems, value.id);
         });
       }
-      // 絞り込み表示の指定がない場合はAPIで取得したトレンド一覧を返却
-      return this.items;
+      // 絞り込み表示の指定がない場合は、sortedでツイート数順に並べ替えた配列を返却
+      return this.addRankNum;
     },
-    // ツイート数の大きい順に並べ替えて表示
-    sorted() {
-      // 絞り込み処理を行った後の配列を、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
-      return _.orderBy(this.matched, this.column, "desc");
-    },
+
     // 表示中のトレンド
     activeColumn() {
       if (this.column === "tweet_hour") {
@@ -279,7 +285,7 @@ export default {
       // 更新日時を格納
       this.updatedAt = response.data.updated_at;
     },
-    // sorted()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
+    // sortedItems()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour() {
       this.column = "tweet_hour";
     },
