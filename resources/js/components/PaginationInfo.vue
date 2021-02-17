@@ -1,6 +1,6 @@
 <template>
-  <p v-if="totalItems" class="c-pagination__info">
-    全{{ totalItems }}件中 {{ startNum }} - {{ endNum }}件を表示
+  <p v-if="totalNum" class="c-pagination__info">
+    全{{ totalNum }}件中 {{ startNum }} - {{ endNum }}件を表示
   </p>
 </template>
 
@@ -18,7 +18,7 @@ export default {
       required: true,
     },
     //トータル件数
-    totalItems: {
+    totalNum: {
       type: Number,
       required: true,
     },
@@ -32,7 +32,7 @@ export default {
     // 表示している1つ目の件数
     startNum() {
       // 合計件数が0件の場合は0を返却
-      if (this.totalItems === 0) {
+      if (this.totalNum === 0) {
         return 0;
       }
       // その他の場合は（1ページあたりの表示件数 × 1つ前のページ番号）＋1
@@ -41,7 +41,7 @@ export default {
     // 表示している最後の件数
     endNum() {
       // 合計件数が0件の場合は0を返却
-      if (this.totalItems === 0) {
+      if (this.totalNum === 0) {
         return 0;
       }
       // その他の場合は（1ページあたりの表示件数 × 1つ前のページ番号）＋1

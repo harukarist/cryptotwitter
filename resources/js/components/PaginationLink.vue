@@ -1,7 +1,7 @@
 <template>
   <ul class="c-pagination__list">
     <li class="c-pagination__item" v-show="!isFirstPage">
-      <RouterLink :to="`/${directory}?page=1`">
+      <RouterLink :to="`/${directory}?page=1&search=${searchedParam}`">
         <i class="fas fa-angle-double-left"></i>
       </RouterLink>
     </li>
@@ -10,7 +10,9 @@
     </li>
 
     <li class="c-pagination__item" v-show="!isFirstPage">
-      <RouterLink :to="`/${directory}?page=${currentPage - 1}`">
+      <RouterLink
+        :to="`/${directory}?page=${currentPage - 1}&search=${searchedParam}`"
+      >
         <i class="fas fa-angle-left"></i>
       </RouterLink>
     </li>
@@ -23,19 +25,21 @@
       class="c-pagination__item c-pagination__item--page"
       :class="isCurrent(page) ? 'is-active' : ''"
     >
-      <RouterLink :to="`/${directory}?page=${page}`">
+      <RouterLink :to="`/${directory}?page=${page}&search=${searchedParam}`">
         {{ page }}
       </RouterLink>
     </li>
-    <!-- v-show="!isLastPage"
-v-show="!isLastPage" -->
     <li class="c-pagination__item" v-show="!isLastPage">
-      <RouterLink :to="`/${directory}?page=${currentPage + 1}`">
+      <RouterLink
+        :to="`/${directory}?page=${currentPage + 1}&search=${searchedParam}`"
+      >
         <i class="fas fa-angle-right"></i>
       </RouterLink>
     </li>
     <li class="c-pagination__item" v-show="!isLastPage">
-      <RouterLink :to="`/${directory}?page=${lastPage}`">
+      <RouterLink
+        :to="`/${directory}?page=${lastPage}&search=${searchedParam}`"
+      >
         <i class="fas fa-angle-double-right"></i>
       </RouterLink>
     </li>
@@ -68,12 +72,17 @@ export default {
       required: true,
     },
     //トータル件数
-    totalItems: {
+    totalNum: {
       type: Number,
       required: true,
     },
     // ディレクトリ
     directory: {
+      type: String,
+      required: false,
+    },
+    // 検索キーワード
+    searchedParam: {
       type: String,
       required: false,
     },

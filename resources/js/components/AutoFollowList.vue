@@ -4,6 +4,9 @@
       <search-form-component
         @search="searchTargets"
         @clear="clearResult"
+        :total-num="totalNum"
+        :searched-param="searchedParam"
+        item-name="自動フォローしたアカウント"
         class="u-mt--xl u-mb--xxxl"
       />
 
@@ -21,23 +24,25 @@
         </div>
       </twitter-target-item>
 
-      <p v-if="totalItems === 0" class="u-font--center">
+      <p v-if="!searchedParam && totalNum === 0" class="u-font--center">
         アカウントが存在しません
       </p>
 
-      <pagination-link
-        :directory="directoryName"
-        :current-page="currentPage"
-        :last-page="lastPage"
-        :per-page="perPage"
-        :total-items="totalItems"
-      />
-      <pagination-info
-        :current-page="currentPage"
-        :per-page="perPage"
-        :total-items="totalItems"
-        :items-length="targets.length"
-      />
+      <div class="c-pagination">
+        <pagination-link
+          :directory="directoryName"
+          :current-page="currentPage"
+          :last-page="lastPage"
+          :per-page="perPage"
+          :total-num="totalNum"
+        />
+        <pagination-info
+          :current-page="currentPage"
+          :per-page="perPage"
+          :total-num="totalNum"
+          :items-length="targets.length"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -54,26 +59,27 @@ export default {
     TwitterTargetItem,
     PaginationLink, //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo, //ページネーションの件数表示
-    SearchFormComponent,
-  },
-  data() {
-    return {
-      targets: [], //仮想通貨関連アカウント一覧を格納する配列を用意
-      followed_at: "", //現在ページ
-      currentPage: 0, //現在ページ
-      lastPage: 0, //最終ページ
-      perPage: 0, //1ページあたりの表示件数
-      totalItems: 0, //トータル件数
-      directoryName: "autofollow/list", //ページネーションリンクに付与するディレクトリ
-    };
+    SearchFormComponent, //キーワード検索フォーム
   },
   // ページネーションのページ番号を親コンポーネントTwitterListComponentから受け取る
   props: {
     page: {
       type: Number,
       required: false,
-      default: 0,
+      default: 1,
     },
+  },
+  data() {
+    return {
+      targets: [], //仮想通貨関連アカウント一覧を格納する配列を用意
+      followed_at: "", //自動フォロー日時
+      currentPage: 0, //現在ページ
+      lastPage: 0, //最終ページ
+      perPage: 0, //1ページあたりの表示件数
+      totalNum: 0, //トータル件数
+      directoryName: "autofollow/list", //ページネーションリンクに付与するディレクトリ
+      searchedParam: "", //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
+    };
   },
   computed: {
     isTwitterLogin() {
@@ -92,20 +98,29 @@ export default {
       };
       // クエリパラメータを渡してTwitterアカウント一覧を取得
       this.fetchTargets(params);
+      this.searchedParam = word;
     },
     // 検索結果の表示を解除
     clearResult() {
       // 検索用のクエリパラメータを指定しない
-      let params = {};
-      this.fetchTargets(params);
+      this.fetchTargets();
+      this.searchedParam = "";
     },
     // 自動フォロー済みのTwitterアカウント一覧を取得
     async fetchTargets(params) {
       this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-      const response = await axios.get(
-        `/api/autofollow/list?page=${this.page}`,
-        params
-      );
+      if (!params) {
+        // 入力された検索キーワードがなければクエリパラメータの値を再セット
+        params = {
+          params: {
+            page: this.page,
+            search: this.searchedParam,
+          },
+        };
+      }
+      // 仮想通貨アカウントの一覧取得APIへリクエスト
+      const response = await axios.get("/api/autofollow/list", params);
+
       this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット
       if (response.status !== OK) {
@@ -114,13 +129,13 @@ export default {
       }
       // JSONのdata項目を格納
       this.targets = response.data.data;
-      // console.log(response);
+
       // ページネーションの現在ページ、最終ページの値を格納
       this.currentPage = response.data.current_page;
       this.lastPage = response.data.last_page;
       // 1ページあたりの表示件数、トータル件数を格納
       this.perPage = response.data.per_page;
-      this.totalItems = response.data.total;
+      this.totalNum = response.data.total;
       return;
     },
     // フォロー登録メソッド

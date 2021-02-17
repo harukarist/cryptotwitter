@@ -8,10 +8,14 @@
         />お届けします。<br />
       </p>
       <div class="p-news c-fade-in">
-        <search-form-component @search="searchNews" @clear="clearResult" />
-        <p v-if="totalItems === 0" class="u-font--center">
-          ニュースが存在しません
-        </p>
+        <search-form-component
+          @search="searchNews"
+          @clear="clearResult"
+          :total-num="totalNum"
+          :searched-param="searchedParam"
+          item-name="ニュース"
+          class="u-mt--xl u-mb--xxxl"
+        />
 
         <transition-group tag="div" name="popup" appear class="p-news__item">
           <div class="p-news__item" v-for="item in news" :key="item.title">
@@ -34,15 +38,16 @@
         <div class="c-pagination">
           <pagination-link
             :directory="directoryName"
+            :searched-param="searchedParam"
             :current-page="currentPage"
             :last-page="lastPage"
             :per-page="perPage"
-            :total-items="totalItems"
+            :total-num="totalNum"
           />
           <pagination-info
             :current-page="currentPage"
             :per-page="perPage"
-            :total-items="totalItems"
+            :total-num="totalNum"
             :items-length="news.length"
           />
         </div>
@@ -61,14 +66,14 @@ export default {
   components: {
     PaginationLink, //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo, //ページネーションの件数表示
-    SearchFormComponent,
+    SearchFormComponent, //キーワード検索フォーム
   },
   // ページネーションのページ番号をrouter.jsから受け取る
   props: {
     page: {
       type: Number,
       required: false,
-      default: 0,
+      default: 1,
     },
   },
   data() {
@@ -77,8 +82,9 @@ export default {
       currentPage: 0, //現在ページ
       lastPage: 0, //最終ページ
       perPage: 0, //1ページあたりの表示件数
-      totalItems: 0, //トータル件数
+      totalNum: 0, //トータル件数
       directoryName: "news", //ページネーションリンクに付与するディレクトリ
+      searchedParam: "", //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
     };
   },
   methods: {
@@ -92,17 +98,28 @@ export default {
       };
       // クエリパラメータを渡してニュース一覧を取得
       this.fetchNews(params);
+      this.searchedParam = word;
     },
     // 検索結果の表示を解除
     clearResult() {
       // 検索用のクエリパラメータを指定しない
-      let params = {};
-      this.fetchNews(params);
+      this.fetchNews();
+      this.searchedParam = "";
     },
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews(params) {
       this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-      const response = await axios.get(`/api/news?page=${this.page}`, params);
+      if (!params) {
+        // 入力された検索キーワードがなければクエリパラメータの値を再セット
+        params = {
+          params: {
+            page: this.page,
+            search: this.searchedParam,
+          },
+        };
+      }
+      // ニュース一覧取得APIへリクエスト
+      const response = await axios.get("/api/news", params);
       this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       if (response.status !== OK) {
         // 通信失敗の場合
@@ -111,12 +128,13 @@ export default {
       }
       // JSONのdata項目を格納
       this.news = response.data.data;
+      
       // ページネーションの現在ページ、最終ページの値を格納
       this.currentPage = response.data.current_page;
       this.lastPage = response.data.last_page;
       // 1ページあたりの表示件数、トータル件数を格納
       this.perPage = response.data.per_page;
-      this.totalItems = response.data.total;
+      this.totalNum = response.data.total;
       return;
     },
   },

@@ -2282,6 +2282,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2294,33 +2299,36 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__.default,
     //ページネーションの件数表示
-    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__.default
-  },
-  data: function data() {
-    return {
-      targets: [],
-      //仮想通貨関連アカウント一覧を格納する配列を用意
-      followed_at: "",
-      //現在ページ
-      currentPage: 0,
-      //現在ページ
-      lastPage: 0,
-      //最終ページ
-      perPage: 0,
-      //1ページあたりの表示件数
-      totalItems: 0,
-      //トータル件数
-      directoryName: "autofollow/list" //ページネーションリンクに付与するディレクトリ
+    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__.default //キーワード検索フォーム
 
-    };
   },
   // ページネーションのページ番号を親コンポーネントTwitterListComponentから受け取る
   props: {
     page: {
       type: Number,
       required: false,
-      default: 0
+      default: 1
     }
+  },
+  data: function data() {
+    return {
+      targets: [],
+      //仮想通貨関連アカウント一覧を格納する配列を用意
+      followed_at: "",
+      //自動フォロー日時
+      currentPage: 0,
+      //現在ページ
+      lastPage: 0,
+      //最終ページ
+      perPage: 0,
+      //1ページあたりの表示件数
+      totalNum: 0,
+      //トータル件数
+      directoryName: "autofollow/list",
+      //ページネーションリンクに付与するディレクトリ
+      searchedParam: "" //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
+
+    };
   },
   computed: {
     isTwitterLogin: function isTwitterLogin() {
@@ -2339,12 +2347,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }; // クエリパラメータを渡してTwitterアカウント一覧を取得
 
       this.fetchTargets(params);
+      this.searchedParam = word;
     },
     // 検索結果の表示を解除
     clearResult: function clearResult() {
       // 検索用のクエリパラメータを指定しない
-      var params = {};
-      this.fetchTargets(params);
+      this.fetchTargets();
+      this.searchedParam = "";
     },
     // 自動フォロー済みのTwitterアカウント一覧を取得
     fetchTargets: function fetchTargets(params) {
@@ -2359,10 +2368,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
 
 
-                _context.next = 3;
-                return axios.get("/api/autofollow/list?page=".concat(_this.page), params);
+                if (!params) {
+                  // 入力された検索キーワードがなければクエリパラメータの値を再セット
+                  params = {
+                    params: {
+                      page: _this.page,
+                      search: _this.searchedParam
+                    }
+                  };
+                } // 仮想通貨アカウントの一覧取得APIへリクエスト
 
-              case 3:
+
+                _context.next = 4;
+                return axios.get("/api/autofollow/list", params);
+
+              case 4:
                 response = _context.sent;
 
                 _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
@@ -2370,7 +2390,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
-                  _context.next = 8;
+                  _context.next = 9;
                   break;
                 }
 
@@ -2378,19 +2398,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 8:
+              case 9:
                 // JSONのdata項目を格納
-                _this.targets = response.data.data; // console.log(response);
-                // ページネーションの現在ページ、最終ページの値を格納
+                _this.targets = response.data.data; // ページネーションの現在ページ、最終ページの値を格納
 
                 _this.currentPage = response.data.current_page;
                 _this.lastPage = response.data.last_page; // 1ページあたりの表示件数、トータル件数を格納
 
                 _this.perPage = response.data.per_page;
-                _this.totalItems = response.data.total;
+                _this.totalNum = response.data.total;
                 return _context.abrupt("return");
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -4224,7 +4243,7 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     //トータル件数
-    totalItems: {
+    totalNum: {
       type: Number,
       required: true
     },
@@ -4238,7 +4257,7 @@ __webpack_require__.r(__webpack_exports__);
     // 表示している1つ目の件数
     startNum: function startNum() {
       // 合計件数が0件の場合は0を返却
-      if (this.totalItems === 0) {
+      if (this.totalNum === 0) {
         return 0;
       } // その他の場合は（1ページあたりの表示件数 × 1つ前のページ番号）＋1
 
@@ -4248,7 +4267,7 @@ __webpack_require__.r(__webpack_exports__);
     // 表示している最後の件数
     endNum: function endNum() {
       // 合計件数が0件の場合は0を返却
-      if (this.totalItems === 0) {
+      if (this.totalNum === 0) {
         return 0;
       } // その他の場合は（1ページあたりの表示件数 × 1つ前のページ番号）＋1
 
@@ -4322,6 +4341,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     // 現在ページ
@@ -4340,12 +4363,17 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     //トータル件数
-    totalItems: {
+    totalNum: {
       type: Number,
       required: true
     },
     // ディレクトリ
     directory: {
+      type: String,
+      required: false
+    },
+    // 検索キーワード
+    searchedParam: {
       type: String,
       required: false
     }
@@ -4428,6 +4456,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.number.constructor.js */ "./node_modules/core-js/modules/es.number.constructor.js");
+/* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4446,6 +4489,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    totalNum: {
+      type: Number,
+      required: true
+    },
+    searchedParam: {
+      type: String,
+      required: true
+    },
+    itemName: {
+      type: String,
+      required: true
+    }
+  },
   data: function data() {
     return {
       searchWord: "" // 検索キーワード（v-modelでフォームの入力値と紐付け）
@@ -4843,6 +4900,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -4855,14 +4916,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__.default,
     //ページネーションの件数表示
-    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__.default
+    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__.default //キーワード検索フォーム
+
   },
   // ページネーションのページ番号を親コンポーネントTwitterListComponentから受け取る
   props: {
     page: {
       type: Number,
       required: false,
-      default: 0
+      default: 1
     }
   },
   data: function data() {
@@ -4875,14 +4937,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //最終ページ
       perPage: 0,
       //1ページあたりの表示件数
-      totalItems: 0,
+      totalNum: 0,
       //トータル件数
-      directoryName: "twitter" //ページネーションリンクに付与するディレクトリ
+      directoryName: "twitter",
+      //ページネーションリンクに付与するディレクトリ
+      searchedParam: "" //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
 
     };
   },
   methods: {
-    // 仮想通貨アカウントを検索
+    // 検索コンポーネントからキーワードを受け通り、仮想通貨アカウントを検索
     searchTargets: function searchTargets(word) {
       var params = {
         // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
@@ -4892,12 +4956,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }; // クエリパラメータを渡してTwitterアカウント一覧を取得
 
       this.fetchTargets(params);
+      this.searchedParam = word;
     },
     // 検索結果の表示を解除
     clearResult: function clearResult() {
       // 検索用のクエリパラメータを指定しない
-      var params = {};
-      this.fetchTargets(params);
+      this.fetchTargets();
+      this.searchedParam = "";
     },
     // Twitterアカウント一覧を取得
     fetchTargets: function fetchTargets(params) {
@@ -4912,18 +4977,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
 
 
-                _context.next = 3;
-                return axios.get("/api/twitter?page=".concat(_this.page), params);
+                if (!params) {
+                  // 入力された検索キーワードがなければクエリパラメータの値を再セット
+                  params = {
+                    params: {
+                      page: _this.page,
+                      search: _this.searchedParam
+                    }
+                  };
+                } // 仮想通貨アカウントの一覧取得APIへリクエスト
 
-              case 3:
+
+                _context.next = 4;
+                return axios.get("/api/twitter", params);
+
+              case 4:
                 response = _context.sent;
 
+                // const url = `/api/twitter?page=${this.page}&search=${this.search}`;
                 _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
                 // レスポンスのステータスが200以外の場合はエラーをストアにコミット
 
 
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
-                  _context.next = 8;
+                  _context.next = 9;
                   break;
                 }
 
@@ -4931,7 +5008,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 8:
+              case 9:
                 // JSONのdata項目を格納
                 _this.targets = response.data.data; // ページネーションの現在ページ、最終ページの値を格納
 
@@ -4939,10 +5016,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.lastPage = response.data.last_page; // 1ページあたりの表示件数、トータル件数を格納
 
                 _this.perPage = response.data.per_page;
-                _this.totalItems = response.data.total;
+                _this.totalNum = response.data.total;
                 return _context.abrupt("return");
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -6581,6 +6658,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -6591,14 +6673,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     //ページ番号付きページネーション（PC、タブレットで表示）
     PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_6__.default,
     //ページネーションの件数表示
-    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__.default
+    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__.default //キーワード検索フォーム
+
   },
   // ページネーションのページ番号をrouter.jsから受け取る
   props: {
     page: {
       type: Number,
       required: false,
-      default: 0
+      default: 1
     }
   },
   data: function data() {
@@ -6611,9 +6694,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //最終ページ
       perPage: 0,
       //1ページあたりの表示件数
-      totalItems: 0,
+      totalNum: 0,
       //トータル件数
-      directoryName: "news" //ページネーションリンクに付与するディレクトリ
+      directoryName: "news",
+      //ページネーションリンクに付与するディレクトリ
+      searchedParam: "" //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
 
     };
   },
@@ -6628,12 +6713,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }; // クエリパラメータを渡してニュース一覧を取得
 
       this.fetchNews(params);
+      this.searchedParam = word;
     },
     // 検索結果の表示を解除
     clearResult: function clearResult() {
       // 検索用のクエリパラメータを指定しない
-      var params = {};
-      this.fetchNews(params);
+      this.fetchNews();
+      this.searchedParam = "";
     },
     // axiosでニュース一覧取得APIにリクエスト
     fetchNews: function fetchNews(params) {
@@ -6648,17 +6734,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
 
 
-                _context.next = 3;
-                return axios.get("/api/news?page=".concat(_this.page), params);
+                if (!params) {
+                  // 入力された検索キーワードがなければクエリパラメータの値を再セット
+                  params = {
+                    params: {
+                      page: _this.page,
+                      search: _this.searchedParam
+                    }
+                  };
+                } // ニュース一覧取得APIへリクエスト
 
-              case 3:
+
+                _context.next = 4;
+                return axios.get("/api/news", params);
+
+              case 4:
                 response = _context.sent;
 
                 _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
 
 
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
-                  _context.next = 8;
+                  _context.next = 9;
                   break;
                 }
 
@@ -6667,7 +6764,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 8:
+              case 9:
                 // JSONのdata項目を格納
                 _this.news = response.data.data; // ページネーションの現在ページ、最終ページの値を格納
 
@@ -6675,10 +6772,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.lastPage = response.data.last_page; // 1ページあたりの表示件数、トータル件数を格納
 
                 _this.perPage = response.data.per_page;
-                _this.totalItems = response.data.total;
+                _this.totalNum = response.data.total;
                 return _context.abrupt("return");
 
-              case 14:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -8909,9 +9006,9 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_19__.default({
     //認証必須,
     // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
     props: function props(route) {
-      var page = route.query.page; // 整数以外が渡された場合は1に変換して返却
-
+      var page = route.query.page;
       return {
+        // 整数以外が渡された場合は1に変換して返却
         page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1
       };
     }
@@ -53923,6 +54020,11 @@ var render = function() {
       [
         _c("search-form-component", {
           staticClass: "u-mt--xl u-mb--xxxl",
+          attrs: {
+            "total-num": _vm.totalNum,
+            "searched-param": _vm.searchedParam,
+            "item-name": "自動フォローしたアカウント"
+          },
           on: { search: _vm.searchTargets, clear: _vm.clearResult }
         }),
         _vm._v(" "),
@@ -53958,30 +54060,37 @@ var render = function() {
           )
         }),
         _vm._v(" "),
-        _vm.totalItems === 0
+        !_vm.searchedParam && _vm.totalNum === 0
           ? _c("p", { staticClass: "u-font--center" }, [
               _vm._v("\n      アカウントが存在しません\n    ")
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("pagination-link", {
-          attrs: {
-            directory: _vm.directoryName,
-            "current-page": _vm.currentPage,
-            "last-page": _vm.lastPage,
-            "per-page": _vm.perPage,
-            "total-items": _vm.totalItems
-          }
-        }),
-        _vm._v(" "),
-        _c("pagination-info", {
-          attrs: {
-            "current-page": _vm.currentPage,
-            "per-page": _vm.perPage,
-            "total-items": _vm.totalItems,
-            "items-length": _vm.targets.length
-          }
-        })
+        _c(
+          "div",
+          { staticClass: "c-pagination" },
+          [
+            _c("pagination-link", {
+              attrs: {
+                directory: _vm.directoryName,
+                "current-page": _vm.currentPage,
+                "last-page": _vm.lastPage,
+                "per-page": _vm.perPage,
+                "total-num": _vm.totalNum
+              }
+            }),
+            _vm._v(" "),
+            _c("pagination-info", {
+              attrs: {
+                "current-page": _vm.currentPage,
+                "per-page": _vm.perPage,
+                "total-num": _vm.totalNum,
+                "items-length": _vm.targets.length
+              }
+            })
+          ],
+          1
+        )
       ],
       2
     )
@@ -55792,11 +55901,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.totalItems
+  return _vm.totalNum
     ? _c("p", { staticClass: "c-pagination__info" }, [
         _vm._v(
           "\n  全" +
-            _vm._s(_vm.totalItems) +
+            _vm._s(_vm.totalNum) +
             "件中 " +
             _vm._s(_vm.startNum) +
             " - " +
@@ -55847,9 +55956,15 @@ var render = function() {
           staticClass: "c-pagination__item"
         },
         [
-          _c("RouterLink", { attrs: { to: "/" + _vm.directory + "?page=1" } }, [
-            _c("i", { staticClass: "fas fa-angle-double-left" })
-          ])
+          _c(
+            "RouterLink",
+            {
+              attrs: {
+                to: "/" + _vm.directory + "?page=1&search=" + _vm.searchedParam
+              }
+            },
+            [_c("i", { staticClass: "fas fa-angle-double-left" })]
+          )
         ],
         1
       ),
@@ -55888,7 +56003,13 @@ var render = function() {
             "RouterLink",
             {
               attrs: {
-                to: "/" + _vm.directory + "?page=" + (_vm.currentPage - 1)
+                to:
+                  "/" +
+                  _vm.directory +
+                  "?page=" +
+                  (_vm.currentPage - 1) +
+                  "&search=" +
+                  _vm.searchedParam
               }
             },
             [_c("i", { staticClass: "fas fa-angle-left" })]
@@ -55924,8 +56045,18 @@ var render = function() {
           [
             _c(
               "RouterLink",
-              { attrs: { to: "/" + _vm.directory + "?page=" + page } },
-              [_vm._v("\n        " + _vm._s(page) + "\n      ")]
+              {
+                attrs: {
+                  to:
+                    "/" +
+                    _vm.directory +
+                    "?page=" +
+                    page +
+                    "&search=" +
+                    _vm.searchedParam
+                }
+              },
+              [_vm._v("\n      " + _vm._s(page) + "\n    ")]
             )
           ],
           1
@@ -55950,7 +56081,13 @@ var render = function() {
             "RouterLink",
             {
               attrs: {
-                to: "/" + _vm.directory + "?page=" + (_vm.currentPage + 1)
+                to:
+                  "/" +
+                  _vm.directory +
+                  "?page=" +
+                  (_vm.currentPage + 1) +
+                  "&search=" +
+                  _vm.searchedParam
               }
             },
             [_c("i", { staticClass: "fas fa-angle-right" })]
@@ -55975,7 +56112,17 @@ var render = function() {
         [
           _c(
             "RouterLink",
-            { attrs: { to: "/" + _vm.directory + "?page=" + _vm.lastPage } },
+            {
+              attrs: {
+                to:
+                  "/" +
+                  _vm.directory +
+                  "?page=" +
+                  _vm.lastPage +
+                  "&search=" +
+                  _vm.searchedParam
+              }
+            },
             [_c("i", { staticClass: "fas fa-angle-double-right" })]
           )
         ],
@@ -56040,72 +56187,94 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "form",
-    {
-      staticClass: "c-search__form",
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.search($event)
-        }
-      }
-    },
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.searchWord,
-            expression: "searchWord"
-          }
-        ],
-        staticClass: "c-input c-search__input",
-        attrs: {
-          type: "search",
-          name: "search",
-          placeholder: "キーワードを入力して検索"
-        },
-        domProps: { value: _vm.searchWord },
+  return _c("div", { staticClass: "c-search" }, [
+    _c(
+      "form",
+      {
+        staticClass: "c-search__form",
         on: {
-          keydown: function($event) {
-            if (
-              !$event.type.indexOf("key") &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
+          submit: function($event) {
             $event.preventDefault()
             return _vm.search($event)
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.searchWord = $event.target.value
           }
         }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "c-search__clear-icon" }, [
-        _c("i", {
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("input", {
           directives: [
             {
-              name: "show",
-              rawName: "v-show",
-              value: this.searchWord,
-              expression: "this.searchWord"
+              name: "model",
+              rawName: "v-model",
+              value: _vm.searchWord,
+              expression: "searchWord"
             }
           ],
-          staticClass: "fas fa-times",
-          on: { click: _vm.clearWord }
-        })
-      ])
-    ]
-  )
+          staticClass: "c-input c-search__input",
+          attrs: {
+            type: "text",
+            name: "search",
+            placeholder: "キーワードを入力して検索"
+          },
+          domProps: { value: _vm.searchWord },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.searchWord = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "c-search__clear-icon" }, [
+          _c("i", {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.searchWord,
+                expression: "searchWord"
+              }
+            ],
+            staticClass: "fas fa-times",
+            on: { click: _vm.clearWord }
+          })
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _vm.searchedParam && _vm.totalNum === 0
+      ? _c("div", { staticClass: "c-search__notfound" }, [
+          _c("p", { staticClass: "u-font--center" }, [
+            _vm._v(
+              "\n      「" +
+                _vm._s(_vm.searchedParam) +
+                "」を含む" +
+                _vm._s(_vm.itemName) +
+                "が見つかりませんでした\n    "
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.searchedParam && _vm.totalNum > 0
+      ? _c("div", { staticClass: "c-search__found u-mb--xl" }, [
+          _c("p", { staticClass: "u-font--center" }, [
+            _vm._v(
+              "\n      「" +
+                _vm._s(_vm.searchedParam) +
+                "」を含む" +
+                _vm._s(_vm.itemName) +
+                "が"
+            ),
+            _c("br", { staticClass: "u-sp--only" }),
+            _vm._v("\n      " + _vm._s(_vm.totalNum) + "件見つかりました\n    ")
+          ])
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -56499,6 +56668,11 @@ var render = function() {
       [
         _c("search-form-component", {
           staticClass: "u-mt--xl u-mb--xxxl",
+          attrs: {
+            "total-num": _vm.totalNum,
+            "searched-param": _vm.searchedParam,
+            "item-name": "仮想通貨関連アカウント"
+          },
           on: { search: _vm.searchTargets, clear: _vm.clearResult }
         }),
         _vm._v(" "),
@@ -56514,7 +56688,7 @@ var render = function() {
           })
         }),
         _vm._v(" "),
-        _vm.totalItems === 0
+        !_vm.searchedParam && _vm.totalNum === 0
           ? _c("p", { staticClass: "u-font--center" }, [
               _vm._v("\n      アカウントが存在しません\n    ")
             ])
@@ -56527,10 +56701,11 @@ var render = function() {
             _c("pagination-link", {
               attrs: {
                 directory: _vm.directoryName,
+                "searched-param": _vm.searchedParam,
                 "current-page": _vm.currentPage,
                 "last-page": _vm.lastPage,
                 "per-page": _vm.perPage,
-                "total-items": _vm.totalItems
+                "total-num": _vm.totalNum
               }
             }),
             _vm._v(" "),
@@ -56538,7 +56713,7 @@ var render = function() {
               attrs: {
                 "current-page": _vm.currentPage,
                 "per-page": _vm.perPage,
-                "total-items": _vm.totalItems,
+                "total-num": _vm.totalNum,
                 "items-length": _vm.targets.length
               }
             })
@@ -58572,14 +58747,14 @@ var render = function() {
         { staticClass: "p-news c-fade-in" },
         [
           _c("search-form-component", {
+            staticClass: "u-mt--xl u-mb--xxxl",
+            attrs: {
+              "total-num": _vm.totalNum,
+              "searched-param": _vm.searchedParam,
+              "item-name": "ニュース"
+            },
             on: { search: _vm.searchNews, clear: _vm.clearResult }
           }),
-          _vm._v(" "),
-          _vm.totalItems === 0
-            ? _c("p", { staticClass: "u-font--center" }, [
-                _vm._v("\n        ニュースが存在しません\n      ")
-              ])
-            : _vm._e(),
           _vm._v(" "),
           _c(
             "transition-group",
@@ -58632,10 +58807,11 @@ var render = function() {
               _c("pagination-link", {
                 attrs: {
                   directory: _vm.directoryName,
+                  "searched-param": _vm.searchedParam,
                   "current-page": _vm.currentPage,
                   "last-page": _vm.lastPage,
                   "per-page": _vm.perPage,
-                  "total-items": _vm.totalItems
+                  "total-num": _vm.totalNum
                 }
               }),
               _vm._v(" "),
@@ -58643,7 +58819,7 @@ var render = function() {
                 attrs: {
                   "current-page": _vm.currentPage,
                   "per-page": _vm.perPage,
-                  "total-items": _vm.totalItems,
+                  "total-num": _vm.totalNum,
                   "items-length": _vm.news.length
                 }
               })
