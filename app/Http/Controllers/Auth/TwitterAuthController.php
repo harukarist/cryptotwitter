@@ -21,7 +21,7 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * ログインユーザーのTwitterアカウント情報取得処理
+     * アプリケーションの初期描画時にログインユーザーのTwitterアカウント情報を取得する処理
      */
     public function checkTwitterUserAuth()
     {
@@ -35,7 +35,7 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * ログイン時にログインユーザーのTwitterアカウント情報とフォロー済みリストを更新
+     * ログイン時にログインユーザーのTwitterアカウント情報とフォロー済みリストを更新する処理
      */
     public function updateTwitterUser()
     {
@@ -46,14 +46,14 @@ class TwitterAuthController extends Controller
 
         // Twitterアカウント情報がある場合
         if ($twitter_user) {
-            // ユーザーのTwitterアカウントでoAuth認証
+            // ユーザーのTwitterアカウントでのoAuth認証のコネクションを取得
             $connect = UsersTwitterOAuth::userOAuth($twitter_user);
             // Twitterアカウント情報取得用のパラメータを設定
             $params = array(
                 'user_id' => $twitter_user->twitter_id,
                 'include_entities' => false, //entitiesプロパティを取得するかどうか
             );
-            // ログインユーザーのTwitterアカウント情報をTwitterAPIで取得
+            // TwitterAPIでログインユーザーのTwitterアカウント情報を取得
             $result = $connect->get("users/show", $params);
 
             // TwitterAPIで取得したユーザー名、スクリーンネーム、アバターにDBとの差分があれば更新
@@ -84,11 +84,23 @@ class TwitterAuthController extends Controller
      */
     public function handleProviderCallback()
     {
+        // Twitter認証ページからのコールバックURLにクエリパラメータ'denied'がある場合
+        // （連携アプリの認証がキャンセルされた場合）
+        if (isset($_GET['denied'])) {
+            // セッションフラッシュにエラーメッセージを格納して仮想通貨アカウント一覧画面へリダイレクト
+            return redirect('/twitter')->with(
+                [
+                    'status' => __('認証が取り消されました'),
+                    'type' => 'danger',
+                    'timeout' => 4000,
+                ]
+            );
+        }
         try {
             // OAuthプロバイダでTwitter認証を行い、Twitterアカウント情報を取得
             $oauth_user = Socialite::driver('twitter')->user();
         } catch (Exception $e) {
-            // エラーの場合はエラーメッセージを返却
+            // エラーの場合はエラーメッセージを格納して仮想通貨アカウント一覧画面へリダイレクト
             return redirect('/twitter')->with(
                 [
                     'status' => __('Twitterアカウントの連携を中断しました'),
@@ -101,7 +113,7 @@ class TwitterAuthController extends Controller
         // Twitterアカウント情報をDBに新規登録または更新する
         $twitterUser = $this->updateOrCreateTwitterUser($oauth_user);
 
-        // Twitterアカウントが重複している場合は登録せずにリダイレクトする
+        // Twitterアカウントが重複している場合は登録せずにリダイレクト
         if (!$twitterUser) {
             return redirect('/twitter')->with(
                 [
@@ -111,9 +123,7 @@ class TwitterAuthController extends Controller
                 ]
             );
         }
-
-        // 登録成功した場合はTwitter一覧画面へリダイレクトしてTwitterアカウント情報を再描画する
-        // return redirect('/twitter');
+        // 登録成功した場合は仮想通貨アカウント一覧画面へリダイレクトしてTwitterアカウント情報を再描画する
         return redirect('/twitter')->with(
             [
                 'status' => __('Twitterアカウントを連携しました'),
