@@ -1,6 +1,8 @@
 .c-checkbox {
   // FontAwesomeアイコンを使ったチェックボックス
   &__icon {
+    // デフォルトスタイルを非表示
+    appearance: none;
     & + label {
         display: block;
         cursor: pointer;

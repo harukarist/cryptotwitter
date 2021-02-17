@@ -29,7 +29,7 @@
     text-align: right;
   }
   &__br {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    white-space: pre-wrap; //改行タグで折り返す
+    word-wrap: break-word; //ボックス幅をはみ出す長さの英文を折り返す
   }
 }

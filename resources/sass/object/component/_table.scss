@@ -4,6 +4,7 @@
   margin-right: auto;
   @include mq(){
     width: 100%;
+    overflow: hidden;
   }
   &--left {
     text-align: left;
