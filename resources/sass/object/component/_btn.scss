@@ -3,7 +3,7 @@
   cursor: pointer;
   box-sizing: border-box;
   transition: all .3s;
-  padding: 10px 15px;
+  padding: $space--l;
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -17,11 +17,24 @@
 }
 .c-btn {
   @extend %btnBase;
+  &--small {
+    padding: $space--s $space--m;
+  }
   &--large {
     min-width: 300px;
     @include mq(){
       width: 80%;
       margin: 0 auto;
+    }
+  }
+  &--arrow {
+    &::after { // 矢印アイコン
+      content: '\f105';
+      font-family: FontAwesome;
+      font-size: 18px;
+      margin-left: $space--m;
+      position: relative;
+      top: 1px;
     }
   }
   &--accent {
@@ -98,7 +111,6 @@
     color: $font-color--muted;
     font-weight: normal;
     font-size: $font-size--m;
-    padding: 5px 10px;
     &:hover {
       color: $font-color--muted;
     }
@@ -110,7 +122,6 @@
     color: $font-color--dark;
     font-weight: bold;
     font-size: $font-size--default;
-    padding: 5px 10px;
     &:hover {
       color: $font-color--white;
       background: $bg-color--dark;

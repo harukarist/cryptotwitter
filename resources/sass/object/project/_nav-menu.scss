@@ -114,7 +114,7 @@
       transition: width .2s ease-in-out;  //widthを変化
     }
     &:hover {
-      color: $font-color--hover;
+      color: $font-color--accent-light;
       transform: scale(0.97, 1); //ホバー時に文字を縮める
     }
     &.is-active { //現在表示しているページのメニュー描画
@@ -128,7 +128,6 @@
     @include mq(medium) {
       text-align: center;
       padding: 0;
-      height: 40px;
       &::before {
         margin: 0; //左端からスタート
       }

@@ -12,17 +12,11 @@
 */
 
 // パスワードリマインダフォーム表示
-Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-
-// パスワードリセットフォーム表示
+// Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+// メールURLによるパスワードリセットフォーム表示
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-// パスワードリセット処理
-Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
-
-// パスワード再設定フォーム
-Route::get('password/confirm', 'Auth\ConfirmPasswordController@showConfirmForm')->name('password.confirm');
-// パスワード再設定処理
-Route::post('password/confirm', 'Auth\ConfirmPasswordController@confirm');
+// // パスワードリセット処理
+// Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 Route::group(['middleware' => 'auth'], function () {
     // Twitterログイン認証（TwitterAPIへのリダイレクト）
@@ -31,11 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
 });
 
-
 // 初回アクセス時のみLaravel側でapp.blade.phpを表示し、
-// 以後はフロント側のVueRouterでルーティングを行う
-// {any?} で任意のパスパラメータ any を受け入れ
-// パスパラメータの文字列は任意'.+'
+// 以後はフロント側のVueRouterでルーティングを行う。
+// {any?} で任意'.+'のパスパラメータ any を受け入れる。
 Route::middleware(['cors'])->group(function () {
     Route::get('/{any?}', function () {
         return view('layouts.app');

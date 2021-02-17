@@ -9,7 +9,8 @@
     margin-bottom: $space--xxl;
   }
   &__contents {
-    width: $site-width;
+    width: 100%;
+    max-width: $site-width;
     margin: 0 auto;
     @include mq(medium){
       width: 100%;

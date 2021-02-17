@@ -55,7 +55,7 @@
                 {{ selectedItems.length }}件を絞り込み表示
               </span>
               <button
-                class="c-btn--muted-outline"
+                class="c-btn--muted-outline c-btn--small"
                 @click="isActive = !isActive"
               >
                 <i v-show="!isActive" class="fas fa-angle-down"></i>
@@ -96,13 +96,17 @@
               </ul>
               <div class="p-trend__select-footer">
                 <a
-                  class="c-btn--muted-outline"
+                  class="c-btn--muted-outline c-btn--small"
                   v-if="selectedItems.length"
                   @click="deselect()"
                 >
                   選択をすべて解除
                 </a>
-                <a class="c-btn--muted-outline" v-else @click="selectAll()">
+                <a
+                  class="c-btn--muted-outline c-btn--small"
+                  v-else
+                  @click="selectAll()"
+                >
                   すべてを選択
                 </a>
               </div>

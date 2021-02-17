@@ -8,46 +8,46 @@
       <div class="p-nav-menu__contents">
         <!-- ドロワーメニュー用ロゴ -->
         <div class="p-nav-menu__sp-title" @click="closeMenu">
-          <RouterLink :to="{ name: 'top' }">
+          <router-link :to="{ name: 'top' }">
             <img src="/img/logo.png" class="p-navbar__title-logo" />
             <h1 class="p-navbar__title-text">CryptoTrend</h1>
-          </RouterLink>
+          </router-link>
         </div>
 
         <!-- ログイン済みユーザー向けメニュー -->
         <div v-if="isLogin" class="p-nav-menu__inner">
           <ul class="p-nav-menu__list">
             <li class="p-nav-menu__item" @click="closeMenu">
-              <RouterLink
+              <router-link
                 :to="{ name: 'trend.index' }"
                 active-class="is-active"
                 class="p-nav-menu__link"
               >
                 トレンド一覧
-              </RouterLink>
+              </router-link>
             </li>
             <li class="p-nav-menu__item" @click="closeMenu">
-              <RouterLink
+              <router-link
                 :to="{ name: 'twitter.index' }"
                 active-class="is-active"
                 class="p-nav-menu__link"
               >
                 Twitterフォロー
-              </RouterLink>
+              </router-link>
             </li>
             <li class="p-nav-menu__item" @click="closeMenu">
-              <RouterLink
+              <router-link
                 :to="{ name: 'news.index' }"
                 active-class="is-active"
                 class="p-nav-menu__link"
               >
                 関連ニュース
-              </RouterLink>
+              </router-link>
             </li>
           </ul>
           <!--  -->
           <div class="p-nav-menu__dropdown" @click.self="clickDropdownHead">
-            <div class="p-nav-menu__dropdown-head">
+            <div class="p-nav-menu__dropdown-head" @click="clickDropdownHead">
               <img
                 :src="usersAvatar"
                 class="p-nav-menu__avatar"
@@ -66,13 +66,13 @@
             >
               <ul class="p-nav-menu__dropdown-list">
                 <li class="p-nav-menu__dropdown-item" @click="closeMenu">
-                  <RouterLink
+                  <router-link
                     :to="{ name: 'edit' }"
                     active-class="is-active"
                     class="p-nav-menu__link p-nav-menu__dropdown-link"
                   >
                     アカウント設定
-                  </RouterLink>
+                  </router-link>
                 </li>
                 <li class="p-nav-menu__dropdown-item" @click="closeMenu">
                   <a
@@ -93,32 +93,49 @@
               <a href="/#about" class="p-nav-menu__link" @click="closeMenu"
                 >CryptoTrendとは？</a
               >
+              <!-- <router-link
+                :to="{
+                  name: 'top',
+                  hash: '#about',
+                }"
+                >CryptoTrendとは？</router-link
+              > -->
             </li>
             <li class="p-nav-menu__item">
               <a href="/#reason" class="p-nav-menu__link" @click="closeMenu"
                 >選ばれる理由</a
               >
+              <!-- <router-link
+                :to="{
+                  name: 'top',
+                  hash: '#reason',
+                }"
+                >選ばれる理由</router-link
+              > -->
             </li>
             <li class="p-nav-menu__item">
               <a href="/#faq" class="p-nav-menu__link" @click="closeMenu"
                 >よくあるご質問</a
               >
+              <!-- <router-link to="/#faq">
+                よくあるご質問
+              </router-link> -->
             </li>
             <li class="p-nav-menu__item-btn" @click="closeMenu">
-              <RouterLink
+              <router-link
                 :to="{ name: 'register' }"
                 class="c-btn--accent p-nav-menu__btn"
               >
                 ユーザー登録
-              </RouterLink>
+              </router-link>
             </li>
             <li class="p-nav-menu__item-btn" @click="closeMenu">
-              <RouterLink
+              <router-link
                 :to="{ name: 'login' }"
                 class="c-btn--main-outline p-nav-menu__btn"
               >
                 ログイン
-              </RouterLink>
+              </router-link>
             </li>
           </ul>
         </div>

@@ -52,7 +52,7 @@
           </div>
 
           <div class="c-form__button">
-            <button type="submit" class="c-btn--main-outline">送信する</button>
+            <button type="submit" class="c-btn--main-outline c-btn--large">送信する</button>
           </div>
         </div>
       </form>
@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { OK, UNPROCESSABLE_ENTITY } from "../utility";
+import { OK } from "../utility";
 
 export default {
   data() {

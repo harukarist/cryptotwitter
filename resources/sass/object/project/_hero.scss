@@ -69,7 +69,8 @@
     color: $font-color--dark;
     text-align: center;
     &:hover {
-      color: rgba($font-color--dark, 0.8);
+      color: $font-color--hover;
+      transform: scale(0.95);
     }
     @include mq(){
       margin-bottom: $space--xxl;

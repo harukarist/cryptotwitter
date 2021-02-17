@@ -152,7 +152,7 @@ export default {
         this.emailErrors,
         this.messageErrors
       );
-      // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      // エラーメッセージがなければお問い合わせフォーム確認WebAPIを呼び出す
       if (!results.length) {
         // 入力フォームからの送信の場合は入力内容確認メソッドを実行
         this.confirmContact();

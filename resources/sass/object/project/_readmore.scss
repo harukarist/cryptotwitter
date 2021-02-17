@@ -2,45 +2,16 @@
   &__wrapper {
     text-align: center;
     margin: $space--l auto;
-    width: 300px;
-    @include mq(medium) {
-      width: 100%;
-    }
+    width: 100%;
   }
   &__link {
-    cursor: pointer;
-    transition: all .3s;
-    padding: 10px 15px;
     width: 100%;
-    box-sizing: border-box;
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 100vh;
-    font-weight: bold;
-    letter-spacing: 0.02em;
-    color: $bg-color--accent;
-    border: 2px solid $bg-color--accent;
-    background: $bg-color--white;
-    &::after { // 矢印アイコン
-      content: '\f105';
-      font-family: FontAwesome;
-      color: $bg-color--accent;
-      font-size: 18px;
-      padding: 0;
-      margin-left: $space--m;
-      position: relative;
-      top: 1px;
-    }
+    color: $font-color--accent;
     &:hover {
       color: $font-color--white;
-      border: none;
-      background: $bg-color--accent;
-      transform: scale(0.97); //ホバー時にボタンを動かす
-      &::after {
-        color: $font-color--white;
-      }
     }
-
+    @include mq(){
+      width: 100%;
+    }
   }
 }

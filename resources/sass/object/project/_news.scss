@@ -12,17 +12,13 @@
     padding-right: $space--xl;
   }
   &__item {
-    margin-bottom: $space--l;
+    margin-bottom: $space--xxl;
   }
 
   &__title {
-    margin-bottom: $space--m;
-    // a {
-    //   text-decoration: none;
-    //   &:hover {
-    //     text-decoration: underline;
-    //   }
-    // }
+    margin-left: $space--m;
+    margin-right: $space--m;
+    letter-spacing: 0.12em;
   }
   &__info {
     display: flex;
@@ -31,6 +27,9 @@
   }
   &__date {
     font-size: $font-size--m;
+    font-family: $font-family--theme;
+    font-weight: bold;
+    color: $font-color--muted;
     padding: $space--s $space--m;
     background: $bg-color--light;
     border-radius: 4px;

@@ -1925,8 +1925,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     break;
                   }
 
-                  // this.$router.push("/error");
-                  // this.$router.push({ name: "errors.system" });
                   _this.$store.dispatch("message/showMessage", {
                     text: "システムエラーが発生しました。お手数ですが、時間を置いて再度お試しください。",
                     type: "danger",
@@ -1948,7 +1946,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 case 7:
                   // ストアの古いuserDataをクリア
                   _this.$store.commit("auth/setUserData", null); // ログイン画面へ遷移
-                  // this.$router.push("/login");
 
 
                   _this.$router.push({
@@ -1961,7 +1958,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 case 11:
                   if (val === _utility__WEBPACK_IMPORTED_MODULE_3__.NOT_FOUND) {
                     // 404エラーの場合はNotFoundページを表示
-                    // this.$router.push("/not-found");
                     _this.$router.push({
                       name: "errors.notfound"
                     });
@@ -2080,6 +2076,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -2494,7 +2493,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    // ページネーション遷移時にコンポーネントの再生成が必要になるため、
+    // $routeを監視し、ページ切り替え時にデータ取得を実行する
     $route: {
       handler: function handler() {
         var _this4 = this;
@@ -3359,7 +3359,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } // エラーメッセージを格納した配列を全て結合
 
 
-      var results = this.nameErrors.concat(this.emailErrors, this.messageErrors); // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      var results = this.nameErrors.concat(this.emailErrors, this.messageErrors); // エラーメッセージがなければお問い合わせフォーム確認WebAPIを呼び出す
 
       if (!results.length) {
         // 入力フォームからの送信の場合は入力内容確認メソッドを実行
@@ -3710,6 +3710,23 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5028,7 +5045,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    // ページネーション遷移時にコンポーネントの再生成が必要になるため、
+    // $routeを監視し、ページ切り替え時にデータ取得を実行する
     $route: {
       handler: function handler() {
         var _this4 = this;
@@ -5114,6 +5132,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FadeInComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../FadeInComponent.vue */ "./resources/js/components/FadeInComponent.vue");
+//
+//
+//
 //
 //
 //
@@ -6002,6 +6023,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6416,7 +6440,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } // エラーメッセージを格納した配列を全て結合
 
 
-      var results = this.emailErrors.concat(this.passwordErrors); // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      var results = this.emailErrors.concat(this.passwordErrors); // エラーメッセージがなければログインWebAPIを呼び出す
 
       if (!results.length) {
         this.login();
@@ -6662,7 +6686,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   //   this.fetchNews();
   // },
   watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    // ページネーション遷移時にコンポーネントの再生成が必要になるため、
+    // $routeを監視し、ページ切り替え時にデータ取得を実行する
     $route: {
       handler: function handler() {
         var _this2 = this;
@@ -7022,6 +7047,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -7087,7 +7114,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       } // エラーメッセージを格納した配列を全て結合
 
 
-      var results = this.emailErrors.concat(this.passwordErrors, this.confirmErrors); // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      var results = this.emailErrors.concat(this.passwordErrors, this.confirmErrors); // エラーメッセージがなければパスワードリセット処理WebAPIを呼び出す
 
       if (!results.length) {
         this.resetPassword();
@@ -8013,29 +8040,49 @@ __webpack_require__.r(__webpack_exports__);
       hash: this.$route.hash
     };
   },
-  methods: {
-    // アンカーポイントまでスクロールするメソッド
-    scrollToAnchorPoint: function scrollToAnchorPoint(refName) {
-      // refNameと一致するref属性を持つ要素を取得
-      var el = this.$refs[refName]; // その要素にスクロール（アニメーションはautoまたはsmooth）
-
-      el.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
-  },
   mounted: function mounted() {
     //this.$nextTick()でDOMの読み込み完了時に実行
     this.$nextTick(function () {
       // URL中にhashがある場合
       if (this.hash) {
-        // #を除いた文字列を取得
-        var refName = this.hash.replace("#", "");
-        console.log(refName); // アンカーポイントまでスクロールするメソッドを実行
-
-        this.scrollToAnchorPoint(refName);
+        this.pageScroll(this.hash); // // #を除いた文字列を取得
+        // const refName = this.hash.replace("#", "");
+        // // this.scrollToAnchorPoint(refName);
+        // setTimeout(() => {
+        //   // 正しい高さを取得できるよう、画像の読み込みを待ってからスクロールメソッドを実行
+        //   this.scrollToAnchorPoint(refName);
+        // }, 100);
       }
     });
+  },
+  methods: {
+    pageScroll: function pageScroll(hash) {
+      var _this = this;
+
+      // #を除いた文字列を取得
+      var refName = hash.replace("#", "");
+      setTimeout(function () {
+        // 正しい高さを取得できるよう、画像の読み込みを待ってからスクロールメソッドを実行
+        _this.scrollToAnchorPoint(refName);
+      }, 50);
+    },
+    // アンカーポイントまでスクロールするメソッド
+    scrollToAnchorPoint: function scrollToAnchorPoint(refName) {
+      // refNameと一致するref属性を持つ要素を取得
+      var el = this.$refs[refName]; // その要素にスクロール
+
+      el.scrollIntoView({
+        behavior: "smooth"
+      });
+      this.hash = "";
+    }
+  },
+  watch: {
+    // $routeを監視し、トップページを表示時にヘッダーのトップページリンクがクリックされたら
+    // そのアンカーポイントへ移動
+    $route: function $route(to, from) {
+      this.pageScroll(to.hash);
+    }
   }
 });
 
@@ -8077,6 +8124,10 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
 //
 //
 //
@@ -53779,7 +53830,7 @@ var render = function() {
             _c(
               "a",
               {
-                staticClass: "c-btn--muted-outline",
+                staticClass: "c-btn--muted-outline c-btn--small",
                 on: {
                   click: function($event) {
                     $event.stopPropagation()
@@ -55154,7 +55205,7 @@ var render = function() {
               on: { click: _vm.closeMenu }
             },
             [
-              _c("RouterLink", { attrs: { to: { name: "top" } } }, [
+              _c("router-link", { attrs: { to: { name: "top" } } }, [
                 _c("img", {
                   staticClass: "p-navbar__title-logo",
                   attrs: { src: "/img/logo.png" }
@@ -55179,7 +55230,7 @@ var render = function() {
                     },
                     [
                       _c(
-                        "RouterLink",
+                        "router-link",
                         {
                           staticClass: "p-nav-menu__link",
                           attrs: {
@@ -55201,7 +55252,7 @@ var render = function() {
                     },
                     [
                       _c(
-                        "RouterLink",
+                        "router-link",
                         {
                           staticClass: "p-nav-menu__link",
                           attrs: {
@@ -55227,7 +55278,7 @@ var render = function() {
                     },
                     [
                       _c(
-                        "RouterLink",
+                        "router-link",
                         {
                           staticClass: "p-nav-menu__link",
                           attrs: {
@@ -55256,27 +55307,34 @@ var render = function() {
                     }
                   },
                   [
-                    _c("div", { staticClass: "p-nav-menu__dropdown-head" }, [
-                      _c("img", {
-                        staticClass: "p-nav-menu__avatar",
-                        attrs: {
-                          src: _vm.usersAvatar,
-                          alt: _vm.userName + "'s avatar"
-                        },
-                        on: { error: _vm.noImage }
-                      }),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "p-nav-menu__username" }, [
-                        _vm._v(_vm._s(_vm.userName))
-                      ]),
-                      _vm._v(" "),
-                      !_vm.isActiveDrawerMenu
-                        ? _c("i", {
-                            staticClass:
-                              "fas fa-caret-down p-nav-menu__dropdown-icon"
-                          })
-                        : _vm._e()
-                    ]),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "p-nav-menu__dropdown-head",
+                        on: { click: _vm.clickDropdownHead }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "p-nav-menu__avatar",
+                          attrs: {
+                            src: _vm.usersAvatar,
+                            alt: _vm.userName + "'s avatar"
+                          },
+                          on: { error: _vm.noImage }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "p-nav-menu__username" }, [
+                          _vm._v(_vm._s(_vm.userName))
+                        ]),
+                        _vm._v(" "),
+                        !_vm.isActiveDrawerMenu
+                          ? _c("i", {
+                              staticClass:
+                                "fas fa-caret-down p-nav-menu__dropdown-icon"
+                            })
+                          : _vm._e()
+                      ]
+                    ),
                     _vm._v(" "),
                     _vm.isActiveDropdown || _vm.isActiveDrawerMenu
                       ? _c(
@@ -55295,7 +55353,7 @@ var render = function() {
                                   },
                                   [
                                     _c(
-                                      "RouterLink",
+                                      "router-link",
                                       {
                                         staticClass:
                                           "p-nav-menu__link p-nav-menu__dropdown-link",
@@ -55389,7 +55447,7 @@ var render = function() {
                     },
                     [
                       _c(
-                        "RouterLink",
+                        "router-link",
                         {
                           staticClass: "c-btn--accent p-nav-menu__btn",
                           attrs: { to: { name: "register" } }
@@ -55408,7 +55466,7 @@ var render = function() {
                     },
                     [
                       _c(
-                        "RouterLink",
+                        "router-link",
                         {
                           staticClass: "c-btn--main-outline p-nav-menu__btn",
                           attrs: { to: { name: "login" } }
@@ -56377,7 +56435,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-target__body" }, [
-        _c("p", { staticClass: "p-target__profile u-font__br" }, [
+        _c("p", { staticClass: "p-target__profile" }, [
           _vm._v(_vm._s(_vm.item.profile_text))
         ]),
         _vm._v(" "),
@@ -56606,7 +56664,7 @@ var render = function() {
           _c(
             "RouterLink",
             {
-              staticClass: "c-btn--white p-action__btn",
+              staticClass: "c-btn--white c-btn--large c-btn--arrow",
               attrs: { to: { name: "register" } }
             },
             [_vm._v("\n      今すぐ無料ではじめる\n    ")]
@@ -56957,7 +57015,7 @@ var render = function() {
             _c(
               "RouterLink",
               {
-                staticClass: "c-btn--white p-hero__btn",
+                staticClass: "c-btn--white c-btn--large c-btn--arrow u-mb--l",
                 attrs: { to: { name: "register" } }
               },
               [_vm._v("\n          今すぐ無料ではじめる\n        ")]
@@ -57932,7 +57990,7 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("td", [
+                      _c("td", { staticClass: "c-table--center" }, [
                         _vm.column === "tweet_hour"
                           ? _c("p", { staticClass: "u-font__num" }, [
                               _vm._v(
@@ -57968,7 +58026,7 @@ var render = function() {
                           : _vm._e()
                       ]),
                       _vm._v(" "),
-                      _c("td", [
+                      _c("td", { staticClass: "c-table--right" }, [
                         trend.high
                           ? _c("p", { staticClass: "p-trend__price" }, [
                               _c("span", { staticClass: "u-font__num" }, [
@@ -57988,7 +58046,7 @@ var render = function() {
                             )
                       ]),
                       _vm._v(" "),
-                      _c("td", [
+                      _c("td", { staticClass: "c-table--right" }, [
                         trend.low
                           ? _c("p", { staticClass: "p-trend__price" }, [
                               _c("span", { staticClass: "u-font__num" }, [
@@ -58034,7 +58092,8 @@ var render = function() {
               _c(
                 "RouterLink",
                 {
-                  staticClass: "p-readmore__link",
+                  staticClass:
+                    "c-btn--accent-outline c-btn--arrow p-readmore__link",
                   attrs: { to: { name: "trend.index" } }
                 },
                 [_vm._v("\n            もっと見る\n          ")]
@@ -58070,7 +58129,8 @@ var render = function() {
                 _c(
                   "RouterLink",
                   {
-                    staticClass: "p-readmore__link",
+                    staticClass:
+                      "c-btn--accent-outline c-btn--arrow p-readmore__link",
                     attrs: { to: { name: "twitter.index" } }
                   },
                   [_vm._v("\n            もっと見る\n          ")]
@@ -58123,7 +58183,9 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "p-readmore__wrapper" },
+          {
+            staticClass: "c-btn--accent-outline c-btn--arrow p-readmore__link"
+          },
           [
             _c(
               "RouterLink",
@@ -58319,7 +58381,25 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm._m(0),
+            _c(
+              "div",
+              { staticClass: "u-font--right" },
+              [
+                _c(
+                  "RouterLink",
+                  {
+                    staticClass: "c-form__link",
+                    attrs: { to: { name: "password.request" } }
+                  },
+                  [
+                    _vm._v(
+                      "\n            パスワードをお忘れですか？\n          "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
             _vm._v(" "),
             _vm.passwordErrors
               ? _c(
@@ -58418,7 +58498,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(0)
         ]
       ),
       _vm._v(" "),
@@ -58445,23 +58525,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "u-font--right" }, [
-      _c(
-        "a",
-        { staticClass: "c-form__link", attrs: { href: "/password/reset" } },
-        [_vm._v("\n            パスワードをお忘れですか？\n          ")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn--main-outline", attrs: { type: "submit" } },
-        [_vm._v("ログイン")]
+        {
+          staticClass: "c-btn--main-outline c-btn--large",
+          attrs: { type: "submit" }
+        },
+        [_vm._v("\n          ログイン\n        ")]
       )
     ])
   }
@@ -58780,7 +58851,10 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn--main-outline", attrs: { type: "submit" } },
+        {
+          staticClass: "c-btn--main-outline c-btn--large",
+          attrs: { type: "submit" }
+        },
         [_vm._v("送信する")]
       )
     ])
@@ -59076,8 +59150,11 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn--main-outline", attrs: { type: "submit" } },
-        [_vm._v("送信する")]
+        {
+          staticClass: "c-btn--main-outline c-btn--large",
+          attrs: { type: "submit" }
+        },
+        [_vm._v("\n          送信する\n        ")]
       )
     ])
   }
@@ -59834,7 +59911,10 @@ var staticRenderFns = [
     return _c("div", { staticClass: "c-form__button" }, [
       _c(
         "button",
-        { staticClass: "c-btn--accent", attrs: { type: "submit" } },
+        {
+          staticClass: "c-btn--accent c-btn--large",
+          attrs: { type: "submit" }
+        },
         [_vm._v("ユーザー登録")]
       )
     ])
@@ -60464,7 +60544,7 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "c-btn--muted-outline",
+                    staticClass: "c-btn--muted-outline c-btn--small",
                     on: {
                       click: function($event) {
                         _vm.isActive = !_vm.isActive
@@ -60604,7 +60684,7 @@ var render = function() {
                       ? _c(
                           "a",
                           {
-                            staticClass: "c-btn--muted-outline",
+                            staticClass: "c-btn--muted-outline c-btn--small",
                             on: {
                               click: function($event) {
                                 return _vm.deselect()
@@ -60620,7 +60700,7 @@ var render = function() {
                       : _c(
                           "a",
                           {
-                            staticClass: "c-btn--muted-outline",
+                            staticClass: "c-btn--muted-outline c-btn--small",
                             on: {
                               click: function($event) {
                                 return _vm.selectAll()

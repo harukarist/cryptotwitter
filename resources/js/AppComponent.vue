@@ -49,8 +49,6 @@ export default {
       async handler(val) {
         // サーバー内部エラーの場合はエラーメッセージを表示
         if (val === INTERNAL_SERVER_ERROR) {
-          // this.$router.push("/error");
-          // this.$router.push({ name: "errors.system" });
           this.$store.dispatch("message/showMessage", {
             text:
               "システムエラーが発生しました。お手数ですが、時間を置いて再度お試しください。",
@@ -58,17 +56,15 @@ export default {
             timeout: 6000,
           });
         } else if (val === UNAUTHORIZED) {
-          // 認証エラーの場合はログインページへ移動
-          // CSRFトークンをリフレッシュ
+          // セッション切れなど認証エラーの場合
+          // CSRFトークンのリフレッシュ処理
           await axios.get("/api/refresh-token");
           // ストアの古いuserDataをクリア
           this.$store.commit("auth/setUserData", null);
           // ログイン画面へ遷移
-          // this.$router.push("/login");
           this.$router.push({ name: "login" });
         } else if (val === NOT_FOUND) {
           // 404エラーの場合はNotFoundページを表示
-          // this.$router.push("/not-found");
           this.$router.push({ name: "errors.notfound" });
         }
       },

@@ -44,9 +44,7 @@ class ResetPasswordController extends Controller
      */
     public function showResetForm(Request $request, $token = null)
     {
-        // return view('auth.passwords.reset')->with(
-        //     ['token' => $token, 'email' => $request->email]
-        // );
+        // Vueコンポーネントのパスワードリセットフォームを表示
         return redirect("/pass/reset/{$token}?email={$request->email}");
     }
 

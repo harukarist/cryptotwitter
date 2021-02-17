@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="p-target__body">
-      <p class="p-target__profile u-font__br">{{ item.profile_text }}</p>
+      <p class="p-target__profile">{{ item.profile_text }}</p>
 
       <div class="p-target__follow">
         <span class="p-target__num">

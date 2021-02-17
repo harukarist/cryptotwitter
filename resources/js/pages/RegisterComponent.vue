@@ -128,7 +128,7 @@
           に同意の上、ご登録ください。
         </div>
         <div class="c-form__button">
-          <button type="submit" class="c-btn--accent">ユーザー登録</button>
+          <button type="submit" class="c-btn--accent c-btn--large">ユーザー登録</button>
         </div>
       </form>
       <div class="c-form__link">

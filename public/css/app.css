@@ -92,7 +92,7 @@ html, body {
   height: 100vh;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  font-family: "Nunito Sans", "Noto Sans JP", "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro W3", Meiryo, sans-serif;
+  font-family: "Noto Sans JP", "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro W3", Meiryo, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   letter-spacing: 0.1em;
@@ -134,7 +134,7 @@ input, button, textarea, select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  font-family: "Nunito Sans", "Noto Sans JP", "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro W3", Meiryo, sans-serif;
+  font-family: "Noto Sans JP", "游ゴシック", YuGothic, "ヒラギノ角ゴ Pro W3", Meiryo, sans-serif;
   font-size: 100%; }
 
 #app {
@@ -242,7 +242,7 @@ input, button, textarea, select {
           box-sizing: border-box;
   -webkit-transition: all .3s;
   transition: all .3s;
-  padding: 10px 15px;
+  padding: 15px;
   display: inline-block;
   text-align: center;
   text-decoration: none;
@@ -254,12 +254,23 @@ input, button, textarea, select {
     -webkit-transform: scale(0.97);
             transform: scale(0.97); }
 
+.c-btn--small {
+  padding: 5px 10px; }
+
 .c-btn--large {
   min-width: 300px; }
   @media screen and (max-width: 599px) {
     .c-btn--large {
       width: 80%;
       margin: 0 auto; } }
+
+.c-btn--arrow::after {
+  content: '\f105';
+  font-family: FontAwesome;
+  font-size: 18px;
+  margin-left: 10px;
+  position: relative;
+  top: 1px; }
 
 .c-btn--accent {
   background-color: #3999AA;
@@ -317,8 +328,7 @@ input, button, textarea, select {
   border: 1px solid #D3D9E0;
   color: #707F89;
   font-weight: normal;
-  font-size: 14px;
-  padding: 5px 10px; }
+  font-size: 14px; }
   .c-btn--muted-outline:hover {
     color: #707F89; }
 
@@ -327,8 +337,7 @@ input, button, textarea, select {
   background: #FCFCFC;
   color: #19465B;
   font-weight: bold;
-  font-size: 16px;
-  padding: 5px 10px; }
+  font-size: 16px; }
   .c-btn--white:hover {
     color: #FCFCFC;
     background: #19465B; }
@@ -1124,7 +1133,8 @@ input, button, textarea, select {
     font-size: 24px;
     margin-bottom: 30px; }
   .p-faq__contents {
-    width: 980px;
+    width: 100%;
+    max-width: 980px;
     margin: 0 auto; }
     @media screen and (max-width: 880px) {
       .p-faq__contents {
@@ -1328,7 +1338,9 @@ input, button, textarea, select {
     color: #19465B;
     text-align: center; }
     .p-hero__link:hover {
-      color: rgba(25, 70, 91, 0.8); }
+      color: #559BED;
+      -webkit-transform: scale(0.95);
+              transform: scale(0.95); }
     @media screen and (max-width: 599px) {
       .p-hero__link {
         margin-bottom: 30px; } }
@@ -1457,7 +1469,7 @@ input, button, textarea, select {
       -webkit-transition: width .2s ease-in-out;
       transition: width .2s ease-in-out; }
     .p-nav-menu__link:hover {
-      color: #559BED;
+      color: #5AB4BD;
       -webkit-transform: scale(0.97, 1);
               transform: scale(0.97, 1); }
     .p-nav-menu__link.is-active {
@@ -1468,8 +1480,7 @@ input, button, textarea, select {
     @media screen and (max-width: 880px) {
       .p-nav-menu__link {
         text-align: center;
-        padding: 0;
-        height: 40px; }
+        padding: 0; }
         .p-nav-menu__link::before {
           margin: 0; } }
   .p-nav-menu__btn {
@@ -1735,9 +1746,11 @@ input, button, textarea, select {
       padding-left: 20px;
       padding-right: 20px; } }
   .p-news__item {
-    margin-bottom: 15px; }
+    margin-bottom: 30px; }
   .p-news__title {
-    margin-bottom: 10px; }
+    margin-left: 10px;
+    margin-right: 10px;
+    letter-spacing: 0.12em; }
   .p-news__info {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1748,6 +1761,9 @@ input, button, textarea, select {
     margin-bottom: 10px; }
   .p-news__date {
     font-size: 14px;
+    font-family: "Nunito Sans", sans-serif;
+    font-weight: bold;
+    color: #707F89;
     padding: 5px 10px;
     background: #F0F4F7;
     border-radius: 4px; }
@@ -1778,45 +1794,16 @@ input, button, textarea, select {
 .p-readmore__wrapper {
   text-align: center;
   margin: 15px auto;
-  width: 300px; }
-  @media screen and (max-width: 880px) {
-    .p-readmore__wrapper {
-      width: 100%; } }
+  width: 100%; }
 
 .p-readmore__link {
-  cursor: pointer;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-  padding: 10px 15px;
   width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  display: block;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 100vh;
-  font-weight: bold;
-  letter-spacing: 0.02em;
-  color: #3999AA;
-  border: 2px solid #3999AA;
-  background: #FCFCFC; }
-  .p-readmore__link::after {
-    content: '\f105';
-    font-family: FontAwesome;
-    color: #3999AA;
-    font-size: 18px;
-    padding: 0;
-    margin-left: 10px;
-    position: relative;
-    top: 1px; }
+  color: #3999AA; }
   .p-readmore__link:hover {
-    color: #FCFCFC;
-    border: none;
-    background: #3999AA;
-    -webkit-transform: scale(0.97);
-            transform: scale(0.97); }
-    .p-readmore__link:hover::after {
-      color: #FCFCFC; }
+    color: #FCFCFC; }
+  @media screen and (max-width: 599px) {
+    .p-readmore__link {
+      width: 100%; } }
 
 .p-reason {
   background: #004BB1;
@@ -1842,7 +1829,8 @@ input, button, textarea, select {
         -ms-flex-direction: column;
             flex-direction: column;
     margin: 0 auto;
-    width: 980px; }
+    width: 100%;
+    max-width: 980px; }
     .p-reason__contents div:nth-child(even) {
       -webkit-box-orient: horizontal;
       -webkit-box-direction: reverse;

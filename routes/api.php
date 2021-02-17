@@ -25,12 +25,6 @@ Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail
 // パスワードリセット
 Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-// // パスワードリセットメール送信API
-// Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-// // パスワードリセットフォーム表示
-// Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-
-
 // お問い合わせフォーム入力内容確認
 Route::post('/contact/confirm', 'ContactController@confirm')->name('contact.confirm');
 //お問い合わせフォーム送信
@@ -41,12 +35,11 @@ Route::post('/user', function () {
   return Auth::user();
 })->name('user');
 
-
 // ログインユーザーのTwitter認証チェック（認証済みであればアカウント情報を返却）
 Route::post('/auth/twitter/check', 'Auth\TwitterAuthController@checkTwitterUserAuth');
 
 // トークンリフレッシュ
-Route::get('/reflesh-token', function (Illuminate\Http\Request $request) {
+Route::get('/refresh-token', function (Illuminate\Http\Request $request) {
   // 認証切れの場合はセッションのCSRFトークンをリフレッシュして返却
   $request->session()->regenerateToken();
   return response()->json();

@@ -22,7 +22,10 @@
     </fade-in-component>
 
     <fade-in-component>
-      <RouterLink :to="{ name: 'register' }" class="c-btn--white p-action__btn">
+      <RouterLink
+        :to="{ name: 'register' }"
+        class="c-btn--white c-btn--large c-btn--arrow"
+      >
         今すぐ無料ではじめる
       </RouterLink>
     </fade-in-component>

@@ -81,7 +81,7 @@
                       </span>
                     </a>
                   </td>
-                  <td>
+                  <td class="c-table--center">
                     <p v-if="column === 'tweet_hour'" class="u-font__num">
                       {{ trend.tweet_hour | localeNum }}
                     </p>
@@ -92,7 +92,7 @@
                       {{ trend.tweet_week | localeNum }}
                     </p>
                   </td>
-                  <td>
+                  <td class="c-table--right">
                     <p v-if="trend.high" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.high | round | localeNum
@@ -100,7 +100,7 @@
                     </p>
                     <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
-                  <td>
+                  <td class="c-table--right">
                     <p v-if="trend.low" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.low | round | localeNum
@@ -119,7 +119,10 @@
           </div>
 
           <div class="p-readmore__wrapper">
-            <RouterLink :to="{ name: 'trend.index' }" class="p-readmore__link">
+            <RouterLink
+              :to="{ name: 'trend.index' }"
+              class="c-btn--accent-outline c-btn--arrow p-readmore__link"
+            >
               もっと見る
             </RouterLink>
           </div>
@@ -140,7 +143,7 @@
           <div class="p-readmore__wrapper">
             <RouterLink
               :to="{ name: 'twitter.index' }"
-              class="p-readmore__link"
+              class="c-btn--accent-outline c-btn--arrow p-readmore__link"
             >
               もっと見る
             </RouterLink>
@@ -171,7 +174,7 @@
           </div>
         </div>
 
-        <div class="p-readmore__wrapper">
+        <div class="c-btn--accent-outline c-btn--arrow p-readmore__link">
           <RouterLink :to="{ name: 'news.index' }" class="p-readmore__link">
             もっと見る
           </RouterLink>

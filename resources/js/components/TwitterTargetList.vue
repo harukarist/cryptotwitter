@@ -158,7 +158,8 @@ export default {
     },
   },
   watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    // ページネーション遷移時にコンポーネントの再生成が必要になるため、
+    // $routeを監視し、ページ切り替え時にデータ取得を実行する
     $route: {
       async handler() {
         this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン

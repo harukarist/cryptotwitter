@@ -46,15 +46,13 @@
             autocomplete="current-password"
           />
           <div class="u-font--right">
-            <a href="/password/reset" class="c-form__link">
-              パスワードをお忘れですか？
-            </a>
-          </div>
-          <!-- <div class="u-font--right">
             <RouterLink :to="{ name: 'password.request' }" class="c-form__link">
               パスワードをお忘れですか？
             </RouterLink>
-          </div> -->
+            <!-- <a href="/pass/reset" class="c-form__link">
+              パスワードをお忘れですか？
+            </a> -->
+          </div>
           <ul v-if="passwordErrors">
             <li
               v-for="error in passwordErrors"
@@ -88,7 +86,9 @@
         </div>
 
         <div class="c-form__button">
-          <button type="submit" class="c-btn--main-outline">ログイン</button>
+          <button type="submit" class="c-btn--main-outline c-btn--large">
+            ログイン
+          </button>
         </div>
       </form>
       <div class="c-form__link">
@@ -157,7 +157,7 @@ export default {
       }
       // エラーメッセージを格納した配列を全て結合
       const results = this.emailErrors.concat(this.passwordErrors);
-      // エラーメッセージがなければユーザー登録WebAPIを呼び出す
+      // エラーメッセージがなければログインWebAPIを呼び出す
       if (!results.length) {
         this.login();
       }
