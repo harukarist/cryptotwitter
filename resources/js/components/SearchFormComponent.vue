@@ -2,7 +2,7 @@
   <form class="c-search__form" @submit.prevent="search">
     <span class="c-search__icon"><i class="fas fa-search"></i></span>
     <input
-      type="text"
+      type="search"
       class="c-input c-search__input"
       name="search"
       v-model="searchWord"
