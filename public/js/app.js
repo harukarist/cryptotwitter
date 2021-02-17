@@ -56065,7 +56065,7 @@ var render = function() {
         ],
         staticClass: "c-input c-search__input",
         attrs: {
-          type: "text",
+          type: "search",
           name: "search",
           placeholder: "キーワードを入力して検索"
         },
