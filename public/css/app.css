@@ -841,10 +841,12 @@ input, button, textarea, select {
         color: #FCFCFC; }
     @media screen and (max-width: 599px) {
       .c-pagination__item {
-        width: calc(100% / 4);
-        border-radius: 4px; }
+        width: calc(100% / 4); }
         .c-pagination__item a {
-          border-radius: 4px; } }
+          border-radius: 4px; }
+          .c-pagination__item a:hover {
+            color: #19465B;
+            background: rgba(240, 244, 247, 0.8); } }
     .c-pagination__item + .c-pagination__item {
       border-left: none; }
     .c-pagination__item.is-disabled {
