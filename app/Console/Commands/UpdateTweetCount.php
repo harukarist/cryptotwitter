@@ -59,9 +59,11 @@ class UpdateTweetCount extends Command
         // trendsテーブルから銘柄名と検索キーワードを配列型式で取得
         $trends_arr = Trend::select('currency_name', 'tweet_words')->get()->toArray();
 
-        // 各銘柄の検索キーワードをORでつないだ文字列を分割し、銘柄名をキーとする配列に格納する
+        // 各銘柄について、検索キーワードが設定されていれば ORでつないだ文字列を分割し、銘柄名をキーとする配列に格納する
         foreach ($trends_arr as $trend) {
-            $this->words_arr[$trend['currency_name']] = explode(' OR ', $trend['tweet_words']);
+            if (array_key_exists('tweet_words', $trend)) {
+                $this->words_arr[$trend['currency_name']] = explode(' OR ', $trend['tweet_words']);
+            }
         }
 
         // 過去1時間の集計対象日時をセット
