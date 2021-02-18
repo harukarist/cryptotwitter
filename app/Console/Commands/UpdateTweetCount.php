@@ -61,15 +61,16 @@ class UpdateTweetCount extends Command
 
         // 各銘柄について、検索キーワードが設定されていれば ORでつないだ文字列を分割し、銘柄名をキーとする配列に格納する
         foreach ($trends_arr as $trend) {
-            if (array_key_exists('tweet_words', $trend)) {
-                $this->words_arr[$trend['currency_name']] = explode(' OR ', $trend['tweet_words']);
-            }
+            $this->words_arr[$trend['currency_name']] = explode(' OR ', $trend['tweet_words']);
+            // if (array_key_exists('tweet_words', $trend)) {
+            //     $this->words_arr[$trend['currency_name']] = explode(' OR ', $trend['tweet_words']);
+            // }
         }
 
         // 過去1時間の集計対象日時をセット
         $this->setHour();
         // 過去1時間の銘柄別ツイート数を集計
-        $this->countUpdate('tweet_hou');
+        $this->countUpdate('tweet_hour');
 
         // 過去24時間の集計対象日時をセット
         $this->setDay();
