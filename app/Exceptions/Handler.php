@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -13,7 +15,10 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        // メール通知対象外とする例外エラーを指定
+        \Illuminate\Auth\AuthenticationException::class, //認証エラー
+        \Illuminate\Auth\Access\AuthorizationException::class, //アクセス権限エラー
+        \Illuminate\Validation\ValidationException::class, //バリデーションエラー
     ];
 
     /**
@@ -36,6 +41,32 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
+
+        $status = $this->isHttpException($exception) ? $exception->getStatusCode() : 500;
+
+        if ($exception instanceof \Exception && $this->shouldReport($exception)) {
+            if (\App::environment(['staging', 'production'])) {
+                $status = $this->isHttpException($exception) ? $exception->getStatusCode() : 500;
+
+                if ($status >= 500) {
+                    $error['message'] = $exception->getMessage();
+                    $error['status']  = $status;
+                    $error['code']    = $exception->getCode();
+                    $error['file']    = $exception->getFile();
+                    $error['line']    = $exception->getLine();
+                    $error['url']     = url()->current();
+
+                    Mail::send(['text' => 'emails.exception'], ["e" => $error], function (Message $message) {
+                        $message
+                            ->to(config('mail.to.address'))
+                            ->from(config('mail.from.address'))
+                            ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生の連絡');
+                    });
+                }
+            }
+        }
+
+
         parent::report($exception);
     }
 
