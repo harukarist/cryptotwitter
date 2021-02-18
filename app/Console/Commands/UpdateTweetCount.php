@@ -69,7 +69,7 @@ class UpdateTweetCount extends Command
         // 過去1時間の集計対象日時をセット
         $this->setHour();
         // 過去1時間の銘柄別ツイート数を集計
-        $this->countUpdate('tweet_hour');
+        $this->countUpdate('tweet_hou');
 
         // 過去24時間の集計対象日時をセット
         $this->setDay();
