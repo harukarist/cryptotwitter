@@ -56,9 +56,11 @@ class Handler extends ExceptionHandler
                     $error['line']    = $exception->getLine();
                     $error['url']     = url()->current();
 
-                    Mail::send(['text' => 'emails.exception'], ["e" => $error], function (Message $message) {
+
+                    // config/mail.phpで設定した送信元メールアドレス宛に送信（.envのMAIL_FROM_ADDRESSと同一）
+                    Mail::send(['text' => 'mail.exception'], ["e" => $error], function (Message $message) {
                         $message
-                            ->to(config('mail.to.address'))
+                            ->to(config('mail.from.address'))
                             ->from(config('mail.from.address'))
                             ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生の連絡');
                     });
