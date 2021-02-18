@@ -1,0 +1,81 @@
+.p-message-large {
+  position: fixed;
+  min-width: 350px;
+  height: 200px;
+  padding: $space--l;
+  box-sizing: border-box;
+  top: calc(50% - (200px/2));
+  left: calc(50% - (350px/2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border-radius: 4px;
+  box-shadow: $shadow-color--s;
+  z-index: 5;
+  font-weight: bold;
+  font-size: $font-size--l;
+  letter-spacing: 1.8;
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+  &--success {
+    color: $font-color--success;
+    background-color: rgba($bg-color--success-light, 0.95);
+  }
+  &--danger {
+    color: $font-color--danger;
+    background-color: rgba($bg-color--danger-light, 0.95);
+  }
+  &--notice {
+    color: $font-color--notice;
+    background-color: rgba($bg-color--notice-light, 0.95);
+  }
+  &__text {
+    padding-top: 40px;
+    &:before {
+      font-family: FontAwesome;
+      font-size: 60px;
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translate(-50%, -50%); //要素自身の高さの半分だけ上にずらす
+    }
+    &--success {
+      &:before {
+        content: '\f058';
+        color: $font-color--success;
+      }
+    }
+    &--danger {
+      &:before {
+        content: '\f00c';
+        color: $font-color--danger;
+      }
+    }
+    &--notice {
+      &:before {
+        content: '\f024';
+        color: $font-color--notice;
+      }
+    }
+  }
+}
+.p-message-small {
+  position: fixed;
+  top: $header-height + 10px;
+  right: 10px;
+  z-index: 5;
+  &__text {
+    display: inline-block;
+    padding-right: $space--l;
+  }
+  &__close {
+    position: absolute;
+    right: 10px;
+    top: 50%; //閉じるボタンの高さをボックスの上下中央に配置
+    transform: translateY(-50%); //要素自身の高さの半分だけ上にずらす
+  }
+}

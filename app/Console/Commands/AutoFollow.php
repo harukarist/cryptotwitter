@@ -57,8 +57,10 @@ class AutoFollow extends Command
         // 自動フォローを利用しているユーザーのTwitterアカウント一覧を取得
         $twitter_users = TwitterUser::where('use_autofollow', true)->get();
 
-        // ターゲット一覧（フォロー対象のTwitterアカウント一覧）を取得
-        $target_users = TargetUser::select('id', 'twitter_id')->get();
+        // ターゲット一覧（自動フォロー対象のTwitterアカウント一覧）を取得
+        // ツイートIDがnullのレコードは除く（凍結アカウント、削除済みアカウント、鍵付きアカウント、ツイートが1件もないアカウントのため、自動フォロー対象外とする）
+        $target_users = TargetUser::select('id', 'twitter_id')
+            ->whereNotNull('tweet_id')->get();
 
         $MAX_REQUESTS = 15; //自動フォローするアカウント数の上限（15分に15回まで）
 

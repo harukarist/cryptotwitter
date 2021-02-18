@@ -52,9 +52,7 @@ class UsersTwitterOAuth
 
       if (property_exists($resources_obj, $category)) {
         $remain_count = $resources_obj->$category->$endpoint->remaining; // 残り使用回数
-
         logger()->info("{$endpoint}へのリクエストは残り{$remain_count}回");
-
         return $remain_count;
       }
     }

@@ -51,7 +51,7 @@
                   :key="trend.id"
                   class="p-trend__item"
                 >
-                  <td>
+                  <td class="p-trend__order-td">
                     <span
                       class="p-trend__order"
                       :class="{
@@ -63,7 +63,7 @@
                       {{ index + 1 }}
                     </span>
                   </td>
-                  <td>
+                  <td class="p-trend__name-td">
                     <a
                       :href="`https://twitter.com/search?q=${trend.currency_name}`"
                       target="_blank"
@@ -81,7 +81,7 @@
                       </span>
                     </a>
                   </td>
-                  <td class="c-table--center">
+                  <td class="p-trend__tweet-td">
                     <p v-if="column === 'tweet_hour'" class="u-font__num">
                       {{ trend.tweet_hour | localeNum }}
                     </p>
@@ -92,7 +92,7 @@
                       {{ trend.tweet_week | localeNum }}
                     </p>
                   </td>
-                  <td class="c-table--right">
+                  <td class="p-trend__price-td">
                     <p v-if="trend.high" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.high | round | localeNum
@@ -100,7 +100,7 @@
                     </p>
                     <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
-                  <td class="c-table--right">
+                  <td class="p-trend__price-td">
                     <p v-if="trend.low" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.low | round | localeNum
@@ -133,49 +133,56 @@
     <section class="c-section">
       <h5 class="c-section__title">仮想通貨 最新Twitterアカウント</h5>
       <div class="p-target p-home__contents">
-        <div class="p-target__list p-home__twitter">
-          <TwitterTargetItem
-            v-for="target in targets"
-            :key="target.id"
-            :item="target"
-            :is-login="false"
-          />
-          <div class="p-readmore__wrapper">
-            <RouterLink
-              :to="{ name: 'twitter.index' }"
-              class="c-btn--accent-outline c-btn--arrow p-readmore__link"
-            >
-              もっと見る
-            </RouterLink>
+        <fade-in-component>
+          <div class="p-target__list p-home__twitter">
+            <TwitterTargetItem
+              v-for="target in targets"
+              :key="target.id"
+              :item="target"
+              :is-login="false"
+            />
+            <div class="p-readmore__wrapper">
+              <RouterLink
+                :to="{ name: 'twitter.index' }"
+                class="c-btn--accent-outline c-btn--arrow p-readmore__link"
+              >
+                もっと見る
+              </RouterLink>
+            </div>
           </div>
-        </div>
+        </fade-in-component>
       </div>
     </section>
 
     <section class="c-section">
       <h5 class="c-section__title">仮想通貨 最新ニュース</h5>
       <div class="p-news p-home__contents">
-        <div class="p-home__row">
-          <div
-            class="p-news__item p-home__item"
-            v-for="item in news"
-            :key="item.title"
-          >
-            <div class="p-news__info">
-              <span class="p-news__date">
-                {{ item.published_date }}
-              </span>
+        <fade-in-component>
+          <div class="p-home__row">
+            <div
+              class="p-news__item p-home__item"
+              v-for="item in news"
+              :key="item.title"
+            >
+              <div class="p-news__info">
+                <span class="p-news__date">
+                  {{ item.published_date }}
+                </span>
+              </div>
+              <h5 class="p-news__title">
+                <a :href="item.url" target="_blank">
+                  {{ item.title }}
+                </a>
+              </h5>
             </div>
-            <h5 class="p-news__title">
-              <a :href="item.url" target="_blank">
-                {{ item.title }}
-              </a>
-            </h5>
           </div>
-        </div>
+        </fade-in-component>
 
-        <div class="c-btn--accent-outline c-btn--arrow p-readmore__link">
-          <RouterLink :to="{ name: 'news.index' }" class="p-readmore__link">
+        <div class="p-readmore__wrapper">
+          <RouterLink
+            :to="{ name: 'news.index' }"
+            class="c-btn--accent-outline c-btn--arrow p-readmore__link"
+          >
             もっと見る
           </RouterLink>
         </div>
@@ -187,10 +194,12 @@
 <script>
 import { OK } from "../utility";
 import TwitterTargetItem from "../components/TwitterTargetItem.vue";
+import FadeInComponent from "../components/FadeInComponent.vue";
 
 export default {
   components: {
     TwitterTargetItem,
+    FadeInComponent,
   },
   data() {
     return {

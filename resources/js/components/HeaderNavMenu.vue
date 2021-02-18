@@ -191,7 +191,7 @@ export default {
           {
             text: "ログアウトしました",
             type: "success",
-            timeout: 3000,
+            timeout: 2000,
           },
           { root: true }
         );

@@ -3,6 +3,9 @@
   margin: $space--m $space--m;
   border-radius: 4px;
   text-align: center;
+  @include mq(){
+    margin: $space--m 0;
+  }
 }
 
 .c-alert {
@@ -10,7 +13,7 @@
   &--success {
     @extend %alertBase;
     color: $font-color--white;
-    background-color: rgba($bg-color--accent, 0.98);
+    background-color: rgba($bg-color--success, 0.98);
   }
   &--danger {
     @extend %alertBase;
@@ -25,18 +28,18 @@
   &__inline {
     &--success {
       @extend %alertBase;
-      color: $font-color--accent;
-      background-color: rgba($bg-color--accent, 0.1);
+      color: $font-color--success;
+      background-color: rgba($bg-color--success-light, 0.98);
     }
     &--danger {
       @extend %alertBase;
       color: $font-color--danger;
-      background-color: rgba($bg-color--danger, 0.1);
+      background-color: rgba($bg-color--danger-light, 0.98);
     }
     &--notice {
       @extend %alertBase;
       color: $font-color--notice;
-      background-color: rgba($bg-color--notice, 0.1);
+      background-color: rgba($bg-color--notice-light, 0.98);
     }
   }
 }

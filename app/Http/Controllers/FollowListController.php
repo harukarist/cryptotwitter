@@ -78,11 +78,11 @@ class FollowListController extends Controller
   {
     $cursor = '-1'; //初期値は-1
     $follows = []; //TwitterAPIから取得したフォロー済みIDを格納する配列
-    $category = "friends";
-    $endpoint = "/friends/ids";
+    $CATEGORY = "friends";
+    $ENDPOINT = "/friends/ids";
 
     // ユーザーアカウントでのTwitterAPIのレートリミットをチェック
-    $limit = UsersTwitterOAuth::checkLimit($connect, $category, $endpoint);
+    $limit = UsersTwitterOAuth::checkLimit($connect, $CATEGORY, $ENDPOINT);
 
     // リミット上限に達した場合はエラーログを出力
     if (!$limit) {
@@ -101,7 +101,7 @@ class FollowListController extends Controller
       );
 
       // 対象ユーザーがフォローしているユーザーをTwitterIDの一覧で取得
-      $result = $connect->get($endpoint, $params);
+      $result = $connect->get($ENDPOINT, $params);
 
       // フォローユーザーIDが返却された場合
       if (property_exists($result, 'ids')) {

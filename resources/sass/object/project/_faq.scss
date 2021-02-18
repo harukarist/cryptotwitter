@@ -34,7 +34,7 @@
   }
   &__question {
     color: $font-color--dark;
-    font-size: $font-size--l;
+    // font-size: $font-size--l;
     font-weight: bold;
     text-align: left;
     position: relative; //擬似要素の配置基準
@@ -64,9 +64,13 @@
     text-align: left;
     position: relative; //擬似要素の配置基準
     padding: 30px 60px 40px 60px;
+    text-align: justify;
+    line-height: 1.8;
+    @include mq(medium){
+      padding: 30px 40px 40px 60px;
+    }
     @include mq(){
       padding: 20px 20px 20px 40px;
-      font-size: $font-size--default;
     }
     &::before {
       content: 'A';

@@ -7,7 +7,11 @@ use App\Facades\Twitter;
 use Illuminate\Console\Command;
 use Abraham\TwitterOAuth\TwitterOAuthException;
 
-// TwproAPIから取得した仮想通貨アカウントなど、最新ツイートが取得できなかった仮想通貨アカウントの最新ツイートをTwitterAPIから取得するコマンド
+/**
+ * TwproAPIから取得した仮想通貨アカウントなど、
+ * 最新ツイートが取得できなかった仮想通貨アカウントの最新ツイートを
+ * TwitterAPIから取得するコマンド
+ */
 class FetchTargetsTweet extends Command
 {
     /**

@@ -5,7 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-// バッチ処理を行うタスクスケジューラー
+/**
+ * バッチ処理を指定のタイミングで実行するためのタスクスケジューラー
+ */
 class Kernel extends ConsoleKernel
 {
     /**

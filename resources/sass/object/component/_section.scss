@@ -21,9 +21,7 @@
     color: $font-color--dark;
     font-size: $font-size--xl;
     font-weight: bold;
-    -webkit-font-smoothing: none; //スムージングを解除
     font-feature-settings: "palt"; //自動カーニングで文字詰め
-    letter-spacing: 0.15em;
     margin-top: $space--l;
     margin-bottom: $space--xxxl;
     position: relative;
@@ -60,9 +58,5 @@
     text-align: left;
     line-height: 1.8;
     margin-bottom: $space--l;
-  }
-  &__list {
-    margin-left: $space--xxxl;
-    margin-bottom: $space--xl;
   }
 }

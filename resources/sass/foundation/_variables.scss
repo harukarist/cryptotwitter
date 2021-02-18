@@ -23,6 +23,7 @@ $font-color--hover: #559BED; //主にリンクホバー時の文字色に使用
 
 $font-color--muted: #707F89;
 $font-color--white: #FCFCFC;
+$font-color--success: #3999AA;
 $font-color--danger: #DC5B34;
 $font-color--notice: #999999;
 
@@ -37,8 +38,13 @@ $bg-color--main-light: #C4DDFF;
 $bg-color--dark: #19465B;
 
 $bg-color--twitter: #1C91DA;
-$bg-color--danger: #DC5B34;
+$bg-color--danger: #DC5B34;  //主にボタンやフォーム要素の塗りに使用
+$bg-color--danger-light: #FFEEEA;  //主にフラッシュメッセージの塗りに使用
+$bg-color--success:#3999AA;
+$bg-color--success-light:#EBFDFF;
 $bg-color--notice: #999999;
+$bg-color--notice-light: #EAEAEA;
+
 
 $bg-color--gold: #FFD700;
 $bg-color--silver: #C0C0C0;

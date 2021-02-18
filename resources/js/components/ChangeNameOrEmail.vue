@@ -1,10 +1,5 @@
 <template>
   <form class="c-form--small" @submit.prevent="checkEditForm">
-    <transition name="popup" appear>
-      <p v-if="successMessage" class="u-mb--xxxl c-alert--success">
-        {{ successMessage }}
-      </p>
-    </transition>
     <div class="c-form__group">
       <label for="username" class="c-form__label">
         お名前
@@ -60,7 +55,9 @@
       </ul>
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn--accent c-btn--large">アカウント情報を変更</button>
+      <button type="submit" class="c-btn--accent c-btn--large">
+        アカウント情報を変更
+      </button>
     </div>
   </form>
 </template>
@@ -135,12 +132,18 @@ export default {
     },
     // ユーザー情報変更WebAPI呼び出し
     async EditAccount() {
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       // dispatch()でauthストアのアクションを呼び出す
       await this.$store.dispatch("auth/EditAccount", this.editForm);
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // API通信が成功した場合
       if (this.apiStatus) {
         // フォーム上にサクセスメッセージを表示
-        this.successMessage = "アカウント情報を変更しました";
+        this.$store.dispatch("message/showMessage", {
+          text: "アカウント情報を変更しました",
+          type: "success",
+          timeout: 2000,
+        });
         // エラーメッセージをクリア
         this.nameErrors = [];
         this.emailErrors = [];

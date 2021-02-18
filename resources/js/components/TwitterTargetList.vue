@@ -1,16 +1,21 @@
 <template>
   <div class="p-target">
     <div class="p-target__list">
+      <h5 class="p-target__title">仮想通貨関連アカウント</h5>
+      <pagination-info
+        :current-page="currentPage"
+        :per-page="perPage"
+        :total-num="totalNum"
+        :items-length="targets.length"
+      />
       <search-form-component
         @search="searchTargets"
         @clear="clearResult"
         :total-num="totalNum"
         :searched-param="searchedParam"
         item-name="仮想通貨関連アカウント"
-        class="u-mt--xl u-mb--xxxl"
       />
 
-      <h5 class="p-target__title">仮想通貨関連アカウント</h5>
       <twitter-target-item
         v-for="target in targets"
         :key="target.id"
@@ -78,6 +83,11 @@ export default {
   methods: {
     // 検索コンポーネントからキーワードを受け通り、仮想通貨アカウントを検索
     searchTargets(word) {
+      // 検索キーワードが空の場合は全てのアカウント一覧を取得
+      if (!word) {
+        this.clearResult();
+        return;
+      }
       let params = {
         // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {
@@ -108,7 +118,6 @@ export default {
       }
       // 仮想通貨アカウントの一覧取得APIへリクエスト
       const response = await axios.get("/api/twitter", params);
-      // const url = `/api/twitter?page=${this.page}&search=${this.search}`;
 
       this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // レスポンスのステータスが200以外の場合はエラーをストアにコミット

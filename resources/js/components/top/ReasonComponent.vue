@@ -19,16 +19,15 @@
                 class="u-md--hidden"
               />過去1時間・24時間・1週間でランキング表示
             </h4>
+          </fade-in-component>
+          <fade-in-component>
             <p class="p-reason__text">
-              Coincheckにて取り扱われている全18銘柄の仮想通貨について<br
+              Coincheckにて取り扱われている全18銘柄の仮想通貨について、<br
                 class="u-md--hidden"
-              />
-              仮想通貨の銘柄名をキーワードに含むツイート数を集計し、<br
+              />仮想通貨の銘柄名をキーワードに含むツイート数を集計し、<br
                 class="u-md--hidden"
-              />
-              最新データをランキングで表示。<br
-                class="u-md--hidden"
-              />変化の激しい仮想通貨の最新トレンドを手軽にチェックできます。
+              />最新データをランキングで表示。<br />
+              変化の激しい仮想通貨の最新トレンドを手軽にチェックできます。
             </p>
           </fade-in-component>
         </div>
@@ -52,29 +51,24 @@
                 class="u-sp--hidden"
               />ターゲットを絞った自動フォロー
             </h4>
+          </fade-in-component>
+          <fade-in-component>
             <p class="p-reason__text">
-              仮想通貨に関心を持っている1,500以上のTwitterアカウントを<br
+              仮想通貨に関心を持っている3,000件以上のTwitterアカウントを<br
                 class="u-md--hidden"
-              />
-              自動でフォロー。お使いのTwitterアカウントを登録するだけで<br
-                class="u-md--hidden"
-              />
-              手間なくフォロー数を増やすことができます。<br
-                class="u-md--hidden"
-              />
-              個別のアカウントフォロー、最新ツイートのチェックも可能です。<br
-                class="u-md--hidden"
-              />
+              />自動でフォロー。<br />
+              お使いのTwitterアカウントを登録するだけで、手間なくフォロー数を増やすことができます。<br />
+              個別のアカウントフォロー、最新ツイートのチェックも可能です。
             </p>
           </fade-in-component>
         </div>
         <div class="p-reason__img-wrapper">
           <fade-in-component>
-            <img
-              src="/img/img_reason_02.png"
-              class="p-reason__img"
-              alt="自動フォローアイコン"
-            />
+          <img
+            src="/img/img_reason_02.png"
+            class="p-reason__img"
+            alt="自動フォローアイコン"
+          />
           </fade-in-component>
         </div>
       </div>
@@ -88,10 +82,10 @@
                 class="u-sp--hidden"
               />最新ニュースを厳選してお届け
             </h4>
+          </fade-in-component>
+          <fade-in-component>
             <p class="p-reason__text">
-              仮想通貨に関する最新ニュースをGoogleから随時お届けします。<br
-                class="u-md--hidden"
-              />
+              仮想通貨に関する最新ニュースをGoogleから随時お届けします。<br />
               膨大な情報の中から仮想通貨のみにテーマを絞って、いつでも<br
                 class="u-md--hidden"
               />必要な情報だけを効率良くチェックできます。
@@ -99,12 +93,13 @@
           </fade-in-component>
         </div>
         <div class="p-reason__img-wrapper">
+
           <fade-in-component>
-            <img
-              src="/img/img_reason_03.png"
-              class="p-reason__img"
-              alt="ニュース表示アイコン"
-            />
+          <img
+            src="/img/img_reason_03.png"
+            class="p-reason__img"
+            alt="ニュース表示アイコン"
+          />
           </fade-in-component>
         </div>
       </div>

@@ -8,7 +8,7 @@ html, body {
   font-family: $font-family--default;
   font-size: $font-size--default;
   line-height: 1.6;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   text-size-adjust: 100%;
   color: $font-color--default;
   background: $bg-color--white;
@@ -19,8 +19,9 @@ p, a, h1, h2, h3, h4, h5, h6, li {
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, h4, h5, h6 {
-  // 見出しは自動カーニングで文字詰めを行う
-  font-feature-settings: "palt";
+  font-feature-settings: "palt"; //自動カーニングで文字詰め
+  font-weight: bold;
+  letter-spacing: 0.1em;
 }
 
 a {
@@ -68,8 +69,8 @@ input[type="search"]::-webkit-search-decoration {
   display: none;
 }
 // フォームのフォントを指定
-input, button, textarea, select {
+input, textarea, select {
   font-family: $font-family--default;
   font-size: 100%;
-  text-align-last: left;
+  text-align: left;
 }

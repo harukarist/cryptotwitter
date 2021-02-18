@@ -129,7 +129,7 @@ const actions = {
     context.commit('setApiStatus', null)
 
     // サーバーのAPIを呼び出し
-    context.commit("loader/setIsLoading", false); //ローディング表示をオン
+    context.commit("loader/setIsLoading", false, { root: true }); //ローディング表示をオン
     const response = await axios.post('/api/autofollow/apply')
     context.commit("loader/setIsLoading", false, { root: true }); //ローディング表示をオフ
     // console.log(response);

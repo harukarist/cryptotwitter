@@ -8,13 +8,18 @@
         />お届けします。<br />
       </p>
       <div class="p-news c-fade-in">
+        <pagination-info
+          :current-page="currentPage"
+          :per-page="perPage"
+          :total-num="totalNum"
+          :items-length="news.length"
+        />
         <search-form-component
           @search="searchNews"
           @clear="clearResult"
           :total-num="totalNum"
           :searched-param="searchedParam"
           item-name="ニュース"
-          class="u-mt--xl u-mb--xxxl"
         />
 
         <transition-group tag="div" name="popup" appear class="p-news__item">
@@ -84,12 +89,17 @@ export default {
       perPage: 0, //1ページあたりの表示件数
       totalNum: 0, //トータル件数
       directoryName: "news", //ページネーションリンクに付与するディレクトリ
-      searchedParam: "", //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
+      searchedParam: "", //検索したキーワード（ページネーションのクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
     };
   },
   methods: {
     // ニュースをキーワード検索
     searchNews(word) {
+      // 検索キーワードが空の場合は全てのアカウント一覧を取得
+      if (!word) {
+        this.clearResult();
+        return;
+      }
       let params = {
         // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {
@@ -100,11 +110,18 @@ export default {
       this.fetchNews(params);
       this.searchedParam = word;
     },
-    // 検索結果の表示を解除
+    // 検索ボックスのテキストを削除
     clearResult() {
-      // 検索用のクエリパラメータを指定しない
-      this.fetchNews();
+      // 検索コンポーネントにpropsで渡すsearchedParamを空にする
       this.searchedParam = "";
+      let params = {
+        params: {
+          page: 1,
+          search: "",
+        },
+      };
+      this.fetchNews(params);
+      // this.searchedParam = "";
     },
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews(params) {
@@ -128,7 +145,7 @@ export default {
       }
       // JSONのdata項目を格納
       this.news = response.data.data;
-      
+
       // ページネーションの現在ページ、最終ページの値を格納
       this.currentPage = response.data.current_page;
       this.lastPage = response.data.last_page;

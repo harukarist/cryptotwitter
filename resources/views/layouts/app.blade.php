@@ -37,8 +37,8 @@
         @yield('content')
         <app-component></app-component>
         <!-- セッション経由のフラッシュメッセージを表示 -->
-        @if (session('status'))
-        <message-component message="{{ session('status') }}" type="{{ session('type') ?? 'success' }}" timeout="{{ session('timeout') ?? '3000' }}" />
+        @if (session('message'))
+        <message-component message="{{ session('message') }}" type="{{ session('type') ?? 'success' }}" timeout="{{ session('timeout') ?? '3000' }}" />
         @endif
         
     </div>

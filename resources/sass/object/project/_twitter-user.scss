@@ -54,27 +54,5 @@
       width: 100%;
     }
   }
-  &__confirm {
-    text-align: center;
-    padding-top: $space--l;
-    padding-bottom: $space--l;
-    margin-top: $space--l;
-    margin-bottom: $space--l;
-    border: 1px solid $bg-color--danger;
-    position: relative;
-    &-text {
-      margin-bottom: $space--l;
-    }
-    &-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: $bg-color--danger;
-      @include mq() {
-        top: 5px;
-        right: 5px;
-      }
-    }
-  }
 }
 

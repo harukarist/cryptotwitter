@@ -21,8 +21,6 @@
     // スマホサイトは横幅いっぱい
     @include mq() {
       width: 100%;
-      padding-left: $space--xl;
-      padding-right: $space--xl;
     }
   }
   &--small {

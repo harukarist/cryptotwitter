@@ -2,11 +2,19 @@
   <transition name="slide-left">
     <div
       v-if="flashMessage && isShow"
-      class="c-alert p-flash"
-      :class="`c-alert--${messageType}`"
+      class="c-alert p-message-large"
+      :class="`c-alert--${messageType} p-message-large--${messageType}`"
     >
-      <p class="p-flash__text">{{ flashMessage }}</p>
-      <i class="fas fa-times p-flash__close" @click="closeMessage()"></i>
+      <p
+        class="p-message-large__text"
+        :class="`p-message-large__text--${messageType}`"
+      >
+        {{ flashMessage }}
+      </p>
+      <i
+        class="fas fa-times p-message-large__close"
+        @click="closeMessage()"
+      ></i>
     </div>
   </transition>
 </template>
@@ -63,7 +71,7 @@ export default {
     },
     // フラッシュメッセージを閉じる
     closeMessage() {
-      this.isShow = false;
+      // this.isShow = false;
     },
     // タイムアウトを管理するtimeoutIdをセット
     setTimeoutId(value) {

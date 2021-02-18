@@ -1,11 +1,11 @@
 .slide-down {
   &-enter-active,
   &-leave-active {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.4s ease-in-out;
     overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
   }
   &-leave-active {
-    position: absolute;
+    // position: absolute;
   }
   // 上からスライドイン
   &-enter {

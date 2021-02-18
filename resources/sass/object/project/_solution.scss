@@ -22,19 +22,22 @@
     width: 100%;
     max-width: $site-width;
     justify-content: center;
+    box-sizing: border-box;
     @include mq(medium){
       width: 100%;
+      padding-left: $space--m;
+      padding-right: $space--m;
     }
     @include mq(){
       flex-direction: column;
     }
   }
   &__item {
-    margin-right: $space--l;
+    margin-right: $space--xxl;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: calc(100% / 3  - ((#{$space--l} * 2) / 3) ); //1行に3アイテムを均等配置
+    width: calc(100% / 3  - ((#{$space--xxl} * 2) / 3) ); //1行に3アイテムを均等配置
     box-sizing: border-box;
     &:nth-child(3n) {
       margin-right: 0; //3番目の要素は右に余白を空けない
@@ -49,12 +52,13 @@
   &__description {
     text-align: left;
     display: inline-block;
+    margin-bottom: $space--l;
     @include mq(){
       margin-left: $space--s;
     }
   }
   &__heading {
-    color: $font-color--main;
+    color: $font-color--dark;
     font-size: $font-size--l;
     margin-bottom: $space--xl;
     line-height: 1.7;
@@ -62,6 +66,8 @@
   &__text {
     color: $font-color--default;
     font-size: $font-size--default;
+    text-align: justify;
+    line-height: 1.8;
     @include mq(){
       margin-bottom: $space--l;
     }

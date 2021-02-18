@@ -140,7 +140,7 @@
                 :key="trend.id"
                 class="p-trend__item"
               >
-                <td>
+                <td class="p-trend__order-td">
                   <span
                     class="p-trend__order"
                     :class="{
@@ -152,7 +152,7 @@
                     {{ trend.ranking }}
                   </span>
                 </td>
-                <td>
+                <td class="p-trend__name-td">
                   <a
                     :href="`https://twitter.com/search?q=${trend.currency_name}`"
                     target="_blank"
@@ -170,7 +170,7 @@
                     </span>
                   </a>
                 </td>
-                <td class="c-table--center">
+                <td class="p-trend__tweet-td">
                   <p v-if="column === 'tweet_hour'" class="u-font__num">
                     {{ trend.tweet_hour | localeNum }}
                   </p>
@@ -181,7 +181,7 @@
                     {{ trend.tweet_week | localeNum }}
                   </p>
                 </td>
-                <td class="c-table--right">
+                <td class="p-trend__price-td">
                   <p v-if="trend.high" class="p-trend__price">
                     <span class="u-font__num">{{
                       trend.high | round | localeNum
@@ -189,7 +189,7 @@
                   </p>
                   <p v-else class="u-font--small u-font--muted">不明</p>
                 </td>
-                <td class="c-table--right">
+                <td class="p-trend__price-td">
                   <p v-if="trend.low" class="p-trend__price">
                     <span class="u-font__num">{{
                       trend.low | round | localeNum
@@ -272,9 +272,9 @@ export default {
   methods: {
     // axiosでトレンド一覧取得APIにリクエスト
     async fetchTrends() {
-      // this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       const response = await axios.get("/api/trend");
-      // this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       if (response.status !== OK) {
         // 通信失敗の場合
         this.$store.commit("error/setCode", response.status);

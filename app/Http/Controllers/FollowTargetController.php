@@ -14,7 +14,8 @@ use App\Http\Controllers\Auth\UsersTwitterOAuth;
 class FollowTargetController extends Controller
 {
   /**
-   * ログインユーザーのTwitterアカウントでターゲットをフォロー
+   * WebAPからのリクエストを元に、ログインユーザーのTwitterアカウントで
+   * ターゲットをフォローする処理
    */
   public function createUsersFollow(string $target_id)
   {
@@ -25,22 +26,25 @@ class FollowTargetController extends Controller
     if (!$twitter_user) {
       return abort(404);
     }
+
+    // ログインユーザーとターゲットのTwitterIDを指定してターゲットをフォローするメソッドを実行
     $follow = self::createFollow($twitter_user, $target_id);
     return $follow;
   }
 
   /**
-   * ターゲット1件をフォロー
+   * ログインユーザーとターゲットのTwitterを
+   * フォローする処理
    */
   static public function createFollow(object $twitter_user, string $target_id)
   {
     // ログインユーザーのTwitterIDを取得
     $twitter_id = $twitter_user->twitter_id;
 
-    // ユーザーのTwitterアカウントでoAuth認証
+    // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
     $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
-    // ターゲットをフォロー済みかどうかをチェック
+    // ターゲットをフォロー済みかどうかをチェックするメソッドを実行
     $is_following = self::checkIsFollowing($twitter_id, $target_id, $connect);
 
     // すでにターゲットをフォロー済みの場合は何もせずに返却
@@ -51,7 +55,7 @@ class FollowTargetController extends Controller
       ];
     }
 
-    // ターゲットをフォロー
+    // ターゲットをまだフォローしていない場合は、ターゲットをフォローするメソッドを実行
     self::followTarget($twitter_user, $target_id, $connect);
 
     return [
@@ -61,27 +65,29 @@ class FollowTargetController extends Controller
   }
 
   /**
-   * 対象Twitterアカウントのフォロー状況をチェック
+   * 対象Twitterアカウントのフォロー状況をチェックするメソッド
    */
   static public function checkIsFollowing($twitter_id, $target_id, $connect)
   {
-    $params = array(
-      'source_id' => $twitter_id,
-      'target_id' => $target_id,
-    );
-    $category = "friendships";
-    $endpoint = "/friendships/show";
+    // ユーザーのTwitterAPIレートリミットをチェック
+    $CATEGORY = "friendships";
+    $ENDPOINT = "/friendships/show";
+    $limit = UsersTwitterOAuth::checkLimit($connect, $CATEGORY, $ENDPOINT);
 
-    // ユーザーアカウントでのTwitterAPIのレートリミットをチェック
-    $limit = UsersTwitterOAuth::checkLimit($connect, $category, $endpoint);
-
+    // フォロー状況チェック/friendships/show のレートリミットが上限に達していたら処理を終了
     if (!$limit) {
       logger()->info("フォロー状況チェックのリクエスト上限に達しました");
       return;
     }
 
+    // ユーザーのTwitterIDとフォロー対象のTwitterIDをTwitterAPIのパラメータに指定
+    $params = array(
+      'source_id' => $twitter_id,
+      'target_id' => $target_id,
+    );
+
     // TwitterAPIでフォロー状況を取得
-    $result = $connect->get($endpoint, $params);
+    $result = $connect->get($ENDPOINT, $params);
 
     // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
@@ -96,7 +102,7 @@ class FollowTargetController extends Controller
   }
 
   /**
-   * ターゲットをフォロー
+   * ターゲットをフォローするメソッド
    */
   static public function followTarget($twitter_user, $target_id, $connect)
   {
@@ -105,11 +111,11 @@ class FollowTargetController extends Controller
       'user_id' => $target_id,
       'follow' => true, //フォローを相手に通知するか
     );
-    $endpoint = "friendships/create";
-    // レートリミット上限なし
+    $ENDPOINT = "friendships/create";
+    // レートリミットは1日あたり400件
 
     // TwitterAPIでターゲットをフォロー
-    $result = $connect->post($endpoint, $params);
+    $result = $connect->post($ENDPOINT, $params);
 
     // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {

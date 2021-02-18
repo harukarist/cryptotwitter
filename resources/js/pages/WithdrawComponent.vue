@@ -44,7 +44,7 @@ export default {
         this.$store.dispatch("message/showMessage", {
           text: "退会手続きが完了しました",
           type: "success",
-          timeout: 6000,
+          timeout: 2000,
         });
         // VueRouterのpush()でトップ画面に遷移
         this.$router.push({ name: "top" });

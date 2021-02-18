@@ -72,7 +72,7 @@ export default {
         this.$store.dispatch("message/showMessage", {
           text: "自動フォローを適用しました",
           type: "success",
-          timeout: 6000,
+          timeout: 2000,
         });
       }
     },
@@ -86,7 +86,7 @@ export default {
         this.$store.dispatch("message/showMessage", {
           text: "自動フォローを解除しました",
           type: "notice",
-          timeout: 6000,
+          timeout: 2000,
         });
       }
     },

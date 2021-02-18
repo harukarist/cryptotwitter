@@ -90,9 +90,9 @@ class TwitterAuthController extends Controller
             // セッションフラッシュにエラーメッセージを格納して仮想通貨アカウント一覧画面へリダイレクト
             return redirect('/twitter')->with(
                 [
-                    'status' => __('認証が取り消されました'),
+                    'message' => __('認証が取り消されました'),
                     'type' => 'danger',
-                    'timeout' => 4000,
+                    'timeout' => 3000,
                 ]
             );
         }
@@ -103,9 +103,9 @@ class TwitterAuthController extends Controller
             // エラーの場合はエラーメッセージを格納して仮想通貨アカウント一覧画面へリダイレクト
             return redirect('/twitter')->with(
                 [
-                    'status' => __('Twitterアカウントの連携を中断しました'),
+                    'message' => __('Twitterアカウントの連携を中断しました'),
                     'type' => 'danger',
-                    'timeout' => 4000,
+                    'timeout' => 3000,
                 ]
             );
         }
@@ -117,16 +117,16 @@ class TwitterAuthController extends Controller
         if (!$twitterUser) {
             return redirect('/twitter')->with(
                 [
-                    'status' => __('そのTwitterアカウントはすでに登録されています'),
+                    'message' => __('そのTwitterアカウントはすでに登録されています'),
                     'type' => 'danger',
-                    'timeout' => 4000,
+                    'timeout' => 3000,
                 ]
             );
         }
         // 登録成功した場合は仮想通貨アカウント一覧画面へリダイレクトしてTwitterアカウント情報を再描画する
         return redirect('/twitter')->with(
             [
-                'status' => __('Twitterアカウントを連携しました'),
+                'message' => __('Twitterアカウントを連携しました'),
                 'type' => 'success',
                 'timeout' => 3000,
             ]

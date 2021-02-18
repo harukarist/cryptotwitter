@@ -8,7 +8,7 @@
         </p>
 
         <h3 class="c-section__subtitle--left">第1条（適用）</h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             本規約は、ユーザーと当社との間の本サービスの利用に関わる一切の関係に適用されるものとします。
           </li>
@@ -21,13 +21,13 @@
         </ol>
 
         <h3 class="c-section__subtitle--left">第2条（利用登録）</h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             本サービスにおいては、登録希望者が本規約に同意の上、当社の定める方法によって利用登録を申請し、当社がこれを承認することによって、利用登録が完了するものとします。
           </li>
           <li>
             当社は、利用登録の申請者に以下の事由があると判断した場合、利用登録の申請を承認しないことがあり、その理由については一切の開示義務を負わないものとします。
-            <ol class="c-section__list">
+            <ol class="c-list__ordered">
               <li>利用登録の申請に際して虚偽の事項を届け出た場合</li>
               <li>本規約に違反したことがある者からの申請である場合</li>
               <li>本規約に違反するおそれがあると当社が判断した場合</li>
@@ -45,7 +45,7 @@
         <h3 class="c-section__subtitle--left">
           第3条（ユーザーIDおよびパスワードの管理）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             ユーザーは、自己の責任において、本サービスのユーザーIDおよびパスワードを適切に管理するものとします。
           </li>
@@ -60,7 +60,7 @@
         <h3 class="c-section__subtitle--left">
           第4条（利用料金および支払方法）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             ユーザーは、本サービスの有料部分の対価として、当社が別途定め、本ウェブサイトに表示する利用料金を、当社が指定する方法により支払うものとします。
           </li>
@@ -77,7 +77,7 @@
           ユーザーは、本サービスの利用にあたり、以下の行為をしてはなりません。
         </p>
 
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>法令または公序良俗に違反する行為</li>
           <li>犯罪行為に関連する行為</li>
           <li>
@@ -111,10 +111,10 @@
         <h3 class="c-section__subtitle--left">
           第6条（本サービスの提供の停止等）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             当社は、以下のいずれかの事由があると判断した場合、ユーザーに事前に通知することなく本サービスの全部または一部の提供を停止または中断することができるものとします。
-            <ol class="c-section__list">
+            <ol class="c-list__ordered">
               <li>
                 本サービスにかかるコンピュータシステムの保守点検または更新を行う場合
               </li>
@@ -139,10 +139,10 @@
         <h3 class="c-section__subtitle--left">
           第7条（利用制限および登録抹消）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             当社は、ユーザーが以下のいずれかに該当する場合には、事前の通知なく、ユーザーに対して、本サービスの全部もしくは一部の利用を制限し、またはユーザーとしての登録を抹消することができるものとします。
-            <ol class="c-section__list">
+            <ol class="c-list__ordered">
               <li>本規約のいずれかの条項に違反した場合</li>
               <li>登録事項に虚偽の事実があることが判明した場合</li>
               <li>
@@ -171,7 +171,7 @@
         <h3 class="c-section__subtitle--left">
           第9条（保証の否認および免責事項）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             当社は、本サービスに事実上または法律上の瑕疵（安全性、信頼性、正確性、完全性、有効性、特定の目的への適合性、セキュリティなどに関する欠陥、エラーやバグ、権利侵害などを含みます。）がないことを明示的にも黙示的にも保証しておりません。
           </li>
@@ -214,7 +214,7 @@
         <h3 class="c-section__subtitle--left">
           第14条（権利義務の譲渡の禁止）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             ユーザーは、当社の書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務を第三者に譲渡し、または担保に供することはできません。
           </li>
@@ -224,7 +224,7 @@
         </ol>
 
         <h3 class="c-section__subtitle--left">第15条（準拠法・裁判管轄）</h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>本規約の解釈にあたっては、日本法を準拠法とします。</li>
           <li>
             本サービスに関して紛争が生じた場合には、当社の本店所在地を管轄する裁判所を専属的合意管轄とします。

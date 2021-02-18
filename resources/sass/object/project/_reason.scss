@@ -24,6 +24,14 @@
     div:nth-child(even) { //子要素を違い違いに配置
       flex-direction: row-reverse;
       align-self: flex-end;
+      .p-reason__img-wrapper {
+        margin-right: $space--xl;
+      }
+    }
+    div:nth-child(odd) {
+      .p-reason__img-wrapper {
+        margin-left: $space--xl;
+      }
     }
     @include mq(medium){
       width: 100%;
@@ -44,11 +52,15 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 95%;
+    justify-content: space-between;
+    width: 90%;
     margin-bottom: 80px;
     box-sizing: border-box;
     &:last-child {
       margin-bottom: 10px;
+    }
+    @include mq(medium){
+      width: 95%;
     }
     @include mq(){
       padding: $space--xxl;
@@ -58,12 +70,20 @@
   }
   &__description {
     width: 70%;
+    min-width: 650px;
+    @include mq(medium){
+      min-width: 180px;
+    }
     @include mq(){
       width: 100%;
     }
   }
   &__img-wrapper {
+    // width: 300px;
     width: 30%;
+    @include mq(medium){
+      // margin: 0 auto;
+    }
     @include mq(){
       width: 70%;
       margin: 0 auto;
@@ -95,6 +115,10 @@
     color: $font-color--default;
     font-size: $font-size--default;
     text-align: left;
-    margin-bottom: $space--xl;
+    text-align: justify;
+    line-height: 1.8;
+    @include mq(){
+    margin-bottom: $space--xxl;
+    }
   }
 }

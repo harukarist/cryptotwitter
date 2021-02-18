@@ -17,12 +17,7 @@
               ランキング表示
             </h4>
             <p class="p-solution__text">
-              主要な18銘柄について<br />
-              Twitterのツイート数を<br class="u-md--only" />集計し、<br
-                class="u-md--hidden"
-              />
-              今どの銘柄が<br class="u-md--only" />注目されているのかを<br />
-              ランキング形式で<br class="u-md--only" />お届けします。
+              主要な18銘柄について、Twitterの最新ツイート数を集計し、今どの銘柄が最も注目されているのかをランキング形式でお届けします。
             </p>
           </div>
           <div class="p-solution__img-wrapper">
@@ -39,11 +34,8 @@
               Twitter自動フォロー
             </h4>
             <p class="p-solution__text">
-              仮想通貨に関心のある<br />
-              Twitterアカウントだけを<br />
-              自動的にフォローします。<br />
-              運用の手間をかけずに<br />
-              フォロー数を<br class="u-md--only" />増やすことができます。
+              仮想通貨に関心のある3,000件以上のTwitterアカウントだけを自動的にフォローします。
+              運用の手間をかけずに、フォロー数を増やすことができます。
             </p>
           </div>
           <div class="p-solution__img-wrapper">
@@ -60,11 +52,7 @@
               ニュースのみを表示
             </h4>
             <p class="p-solution__text">
-              仮想通貨についての<br
-                class="u-md--only"
-              />ニュースに特化しており<br />
-              余計な情報に<br class="u-md--only" />振り回されることなく、<br />
-              効率よく必要な情報を<br class="u-md--only" />チェックできます。
+              仮想通貨についてのニュースに特化しているため、余計な情報に振り回されることなく、毎日のスキマ時間に効率よく、必要な情報をチェックできます。
             </p>
           </div>
           <div class="p-solution__img-wrapper">

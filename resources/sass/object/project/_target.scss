@@ -66,6 +66,7 @@
   }
   &__btn {
     width: 140px;
+    padding: $space--s;
     @include mq() {
       width: 90%;
       font-size: $font-size--m;

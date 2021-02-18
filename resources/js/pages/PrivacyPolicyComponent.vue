@@ -23,7 +23,7 @@
         <p class="c-section__text--left">
           当社が個人情報を収集・利用する目的は、以下のとおりです。
         </p>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>当社サービスの提供・運営のため</li>
           <li>
             ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）
@@ -43,7 +43,7 @@
         </ol>
 
         <h3 class="c-section__subtitle--left">第4条（利用目的の変更）</h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             当社は、利用目的が変更前と関連性を有すると合理的に認められる場合に限り、個人情報の利用目的を変更するものとします。
           </li>
@@ -53,10 +53,10 @@
         </ol>
 
         <h3 class="c-section__subtitle--left">第5条（個人情報の第三者提供）</h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             当社は、次に掲げる場合を除いて、あらかじめユーザーの同意を得ることなく、第三者に個人情報を提供することはありません。ただし、個人情報保護法その他の法令で認められる場合を除きます。
-            <ol class="c-section__list">
+            <ol class="c-list__ordered">
               <li>
                 人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき
               </li>
@@ -68,7 +68,7 @@
               </li>
               <li>
                 予め次の事項を告知あるいは公表し、かつ当社が個人情報保護委員会に届出をしたとき
-                <ol class="c-section__list">
+                <ol class="c-list__ordered">
                   <li>利用目的に第三者への提供を含むこと</li>
                   <li>第三者に提供されるデータの項目</li>
                   <li>第三者への提供の手段または方法</li>
@@ -82,7 +82,7 @@
           </li>
           <li>
             前項の定めにかかわらず、次に掲げる場合には、当該情報の提供先は第三者に該当しないものとします。
-            <ol class="c-section__list">
+            <ol class="c-list__ordered">
               <li>
                 当社が利用目的の達成に必要な範囲内において個人情報の取扱いの全部または一部を委託する場合
               </li>
@@ -97,10 +97,10 @@
         </ol>
 
         <h3 class="c-section__subtitle--left">第6条（個人情報の開示）</h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             当社は、本人から個人情報の開示を求められたときは、本人に対し、遅滞なくこれを開示します。ただし、開示することにより次のいずれかに該当する場合は、その全部または一部を開示しないこともあり、開示しない決定をした場合には、その旨を遅滞なく通知します。なお、個人情報の開示に際しては、1件あたり1,000円の手数料を申し受けます。
-            <ol class="c-section__list">
+            <ol class="c-list__ordered">
               <li>
                 本人または第三者の生命、身体、財産その他の権利利益を害するおそれがある場合
               </li>
@@ -118,7 +118,7 @@
         <h3 class="c-section__subtitle--left">
           第7条（個人情報の訂正および削除）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             ユーザーは、当社の保有する自己の個人情報が誤った情報である場合には、当社が定める手続きにより、当社に対して個人情報の訂正、追加または削除（以下、「訂正等」といいます。）を請求することができます。
           </li>
@@ -131,7 +131,7 @@
         </ol>
 
         <h3 class="c-section__subtitle--left">第8条（個人情報の利用停止等）</h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             当社は、本人から、個人情報が、利用目的の範囲を超えて取り扱われているという理由、または不正の手段により取得されたものであるという理由により、その利用の停止または消去（以下、「利用停止等」といいます。）を求められた場合には、遅滞なく必要な調査を行います。
           </li>
@@ -149,7 +149,7 @@
         <h3 class="c-section__subtitle--left">
           第9条（プライバシーポリシーの変更）
         </h3>
-        <ol class="c-section__list">
+        <ol class="c-list__ordered">
           <li>
             本ポリシーの内容は、法令その他本ポリシーに別段の定めのある事項を除いて、ユーザーに通知することなく、変更することができるものとします。
           </li>

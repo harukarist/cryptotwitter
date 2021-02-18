@@ -1,16 +1,20 @@
 <template>
   <div class="p-target">
     <div class="p-target__list">
+      <h5 class="p-target__title">自動フォロー履歴</h5>
+      <pagination-info
+        :current-page="currentPage"
+        :per-page="perPage"
+        :total-num="totalNum"
+        :items-length="targets.length"
+      />
       <search-form-component
         @search="searchTargets"
         @clear="clearResult"
         :total-num="totalNum"
         :searched-param="searchedParam"
         item-name="自動フォローしたアカウント"
-        class="u-mt--xl u-mb--xxxl"
       />
-
-      <h5 class="p-target__title">自動フォロー履歴</h5>
 
       <twitter-target-item
         v-for="target in targets"
@@ -31,6 +35,7 @@
       <div class="c-pagination">
         <pagination-link
           :directory="directoryName"
+          :searched-param="searchedParam"
           :current-page="currentPage"
           :last-page="lastPage"
           :per-page="perPage"
@@ -90,6 +95,11 @@ export default {
   methods: {
     // 自動フォロー履歴の仮想通貨アカウントを検索
     searchTargets(word) {
+      // 検索キーワードが空の場合は全てのアカウント一覧を取得
+      if (!word) {
+        this.clearResult();
+        return;
+      }
       let params = {
         // 検索コンポーネントから受け取ったキーワードをクエリパラメータに格納
         params: {

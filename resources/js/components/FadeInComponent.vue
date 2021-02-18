@@ -29,7 +29,7 @@ export default {
         var top = this.$el.getBoundingClientRect().top;
         // 要素の上端までの高さがウィンドウ高さ+100pxよりも小さくなったら
         // isVisibleをtrueにして表示
-        this.isVisible = top < window.innerHeight + 100;
+        this.isVisible = top < window.innerHeight + 50;
       }
     },
   },

@@ -10,7 +10,7 @@
         アカウントをまとめてフォローできます。<br />
       </p>
 
-      <TwitterLogin />
+      <twitter-login />
 
       <div v-if="totalAutoFollow" class="c-tab c-fade-in p-twitter__list">
         <ul class="c-tab__list">
@@ -73,6 +73,7 @@ export default {
     return {
       totalAutoFollow: 0,
       showAutoFollow: false,
+      isActive: false,
     };
   },
   computed: {

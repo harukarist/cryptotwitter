@@ -67,6 +67,11 @@
   }
   
   // ツイートランキングの順位表示
+  &__order-td {
+    @include mq() {
+      padding: $space--m 2px;
+    }
+  }
   &__order {
     text-align: center;
     background: $bg-color--dark;
@@ -92,13 +97,36 @@
       color: $font-color--white;
     }
   }
+  // 銘柄名の表示
+  &__name-td {
+    // @include mq(){
+    //   width: 90px;
+    // }
+  }
   &__name {
     font-weight: bold;
     font-size: $font-size--default;
     font-family: $font-family--theme;
     letter-spacing: 0.15em;
+    @include mq(){
+      letter-spacing: 0.08em;
+    }
     &--small {
       font-size: $font-size--s;
+    }
+  }
+  // ツイート数
+  &__tweet-td {
+    text-align: center;
+    @include mq(){
+      width: 80px;
+    }
+  }
+  // 取引価格
+  &__price-td {
+    text-align: right;
+    @include mq(){
+      width: 90px;
     }
   }
 }

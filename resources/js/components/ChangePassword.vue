@@ -1,10 +1,5 @@
 <template>
   <form class="c-form--small" @submit.prevent="checkChangePassForm">
-    <transition name="popup" appear>
-      <p v-if="successMessage" class="u-mb--xxxl c-alert--success">
-        {{ successMessage }}
-      </p>
-    </transition>
     <input
       name="username"
       v-model="changePassForm.username"
@@ -102,7 +97,9 @@
       </ul>
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn--accent c-btn--large">パスワードを変更</button>
+      <button type="submit" class="c-btn--accent c-btn--large">
+        パスワードを変更
+      </button>
     </div>
   </form>
 </template>
@@ -125,7 +122,6 @@ export default {
       newPasswordErrors: [],
       confirmErrors: [],
       apiMessages: [],
-      successMessage: "",
     };
   },
   methods: {
@@ -180,10 +176,12 @@ export default {
     },
     // パスワード変更WebAPI呼び出し
     async changePassword() {
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       const response = await axios.post(
         "/api/password/change",
         this.changePassForm
       );
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
       if (response.status === UNPROCESSABLE_ENTITY) {
         this.apiMessages = response.data.errors;
@@ -192,8 +190,12 @@ export default {
         this.$store.commit("error/setCode", response.status);
         return false;
       }
-      // レスポンスがOKの場合はフォーム上にサクセスメッセージを表示
-      this.successMessage = "パスワードを変更しました";
+      // レスポンスがOKの場合はフラッシュメッセージを表示
+      this.$store.dispatch("message/showMessage", {
+        text: "パスワードを変更しました",
+        type: "success",
+        timeout: 2000,
+      });
       // エラーメッセージをクリア
       this.passwordErrors = [];
       this.newPasswordErrors = [];

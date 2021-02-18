@@ -61,6 +61,7 @@ class ResetPasswordController extends Controller
                 $this->resetPassword($user, $password);
             }
         );
+        // bladeテンプレートの返却ではなく、Vueコンポーネントにメッセージと成否フラグを返却するように変更
         return $response == Password::PASSWORD_RESET
             ? $this->sendResetResponse($request, $response)
             : $this->sendResetFailedResponse($request, $response);
@@ -71,6 +72,7 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetResponse(Request $request, $response)
     {
+        // Vueコンポーネントにメッセージと成否フラグを返却
         return ([
             'status' => trans($response), //バリデーションメッセージ
             'result' => 'success', //成否フラグ
@@ -83,6 +85,7 @@ class ResetPasswordController extends Controller
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
+        // Vueコンポーネントにメッセージと成否フラグを返却
         return ([
             'status' => trans($response), //バリデーションメッセージ
             'result' => 'failed', //成否フラグ

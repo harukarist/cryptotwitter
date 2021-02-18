@@ -53,7 +53,7 @@ export default {
             text:
               "システムエラーが発生しました。お手数ですが、時間を置いて再度お試しください。",
             type: "danger",
-            timeout: 6000,
+            timeout: 2000,
           });
         } else if (val === UNAUTHORIZED) {
           // セッション切れなど認証エラーの場合
