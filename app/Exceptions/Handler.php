@@ -33,7 +33,8 @@ class Handler extends ExceptionHandler
 
     /**
      * Report or log an exception.
-     *
+     * 例外のレポート処理
+     * エラーが発生した場合はメールで通知する
      * @param  \Exception  $exception
      * @return void
      *
@@ -41,11 +42,14 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-
+        // 例外がHttpExceptionの場合はステータスコードを取得
         $status = $this->isHttpException($exception) ? $exception->getStatusCode() : 500;
 
         if ($exception instanceof \Exception && $this->shouldReport($exception)) {
-            if (\App::environment(['staging', 'production'])) {
+            // 商用環境の場合
+            if (\App::environment(['production'])) {
+                // ステータスコードコードが500以上の場合はエラー内容を配列に格納して
+                // mail/exception.blade.php のメールテンプレートを使ってメールを作成、送信する
                 $status = $this->isHttpException($exception) ? $exception->getStatusCode() : 500;
 
                 if ($status >= 500) {
@@ -57,12 +61,12 @@ class Handler extends ExceptionHandler
                     $error['url']     = url()->current();
 
 
-                    // config/mail.phpで設定した送信元メールアドレス宛に送信（.envのMAIL_FROM_ADDRESSと同一）
+                    // config/mail.phpで設定したメールアドレス宛にエラー通知メールを送信（.envのMAIL_FROM_ADDRESSと同一）
                     Mail::send(['text' => 'mail.exception'], ["e" => $error], function (Message $message) {
                         $message
                             ->to(config('mail.from.address'))
                             ->from(config('mail.from.address'))
-                            ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生の連絡');
+                            ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生');
                     });
                 }
             }
