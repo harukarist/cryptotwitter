@@ -1,17 +1,19 @@
+$dialog-width: 320px;
+$dialog-height: 250px;
 .p-message-large {
   position: fixed;
-  min-width: 350px;
-  height: 200px;
-  padding: $space--l;
+  width: $dialog-width;
+  height: $dialog-height;
   box-sizing: border-box;
-  top: calc(50% - (200px/2));
-  left: calc(50% - (350px/2));
+  padding: $space--l;
+  margin: 0 auto;
+  top: calc(50% - (#{$dialog-height} / 2));
+  left: calc(50% - (#{$dialog-width} / 2));
   display: flex;
   flex-direction: column;
   justify-content: center;
   text-align: center;
   border-radius: 4px;
-  box-shadow: $shadow-color--s;
   z-index: 5;
   font-weight: bold;
   font-size: $font-size--l;

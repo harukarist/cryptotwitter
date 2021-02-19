@@ -781,7 +781,7 @@ input, textarea, select {
   content: "";
   display: block;
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   width: 40%;
   height: 3px;
@@ -796,8 +796,8 @@ input, textarea, select {
   content: "";
   display: block;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 40%;
+  left: 60%;
   width: 76%;
   height: 3px;
   border-radius: 2px;
@@ -1730,13 +1730,14 @@ input, textarea, select {
 
 .p-message-large {
   position: fixed;
-  min-width: 350px;
-  height: 200px;
-  padding: 15px;
+  width: 320px;
+  height: 250px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  top: calc(50% - (200px/2));
-  left: calc(50% - (350px/2));
+  padding: 15px;
+  margin: 0 auto;
+  top: calc(50% - (250px / 2));
+  left: calc(50% - (320px / 2));
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1749,8 +1750,6 @@ input, textarea, select {
           justify-content: center;
   text-align: center;
   border-radius: 4px;
-  -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
-          box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
   z-index: 5;
   font-weight: bold;
   font-size: 20px;
@@ -2902,9 +2901,11 @@ input, textarea, select {
     text-align: left;
     float: left; }
   .p-twitter-user__name {
-    font-weight: bold; }
+    font-weight: bold;
+    color: #19465B; }
   .p-twitter-user__screen {
-    font-size: 14px; }
+    font-size: 14px;
+    color: #19465B; }
   .p-twitter-user__delete {
     text-align: right;
     margin-bottom: 40px;

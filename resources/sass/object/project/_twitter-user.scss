@@ -36,9 +36,11 @@
   }
   &__name {
     font-weight: bold;
+    color: $font-color--dark;
   }
   &__screen {
     font-size: $font-size--m;
+    color: $font-color--dark;
   }
   &__delete {
     text-align: right;
