@@ -35,7 +35,7 @@
     <meta property="og:url" content="https://crypto-trend.harukarist.com/">
     <meta property="og:image" content="{{ asset('img/ogp.png') }}">
     <meta property="og:site_name" content="CryptoTrend">
-    <meta property="og:description" content="仮想通貨についてのTwitterトレンド分析、Twitterアカウントの自動フォロー、最新ニュースのチェックをサポートする無料サービスです">
+    <meta property="og:description" content="CryptoTrendは仮想通貨のTwitterトレンド分析、Twitterアカウントの自動フォロー、最新ニュースのチェックをサポートする無料サービスです">
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@cryptotrendjp" />
     <meta name="twitter:player" content="@cryptotrendjp" />
