@@ -11,10 +11,7 @@
       >
         {{ flashMessage }}
       </p>
-      <i
-        class="fas fa-times p-message-large__close"
-        @click="closeMessage()"
-      ></i>
+      <i class="fas fa-times p-message-large__close" @click="closeMessage()"></i>
     </div>
   </transition>
 </template>
@@ -71,7 +68,7 @@ export default {
     },
     // フラッシュメッセージを閉じる
     closeMessage() {
-      // this.isShow = false;
+      this.isShow = false;
     },
     // タイムアウトを管理するtimeoutIdをセット
     setTimeoutId(value) {

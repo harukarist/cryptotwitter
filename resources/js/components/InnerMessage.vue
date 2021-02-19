@@ -11,7 +11,10 @@
       >
         {{ flashMessage }}
       </p>
-      <i class="fas fa-times p-message-large__close" @click="closeMsgBox()"></i>
+      <i
+        class="fas fa-times p-message-large__close"
+        @click="closeMessage()"
+      ></i>
     </div>
   </transition>
 </template>
@@ -30,7 +33,7 @@ export default {
   },
   methods: {
     // フラッシュメッセージを閉じる
-    closeMsgBox() {
+    closeMessage() {
       // messageストアのclearMessageミューテーションを実行してメッセージをクリア
       this.$store.commit("message/clearMessage");
     },
