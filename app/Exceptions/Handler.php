@@ -3,10 +3,15 @@
 namespace App\Exceptions;
 
 use Exception;
+use App\Mail\ExceptionMail;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
+/**
+ * 例外が投げられた時の処理を定義する例外ハンドラクラス
+ * サーバーエラー発生時に、管理者メールアドレス宛にメール通知する処理をreportメソッドで指定。
+ */
 class Handler extends ExceptionHandler
 {
     /**
@@ -33,8 +38,8 @@ class Handler extends ExceptionHandler
 
     /**
      * Report or log an exception.
-     * 例外のレポート処理
-     * エラーが発生した場合はメールで通知する
+     * 例外のレポート処理を実行するメソッド
+     * ステータスコードが500以上のサーバーエラーが発生した場合はメールで通知する
      * @param  \Exception  $exception
      * @return void
      *
@@ -48,7 +53,7 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Exception && $this->shouldReport($exception)) {
             // 商用環境の場合
             if (\App::environment(['production'])) {
-                // ステータスコードコードが500以上の場合はエラー内容を配列に格納して
+                // ステータスコードが500以上の場合はエラー内容を配列に格納して
                 // mail/exception.blade.php のメールテンプレートを使ってメールを作成、送信する
                 $status = $this->isHttpException($exception) ? $exception->getStatusCode() : 500;
 
@@ -60,19 +65,23 @@ class Handler extends ExceptionHandler
                     $error['line']    = $exception->getLine();
                     $error['url']     = url()->current();
 
+                    // // config/mail.phpで設定したメールアドレス宛にエラー通知メールを送信（.envのMAIL_FROM_ADDRESSと同一）
+                    // Mail::send(['text' => 'email.exception'], ["error" => $error], function (Message $message) {
+                    //     $message
+                    //         ->to(config('mail.from.address'))
+                    //         ->from(config('mail.from.address'))
+                    //         ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生');
+                    // });
 
-                    // config/mail.phpで設定したメールアドレス宛にエラー通知メールを送信（.envのMAIL_FROM_ADDRESSと同一）
-                    Mail::send(['text' => 'mail.exception'], ["e" => $error], function (Message $message) {
-                        $message
-                            ->to(config('mail.from.address'))
-                            ->from(config('mail.from.address'))
-                            ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生');
-                    });
+                    // Mailファサードでメールを送信
+                    // （app/Mail のMailableクラスを使用する）
+                    Mail::to(config('mail.from.address'))
+                        ->send(new ExceptionMail($error));
                 }
             }
         }
 
-
+        // その他は親クラスの設定を継承
         parent::report($exception);
     }
 
