@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
  * お問い合わせフォームのメール送信に必要な情報をまとめた
  * Mailableクラス
  */
-class ContactMail extends Mailable
+class ContactAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -24,9 +24,6 @@ class ContactMail extends Mailable
     {
         // フォームに入力された各項目を格納
         $this->contact = $inputs;
-        // $this->name = $inputs['name'];
-        // $this->email = $inputs['email'];
-        // $this->message  = $inputs['message'];
     }
 
     /**
@@ -38,8 +35,8 @@ class ContactMail extends Mailable
     {
         // 問合せ受付完了メールのテンプレートcontact.blade.phpに入力内容を渡す
         return $this
-            ->subject('お問い合わせを受け付けました')
-            ->view('email.contact')
+            ->subject('【' . config('app.name') . '】お問い合わせが届きました')
+            ->view('email.contact_admin')
             ->with([
                 'inputs' => $this->contact,
             ]);

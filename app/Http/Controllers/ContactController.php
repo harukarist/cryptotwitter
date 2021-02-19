@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use App\Mail\ContactMail;
+use App\Mail\ContactAdmin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CreateContactRequest;
@@ -36,9 +37,10 @@ class ContactController extends Controller
         // フォームから受け取った値を取得
         $inputs = $request->all();
 
-        // 正常に送信ボタンが押された場合は入力されたメールアドレスにメールを送信
-        // （app/Mail/ContactMail.php のMailableクラスを使用する）
+        // 正常に送信ボタンが押された場合はMailファサードで入力されたメールアドレスにメールを送信
+        // （app/Mail のMailableクラスを使用する）
         Mail::to($inputs['email'])->send(new ContactMail($inputs));
+        Mail::to(config('mail.from.address'))->send(new ContactAdmin($inputs));
 
         // 入力された内容をcontactsテーブルに保存
         $contact = new Contact();

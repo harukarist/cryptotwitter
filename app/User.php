@@ -2,11 +2,12 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Contracts\Auth\CanResetPassword;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use App\Notifications\PasswordResetNotification;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -15,6 +16,14 @@ class User extends Authenticatable
 
     // 通知用のNotifiableトレイトを使用
     use Notifiable;
+
+    /**
+     * パスワードリセット通知の送信をオーバーライド
+     */
+    // public function sendPasswordResetNotification($token)
+    // {
+    //     $this->notify(new PasswordResetNotification($token));
+    // }
 
     /**
      * 値の代入を許可するカラム

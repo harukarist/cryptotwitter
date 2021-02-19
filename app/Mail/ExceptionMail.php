@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
  * お問い合わせフォームのメール送信に必要な情報をまとめた
  * Mailableクラス
  */
-class ContactMail extends Mailable
+class ExceptionMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -20,28 +20,25 @@ class ContactMail extends Mailable
      *
      * @return void
      */
-    public function __construct($inputs)
+    public function __construct($error)
     {
         // フォームに入力された各項目を格納
-        $this->contact = $inputs;
-        // $this->name = $inputs['name'];
-        // $this->email = $inputs['email'];
-        // $this->message  = $inputs['message'];
+        $this->error = $error;
     }
 
     /**
      * Build the message.
-     * 問合せ受付完了メールのメッセージを作成
+     * サーバーエラー発生通知メールのメッセージを作成
      * @return $this
      */
     public function build()
     {
-        // 問合せ受付完了メールのテンプレートcontact.blade.phpに入力内容を渡す
+        // エラー通知メールのテンプレートexception.blade.phpに入力内容を渡す
         return $this
-            ->subject('お問い合わせを受け付けました')
-            ->view('email.contact')
+            ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生')
+            ->view('email.exception')
             ->with([
-                'inputs' => $this->contact,
+                'error' => $this->error,
             ]);
     }
 }
