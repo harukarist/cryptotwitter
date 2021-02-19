@@ -91,31 +91,4 @@ class ResetPasswordController extends Controller
             'result' => 'failed', //成否フラグ
         ]);
     }
-
-
-    // protected function rules()
-    // {
-    //     return [
-    //         'token' => 'required',
-    //         'email' => 'required|email',
-    //         'password' => 'required|confirmed|min:8',
-    //     ];
-    // }
-    // protected function validationErrorMessages()
-    // {
-    //     return [];
-    // }
-    // protected function credentials(Request $request)
-    // {
-    //     return $request->only(
-    //         'email',
-    //         'password',
-    //         'password_confirmation',
-    //         'token'
-    //     );
-    // }
-    // public function broker()
-    // {
-    //     return Password::broker();
-    // }
 }

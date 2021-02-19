@@ -52,6 +52,10 @@ class ForgotPasswordController extends Controller
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );
+
+        // $response = $this->broker()->sendResetLink(
+        //     $this->credentials($request)
+        // );
         // 結果をJSON形式で返却
         return $response == Password::RESET_LINK_SENT
             ? response()->json([
