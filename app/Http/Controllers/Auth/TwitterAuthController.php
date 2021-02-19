@@ -92,7 +92,7 @@ class TwitterAuthController extends Controller
                 [
                     'message' => __('認証が取り消されました'),
                     'type' => 'danger',
-                    'timeout' => 3000,
+                    'timeout' => 2000,
                 ]
             );
         }
@@ -128,7 +128,7 @@ class TwitterAuthController extends Controller
             [
                 'message' => __('Twitterアカウントを連携しました'),
                 'type' => 'success',
-                'timeout' => 3000,
+                'timeout' => 2000,
             ]
         );
     }
