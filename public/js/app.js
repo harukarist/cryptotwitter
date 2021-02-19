@@ -4038,6 +4038,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     flashMessage: function flashMessage() {
@@ -4051,7 +4054,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     // フラッシュメッセージを閉じる
-    closeMsgBox: function closeMsgBox() {
+    closeMessage: function closeMessage() {
       // messageストアのclearMessageミューテーションを実行してメッセージをクリア
       this.$store.commit("message/clearMessage");
     }
@@ -4133,9 +4136,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     message: {
@@ -4188,7 +4188,8 @@ __webpack_require__.r(__webpack_exports__);
       this.setTimeoutId(timeoutId);
     },
     // フラッシュメッセージを閉じる
-    closeMessage: function closeMessage() {// this.isShow = false;
+    closeMessage: function closeMessage() {
+      this.isShow = false;
     },
     // タイムアウトを管理するtimeoutIdをセット
     setTimeoutId: function setTimeoutId(value) {
@@ -6969,6 +6970,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -7058,7 +7061,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                       behavior: "smooth"
                     }); // メール送信が失敗した場合
                   } else if (result === "failed") {
-                    // エラーメッセージを表示
+                    // Laravel側で設定したエラーメッセージを表示
                     _this.apiMessage = response.data.message;
                   }
                 } else {
@@ -55707,7 +55710,7 @@ var render = function() {
               staticClass: "fas fa-times p-message-large__close",
               on: {
                 click: function($event) {
-                  return _vm.closeMsgBox()
+                  return _vm.closeMessage()
                 }
               }
             })
@@ -59118,7 +59121,7 @@ var staticRenderFns = [
           staticClass: "c-btn--main-outline c-btn--large",
           attrs: { type: "submit" }
         },
-        [_vm._v("送信する")]
+        [_vm._v("\n            送信する\n          ")]
       )
     ])
   }

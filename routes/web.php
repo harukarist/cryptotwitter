@@ -11,12 +11,14 @@
 |
 */
 
-// パスワードリマインダフォーム表示
-// Route::get('/password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-// メールURLによるパスワードリセットフォーム表示
+// メールURL経由でのパスワードリセットフォーム表示
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-// // パスワードリセット処理
-// Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+
+Route::get('/test', function () {
+    // routeから作成したメールクラスを呼び出し
+    return new App\Mail\TestMail;
+});
+
 
 Route::group(['middleware' => 'auth'], function () {
     // Twitterログイン認証（TwitterAPIへのリダイレクト）

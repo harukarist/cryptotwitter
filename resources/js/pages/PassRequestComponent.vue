@@ -52,7 +52,9 @@
           </div>
 
           <div class="c-form__button">
-            <button type="submit" class="c-btn--main-outline c-btn--large">送信する</button>
+            <button type="submit" class="c-btn--main-outline c-btn--large">
+              送信する
+            </button>
           </div>
         </div>
       </form>
@@ -144,7 +146,7 @@ export default {
           });
           // メール送信が失敗した場合
         } else if (result === "failed") {
-          // エラーメッセージを表示
+          // Laravel側で設定したエラーメッセージを表示
           this.apiMessage = response.data.message;
         }
       } else {
