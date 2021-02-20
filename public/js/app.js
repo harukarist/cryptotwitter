@@ -7318,7 +7318,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(response); // API通信が成功した時
 
                 if (!(response.status === _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
-                  _context.next = 18;
+                  _context.next = 19;
                   break;
                 }
 
@@ -7326,7 +7326,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 result = response.data.result; // パスワード変更が完了した場合
 
                 if (!(result === "success")) {
-                  _context.next = 13;
+                  _context.next = 14;
                   break;
                 }
 
@@ -7347,15 +7347,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   text: "パスワードを変更しました",
                   type: "success",
                   timeout: 2000
-                }); // パスワード変更できなかった場合
+                });
 
+                return _context.abrupt("return");
 
-                _context.next = 16;
-                break;
-
-              case 13:
+              case 14:
                 if (!(result === "failed")) {
-                  _context.next = 16;
+                  _context.next = 17;
                   break;
                 }
 
@@ -7363,15 +7361,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.apiMessage = response.data.status;
                 return _context.abrupt("return");
 
-              case 16:
-                _context.next = 19;
+              case 17:
+                _context.next = 20;
                 break;
 
-              case 18:
+              case 19:
                 // 失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
                 _this.$store.commit("error/setCode", response.status);
 
-              case 19:
+              case 20:
               case "end":
                 return _context.stop();
             }

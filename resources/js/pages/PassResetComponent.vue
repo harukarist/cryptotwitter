@@ -212,6 +212,7 @@ export default {
             type: "success",
             timeout: 2000,
           });
+          return;
           // パスワード変更できなかった場合
         } else if (result === "failed") {
           // エラーメッセージを表示
