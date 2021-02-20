@@ -72,6 +72,8 @@ class EditAccountController extends Controller
         }
         // ログインユーザーのユーザー情報を削除
         $user->delete();
-        return;
+
+        // ステータスコードを返却
+        return response()->json();
     }
 }
