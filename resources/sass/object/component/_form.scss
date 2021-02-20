@@ -90,5 +90,7 @@
     margin: $space--l 0;
     background: $bg-color--light;
     border-radius: 4px;
+    white-space: pre-wrap; //改行タグで折り返す
+    word-wrap: break-word; //ボックス幅をはみ出す長さの英文を折り返す
   }
 }
