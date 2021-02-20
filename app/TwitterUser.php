@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TwitterUser extends Model
 {
+    // ソフトデリート用のSoftDeletesトレイトを使用
+    use SoftDeletes;
+
     // 書き込みを許可するカラムの指定
     protected $fillable = [
         'user_id',
@@ -24,7 +27,7 @@ class TwitterUser extends Model
      * @var array
      */
     protected $hidden = [
-        'twitter_token', 'twitter_token_secret', self::CREATED_AT, self::UPDATED_AT,
+        'twitter_token', 'twitter_token_secret', 'created_at', 'updated_at'
     ];
 
     /**
@@ -43,18 +46,15 @@ class TwitterUser extends Model
     public function follows()
     {
         // TwitterUserとTargetUserは、followsテーブルを中間テーブルとした多対多の関係
-        // 第３引数はリレーションを定義しているモデルの外部キー名、第４引数は結合するモデルの外部キー名
+        // 第３引数は中間テーブルにおけるこのモデルの外部キー名、第４引数は結合するモデルの外部キー名
         // withTimestamps()で、followsテーブルへの操作時にタイムスタンプを更新する設定を追加
         return $this->belongsToMany('App\TargetUser', 'follows', 'twitter_user_id', 'target_id')
             ->withTimestamps();
     }
-
-    /**
-     * リレーションシップ - autofollowsテーブル
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
     public function autofollows()
     {
-        return $this->hasMany('App\Autofollow', 'twitter_user_id');
+        // TwitterUserとTargetUserは、autofollowsテーブルを中間テーブルとした多対多の関係
+        return $this->belongsToMany('App\TargetUser', 'autofollows', 'twitter_user_id', 'target_id')
+            ->withTimestamps();
     }
 }

@@ -19,6 +19,14 @@ class NewsList extends Model
         'source',
     ];
 
+    /**
+     * 返却するJSONに含めない項目
+     * @var array
+     */
+    protected $hidden = [
+        'created_at', 'updated_at', 'deleted_at'
+    ];
+
     // 日付のデータ属性を指定
     protected $dates = [
         'published_date',

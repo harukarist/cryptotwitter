@@ -18,14 +18,6 @@ class User extends Authenticatable
     use Notifiable;
 
     /**
-     * パスワードリセット通知の送信をオーバーライド
-     */
-    // public function sendPasswordResetNotification($token)
-    // {
-    //     $this->notify(new PasswordResetNotification($token));
-    // }
-
-    /**
      * 値の代入を許可するカラム
      * The attributes that are mass assignable.
      * @var array

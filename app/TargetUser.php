@@ -46,7 +46,7 @@ class TargetUser extends Model
      * @var array
      */
     protected $hidden = [
-        'tweet_id', self::CREATED_AT, self::UPDATED_AT,
+        'tweet_id', 'created_at', 'updated_at', 'deleted_at'
     ];
 
 
@@ -71,20 +71,21 @@ class TargetUser extends Model
     }
 
     /**
-     * リレーションシップ - followsテーブル,twitter_usersテーブル
+     * リレーションシップ - followsテーブル,autofollowsテーブル
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function follows()
     {
         // TwitterUserとTargetUserは、followsテーブルを中間テーブルとした多対多の関係
-        // 第３引数はリレーションを定義しているモデルの外部キー名、第４引数は結合するモデルの外部キー名
+        // 第３引数は中間テーブルにおけるこのモデルの外部キー名、第４引数は結合するモデルの外部キー名
         // withTimestamps()で、followsテーブルへの操作時にタイムスタンプを更新する設定を追加
         return $this->belongsToMany('App\TwitterUser', 'follows', 'target_id', 'twitter_user_id')
             ->withTimestamps();
     }
-
     public function autofollows()
     {
-        return $this->hasMany('App\Autofollow', 'target_id');
+        // TwitterUserとTargetUserは、autofollowsテーブルを中間テーブルとした多対多の関係
+        return $this->belongsToMany('App\TwitterUser', 'autofollows', 'target_id', 'twitter_user_id')
+            ->withTimestamps();
     }
 }
