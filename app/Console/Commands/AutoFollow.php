@@ -107,9 +107,6 @@ class AutoFollow extends Command
                 logger()->info("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントがありませんでした");
                 continue; //次のユーザーの自動フォローへ進む
             }
-            // dump($follows);
-            // dump($diff);
-            // dump($target_ids);
 
             $follow_total = 0;
 
@@ -118,25 +115,24 @@ class AutoFollow extends Command
                 $key = array_rand($target_ids);
                 // ターゲット配列から抽出したキーを持つターゲットのTwitterIDを取得
                 $target_id = $target_ids[$key];
-                dump($key);
-                // // ユーザーとターゲットのTwitterIDを指定してTwitterAPIでフォローを行うメソッドを実行
-                // $result = FollowTargetController::createFollow($twitter_user, $target_id);
-                // // ターゲットをフォローした場合
-                // if ($result['do_follow']) {
-                //     // ターゲットのtarget_usersテーブル上の主キー'id'を取得
-                //     $target = TargetUser::select('id')->where('twitter_id', $target_id)->first();
-                //     // 自動フォローリストに保存
-                //     DB::table('autofollows')->insert([
-                //         'twitter_user_id' => $twitter_user->id,
-                //         'target_id' => $target->id,
-                //         'created_at' => Carbon::now(),
-                //         'updated_at' => Carbon::now(),
-                //     ]);
-                //     // 今回のフォロー合計数を1増やす
-                //     $follow_total++;
-                // }
-                // dump($result);
-                // logger()->info($result);
+                // ユーザーとターゲットのTwitterIDを指定してTwitterAPIでフォローを行うメソッドを実行
+                $result = FollowTargetController::createFollow($twitter_user, $target_id);
+                // ターゲットをフォローした場合
+                if ($result['do_follow']) {
+                    // ターゲットのtarget_usersテーブル上の主キー'id'を取得
+                    $target = TargetUser::select('id')->where('twitter_id', $target_id)->first();
+                    // 自動フォローリストに保存
+                    DB::table('autofollows')->insert([
+                        'twitter_user_id' => $twitter_user->id,
+                        'target_id' => $target->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+                    // 今回のフォロー合計数を1増やす
+                    $follow_total++;
+                }
+                dump($result);
+                logger()->info($result);
             }
             dump("{$twitter_user->user_name}さんのアカウントで {$follow_total}件自動フォローしました");
             logger()->info("{$twitter_user->user_name}さんのアカウントで {$follow_total}件自動フォローしました");
