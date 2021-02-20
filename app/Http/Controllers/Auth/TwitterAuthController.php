@@ -55,6 +55,7 @@ class TwitterAuthController extends Controller
             );
             // TwitterAPIでログインユーザーのTwitterアカウント情報を取得
             $result = $connect->get("users/show", $params);
+            clock($result);
 
             if ($result) {
                 // TwitterAPIで取得したユーザー名、スクリーンネーム、アバターにDBとの差分があれば更新
