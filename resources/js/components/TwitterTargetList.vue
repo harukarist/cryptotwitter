@@ -25,7 +25,9 @@
       />
       <div v-if="!searchedParam && totalNum === 0" class="u-font--center">
         <p v-if="useAutoFollow">アカウントはすべて自動フォロー済みです</p>
-        <p else>仮想通貨関連アカウントが取得できませんでした</p>
+        <p v-if="!useAutoFollow">
+          仮想通貨関連アカウントが取得できませんでした
+        </p>
       </div>
 
       <div class="c-pagination">

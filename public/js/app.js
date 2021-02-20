@@ -4956,6 +4956,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
  // VuexのmapGetters関数をインポート
 
@@ -56754,9 +56756,13 @@ var render = function() {
                 ? _c("p", [_vm._v("アカウントはすべて自動フォロー済みです")])
                 : _vm._e(),
               _vm._v(" "),
-              _c("p", { attrs: { else: "" } }, [
-                _vm._v("仮想通貨関連アカウントが取得できませんでした")
-              ])
+              !_vm.useAutoFollow
+                ? _c("p", [
+                    _vm._v(
+                      "\n        仮想通貨関連アカウントが取得できませんでした\n      "
+                    )
+                  ])
+                : _vm._e()
             ])
           : _vm._e(),
         _vm._v(" "),
