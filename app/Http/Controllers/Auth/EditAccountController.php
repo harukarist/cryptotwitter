@@ -59,13 +59,19 @@ class EditAccountController extends Controller
         // ログインユーザーのTwitterアカウント情報を取得
         $twitter_user = $user->twitter_user()->first();
 
-        // ログインユーザーのフォローリストを削除
-        DB::table('follows')->where('twitter_user_id', $twitter_user->id)->delete();
-        // ログインユーザーの自動フォローログを削除
-        DB::table('autofollow_logs')->where('twitter_user_id', $twitter_user->id)->delete();
-        // ログインユーザーのTwitterアカウント情報を削除
-        $twitter_user->delete();
+        // ログインユーザーのTwitterアカウント情報が登録されている場合は関連レコードを削除
+        if ($twitter_user) {
+            // ログインユーザーのフォローリストを削除
+            DB::table('follows')->where('twitter_user_id', $twitter_user->id)->delete();
+            // ログインユーザーの自動フォローログを削除
+            DB::table('autofollow_logs')->where('twitter_user_id', $twitter_user->id)->delete();
+            // ログインユーザーの自動フォロー履歴を削除
+            DB::table('autofollows')->where('twitter_user_id', $twitter_user->id)->delete();
+            // ログインユーザーのTwitterアカウント情報を削除
+            $twitter_user->delete();
+        }
         // ログインユーザーのユーザー情報を削除
         $user->delete();
+        return;
     }
 }
