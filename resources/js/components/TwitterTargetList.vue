@@ -23,9 +23,10 @@
         @follow="createFollow"
         @unfollow="destroyFollow"
       />
-      <p v-if="!searchedParam && totalNum === 0" class="u-font--center">
-        アカウントが存在しません
-      </p>
+      <div v-if="!searchedParam && totalNum === 0" class="u-font--center">
+        <p v-if="useAutoFollow">アカウントはすべて自動フォロー済みです</p>
+        <p else>仮想通貨関連アカウントが取得できませんでした</p>
+      </div>
 
       <div class="c-pagination">
         <pagination-link
@@ -49,6 +50,7 @@
 
 <script>
 import { OK } from "../utility";
+import { mapGetters } from "vuex"; // VuexのmapGetters関数をインポート
 import TwitterTargetItem from "../components/TwitterTargetItem.vue";
 import PaginationLink from "../components/PaginationLink.vue";
 import PaginationInfo from "../components/PaginationInfo.vue";
@@ -68,6 +70,12 @@ export default {
       required: false,
       default: 1,
     },
+  },
+  computed: {
+    ...mapGetters({
+      // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
+      useAutoFollow: "twitter/useAutoFollow",
+    }),
   },
   data() {
     return {

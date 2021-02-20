@@ -4884,19 +4884,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_map_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.number.constructor.js */ "./node_modules/core-js/modules/es.number.constructor.js");
 /* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
-/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
-/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
-/* harmony import */ var _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/TwitterTargetItem.vue */ "./resources/js/components/TwitterTargetItem.vue");
-/* harmony import */ var _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/PaginationLink.vue */ "./resources/js/components/PaginationLink.vue");
-/* harmony import */ var _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/PaginationInfo.vue */ "./resources/js/components/PaginationInfo.vue");
-/* harmony import */ var _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/SearchFormComponent.vue */ "./resources/js/components/SearchFormComponent.vue");
-
-
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/TwitterTargetItem.vue */ "./resources/js/components/TwitterTargetItem.vue");
+/* harmony import */ var _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/PaginationLink.vue */ "./resources/js/components/PaginationLink.vue");
+/* harmony import */ var _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/PaginationInfo.vue */ "./resources/js/components/PaginationInfo.vue");
+/* harmony import */ var _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/SearchFormComponent.vue */ "./resources/js/components/SearchFormComponent.vue");
 
 
 
@@ -4905,6 +4900,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -4954,6 +4955,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+
+ // VuexのmapGetters関数をインポート
 
 
 
@@ -4961,12 +4965,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    TwitterTargetItem: _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_6__.default,
-    PaginationLink: _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_7__.default,
+    TwitterTargetItem: _components_TwitterTargetItem_vue__WEBPACK_IMPORTED_MODULE_4__.default,
+    PaginationLink: _components_PaginationLink_vue__WEBPACK_IMPORTED_MODULE_5__.default,
     //ページ番号付きページネーション（PC、タブレットで表示）
-    PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_8__.default,
+    PaginationInfo: _components_PaginationInfo_vue__WEBPACK_IMPORTED_MODULE_6__.default,
     //ページネーションの件数表示
-    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_9__.default //キーワード検索フォーム
+    SearchFormComponent: _components_SearchFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__.default //キーワード検索フォーム
 
   },
   // ページネーションのページ番号を親コンポーネントTwitterListComponentから受け取る
@@ -4977,6 +4981,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       default: 1
     }
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_8__.mapGetters)({
+    // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
+    useAutoFollow: "twitter/useAutoFollow"
+  })),
   data: function data() {
     return {
       targets: [],
@@ -5054,7 +5062,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // レスポンスのステータスが200以外の場合はエラーをストアにコミット
 
 
-                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
+                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_3__.OK)) {
                   _context.next = 9;
                   break;
                 }
@@ -5098,7 +5106,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context2.sent;
 
-                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
+                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_3__.OK)) {
                   _context2.next = 6;
                   break;
                 }
@@ -5148,7 +5156,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context3.sent;
 
-                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_5__.OK)) {
+                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_3__.OK)) {
                   _context3.next = 6;
                   break;
                 }
@@ -56741,8 +56749,14 @@ var render = function() {
         }),
         _vm._v(" "),
         !_vm.searchedParam && _vm.totalNum === 0
-          ? _c("p", { staticClass: "u-font--center" }, [
-              _vm._v("\n      アカウントが存在しません\n    ")
+          ? _c("div", { staticClass: "u-font--center" }, [
+              _vm.useAutoFollow
+                ? _c("p", [_vm._v("アカウントはすべて自動フォロー済みです")])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("p", { attrs: { else: "" } }, [
+                _vm._v("仮想通貨関連アカウントが取得できませんでした")
+              ])
             ])
           : _vm._e(),
         _vm._v(" "),
