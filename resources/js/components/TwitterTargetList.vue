@@ -111,7 +111,12 @@ export default {
     // 検索結果の表示を解除
     clearResult() {
       // 検索用のクエリパラメータを指定しない
-      this.fetchTargets();
+      let params = {
+        params: {
+          page: 1,
+        },
+      };
+      this.fetchTargets(params);
       this.searchedParam = "";
     },
     // Twitterアカウント一覧を取得
@@ -119,7 +124,7 @@ export default {
       this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       if (!params) {
         // 入力された検索キーワードがなければクエリパラメータの値を再セット
-        params = {
+        let params = {
           params: {
             page: this.page,
             search: this.searchedParam,
