@@ -15,8 +15,8 @@ class Trend extends Model
         'currency_name', 'currency_ja', 'currency_pair', 'used_api'
     ];
 
-    // サーバーから返却するJSONに含めないカラム
+    // モデルから取得するデータに含めないカラム
     protected $hidden = [
-        'deleted_at', 'created_at', 'updated_at', 'use_api', 'tweet_words'
+        'deleted_at'
     ];
 }

@@ -46,7 +46,7 @@ class TargetUser extends Model
      * @var array
      */
     protected $hidden = [
-        'tweet_id', 'created_at', 'updated_at', 'deleted_at'
+        'updated_at', 'deleted_at'
     ];
 
 

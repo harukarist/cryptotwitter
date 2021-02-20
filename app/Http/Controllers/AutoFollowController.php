@@ -43,6 +43,7 @@ class AutoFollowController extends Controller
             $items = Autofollow::with('target_user')
                 ->where('twitter_user_id', $twitter_id)
                 ->whereHas('target_user', $whereHas)
+                ->orderBy('created_at', 'DESC')
                 ->paginate(10);
             return $items;
         }
@@ -52,6 +53,7 @@ class AutoFollowController extends Controller
         // ログインユーザーの自動フォロー履歴（autofollowsテーブルとリレーション先のtarget_userテーブルのレコード）を取得
         $items = Autofollow::with('target_user')
             ->where('twitter_user_id',  $twitter_id)
+            ->orderBy('created_at', 'DESC')
             ->paginate(10);
 
         // json形式で返却

@@ -65,6 +65,7 @@ class UpdateTweetCount extends Command
                 $this->words_arr[$trend['currency_name']] = explode(' OR ', $trend['tweet_words']);
             }
         }
+        dump($trends_arr);
 
         // 過去1時間の集計対象日時をセット
         $this->setHour();
@@ -112,6 +113,7 @@ class UpdateTweetCount extends Command
         dump($this->since_at . ' 〜' . $this->until_at . 'の集計を開始');
         logger()->info($this->since_at . ' 〜' . $this->until_at . 'の集計を開始');
 
+        dump($this->words_arr);
         // 検索キーワードの配列をキー（銘柄名）とバリュー（検索キーワード）に展開して1つずつ処理
         foreach ($this->words_arr as $name => $keywords) {
             // 指定期間内のツイートを集計
