@@ -99,15 +99,17 @@ class AutoFollow extends Command
             $follows = $twitter_user->follows()->get();
             // ターゲット一覧からフォロー済みアカウントを除いたオブジェクトを取得
             $diff = $target_users->diff($follows);
-            if (!$diff) {
-                return;
-            }
-
             // オブジェクトからTwitterIDのみ抽出し、配列に変換
             $target_ids = $diff->pluck('twitter_id')->toArray();
+            // フォロー済みアカウントを除いた自動フォローターゲットのTwitterIDが存在しない場合
+            if (!$target_ids) {
+                dump("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントがありませんでした");
+                logger()->info("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントがありませんでした");
+                continue; //次のユーザーの自動フォローへ進む
+            }
             // dump($follows);
             // dump($diff);
-            dump($target_ids);
+            // dump($target_ids);
 
             $follow_total = 0;
 
