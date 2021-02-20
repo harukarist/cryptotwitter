@@ -9,8 +9,6 @@ const mutations = {
   setMessage(state, { text, type }) {
     state.text = text;
     state.type = type;
-    // console.log('setMessage');
-    // console.log(text);
   },
   // フラッシュメッセージのテキストとcssクラスをクリア
   clearMessage(state) {

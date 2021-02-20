@@ -276,7 +276,7 @@ export default {
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews() {
       const response = await axios.get(`/api/news/latest`);
-      console.log(response.data);
+
       if (response.status !== OK) {
         // 通信失敗の場合
         this.$store.commit("error/setCode", response.status);

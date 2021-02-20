@@ -75,7 +75,6 @@ const actions = {
     context.commit("loader/setIsLoading", true, { root: true }); //ローディング表示をオン
     const response = await axios.post('/api/auth/twitter/update')
     context.commit("loader/setIsLoading", false, { root: true }); //ローディング表示をオフ
-    console.log('twitterUpdate');
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
@@ -133,7 +132,6 @@ const actions = {
     context.commit("loader/setIsLoading", false, { root: true }); //ローディング表示をオン
     const response = await axios.post('/api/autofollow/apply')
     context.commit("loader/setIsLoading", false, { root: true }); //ローディング表示をオフ
-    // console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {
@@ -162,7 +160,6 @@ const actions = {
     context.commit("loader/setIsLoading", true, { root: true }); //ローディング表示をオン
     const response = await axios.post('/api/autofollow/cancel')
     context.commit("loader/setIsLoading", false, { root: true }); //ローディング表示をオフ
-    // console.log(response);
 
     // API通信が成功した場合
     if (response.status === OK) {
