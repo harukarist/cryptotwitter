@@ -63,6 +63,20 @@ const router = new VueRouter({
       }
     },
     {
+      path: '/autofollow/list',
+      name: 'autofollow.list',
+      component: TwitterListComponent,
+      meta: { requiresAuth: true }, //認証必須,
+      // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
+      props: route => {
+        const page = route.query.page
+        return {
+          // 整数以外が渡された場合は1に変換して返却
+          page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1,
+        }
+      }
+    },
+    {
       path: '/news',
       name: 'news.index',
       component: NewsListComponent,

@@ -17,16 +17,18 @@
           <li
             class="c-tab__item c-tab__item--two"
             :class="{ 'c-tab__item--active': !showAutoFollow }"
-            @click="showAutoFollow = false"
           >
-            未フォローの<br class="u-sp--only" />アカウントを表示
+            <RouterLink :to="{ name: 'twitter.index' }">
+              未フォローの<br class="u-sp--only" />アカウントを表示
+            </RouterLink>
           </li>
           <li
             class="c-tab__item c-tab__item--two"
             :class="{ 'c-tab__item--active': showAutoFollow }"
-            @click="showAutoFollow = true"
           >
-            自動フォロー履歴<br class="u-sp--only" />を表示
+            <RouterLink :to="{ name: 'autofollow.list' }">
+              自動フォロー履歴<br class="u-sp--only" />を表示
+            </RouterLink>
           </li>
         </ul>
 
@@ -41,7 +43,6 @@
           </transition>
         </div>
       </div>
-
       <div v-if="!useAutoFollow">
         <TwitterTargetList :page="page" />
       </div>
@@ -81,6 +82,28 @@ export default {
       // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
       useAutoFollow: "twitter/useAutoFollow",
     }),
+  },
+  methods: {
+    checkThisPath() {
+      if (
+        this.$route.path ===
+        this.$router.resolve({ name: "autofollow.list" }).href
+      ) {
+        this.showAutoFollow = true;
+      } else {
+        this.showAutoFollow = false;
+      }
+    },
+  },
+  watch: {
+    // ページリンク切り替え時にコンポーネントの再生成が必要になるため、
+    // $routeを監視し、ページ切り替え時にデータ取得を実行する
+    $route: {
+      async handler() {
+        await this.checkThisPath();
+      },
+      immediate: true, //コンポーネント生成時も実行
+    },
   },
 };
 </script>

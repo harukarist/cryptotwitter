@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use App\Autofollow;
 use App\TwitterUser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -55,6 +54,7 @@ class AutoFollowController extends Controller
             ->where('twitter_user_id',  $twitter_id)
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
+
 
         // json形式で返却
         return $items;

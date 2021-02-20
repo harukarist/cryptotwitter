@@ -138,31 +138,33 @@ export default {
     pageRange() {
       let minPage = "";
       let maxPage = "";
-      // 現在のページが総ページ数と同じ かつ 総ページ数が表示項目数以上の場合
       if (this.currentPage === this.lastPage && this.range < this.lastPage) {
-        minPage = this.currentPage - (this.range - 1);
-        maxPage = this.currentPage;
-        // 現在のページが総ページ数の1ページ前 かつ 総ページ数が表示項目数以上の場合
+        // 現在のページが総ページ数と同じ かつ 総ページ数が表示項目数以上の場合は
+        // 最終ページのリンクとその前のページのリンクを合わせて表示項目数だけリンクを出す
+        minPage = this.lastPage - (this.range - 1);
+        maxPage = this.lastPage;
       } else if (
         this.currentPage === this.lastPage - 1 &&
         this.range < this.lastPage
       ) {
+        // 現在のページが総ページ数の1ページ前 かつ 総ページ数が表示項目数以上の場合は
+        // 現在のページ、最終ページのリンクとその前のページのリンクを合わせて表示項目数だけリンクを出す
         minPage = this.currentPage - (this.range - 2);
-        maxPage = this.currentPage + 1;
-        // 現在のページが2 かつ 総ページ数が表示項目数以上の場合
+        maxPage = this.lastPage;
       } else if (this.currentPage === 2 && this.range < this.lastPage) {
-        minPage = this.currentPage - 1;
-        maxPage = this.currentPage + (this.range - 2);
-        // 現在のページが1の場合
+        // 現在のページが2 かつ 総ページ数が表示項目数以上の場合は1ページ目から表示項目数だけリンクを出す
+        minPage = 1;
+        maxPage = 2 + (this.range - 2);
       } else if (this.currentPage === 1 && this.range < this.lastPage) {
-        minPage = this.currentPage;
-        maxPage = this.currentPage + (this.range - 1);
-        // 総ページ数が表示項目数より少ない場合
-      } else if (this.lastPage < this.range) {
+        // 現在のページが1 かつ 総ページ数が表示項目数以上の場合は1ページ目から表示項目数だけリンクを出す
+        minPage = 1;
+        maxPage = 1 + (this.range - 1);
+      } else if (this.lastPage <= this.range) {
+        // 総ページ数が表示項目数以下の場合は1ページ目から最終ページまでのリンクを出す
         minPage = 1;
         maxPage = this.lastPage;
-        // その他の場合は左右にリンクを出す
       } else {
+        // その他の場合は左右にリンクを出す
         minPage = this.currentPage - Math.floor(this.range / 2);
         maxPage = this.currentPage + Math.floor(this.range / 2);
       }

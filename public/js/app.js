@@ -4477,24 +4477,32 @@ __webpack_require__.r(__webpack_exports__);
     // ページ番号配列の生成
     pageRange: function pageRange() {
       var minPage = "";
-      var maxPage = ""; // 現在のページが総ページ数と同じ かつ 総ページ数が表示項目数以上の場合
+      var maxPage = "";
 
       if (this.currentPage === this.lastPage && this.range < this.lastPage) {
-        minPage = this.currentPage - (this.range - 1);
-        maxPage = this.currentPage; // 現在のページが総ページ数の1ページ前 かつ 総ページ数が表示項目数以上の場合
+        // 現在のページが総ページ数と同じ かつ 総ページ数が表示項目数以上の場合は
+        // 最終ページのリンクとその前のページのリンクを合わせて表示項目数だけリンクを出す
+        minPage = this.lastPage - (this.range - 1);
+        maxPage = this.lastPage;
       } else if (this.currentPage === this.lastPage - 1 && this.range < this.lastPage) {
+        // 現在のページが総ページ数の1ページ前 かつ 総ページ数が表示項目数以上の場合は
+        // 現在のページ、最終ページのリンクとその前のページのリンクを合わせて表示項目数だけリンクを出す
         minPage = this.currentPage - (this.range - 2);
-        maxPage = this.currentPage + 1; // 現在のページが2 かつ 総ページ数が表示項目数以上の場合
+        maxPage = this.lastPage;
       } else if (this.currentPage === 2 && this.range < this.lastPage) {
-        minPage = this.currentPage - 1;
-        maxPage = this.currentPage + (this.range - 2); // 現在のページが1の場合
-      } else if (this.currentPage === 1 && this.range < this.lastPage) {
-        minPage = this.currentPage;
-        maxPage = this.currentPage + (this.range - 1); // 総ページ数が表示項目数より少ない場合
-      } else if (this.lastPage < this.range) {
+        // 現在のページが2 かつ 総ページ数が表示項目数以上の場合は1ページ目から表示項目数だけリンクを出す
         minPage = 1;
-        maxPage = this.lastPage; // その他の場合は左右にリンクを出す
+        maxPage = 2 + (this.range - 2);
+      } else if (this.currentPage === 1 && this.range < this.lastPage) {
+        // 現在のページが1 かつ 総ページ数が表示項目数以上の場合は1ページ目から表示項目数だけリンクを出す
+        minPage = 1;
+        maxPage = 1 + (this.range - 1);
+      } else if (this.lastPage <= this.range) {
+        // 総ページ数が表示項目数以下の場合は1ページ目から最終ページまでのリンクを出す
+        minPage = 1;
+        maxPage = this.lastPage;
       } else {
+        // その他の場合は左右にリンクを出す
         minPage = this.currentPage - Math.floor(this.range / 2);
         maxPage = this.currentPage + Math.floor(this.range / 2);
       } // 配列を生成
@@ -8717,11 +8725,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.number.constructor.js */ "./node_modules/core-js/modules/es.number.constructor.js");
 /* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
-/* harmony import */ var _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/TwitterLogin.vue */ "./resources/js/components/TwitterLogin.vue");
-/* harmony import */ var _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/TwitterTargetList.vue */ "./resources/js/components/TwitterTargetList.vue");
-/* harmony import */ var _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/AutoFollowList.vue */ "./resources/js/components/AutoFollowList.vue");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/TwitterLogin.vue */ "./resources/js/components/TwitterLogin.vue");
+/* harmony import */ var _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/TwitterTargetList.vue */ "./resources/js/components/TwitterTargetList.vue");
+/* harmony import */ var _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/AutoFollowList.vue */ "./resources/js/components/AutoFollowList.vue");
 
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -8780,6 +8795,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
  // VuexのmapState関数,mapGetters関数をインポート
 
 
@@ -8787,9 +8803,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    TwitterLogin: _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_1__.default,
-    TwitterTargetList: _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-    AutoFollowList: _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_3__.default
+    TwitterLogin: _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+    TwitterTargetList: _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_3__.default,
+    AutoFollowList: _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_4__.default
   },
   // ページネーションのページ番号をrouter.jsから受け取る
   props: {
@@ -8804,12 +8820,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       showAutoFollow: false
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)({
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_5__.mapGetters)({
     // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
     isTwitterLogin: "twitter/check",
     // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
     useAutoFollow: "twitter/useAutoFollow"
-  }))
+  })),
+  methods: {
+    checkThisPath: function checkThisPath() {
+      if (this.$route.path === this.$router.resolve({
+        name: "autofollow.list"
+      }).href) {
+        this.showAutoFollow = true;
+      } else {
+        this.showAutoFollow = false;
+      }
+    }
+  },
+  watch: {
+    // ページリンク切り替え時にコンポーネントの再生成が必要になるため、
+    // $routeを監視し、ページ切り替え時にデータ取得を実行する
+    $route: {
+      handler: function handler() {
+        var _this = this;
+
+        return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  _context.next = 2;
+                  return _this.checkThisPath();
+
+                case 2:
+                case "end":
+                  return _context.stop();
+              }
+            }
+          }, _callee);
+        }))();
+      },
+      immediate: true //コンポーネント生成時も実行
+
+    }
+  }
 });
 
 /***/ }),
@@ -9074,6 +9128,22 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_19__.default({
   }, {
     path: '/twitter',
     name: 'twitter.index',
+    component: _pages_TwitterListComponent__WEBPACK_IMPORTED_MODULE_6__.default,
+    meta: {
+      requiresAuth: true
+    },
+    //認証必須,
+    // ページネーションのクエリパラメータpageをrouteから取り出し、propsでコンポーネントに渡す
+    props: function props(route) {
+      var page = route.query.page;
+      return {
+        // 整数以外が渡された場合は1に変換して返却
+        page: /^[1-9][0-9]*$/.test(page) ? page * 1 : 1
+      };
+    }
+  }, {
+    path: '/autofollow/list',
+    name: 'autofollow.list',
     component: _pages_TwitterListComponent__WEBPACK_IMPORTED_MODULE_6__.default,
     meta: {
       requiresAuth: true
@@ -56792,36 +56862,40 @@ var render = function() {
                   "li",
                   {
                     staticClass: "c-tab__item c-tab__item--two",
-                    class: { "c-tab__item--active": !_vm.showAutoFollow },
-                    on: {
-                      click: function($event) {
-                        _vm.showAutoFollow = false
-                      }
-                    }
+                    class: { "c-tab__item--active": !_vm.showAutoFollow }
                   },
                   [
-                    _vm._v("\n          未フォローの"),
-                    _c("br", { staticClass: "u-sp--only" }),
-                    _vm._v("アカウントを表示\n        ")
-                  ]
+                    _c(
+                      "RouterLink",
+                      { attrs: { to: { name: "twitter.index" } } },
+                      [
+                        _vm._v("\n            未フォローの"),
+                        _c("br", { staticClass: "u-sp--only" }),
+                        _vm._v("アカウントを表示\n          ")
+                      ]
+                    )
+                  ],
+                  1
                 ),
                 _vm._v(" "),
                 _c(
                   "li",
                   {
                     staticClass: "c-tab__item c-tab__item--two",
-                    class: { "c-tab__item--active": _vm.showAutoFollow },
-                    on: {
-                      click: function($event) {
-                        _vm.showAutoFollow = true
-                      }
-                    }
+                    class: { "c-tab__item--active": _vm.showAutoFollow }
                   },
                   [
-                    _vm._v("\n          自動フォロー履歴"),
-                    _c("br", { staticClass: "u-sp--only" }),
-                    _vm._v("を表示\n        ")
-                  ]
+                    _c(
+                      "RouterLink",
+                      { attrs: { to: { name: "autofollow.list" } } },
+                      [
+                        _vm._v("\n            自動フォロー履歴"),
+                        _c("br", { staticClass: "u-sp--only" }),
+                        _vm._v("を表示\n          ")
+                      ]
+                    )
+                  ],
+                  1
                 )
               ]),
               _vm._v(" "),
