@@ -29,7 +29,7 @@
       </twitter-target-item>
 
       <p v-if="!searchedParam && totalNum === 0" class="u-font--center">
-        アカウントが存在しません
+        自動フォロー履歴はまだありません
       </p>
 
       <div class="c-pagination">
