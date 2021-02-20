@@ -36,8 +36,10 @@ export default {
   methods: {
     // 退会WebAPI呼び出し
     async withdraw() {
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       // dispatch()でauthストアのloginアクションを呼び出す
       await this.$store.dispatch("auth/withdraw");
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // API通信が成功した場合
       if (this.apiStatus) {
         // フラッシュメッセージを表示

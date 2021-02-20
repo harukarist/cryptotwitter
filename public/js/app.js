@@ -8885,11 +8885,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+                // dispatch()でauthストアのloginアクションを呼び出す
+
+
+                _context.next = 3;
                 return _this.$store.dispatch("auth/withdraw");
 
-              case 2:
+              case 3:
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
                 // API通信が成功した場合
+
+
                 if (_this.apiStatus) {
                   // フラッシュメッセージを表示
                   _this.$store.dispatch("message/showMessage", {
@@ -8904,7 +8911,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   });
                 }
 
-              case 3:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -9176,8 +9183,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_19__.default({
 
 router.beforeEach(function (to, from, next) {
   // // ローディング表示をオン
-  // store.commit('loader/setIsLoading', true)
-  // 認証必須のルートで認証チェックがfalseならログイン画面へ
+  _store__WEBPACK_IMPORTED_MODULE_1__.default.commit('loader/setIsLoading', true); // 認証必須のルートで認証チェックがfalseならログイン画面へ
+
   if (to.matched.some(function (record) {
     return record.meta.requiresAuth;
   }) && !_store__WEBPACK_IMPORTED_MODULE_1__.default.getters["auth/check"]) {
@@ -9196,8 +9203,9 @@ router.beforeEach(function (to, from, next) {
   }
 }); // ルーターナビゲーションの後にフック
 
-router.afterEach(function () {// // ローディング表示をオフ
-  // store.commit('loader/setIsLoading', false)
+router.afterEach(function () {
+  // // ローディング表示をオフ
+  _store__WEBPACK_IMPORTED_MODULE_1__.default.commit('loader/setIsLoading', false);
 }); // VueRouterインスタンスをエクスポートし、app.jsでインポートする
 
 /* harmony default export */ __webpack_exports__["default"] = (router);
