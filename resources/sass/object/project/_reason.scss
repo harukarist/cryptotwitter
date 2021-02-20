@@ -26,11 +26,17 @@
       align-self: flex-end;
       .p-reason__img-wrapper {
         margin-right: $space--xl;
+        @include mq(){
+          margin: 0 auto;
+        }
       }
     }
     div:nth-child(odd) {
       .p-reason__img-wrapper {
         margin-left: $space--xl;
+        @include mq(){
+          margin: 0 auto;
+        }
       }
     }
     @include mq(medium){
@@ -65,27 +71,20 @@
     @include mq(){
       padding: $space--xxl;
       flex-direction: column;
+      justify-content: center;
       width: 100%;
     }
   }
   &__description {
     width: 70%;
-    min-width: 650px;
-    @include mq(medium){
-      min-width: 180px;
-    }
     @include mq(){
       width: 100%;
     }
   }
   &__img-wrapper {
-    // width: 300px;
     width: 30%;
-    @include mq(medium){
-      // margin: 0 auto;
-    }
     @include mq(){
-      width: 70%;
+      width: 200px;
       margin: 0 auto;
     }
   }

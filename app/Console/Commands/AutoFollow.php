@@ -84,9 +84,9 @@ class AutoFollow extends Command
                 $remain_num = 1000;
             }
 
-            // ユーザーの残り回数が0以下の場合は処理を終了
+            // ユーザーの残り回数が0以下の場合は次のユーザーの自動フォローへ進む
             if ($remain_num < 0) {
-                return;
+                continue; //次のループへ
             } else if ($remain_num < $MAX_REQUESTS) {
                 // ユーザーの残り回数が1回のリクエスト上限より少ない場合は、リクエスト上限を残り回数に変更
                 $MAX_REQUESTS = $remain_num;
@@ -105,7 +105,7 @@ class AutoFollow extends Command
             if (!$target_ids) {
                 dump("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントがありませんでした");
                 logger()->info("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントがありませんでした");
-                continue; //次のユーザーの自動フォローへ進む
+                continue; // 次のユーザーの自動フォローへ進む
             }
 
             $follow_total = 0;

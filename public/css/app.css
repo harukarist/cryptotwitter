@@ -1666,7 +1666,7 @@ input, textarea, select {
   .p-hero__contents {
     -ms-flex-preferred-size: 40%;
         flex-basis: 40%;
-    min-width: 440px;
+    min-width: 480px;
     padding-left: 30px; }
     @media screen and (max-width: 880px) {
       .p-hero__contents {
@@ -2305,8 +2305,14 @@ input, textarea, select {
           align-self: flex-end; }
       .p-reason__contents div:nth-child(even) .p-reason__img-wrapper {
         margin-right: 20px; }
+        @media screen and (max-width: 599px) {
+          .p-reason__contents div:nth-child(even) .p-reason__img-wrapper {
+            margin: 0 auto; } }
     .p-reason__contents div:nth-child(odd) .p-reason__img-wrapper {
       margin-left: 20px; }
+      @media screen and (max-width: 599px) {
+        .p-reason__contents div:nth-child(odd) .p-reason__img-wrapper {
+          margin: 0 auto; } }
     @media screen and (max-width: 880px) {
       .p-reason__contents {
         width: 100%;
@@ -2351,13 +2357,12 @@ input, textarea, select {
         -webkit-box-direction: normal;
             -ms-flex-direction: column;
                 flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
         width: 100%; } }
   .p-reason__description {
-    width: 70%;
-    min-width: 650px; }
-    @media screen and (max-width: 880px) {
-      .p-reason__description {
-        min-width: 180px; } }
+    width: 70%; }
     @media screen and (max-width: 599px) {
       .p-reason__description {
         width: 100%; } }
@@ -2365,7 +2370,7 @@ input, textarea, select {
     width: 30%; }
     @media screen and (max-width: 599px) {
       .p-reason__img-wrapper {
-        width: 70%;
+        width: 200px;
         margin: 0 auto; } }
   .p-reason__num {
     position: absolute;

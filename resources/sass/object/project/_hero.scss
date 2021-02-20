@@ -24,7 +24,7 @@
   }
   &__contents {
     flex-basis: 40%;
-    min-width: 440px;
+    min-width: 480px;
     padding-left: $space--xxl;
     @include mq(medium){
       min-width: 380px;
