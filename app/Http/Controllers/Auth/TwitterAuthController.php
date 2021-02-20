@@ -169,15 +169,28 @@ class TwitterAuthController extends Controller
     public function deleteTwitterUser()
     {
         $user_id = Auth::id();
+        // ログインユーザーに紐づくTwitterアカウント情報を削除
+        $twitter_user = TwitterUser::where('user_id', $user_id)->first();
+
+
         try {
-            // ログインユーザーに紐づくTwitterアカウント情報を削除
-            $twitterUser = TwitterUser::where('user_id', $user_id)->delete();
+            // ログインユーザーのTwitterアカウント情報が取得できた場合は関連レコードを削除
+            if ($twitter_user) {
+                // ログインユーザーのフォローリストを削除
+                DB::table('follows')->where('twitter_user_id', $twitter_user->id)->delete();
+                // ログインユーザーの自動フォローログを削除
+                DB::table('autofollow_logs')->where('twitter_user_id', $twitter_user->id)->delete();
+                // ログインユーザーの自動フォロー履歴を削除
+                DB::table('autofollows')->where('twitter_user_id', $twitter_user->id)->delete();
+                // ログインユーザーのTwitterアカウント情報を削除
+                $twitter_user->delete();
+            }
         } catch (Exception $e) {
             // エラーの場合はNotFoundエラーを返却
             return abort(404);
         }
 
-        // 結果を返却する
-        return $twitterUser;
+        // ステータスコードを返却
+        return response()->json();
     }
 }

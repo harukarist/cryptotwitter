@@ -70,8 +70,6 @@ Route::group(['middleware' => ['auth', 'cors']], function () {
   Route::post('/autofollow/apply', 'AutoFollowController@applyAutoFollow');
   // 自動フォロー解除API
   Route::post('/autofollow/cancel', 'AutoFollowController@cancelAutoFollow');
-  // 自動フォロー累計数取得API
-  Route::get('/autofollow/count', 'AutoFollowController@countAutoFollow');
   // 自動フォロー一覧取得API
   Route::get('/autofollow/list', 'AutoFollowController@showAutoFollowList');
 

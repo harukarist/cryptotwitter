@@ -112,7 +112,7 @@ const actions = {
       context.commit('setApiStatus', true)
       // ユーザー情報のステートをnullに初期化
       context.commit('setUsersTwitter', null)
-      return false
+      return false //処理を終了
     }
     // API通信が失敗した場合
     // ステータスをfalseに変更

@@ -95,21 +95,4 @@ class AutoFollowController extends Controller
         // Twitterアカウント情報を返却
         return  $twitter_user;
     }
-
-    /**
-     * ログインユーザーの自動フォロー累計数を集計して返却
-     */
-    public function countAutoFollow()
-    {
-        // ログインユーザーのTwitterアカウント情報を取得
-        $twitter_user = Auth::user()->twitter_user()->first();
-        // Twitterアカウントの登録がある場合、自動フォローログDBからログインユーザーの自動フォロー数の合計を取得
-        if ($twitter_user) {
-            $follow_total = DB::table('autofollow_logs')->where('twitter_user_id', $twitter_user->id)
-                ->sum('follow_total');
-        } else {
-            $follow_total = 0;
-        }
-        return $follow_total;
-    }
 }
