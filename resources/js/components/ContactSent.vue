@@ -20,7 +20,7 @@
     <div class="c-form__group">
       <label for="message" class="c-form__label"> お問い合わせ内容 </label>
       <div class="c-form__confirm-text">
-        <p style="u-font__br">{{ formData.message }}</p>
+        <p class="u-font__br">{{ formData.message }}</p>
       </div>
     </div>
 

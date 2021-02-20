@@ -23,7 +23,7 @@
         お問い合わせ内容<span class="c-form__label--required">必須</span>
       </label>
       <div class="c-form__confirm-text">
-        <p style="u-font__br">{{ formData.message }}</p>
+        <p class="u-font__br">{{ formData.message }}</p>
       </div>
     </div>
     <div class="c-form__button">
