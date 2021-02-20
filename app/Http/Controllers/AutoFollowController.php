@@ -25,8 +25,10 @@ class AutoFollowController extends Controller
             $search_word = '';
         }
 
+        $twitter_id = Auth::user()->twitter_user->id;
+
         // 検索キーワードがある場合
-        if (isset($search_word)) {
+        if (!empty($search_word)) {
             // withメソッドで取得するリレーション先テーブル'target_user'の検索条件を指定するため
             // whereHasでクエリを変数に格納
             $whereHas = function ($q) use ($search_word) {
@@ -39,15 +41,17 @@ class AutoFollowController extends Controller
 
             // 検索キーワードを含む自動フォロー履歴をページネーション形式で取得して返却
             $items = Autofollow::with('target_user')
+                ->where('twitter_user_id', $twitter_id)
                 ->whereHas('target_user', $whereHas)
                 ->paginate(10);
             return $items;
         }
 
 
+        // 検索キーワードの指定がない場合
         // ログインユーザーの自動フォロー履歴（autofollowsテーブルとリレーション先のtarget_userテーブルのレコード）を取得
         $items = Autofollow::with('target_user')
-            ->where('twitter_user_id', Auth::user()->twitter_user->id)
+            ->where('twitter_user_id',  $twitter_id)
             ->paginate(10);
 
         // json形式で返却

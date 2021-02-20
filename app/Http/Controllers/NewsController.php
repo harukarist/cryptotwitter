@@ -22,7 +22,7 @@ class NewsController extends Controller
         }
 
         // 検索キーワードがある場合
-        if (isset($search_word)) {
+        if (!empty($search_word)) {
             $news = NewsList::where('title', 'LIKE', '%' . $search_word . '%')
                 ->orderBy('published_date', 'DESC')
                 ->paginate(10);
