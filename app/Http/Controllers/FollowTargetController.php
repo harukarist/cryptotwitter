@@ -51,7 +51,8 @@ class FollowTargetController extends Controller
     if ($is_following) {
       return [
         'message' => 'アカウントはフォロー済みです',
-        'target_id' => $target_id
+        'target_id' => $target_id,
+        'do_follow' => false,
       ];
     }
 
@@ -60,7 +61,8 @@ class FollowTargetController extends Controller
 
     return [
       'message' => 'アカウントをフォローしました',
-      'target_id' => $target_id
+      'target_id' => $target_id,
+      'do_follow' => true,
     ];
   }
 
