@@ -27,7 +27,8 @@ class AutoFollowController extends Controller
 
         // 検索キーワードがある場合
         if (isset($search_word)) {
-
+            // withメソッドで取得するリレーション先テーブル'target_user'の検索条件を指定するため
+            // whereHasでクエリを変数に格納
             $whereHas = function ($q) use ($search_word) {
                 $q->where('twitter_user_id', Auth::user()->twitter_user->id)
                     ->where('profile_text', 'LIKE', '%' . $search_word . '%')
@@ -36,24 +37,26 @@ class AutoFollowController extends Controller
                     ->orwhere('user_name', 'LIKE', '%' . $search_word . '%');
             };
 
+            // 検索キーワードを含む自動フォロー履歴をページネーション形式で取得して返却
             $items = Autofollow::with('target_user')
                 ->whereHas('target_user', $whereHas)
                 ->paginate(10);
-
             return $items;
         }
 
 
         // ログインユーザーの自動フォロー履歴（autofollowsテーブルとリレーション先のtarget_userテーブルのレコード）を取得
-        $autofollow_list = Autofollow::with('target_user')
+        $items = Autofollow::with('target_user')
             ->where('twitter_user_id', Auth::user()->twitter_user->id)
             ->paginate(10);
 
         // json形式で返却
-        return $autofollow_list;
+        return $items;
     }
 
-    // 自動フォローを適用
+    /**
+     * ログインユーザーの自動フォローを利用開始
+     */
     public function applyAutoFollow()
     {
         // ログインユーザーのIDを取得
@@ -72,7 +75,9 @@ class AutoFollowController extends Controller
         return  $twitter_user;
     }
 
-    // 自動フォローを解除
+    /**
+     * ログインユーザーの自動フォローを解除
+     */
     public function cancelAutoFollow()
     {
         // ログインユーザーのIDを取得
