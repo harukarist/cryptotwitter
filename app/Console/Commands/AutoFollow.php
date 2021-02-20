@@ -80,8 +80,8 @@ class AutoFollow extends Command
             if ($log) {
                 $remain_num = $log->remain_num;
             } else {
-                // 今日のログレコードが未作成の場合は1日の上限（1000件）を残り回数にセット
-                $remain_num = 1000;
+                // 今日のログレコードが未作成の場合は1日の上限（400件）を残り回数にセット
+                $remain_num = 400;
             }
 
             // ユーザーの残り回数が0以下の場合は次のユーザーの自動フォローへ進む
@@ -91,7 +91,6 @@ class AutoFollow extends Command
                 // ユーザーの残り回数が1回のリクエスト上限より少ない場合は、リクエスト上限を残り回数に変更
                 $MAX_REQUESTS = $remain_num;
             }
-
             // ユーザーTwitterアカウントのフォロー済みアカウント一覧をfollowsテーブルに保存するメソッドを実行
             FollowListController::createOrUpdateFollowList($twitter_user);
 
@@ -108,15 +107,17 @@ class AutoFollow extends Command
                 continue; // 次のユーザーの自動フォローへ進む
             }
 
-            $follow_total = 0;
+            // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
+            $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
+            $follow_total = 0;
             for ($i = 1; $i <= $MAX_REQUESTS; $i++) {
                 // TwitterIDの配列からキーをランダムに1件抽出
                 $key = array_rand($target_ids);
                 // ターゲット配列から抽出したキーを持つターゲットのTwitterIDを取得
                 $target_id = $target_ids[$key];
                 // ユーザーとターゲットのTwitterIDを指定してTwitterAPIでフォローを行うメソッドを実行
-                $result = FollowTargetController::createFollow($twitter_user, $target_id);
+                $result = FollowTargetController::createFollow($twitter_user, $target_id, $connect);
                 // ターゲットをフォローした場合
                 if ($result['do_follow']) {
                     // ターゲットのtarget_usersテーブル上の主キー'id'を取得

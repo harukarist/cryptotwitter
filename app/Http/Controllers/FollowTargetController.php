@@ -26,9 +26,11 @@ class FollowTargetController extends Controller
     if (!$twitter_user) {
       return abort(404);
     }
+    // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
+    $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
     // ログインユーザーとターゲットのTwitterIDを指定してターゲットをフォローするメソッドを実行
-    $follow = self::createFollow($twitter_user, $target_id);
+    $follow = self::createFollow($twitter_user, $target_id, $connect);
     return $follow;
   }
 
@@ -36,13 +38,10 @@ class FollowTargetController extends Controller
    * ログインユーザーとターゲットのTwitterを
    * フォローする処理
    */
-  static public function createFollow(object $twitter_user, string $target_id)
+  static public function createFollow(object $twitter_user, string $target_id, $connect)
   {
     // ログインユーザーのTwitterIDを取得
     $twitter_id = $twitter_user->twitter_id;
-
-    // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
-    $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
     // ターゲットをフォロー済みかどうかをチェックするメソッドを実行
     $is_following = self::checkIsFollowing($twitter_id, $target_id, $connect);
