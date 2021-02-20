@@ -4,11 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
-
-// window.Vue = require('vue');
-
-import './bootstrap'; //bootstrap.jsの設定ファイルをインポート
+import './bootstrap'; //設定ファイルbootstrap.jsをインポート
 import Vue from 'vue';
 import router from './router'; // router.jsからルーティング定義をインポート
 import store from './store'; // ストアをインポート
