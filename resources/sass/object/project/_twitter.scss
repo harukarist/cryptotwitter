@@ -5,6 +5,9 @@
     width: 350px;
     margin: 0 auto $space--xxxl;
     text-align: center;
+    @include mq() {
+      width: 100%;
+    }
   }
   &__list {
     width: 90%;
