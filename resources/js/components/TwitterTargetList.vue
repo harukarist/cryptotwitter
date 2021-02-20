@@ -82,9 +82,9 @@ export default {
   data() {
     return {
       targets: [], //仮想通貨関連アカウント一覧を格納する配列を用意
-      currentPage: 0, //現在ページ
-      lastPage: 0, //最終ページ
-      perPage: 0, //1ページあたりの表示件数
+      currentPage: 1, //現在ページ
+      lastPage: 1, //最終ページ
+      perPage: 10, //1ページあたりの表示件数
       totalNum: 0, //トータル件数
       directoryName: "twitter", //ページネーションリンクに付与するディレクトリ
       searchedParam: "", //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
@@ -123,8 +123,7 @@ export default {
     async fetchTargets(params) {
       this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       if (!params) {
-        // 入力された検索キーワードがなければクエリパラメータの値を再セット
-        let params = {
+        params = {
           params: {
             page: this.page,
             search: this.searchedParam,

@@ -113,7 +113,12 @@ export default {
     // 検索結果の表示を解除
     clearResult() {
       // 検索用のクエリパラメータを指定しない
-      this.fetchTargets();
+      let params = {
+        params: {
+          page: 1,
+        },
+      };
+      this.fetchTargets(params);
       this.searchedParam = "";
     },
     // 自動フォロー済みのTwitterアカウント一覧を取得

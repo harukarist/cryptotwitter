@@ -112,16 +112,15 @@ export default {
     },
     // 検索ボックスのテキストを削除
     clearResult() {
-      // 検索コンポーネントにpropsで渡すsearchedParamを空にする
-      this.searchedParam = "";
       let params = {
+        // 検索用のクエリパラメータを指定しない
         params: {
           page: 1,
-          search: "",
         },
       };
       this.fetchNews(params);
-      // this.searchedParam = "";
+      // 検索コンポーネントにpropsで渡すsearchedParamを空にする
+      this.searchedParam = "";
     },
     // axiosでニュース一覧取得APIにリクエスト
     async fetchNews(params) {
@@ -137,6 +136,7 @@ export default {
       }
       // ニュース一覧取得APIへリクエスト
       const response = await axios.get("/api/news", params);
+
       this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       if (response.status !== OK) {
         // 通信失敗の場合
