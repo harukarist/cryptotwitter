@@ -65,7 +65,6 @@ class UpdateTweetCount extends Command
                 $this->words_arr[$trend['currency_name']] = explode(' OR ', $trend['tweet_words']);
             }
         }
-        dump($trends_arr);
 
         // 過去1時間の集計対象日時をセット
         $this->setHour();
