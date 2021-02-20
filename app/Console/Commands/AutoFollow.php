@@ -92,9 +92,6 @@ class AutoFollow extends Command
                 $MAX_REQUESTS = $remain_num;
             }
 
-            // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
-            $connect = UsersTwitterOAuth::userOAuth($twitter_user);
-
             // ユーザーTwitterアカウントのフォロー済みアカウント一覧をfollowsテーブルに保存するメソッドを実行
             FollowListController::createOrUpdateFollowList($twitter_user);
             // フォロー済みアカウントのコレクションをfollowsテーブルから取得

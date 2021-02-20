@@ -47,6 +47,7 @@ class FollowListController extends Controller
     $twitter_id = $twitter_user->twitter_id;
     // ログインユーザーのフォロー済みID一覧をTwitterAPIから取得
     $follows = self::fetchFollowIds($twitter_id, $connect);
+    dump($follows);
 
     // フォロー済みIDが取得できた場合
     if ($follows) {
@@ -87,7 +88,7 @@ class FollowListController extends Controller
     // リミット上限に達した場合はエラーログを出力
     if (!$limit) {
       logger()->info("フォロー済みID取得のリクエスト上限に達しました");
-      return;
+      return false;
     }
 
     // リミット残り回数がある場合はTwitterAPIから返却されるカーソルが0になるまで
