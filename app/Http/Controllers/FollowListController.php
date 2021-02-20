@@ -47,27 +47,28 @@ class FollowListController extends Controller
     $twitter_id = $twitter_user->twitter_id;
     // ログインユーザーのフォロー済みID一覧をTwitterAPIから取得
     $follows = self::fetchFollowIds($twitter_id, $connect);
-    dump($follows);
 
-    // フォロー済みIDが取得できた場合
-    if ($follows) {
-      // ログインユーザーに紐づくfollowsテーブルのレコードを一旦削除
-      DB::table('follows')->where('twitter_user_id', $twitter_user->id)->delete();
-
-      $count = 0;
-      // ユーザーのフォロー済みIDのうち、CryptoTrendで扱う仮想通貨アカウントのみ処理
-      foreach ($follows as $follow_id) {
-        // target_usersテーブルに該当TwitterIDのレコードがあれば取得
-        $target = TargetUser::where('twitter_id', $follow_id)->first();
-        // 該当TwitterIDのレコードがある場合
-        if ($target) {
-          // followsテーブルにユーザーとフォロー相手のidを登録
-          $twitter_user->follows()->attach($target->id);
-          $count++;
-        }
-      }
-      logger()->info("{$twitter_user->user_name}さんのフォローテーブルを{$count}件更新");
+    // フォロー済みIDが取得できなかった場合は処理を終了
+    if (!$follows) {
+      return false;
     }
+
+    // フォロー済みIDが取得できた場合はログインユーザーに紐づく保存済みのfollowsテーブルのレコードを一旦削除
+    DB::table('follows')->where('twitter_user_id', $twitter_user->id)->delete();
+
+    $count = 0;
+    // ユーザーのフォロー済みIDのうち、CryptoTrendで扱う仮想通貨アカウントのみ処理
+    foreach ($follows as $follow_id) {
+      // target_usersテーブルに該当TwitterIDのレコードがあれば取得
+      $target = TargetUser::where('twitter_id', $follow_id)->first();
+      // 該当TwitterIDのレコードがある場合
+      if ($target) {
+        // followsテーブルにユーザーとフォロー相手のidを登録
+        $twitter_user->follows()->attach($target->id);
+        $count++;
+      }
+    }
+    logger()->info("{$twitter_user->user_name}さんのフォローテーブルを{$count}件更新");
 
     return;
   }

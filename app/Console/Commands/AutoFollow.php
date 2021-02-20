@@ -94,14 +94,20 @@ class AutoFollow extends Command
 
             // ユーザーTwitterアカウントのフォロー済みアカウント一覧をfollowsテーブルに保存するメソッドを実行
             FollowListController::createOrUpdateFollowList($twitter_user);
+
             // フォロー済みアカウントのコレクションをfollowsテーブルから取得
             $follows = $twitter_user->follows()->get();
-
             // ターゲット一覧からフォロー済みアカウントを除いたオブジェクトを取得
             $diff = $target_users->diff($follows);
+            if (!$diff) {
+                return;
+            }
 
             // オブジェクトからTwitterIDのみ抽出し、配列に変換
             $target_ids = $diff->pluck('twitter_id')->toArray();
+            // dump($follows);
+            // dump($diff);
+            dump($target_ids);
 
             $follow_total = 0;
 
@@ -110,24 +116,25 @@ class AutoFollow extends Command
                 $key = array_rand($target_ids);
                 // ターゲット配列から抽出したキーを持つターゲットのTwitterIDを取得
                 $target_id = $target_ids[$key];
-                // ユーザーとターゲットのTwitterIDを指定してフォローを行うメソッドを実行
-                $result = FollowTargetController::createFollow($twitter_user, $target_id);
-                // ターゲットをフォローした場合
-                if ($result['do_follow']) {
-                    // ターゲットのtarget_usersテーブル上の主キー'id'を取得
-                    $target = TargetUser::select('id')->where('twitter_id', $target_id)->first();
-                    // 自動フォローリストに保存
-                    DB::table('autofollows')->insert([
-                        'twitter_user_id' => $twitter_user->id,
-                        'target_id' => $target->id,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ]);
-                    // 今回のフォロー合計数を1増やす
-                    $follow_total++;
-                }
-                dump($result);
-                logger()->info($result);
+                dump($key);
+                // // ユーザーとターゲットのTwitterIDを指定してTwitterAPIでフォローを行うメソッドを実行
+                // $result = FollowTargetController::createFollow($twitter_user, $target_id);
+                // // ターゲットをフォローした場合
+                // if ($result['do_follow']) {
+                //     // ターゲットのtarget_usersテーブル上の主キー'id'を取得
+                //     $target = TargetUser::select('id')->where('twitter_id', $target_id)->first();
+                //     // 自動フォローリストに保存
+                //     DB::table('autofollows')->insert([
+                //         'twitter_user_id' => $twitter_user->id,
+                //         'target_id' => $target->id,
+                //         'created_at' => Carbon::now(),
+                //         'updated_at' => Carbon::now(),
+                //     ]);
+                //     // 今回のフォロー合計数を1増やす
+                //     $follow_total++;
+                // }
+                // dump($result);
+                // logger()->info($result);
             }
             dump("{$twitter_user->user_name}さんのアカウントで {$follow_total}件自動フォローしました");
             logger()->info("{$twitter_user->user_name}さんのアカウントで {$follow_total}件自動フォローしました");
