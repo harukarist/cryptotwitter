@@ -53,7 +53,6 @@ class ResetPasswordController extends Controller
      */
     public function reset(Request $request)
     {
-        clock($request);
         $request->validate($this->rules(), $this->validationErrorMessages());
 
         $response = $this->broker()->reset(

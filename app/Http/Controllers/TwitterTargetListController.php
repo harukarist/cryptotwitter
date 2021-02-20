@@ -80,7 +80,6 @@ class TwitterTargetListController extends Controller
       ->whereNotIn('id', $follow_ids)
       ->orderBy('id', 'DESC')->paginate(10);
 
-    clock($targets);
     // 取得できなかった場合は NotFoundエラーを返却
     if (!$targets) {
       return abort(404);
