@@ -13,6 +13,7 @@ const getters = {
   check: state => !!state.usersTwitter,  //ログインチェック（二重否定で確実に真偽値を返す）
   usersTwitter: state => state.usersTwitter ? state.usersTwitter : '',
   usersAvatar: state => state.usersTwitter ? state.usersTwitter.twitter_avatar : '/img/avatar_noimage.png',
+  useAutoFollow: state => state.usersTwitter ? state.usersTwitter.use_autofollow : false,
 }
 
 // ステートの値を同期処理で更新するミューテーション
@@ -23,8 +24,8 @@ const mutations = {
     state.usersTwitter = usersTwitter
   },
   // userDataステートの値を更新する処理
-  setUseAutoFollow(state, isActive) {
-    state.usersTwitter.use_autofollow = isActive
+  setUseAutoFollow(state, status) {
+    state.usersTwitter.use_autofollow = status
   },
   // apiStatusステートを更新する処理
   setApiStatus(state, status) {

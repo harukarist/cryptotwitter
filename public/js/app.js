@@ -2134,8 +2134,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.twitter.apiStatus;
     }
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
-    // twitterストアのusersTwitterゲッターでユーザーのTwitterアカウント情報を取得
-    usersTwitter: "twitter/usersTwitter"
+    // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
+    useAutoFollow: "twitter/useAutoFollow"
   })),
   methods: {
     // 自動フォロー適用処理
@@ -8669,24 +8669,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.number.constructor.js */ "./node_modules/core-js/modules/es.number.constructor.js");
 /* harmony import */ var core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_number_constructor_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.object.to-string.js */ "./node_modules/core-js/modules/es.object.to-string.js");
-/* harmony import */ var core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.promise.js */ "./node_modules/core-js/modules/es.promise.js");
-/* harmony import */ var core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
-/* harmony import */ var _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/TwitterLogin.vue */ "./resources/js/components/TwitterLogin.vue");
-/* harmony import */ var _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/TwitterTargetList.vue */ "./resources/js/components/TwitterTargetList.vue");
-/* harmony import */ var _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/AutoFollowList.vue */ "./resources/js/components/AutoFollowList.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/TwitterLogin.vue */ "./resources/js/components/TwitterLogin.vue");
+/* harmony import */ var _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/TwitterTargetList.vue */ "./resources/js/components/TwitterTargetList.vue");
+/* harmony import */ var _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/AutoFollowList.vue */ "./resources/js/components/AutoFollowList.vue");
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 //
 //
@@ -8739,15 +8732,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+ // VuexのmapState関数,mapGetters関数をインポート
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    TwitterLogin: _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_5__.default,
-    TwitterTargetList: _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_6__.default,
-    AutoFollowList: _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_7__.default
+    TwitterLogin: _components_TwitterLogin_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+    TwitterTargetList: _components_TwitterTargetList_vue__WEBPACK_IMPORTED_MODULE_2__.default,
+    AutoFollowList: _components_AutoFollowList_vue__WEBPACK_IMPORTED_MODULE_3__.default
   },
   // ページネーションのページ番号をrouter.jsから受け取る
   props: {
@@ -8759,61 +8753,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      totalAutoFollow: 0,
-      showAutoFollow: false,
-      isActive: false
+      showAutoFollow: false
     };
   },
-  computed: {
-    isTwitterLogin: function isTwitterLogin() {
-      // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
-      return this.$store.getters["twitter/check"];
-    }
-  },
-  methods: {
-    // 自動フォロー累計数を取得
-    fetchTotalAutoFollow: function fetchTotalAutoFollow() {
-      var _this = this;
-
-      return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var response;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                _context.next = 2;
-                return axios.get("/api/autofollow/count");
-
-              case 2:
-                response = _context.sent;
-                console.log(response); // レスポンスのステータスが200以外の場合はエラーをストアにコミット
-
-                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
-                  _context.next = 7;
-                  break;
-                }
-
-                _this.$store.commit("error/setCode", response.status);
-
-                return _context.abrupt("return", false);
-
-              case 7:
-                // 自動フォロー累計数を格納
-                _this.totalAutoFollow = response.data;
-
-              case 8:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    }
-  },
-  created: function created() {
-    // ページ読み込み時に自動フォロー累計数を取得
-    this.fetchTotalAutoFollow();
-  }
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapGetters)({
+    // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
+    isTwitterLogin: "twitter/check",
+    // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
+    useAutoFollow: "twitter/useAutoFollow"
+  }))
 });
 
 /***/ }),
@@ -9860,6 +9808,9 @@ var getters = {
   },
   usersAvatar: function usersAvatar(state) {
     return state.usersTwitter ? state.usersTwitter.twitter_avatar : '/img/avatar_noimage.png';
+  },
+  useAutoFollow: function useAutoFollow(state) {
+    return state.usersTwitter ? state.usersTwitter.use_autofollow : false;
   }
 }; // ステートの値を同期処理で更新するミューテーション
 // ミューテーションでは必ず第一引数にステートを指定する
@@ -9870,8 +9821,8 @@ var mutations = {
     state.usersTwitter = usersTwitter;
   },
   // userDataステートの値を更新する処理
-  setUseAutoFollow: function setUseAutoFollow(state, isActive) {
-    state.usersTwitter.use_autofollow = isActive;
+  setUseAutoFollow: function setUseAutoFollow(state, status) {
+    state.usersTwitter.use_autofollow = status;
   },
   // apiStatusステートを更新する処理
   setApiStatus: function setApiStatus(state, status) {
@@ -53979,7 +53930,7 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "p-autofollow" }, [
       _c("div", { staticClass: "p-autofollow__guide" }, [
-        _vm.usersTwitter.use_autofollow
+        _vm.useAutoFollow
           ? _c(
               "p",
               { staticClass: "p-autofollow__status c-alert__inline--success" },
@@ -53990,7 +53941,7 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
-        !_vm.usersTwitter.use_autofollow
+        !_vm.useAutoFollow
           ? _c(
               "p",
               { staticClass: "p-autofollow__status c-alert__inline--danger" },
@@ -54004,7 +53955,7 @@ var render = function() {
           : _vm._e()
       ]),
       _vm._v(" "),
-      _vm.usersTwitter.use_autofollow
+      _vm.useAutoFollow
         ? _c("div", { staticClass: "p-autofollow__guide" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -54024,7 +53975,7 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      !_vm.usersTwitter.use_autofollow
+      !_vm.useAutoFollow
         ? _c("div", { staticClass: "p-autofollow__guide" }, [
             _vm._m(1),
             _vm._v(" "),
@@ -61266,7 +61217,7 @@ var render = function() {
         _vm._v(" "),
         _c("twitter-login"),
         _vm._v(" "),
-        _vm.totalAutoFollow
+        _vm.useAutoFollow
           ? _c("div", { staticClass: "c-tab c-fade-in p-twitter__list" }, [
               _c("ul", { staticClass: "c-tab__list" }, [
                 _c(
@@ -61336,7 +61287,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        !_vm.totalAutoFollow
+        !_vm.useAutoFollow
           ? _c(
               "div",
               [_c("TwitterTargetList", { attrs: { page: _vm.page } })],

@@ -12,7 +12,7 @@
 
       <twitter-login />
 
-      <div v-if="totalAutoFollow" class="c-tab c-fade-in p-twitter__list">
+      <div v-if="useAutoFollow" class="c-tab c-fade-in p-twitter__list">
         <ul class="c-tab__list">
           <li
             class="c-tab__item c-tab__item--two"
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <div v-if="!totalAutoFollow">
+      <div v-if="!useAutoFollow">
         <TwitterTargetList :page="page" />
       </div>
     </section>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import { OK } from "../utility";
+import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
 import TwitterLogin from "../components/TwitterLogin.vue";
 import TwitterTargetList from "../components/TwitterTargetList.vue";
 import AutoFollowList from "../components/AutoFollowList.vue";
@@ -71,34 +71,16 @@ export default {
   },
   data() {
     return {
-      totalAutoFollow: 0,
       showAutoFollow: false,
-      isActive: false,
     };
   },
   computed: {
-    isTwitterLogin() {
+    ...mapGetters({
       // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
-      return this.$store.getters["twitter/check"];
-    },
-  },
-  methods: {
-    // 自動フォロー累計数を取得
-    async fetchTotalAutoFollow() {
-      const response = await axios.get("/api/autofollow/count");
-      console.log(response);
-      // レスポンスのステータスが200以外の場合はエラーをストアにコミット
-      if (response.status !== OK) {
-        this.$store.commit("error/setCode", response.status);
-        return false; //処理を中断
-      }
-      // 自動フォロー累計数を格納
-      this.totalAutoFollow = response.data;
-    },
-  },
-  created() {
-    // ページ読み込み時に自動フォロー累計数を取得
-    this.fetchTotalAutoFollow();
+      isTwitterLogin: "twitter/check",
+      // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
+      useAutoFollow: "twitter/useAutoFollow",
+    }),
   },
 };
 </script>
