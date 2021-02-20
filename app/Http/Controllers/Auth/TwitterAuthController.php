@@ -56,14 +56,16 @@ class TwitterAuthController extends Controller
             // TwitterAPIでログインユーザーのTwitterアカウント情報を取得
             $result = $connect->get("users/show", $params);
 
-            // TwitterAPIで取得したユーザー名、スクリーンネーム、アバターにDBとの差分があれば更新
-            $twitter_user->user_name = $result->name;
-            $twitter_user->screen_name = $result->screen_name;
-            $twitter_user->twitter_avatar = $result->profile_image_url;
-            $twitter_user->save();
+            if ($result) {
+                // TwitterAPIで取得したユーザー名、スクリーンネーム、アバターにDBとの差分があれば更新
+                $twitter_user->user_name = $result->name;
+                $twitter_user->screen_name = $result->screen_name;
+                $twitter_user->twitter_avatar = $result->profile_image_url;
+                $twitter_user->save();
 
-            // ログインユーザーのTwitterフォロー済みユーザーリストを更新
-            FollowListController::loginUsersFollowList();
+                // ログインユーザーのTwitterフォロー済みユーザーリストを更新
+                FollowListController::loginUsersFollowList();
+            }
         }
 
         // Twitterアカウント情報を返却
