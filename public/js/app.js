@@ -3168,24 +3168,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3196,9 +3178,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //オブジェクトの初期値を関数で指定する
       default: function _default() {
         return {
-          name: '',
-          email: '',
-          message: ''
+          name: "",
+          email: "",
+          message: ""
         };
       }
     }
@@ -3207,15 +3189,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       // サーバー側のバリデーションエラーメッセージ
       apiMessages: [],
-      apiResult: '',
-      replacedMessage: '' //お問い合わせ本文の改行コード \n を <br>に置換した文字列
+      apiResult: "",
+      replacedMessage: "" //お問い合わせ本文の改行コード \n を <br>に置換した文字列
 
     };
   },
   methods: {
     // 入力フォームに戻る
     goBack: function goBack() {
-      this.$emit('back');
+      this.$emit("back");
       return;
     },
     // お問い合わせフォーム送信WebAPI呼び出し
@@ -3231,17 +3213,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // サーバー側バリデーションメッセージをクリア
                 _this.apiMessages = [];
 
-                _this.$store.commit('loader/setIsLoading', true); //ローディング表示をオン
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
                 // サーバーのAPIを呼び出し
 
 
                 _context.next = 4;
-                return axios.post('/api/contact/send', _this.formData);
+                return axios.post("/api/contact/send", _this.formData);
 
               case 4:
                 response = _context.sent;
 
-                _this.$store.commit('loader/setIsLoading', false); //ローディング表示をオフ
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
                 // API通信が成功した場合
 
 
@@ -3251,7 +3233,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 // $emitで親コンポーネントに通知して送信完了画面へ遷移
-                _this.$emit('sent', _this.formData);
+                _this.$emit("sent", _this.formData);
 
                 return _context.abrupt("return");
 
@@ -3264,17 +3246,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // サーバーから返却されたエラーメッセージを格納
                 _this.apiMessages = response.data.errors; // $emitで親コンポーネントに通知してフォームを再表示
 
-                _this.$emit('back');
+                _this.$emit("back");
 
                 return _context.abrupt("return");
 
               case 15:
                 // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
                 // 別モジュールのミューテーションをcommitするためroot: trueを指定する
-                _this.$store.commit('error/setCode', response.status); // $emitで親コンポーネントに通知してフォームを再表示
+                _this.$store.commit("error/setCode", response.status); // $emitで親コンポーネントに通知してフォームを再表示
 
 
-                _this.$emit('back');
+                _this.$emit("back");
 
               case 17:
               case "end":
@@ -50756,7 +50738,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "c-form__confirm-text" }, [
           _c("p", { staticClass: "u-font__br" }, [
-            _vm._v("\n        " + _vm._s(_vm.formData.message) + "\n      ")
+            _vm._v(_vm._s(_vm.formData.message))
           ])
         ])
       ]),
@@ -50779,7 +50761,7 @@ var render = function() {
         _c(
           "button",
           { staticClass: "c-btn--main u-mb--m", attrs: { type: "submit" } },
-          [_vm._v("\n      送信する\n    ")]
+          [_vm._v("送信する")]
         )
       ])
     ]
@@ -50791,7 +50773,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "c-form__text" }, [
-      _vm._v("\n    下記の内容で送信してよろしいですか？"),
+      _vm._v("下記の内容で送信してよろしいですか？"),
       _c("br")
     ])
   },
@@ -50803,7 +50785,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "c-form__label", attrs: { for: "name" } },
       [
-        _vm._v(" お名前"),
+        _vm._v("\n      お名前"),
         _c("span", { staticClass: "c-form__label--required" }, [_vm._v("必須")])
       ]
     )
@@ -50816,7 +50798,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "c-form__label", attrs: { for: "email" } },
       [
-        _vm._v(" メールアドレス"),
+        _vm._v("\n      メールアドレス"),
         _c("span", { staticClass: "c-form__label--required" }, [_vm._v("必須")])
       ]
     )
@@ -50829,7 +50811,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "c-form__label", attrs: { for: "message" } },
       [
-        _vm._v(" お問い合わせ内容"),
+        _vm._v("\n      お問い合わせ内容"),
         _c("span", { staticClass: "c-form__label--required" }, [_vm._v("必須")])
       ]
     )
