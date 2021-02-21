@@ -3355,7 +3355,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    // フロントエンド側のバリデーションチェック
+    /**
+     * フロントエンド側のバリデーションチェック
+     */
     checkForm: function checkForm() {
       var MSG_NAME_EMPTY = "お名前を入力してください";
       var MSG_NAME_MAX = "20文字以内で入力してください";
@@ -3366,12 +3368,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var MSG_MESSAGE_MAX = "お問い合わせ内容は1000文字以内で入力してください";
       this.nameErrors = [];
       this.emailErrors = [];
-      this.messageErrors = []; // お名前のバリデーション
+      this.messageErrors = [];
+      console.log(this.messageErrors); // お名前のバリデーション
 
       if (!this.formData.name) {
         // 未入力チェック
         this.nameErrors.push(MSG_NAME_EMPTY);
-      } else if (this.registerForm.name.length > 20) {
+      } else if (this.formData.name.length > 20) {
         // 文字数チェック
         this.nameErrors.push(MSG_NAME_MAX);
       } // メッセージのバリデーション
@@ -3410,7 +3413,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return regex.test(email);
     },
-    // お問い合わせフォーム確認WebAPI呼び出し
+
+    /**
+     * お問い合わせフォーム確認WebAPI呼び出し
+     */
     confirmContact: function confirmContact() {
       var _this = this;
 

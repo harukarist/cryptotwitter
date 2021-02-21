@@ -113,29 +113,39 @@ export default {
     };
   },
   methods: {
-    // フロントエンド側のバリデーションチェック
+    /**
+     * フロントエンド側のバリデーションチェック
+     */
     checkForm() {
       const MSG_NAME_EMPTY = "お名前を入力してください";
-      const MSG_MESSAGE_EMPTY = "お問い合わせを入力してください";
+      const MSG_NAME_MAX = "20文字以内で入力してください";
       const MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
       const MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
       const MSG_EMAIL_MAX = "50文字以内で入力してください";
-      const MSG_TEXT_MAX = "お問い合わせ内容は1000文字以内で入力してください";
+      const MSG_MESSAGE_EMPTY = "お問い合わせを入力してください";
+      const MSG_MESSAGE_MAX =
+        "お問い合わせ内容は1000文字以内で入力してください";
 
-      this.errorMessages = "";
-
+      this.nameErrors = [];
+      this.emailErrors = [];
+      this.messageErrors = [];
+      console.log(this.messageErrors);
       // お名前のバリデーション
       if (!this.formData.name) {
         // 未入力チェック
         this.nameErrors.push(MSG_NAME_EMPTY);
+      } else if (this.formD.name.length > 20) {
+        // 文字数チェック
+        this.nameErrors.push(MSG_NAME_MAX);
       }
+
       // メッセージのバリデーション
       if (!this.formData.message) {
         // 未入力チェック
         this.messageErrors.push(MSG_MESSAGE_EMPTY);
       } else if (this.formData.message.length > 1000) {
         // 文字数チェック
-        this.messageErrors.push(MSG_TEXT_MAX);
+        this.messageErrors.push(MSG_MESSAGE_MAX);
       }
 
       // メールアドレスのバリデーション
@@ -166,7 +176,9 @@ export default {
       return regex.test(email);
     },
 
-    // お問い合わせフォーム確認WebAPI呼び出し
+    /**
+     * お問い合わせフォーム確認WebAPI呼び出し
+     */
     async confirmContact() {
       // サーバー側バリデーションメッセージをクリア
       this.apiMessages = [];

@@ -18,7 +18,7 @@ const getters = {
 // ステートの値を同期処理で更新するミューテーション
 // ミューテーションでは必ず第一引数にステートを指定する
 const mutations = {
-// userDataステートの値を更新する処理
+  // userDataステートの値を更新する処理
   setUsersTwitter(state, usersTwitter) {
     state.usersTwitter = usersTwitter
   },
@@ -33,11 +33,11 @@ const mutations = {
 }
 
 // 非同期処理を行い、ミューテーションにcommitするアクション
+// アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
 const actions = {
-/**
- * Twitter認証チェック
- */
-  // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
+  /**
+   * Twitter認証チェックアクション
+   */
   async checkAuth(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
@@ -64,8 +64,8 @@ const actions = {
   },
 
   /**
- * ログインユーザーのTwitterアカウント情報とフォロー済みリストを更新
- */
+   * ログインユーザーTwitterアカウント情報・フォロー済みリスト更新アクション
+   */
   // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
   async updateTwitterUser(context) {
     // setApiStatusミューテーションでステータスを初期化
@@ -93,8 +93,8 @@ const actions = {
   },
 
   /**
- * Twitterアカウント連携を削除
- */
+   * Twitterアカウント連携の削除アクション
+   */
   async deleteAuth(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
@@ -121,8 +121,8 @@ const actions = {
   },
 
   /**
- * 自動フォロー利用開始
- */
+   * 自動フォロー利用開始アクション
+   */
   async applyAutoFollow(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
@@ -149,8 +149,8 @@ const actions = {
   },
 
   /**
- * 自動フォロー利用解除
- */
+   * 自動フォロー利用解除アクション
+   */
   async cancelAutoFollow(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
