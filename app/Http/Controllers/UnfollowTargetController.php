@@ -39,20 +39,26 @@ class UnfollowTargetController extends Controller
     // ユーザーのTwitterアカウントでoAuth認証
     $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
-    // ターゲットをフォロー済みかどうかをチェック
-    $is_following = FollowTargetController::checkIsFollowing($twitter_id, $target_id, $connect);
+    // ログインユーザーとターゲットとの関係性を取得するメソッドを実行
+    $result = FollowTargetController::fetchFriendship($twitter_id, $target_id, $connect);
+
+    // 関係性を取得できなかった場合はエラーを返却
+    if (!$result || !property_exists($result, 'relationship')) {
+      return abort(404);
+    }
+
+    // TwitterAPIからの返却値に'relationship'プロパティがある場合、フォロー状況の値を取得
+    $following = $result->relationship->source->following; //自分が相手をフォローしていたらtrue
 
     // フォローしていない場合は何もせずに返却
-    if (!$is_following) {
+    if (!$following) {
       return [
         'message' => 'このアカウントをフォローしていません',
         'target_id' => $target_id
       ];
     }
-
-    // ターゲットをフォロー解除
+    // ターゲットをフォロー解除するメソッドを実行して結果を返却
     self::unfollowTarget($twitter_user, $target_id, $connect);
-
     return [
       'message' => 'アカウントをフォロー解除しました',
       'target_id' => $target_id
@@ -60,7 +66,7 @@ class UnfollowTargetController extends Controller
   }
 
   /**
-   * ターゲットをフォロー解除
+   * ターゲットをフォロー解除するメソッド
    */
   static public function unfollowTarget($twitter_user, $target_id, $connect)
   {

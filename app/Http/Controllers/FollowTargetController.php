@@ -35,29 +35,45 @@ class FollowTargetController extends Controller
   }
 
   /**
-   * ログインユーザーとターゲットのTwitterを
-   * フォローする処理
+   * ログインユーザーのTwitterアカウントでターゲットのTwitterアカウントをフォローする処理
    */
   static public function createFollow(object $twitter_user, string $target_id, $connect)
   {
     // ログインユーザーのTwitterIDを取得
     $twitter_id = $twitter_user->twitter_id;
 
-    // ターゲットをフォロー済みかどうかをチェックするメソッドを実行
-    $is_following = self::checkIsFollowing($twitter_id, $target_id, $connect);
+    // ログインユーザーとターゲットとの関係性を取得するメソッドを実行
+    $result = self::fetchFriendship($twitter_id, $target_id, $connect);
+    // 関係性を取得できなかった場合はエラーを返却
+    if (!$result || !property_exists($result, 'relationship')) {
+      return abort(404);
+    }
+
+    // TwitterAPIからの返却値に'relationship'プロパティがある場合、フォロー状況の値を取得
+    $following = $result->relationship->source->following; //自分が相手をフォローしていたらtrue
+    $blocking = $result->relationship->source->blocking; //自分が相手をブロックしていたらtrue
+    $blocked = $result->relationship->source->blocked_by; //自分が相手にブロックされていたらtrue
+    $muted = $result->relationship->source->muting; //自分が相手をミュートしていたらtrue
+    $requested = $result->relationship->source->following_requested; //自分が相手にフォローリクエスト済みならtrue
 
     // すでにターゲットをフォロー済みの場合は何もせずに返却
-    if ($is_following) {
+    if ($following) {
       return [
         'message' => 'アカウントはフォロー済みです',
         'target_id' => $target_id,
         'do_follow' => false,
       ];
     }
-
-    // ターゲットをまだフォローしていない場合は、ターゲットをフォローするメソッドを実行
+    // ブロック、ミュート、フォローリクエスト済みアカウントの場合は何もせずに返却
+    if ($blocking || $blocked || $muted || $requested) {
+      return [
+        'message' => 'フォローできないアカウントです',
+        'target_id' => $target_id,
+        'do_follow' => false,
+      ];
+    }
+    // その他の場合は、ターゲットをフォローするメソッドを実行して結果を返却
     self::followTarget($twitter_user, $target_id, $connect);
-
     return [
       'message' => 'アカウントをフォローしました',
       'target_id' => $target_id,
@@ -66,11 +82,11 @@ class FollowTargetController extends Controller
   }
 
   /**
-   * 対象Twitterアカウントのフォロー状況をチェックするメソッド
+   * ユーザーのTwitterアカウントとターゲットアカウントの関係性を取得するメソッド
    */
-  static public function checkIsFollowing($twitter_id, $target_id, $connect)
+  static public function fetchFriendship($twitter_id, $target_id, $connect)
   {
-    // ユーザーのTwitterAPIレートリミットをチェック
+    // ユーザーのTwitterAPIレートリミットをチェック(上限は 180回/15min)
     $CATEGORY = "friendships";
     $ENDPOINT = "/friendships/show";
     $limit = UsersTwitterOAuth::checkLimit($connect, $CATEGORY, $ENDPOINT);
@@ -78,10 +94,13 @@ class FollowTargetController extends Controller
     // フォロー状況チェック/friendships/show のレートリミットが上限に達していたら処理を終了
     if (!$limit) {
       logger()->info("フォロー状況チェックのリクエスト上限に達しました");
-      return;
+      return false;
     }
 
     // ユーザーのTwitterIDとフォロー対象のTwitterIDをTwitterAPIのパラメータに指定
+    $params = array(
+      'user_id' => $target_id,
+    );
     $params = array(
       'source_id' => $twitter_id,
       'target_id' => $target_id,
@@ -94,12 +113,8 @@ class FollowTargetController extends Controller
     if (!$result) {
       return abort(404);
     }
-    // TwitterAPIからの返却値に'relationship'プロパティがある場合
-    if (property_exists($result, 'relationship')) {
-      // フォロー状況の値を返却
-      $is_following = $result->relationship->source->following;
-      return $is_following;
-    }
+
+    return $result;
   }
 
   /**
