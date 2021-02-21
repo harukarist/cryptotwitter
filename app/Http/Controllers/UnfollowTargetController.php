@@ -54,14 +54,16 @@ class UnfollowTargetController extends Controller
     if (!$following) {
       return [
         'message' => 'このアカウントをフォローしていません',
-        'target_id' => $target_id
+        'target_id' => $target_id,
+        'is_done' => false,
       ];
     }
     // ターゲットをフォロー解除するメソッドを実行して結果を返却
     self::unfollowTarget($twitter_user, $target_id, $connect);
     return [
       'message' => 'アカウントをフォロー解除しました',
-      'target_id' => $target_id
+      'target_id' => $target_id,
+      'is_done' => true,
     ];
   }
 

@@ -121,7 +121,7 @@ class AutoFollow extends Command
                 // ユーザーとターゲットのTwitterIDを指定してTwitterAPIでフォローを行うメソッドを実行
                 $result = FollowTargetController::createFollow($twitter_user, $target_id, $connect);
                 // ターゲットをフォローした場合
-                if ($result['do_follow']) {
+                if ($result['is_done']) {
                     // ターゲットのtarget_usersテーブル上の主キー'id'を取得
                     $target = TargetUser::select('id')->where('twitter_id', $target_id)->first();
                     // 自動フォローリストに保存

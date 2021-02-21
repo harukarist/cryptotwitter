@@ -50,7 +50,7 @@ class FollowTargetController extends Controller
       return [
         'message' => 'アカウントをフォローできませんでした',
         'target_id' => $target_id,
-        'do_follow' => false,
+        'is_done' => false,
       ];
     }
 
@@ -66,7 +66,7 @@ class FollowTargetController extends Controller
       return [
         'message' => 'アカウントはフォロー済みです',
         'target_id' => $target_id,
-        'do_follow' => false,
+        'is_done' => false,
       ];
     }
     // ブロック、ミュート、フォローリクエスト済みアカウントの場合は何もせずに返却
@@ -74,7 +74,7 @@ class FollowTargetController extends Controller
       return [
         'message' => 'フォローできないアカウントです',
         'target_id' => $target_id,
-        'do_follow' => false,
+        'is_done' => false,
       ];
     }
     // その他の場合は、ターゲットをフォローするメソッドを実行して結果を返却
@@ -82,7 +82,7 @@ class FollowTargetController extends Controller
     return [
       'message' => 'アカウントをフォローしました',
       'target_id' => $target_id,
-      'do_follow' => true,
+      'is_done' => true,
     ];
   }
 
