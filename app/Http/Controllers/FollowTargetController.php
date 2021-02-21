@@ -44,9 +44,14 @@ class FollowTargetController extends Controller
 
     // ログインユーザーとターゲットとの関係性を取得するメソッドを実行
     $result = self::fetchFriendship($twitter_id, $target_id, $connect);
+
     // 関係性を取得できなかった場合はエラーを返却
     if (!$result || !property_exists($result, 'relationship')) {
-      return abort(404);
+      return [
+        'message' => 'アカウントをフォローできませんでした',
+        'target_id' => $target_id,
+        'do_follow' => false,
+      ];
     }
 
     // TwitterAPIからの返却値に'relationship'プロパティがある場合、フォロー状況の値を取得
