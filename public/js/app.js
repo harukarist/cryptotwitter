@@ -3574,20 +3574,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     // v-modelでフォームの入力値と紐付けるデータ変数
@@ -3597,9 +3583,9 @@ __webpack_require__.r(__webpack_exports__);
       //オブジェクトの初期値を関数で指定する
       default: function _default() {
         return {
-          name: '',
-          email: '',
-          message: ''
+          name: "",
+          email: "",
+          message: ""
         };
       }
     }
@@ -51093,7 +51079,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "c-form__group" }, [
       _c("label", { staticClass: "c-form__label", attrs: { for: "name" } }, [
-        _vm._v(" お名前 ")
+        _vm._v("お名前")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "c-form__confirm-text" }, [
@@ -51103,7 +51089,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "c-form__group" }, [
       _c("label", { staticClass: "c-form__label", attrs: { for: "email" } }, [
-        _vm._v(" メールアドレス ")
+        _vm._v("メールアドレス")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "c-form__confirm-text" }, [
@@ -51113,12 +51099,12 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "c-form__group" }, [
       _c("label", { staticClass: "c-form__label", attrs: { for: "message" } }, [
-        _vm._v(" お問い合わせ内容 ")
+        _vm._v("お問い合わせ内容")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "c-form__confirm-text" }, [
         _c("p", { staticClass: "u-font__br" }, [
-          _vm._v("\n        " + _vm._s(_vm.formData.message) + "\n      ")
+          _vm._v(_vm._s(_vm.formData.message))
         ])
       ])
     ]),
@@ -51128,7 +51114,7 @@ var render = function() {
       { staticClass: "c-form__link" },
       [
         _c(
-          "RouterLink",
+          "router-link",
           { staticClass: "c-form__link", attrs: { to: { name: "top" } } },
           [_vm._v("\n      トップページへ戻る\n    ")]
         )
