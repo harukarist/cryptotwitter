@@ -56,6 +56,11 @@
     "dependencies": {
         "vue-router": "^3.4.9"
     },
+    "babel": {
+        "presets": [
+            "@babel/preset-env"
+        ]
+    },
     "browserslist": [
         "last 2 versions",
         "ie >= 11",

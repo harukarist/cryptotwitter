@@ -54,6 +54,12 @@ module.exports = {
         use: [
           {
             loader: "babel-loader",
+            // options: {
+            //   presets: [
+            //     // プリセットを指定して、ES2020を ES5 に変換
+            //     "@babel/preset-env",
+            //   ],
+            // },
           },
         ]
       },

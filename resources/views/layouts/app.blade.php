@@ -16,7 +16,7 @@
     <!-- dns-prefetchでページの読み込みと並行してGoogleFonts APIに接続 -->
     <!-- preconnectで複数のリクエストを同時に実行 -->
     <link rel="dns-prefetch preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="shortcut icon" href="/favicon.ico">

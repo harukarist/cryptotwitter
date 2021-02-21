@@ -167,8 +167,10 @@ export default {
       element.target.src = "/img/avatar_noimage.png";
     },
     async logout() {
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       // dispatch()でauthストアのlogoutアクションを呼び出す
       await this.$store.dispatch("auth/logout");
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
 
       // API通信が成功した場合
       if (this.apiStatus) {

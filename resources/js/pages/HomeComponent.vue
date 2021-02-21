@@ -245,19 +245,6 @@ export default {
       }
     },
   },
-  watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
-    $route: {
-      async handler() {
-        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-        await this.fetchTrends();
-        await this.fetchTargets();
-        await this.fetchNews();
-        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-      },
-      immediate: true, //コンポーネント生成時も実行
-    },
-  },
   methods: {
     // axiosでトレンド一覧取得APIにリクエスト
     async fetchTrends() {
@@ -309,6 +296,19 @@ export default {
     },
     sortByWeek() {
       this.column = "tweet_week";
+    },
+  },
+  watch: {
+    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    $route: {
+      async handler() {
+        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+        await this.fetchTrends();
+        await this.fetchTargets();
+        await this.fetchNews();
+        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+      },
+      immediate: true, //コンポーネント生成時も実行
     },
   },
 };
