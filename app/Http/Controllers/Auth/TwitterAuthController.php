@@ -63,7 +63,7 @@ class TwitterAuthController extends Controller
                 // TwitterAPIで取得したユーザー名、スクリーンネーム、アバターにDBとの差分があれば更新
                 $twitter_user->user_name = $result->name;
                 $twitter_user->screen_name = $result->screen_name;
-                $twitter_user->twitter_avatar = $result->profile_image_url;
+                $twitter_user->twitter_avatar = $result->profile_image_url_https;
                 $twitter_user->save();
 
                 // ログインユーザーのTwitterフォロー済みユーザーリストを更新
@@ -153,6 +153,7 @@ class TwitterAuthController extends Controller
             return '';
         }
 
+        clock($oauth_user);
         // ログインユーザーIDに紐づくTwitterユーザー情報があれば情報更新し、なければ新規作成する
         $twitter_user = TwitterUser::updateOrCreate(
             ['user_id' => $user_id, 'twitter_id' => $oauth_user->id],
@@ -162,7 +163,7 @@ class TwitterAuthController extends Controller
                 'twitter_token_secret' => $oauth_user->tokenSecret,
                 'user_name' => $oauth_user->name,
                 'screen_name' => $oauth_user->nickname,
-                'twitter_avatar' => $oauth_user->avatar,
+                'twitter_avatar' => $oauth_user->user['profile_image_url_https'],
             ]
         );
         return $twitter_user;
