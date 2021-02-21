@@ -23,19 +23,19 @@
         </div>
       </form>
       <div class="c-form__link">
-        <RouterLink
+        <router-link
           :to="{ name: 'edit' }"
           class="c-form__link"
         >
           アカウント設定に戻る
-        </RouterLink>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex' // VuexのmapState関数をインポート
+import { mapState } from "vuex"; // VuexのmapState関数をインポート
 
 export default {
   computed: {
@@ -47,22 +47,22 @@ export default {
   methods: {
     // 退会WebAPI呼び出し
     async withdraw() {
-      this.$store.commit('loader/setIsLoading', true) //ローディング表示をオン
+      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       // dispatch()でauthストアのloginアクションを呼び出す
-      await this.$store.dispatch('auth/withdraw')
-      this.$store.commit('loader/setIsLoading', false) //ローディング表示をオフ
+      await this.$store.dispatch("auth/withdraw");
+      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
       // API通信が成功した場合
       if (this.apiStatus) {
         // フラッシュメッセージを表示
-        this.$store.dispatch('message/showMessage', {
-          text: '退会手続きが完了しました',
-          type: 'success',
+        this.$store.dispatch("message/showMessage", {
+          text: "退会手続きが完了しました",
+          type: "success",
           timeout: 2000,
-        })
+        });
         // VueRouterのpush()でトップ画面に遷移
-        this.$router.push({ name: 'top' })
+        this.$router.push({ name: "top" });
       }
     },
   },
-}
+};
 </script>

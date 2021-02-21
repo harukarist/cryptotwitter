@@ -2,7 +2,7 @@
   <nav class="p-navbar">
     <!-- サイトロゴ -->
     <div class="p-navbar__title">
-      <RouterLink :to="{ name: 'top' }">
+      <router-link :to="{ name: 'top' }">
         <img
           src="/img/logo.png"
           class="p-navbar__title-logo"
@@ -10,7 +10,7 @@
         <h1 class="p-navbar__title-text">
           CryptoTrend
         </h1>
-      </RouterLink>
+      </router-link>
     </div>
 
     <!-- スマホ用アクションメニュー -->
@@ -24,23 +24,23 @@
           class="p-nav-menu__action-item-btn"
           @click="closeDrawerMenu"
         >
-          <RouterLink
+          <router-link
             :to="{ name: 'register' }"
             class="c-btn--accent p-nav-menu__action-btn"
           >
             ユーザー登録
-          </RouterLink>
+          </router-link>
         </li>
         <li
           class="p-nav-menu__action-item-btn"
           @click="closeDrawerMenu"
         >
-          <RouterLink
+          <router-link
             :to="{ name: 'login' }"
             class="c-btn--main-outline p-nav-menu__action-btn"
           >
             ログイン
-          </RouterLink>
+          </router-link>
         </li>
       </ul>
       <!-- ハンバーガーアイコン -->

@@ -21,17 +21,17 @@
             class="c-tab__item c-tab__item--two"
             :class="{ 'c-tab__item--active': !showAutoFollow }"
           >
-            <RouterLink :to="{ name: 'twitter.index' }">
+            <router-link :to="{ name: 'twitter.index' }">
               未フォローの<br class="u-sp--only">アカウントを表示
-            </RouterLink>
+            </router-link>
           </li>
           <li
             class="c-tab__item c-tab__item--two"
             :class="{ 'c-tab__item--active': showAutoFollow }"
           >
-            <RouterLink :to="{ name: 'autofollow.list' }">
+            <router-link :to="{ name: 'autofollow.list' }">
               自動フォロー履歴<br class="u-sp--only">を表示
-            </RouterLink>
+            </router-link>
           </li>
         </ul>
 
@@ -40,7 +40,7 @@
             name="popup"
             appear
           >
-            <AutoFollowList :page="page" />
+            <auto-follow-list :page="page" />
           </transition>
         </div>
         <div v-else>
@@ -48,12 +48,12 @@
             name="popup"
             appear
           >
-            <TwitterTargetList :page="page" />
+            <twitter-target-list :page="page" />
           </transition>
         </div>
       </div>
       <div v-if="!useAutoFollow">
-        <TwitterTargetList :page="page" />
+        <twitter-target-list :page="page" />
       </div>
     </section>
   </div>

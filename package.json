@@ -11,7 +11,7 @@
         "watch": "run-p serve watch:server watch:webpack",
         "watch-poll": "npm run watch -- --watch-poll",
         "prod": "npm run production",
-        "lint:fix": "eslint --fix ./resources/js/**/*.{js,vue}"
+        "fix": "eslint --fix ./resources/js/**/*.{js,vue}"
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
@@ -28,9 +28,7 @@
         "cross-env": "^7.0",
         "css-loader": "^5.0.1",
         "eslint": "^7.20.0",
-        "eslint-config-prettier": "^7.2.0",
         "eslint-loader": "^4.0.2",
-        "eslint-plugin-prettier": "^3.3.1",
         "eslint-plugin-vue": "^7.6.0",
         "jquery": "^3.2",
         "laravel-mix": "^6.0.10",

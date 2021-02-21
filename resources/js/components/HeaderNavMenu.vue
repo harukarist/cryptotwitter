@@ -68,7 +68,7 @@
               </router-link>
             </li>
           </ul>
-          <!--  -->
+          <!-- ドロップダウンメニュー -->
           <div
             class="p-nav-menu__dropdown"
             @click.self="clickDropdownHead"
@@ -129,13 +129,6 @@
                 class="p-nav-menu__link"
                 @click="closeMenu"
               >CryptoTrendとは？</a>
-              <!-- <router-link
-                :to="{
-                  name: 'top',
-                  hash: '#about',
-                }"
-                >CryptoTrendとは？</router-link
-              > -->
             </li>
             <li class="p-nav-menu__item">
               <a
@@ -143,13 +136,6 @@
                 class="p-nav-menu__link"
                 @click="closeMenu"
               >選ばれる理由</a>
-              <!-- <router-link
-                :to="{
-                  name: 'top',
-                  hash: '#reason',
-                }"
-                >選ばれる理由</router-link
-              > -->
             </li>
             <li class="p-nav-menu__item">
               <a
@@ -157,9 +143,6 @@
                 class="p-nav-menu__link"
                 @click="closeMenu"
               >よくあるご質問</a>
-              <!-- <router-link to="/#faq">
-                よくあるご質問
-              </router-link> -->
             </li>
             <li
               class="p-nav-menu__item-btn"

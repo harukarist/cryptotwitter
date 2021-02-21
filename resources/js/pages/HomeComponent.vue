@@ -148,12 +148,12 @@
           </div>
 
           <div class="p-readmore__wrapper">
-            <RouterLink
+            <router-link
               :to="{ name: 'trend.index' }"
               class="c-btn--accent-outline c-btn--arrow p-readmore__link"
             >
               もっと見る
-            </RouterLink>
+            </router-link>
           </div>
         </div>
       </div>

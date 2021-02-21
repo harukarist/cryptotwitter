@@ -3,28 +3,28 @@
     <div class="p-footer">
       <ul class="p-footer__list">
         <li class="p-footer__item">
-          <RouterLink
+          <router-link
             :to="{ name: 'terms' }"
             class="p-footer__link"
           >
             利用規約
-          </RouterLink>
+          </router-link>
         </li>
         <li class="p-footer__item">
-          <RouterLink
+          <router-link
             :to="{ name: 'privacy' }"
             class="p-footer__link"
           >
             プライバシーポリシー
-          </RouterLink>
+          </router-link>
         </li>
         <li class="p-footer__item">
-          <RouterLink
+          <router-link
             :to="{ name: 'contact' }"
             class="p-footer__link"
           >
             お問い合わせ
-          </RouterLink>
+          </router-link>
         </li>
       </ul>
       <p class="p-footer__copyright">

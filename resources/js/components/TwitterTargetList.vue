@@ -175,6 +175,7 @@ export default {
         this.$store.commit('error/setCode', response.status)
         return false //処理を中断
       }
+      console.log(response.data);
       // レスポンスがOKの場合は配列の該当項目を変更して返却
       this.targets = this.targets.map((target) => {
         if (target.twitter_id === response.data.target_id) {

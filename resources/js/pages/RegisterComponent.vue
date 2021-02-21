@@ -139,13 +139,13 @@
           </ul>
         </div>
         <div class="c-form__info">
-          <RouterLink :to="{ name: 'terms' }">
+          <router-link :to="{ name: 'terms' }">
             利用規約
-          </RouterLink>
+          </router-link>
           および
-          <RouterLink :to="{ name: 'privacy' }">
+          <router-link :to="{ name: 'privacy' }">
             プライバシーポリシー
-          </RouterLink>
+          </router-link>
           に同意の上、ご登録ください。
         </div>
         <div class="c-form__button">
@@ -158,12 +158,12 @@
         </div>
       </form>
       <div class="c-form__link">
-        <RouterLink
+        <router-link
           :to="{ name: 'login' }"
           class="c-form__link"
         >
           アカウントをお持ちの方はこちら
-        </RouterLink>
+        </router-link>
       </div>
     </div>
   </div>

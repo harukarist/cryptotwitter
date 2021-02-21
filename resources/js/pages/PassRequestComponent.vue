@@ -63,12 +63,12 @@
         </div>
       </form>
       <div class="c-form__link">
-        <RouterLink
+        <router-link
           :to="{ name: 'login' }"
           class="c-form__link"
         >
           ログインページへ戻る
-        </RouterLink>
+        </router-link>
       </div>
     </div>
   </div>

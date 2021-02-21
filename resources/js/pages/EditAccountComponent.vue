@@ -32,31 +32,31 @@
         v-if="tabNum === 1"
         class="c-form__wrapper"
       >
-        <ChangeNameOrEmail />
+        <change-name-or-email />
       </div>
 
       <div
         v-if="tabNum === 2"
         class="c-form__wrapper"
       >
-        <ChangePassword />
+        <change-password />
       </div>
 
       <div
         v-if="tabNum === 3"
         class="c-form__wrapper"
       >
-        <TwitterLogin />
+        <twitter-login />
       </div>
     </div>
 
     <div class="c-form__link">
-      <RouterLink
+      <router-link
         :to="{ name: 'withdraw' }"
         class="c-form__link"
       >
         アカウントを削除する場合はこちら
-      </RouterLink>
+      </router-link>
     </div>
   </div>
 </template>

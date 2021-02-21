@@ -23,7 +23,7 @@
           </div>
         </div>
 
-        <AutoFollowApply />
+        <auto-follow-apply />
       </div>
 
       <div class="p-twitter-user__delete">
@@ -81,7 +81,7 @@ export default {
   name: 'TwitterLogin',
   components: {
     AutoFollowApply,
-    ModalComponent,
+    ModalComponent
   },
   data() {
     return {

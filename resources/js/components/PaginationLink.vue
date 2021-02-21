@@ -4,9 +4,9 @@
       v-show="!isFirstPage"
       class="c-pagination__item"
     >
-      <RouterLink :to="linkToFirst">
+      <router-link :to="linkToFirst">
         <i class="fas fa-angle-double-left" />
-      </RouterLink>
+      </router-link>
     </li>
     <li
       v-show="isFirstPage"
@@ -19,9 +19,9 @@
       v-show="!isFirstPage"
       class="c-pagination__item"
     >
-      <RouterLink :to="linkToPrev">
+      <router-link :to="linkToPrev">
         <i class="fas fa-angle-left" />
-      </RouterLink>
+      </router-link>
     </li>
     <li
       v-show="isFirstPage"
@@ -35,25 +35,25 @@
       class="c-pagination__item c-pagination__item--page"
       :class="isCurrent(page) ? 'is-active' : ''"
     >
-      <RouterLink :to="linkToPage(page)">
+      <router-link :to="linkToPage(page)">
         {{ page }}
-      </RouterLink>
+      </router-link>
     </li>
     <li
       v-show="!isLastPage"
       class="c-pagination__item"
     >
-      <RouterLink :to="linkToNext">
+      <router-link :to="linkToNext">
         <i class="fas fa-angle-right" />
-      </RouterLink>
+      </router-link>
     </li>
     <li
       v-show="!isLastPage"
       class="c-pagination__item"
     >
-      <RouterLink :to="linkToLast">
+      <router-link :to="linkToLast">
         <i class="fas fa-angle-double-right" />
-      </RouterLink>
+      </router-link>
     </li>
 
     <li

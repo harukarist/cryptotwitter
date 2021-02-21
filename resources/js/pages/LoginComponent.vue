@@ -55,12 +55,12 @@
             autocomplete="current-password"
           >
           <div class="u-font--right">
-            <RouterLink
+            <router-link
               :to="{ name: 'password.request' }"
               class="c-form__link"
             >
               パスワードをお忘れですか？
-            </RouterLink>
+            </router-link>
             <!-- <a href="/pass/reset" class="c-form__link">
               パスワードをお忘れですか？
             </a> -->
