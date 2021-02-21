@@ -3993,52 +3993,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
  // VuexのmapState関数,mapGetters関数をインポート
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4060,11 +4014,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   })), (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)({
     // authストアのcheckゲッターでユーザーのログイン状態をチェック
-    isLogin: 'auth/check',
+    isLogin: "auth/check",
     // authストアのuserNameゲッターでユーザー名を取得
-    userName: 'auth/userName',
+    userName: "auth/userName",
     // authストアのuserNameゲッターでユーザー名を取得
-    usersAvatar: 'twitter/usersAvatar'
+    usersAvatar: "twitter/usersAvatar"
   })),
   created: function created() {
     // ページ読み込み時にフラグを初期化
@@ -4074,7 +4028,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // APIで取得したアバターがリンク切れの場合
     noImage: function noImage(element) {
       // 代替画像を表示
-      element.target.src = '/img/avatar_noimage.png';
+      element.target.src = "/img/avatar_noimage.png";
     },
     logout: function logout() {
       var _this = this;
@@ -4085,15 +4039,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch('auth/logout');
+                return _this.$store.dispatch("auth/logout");
 
               case 2:
                 // API通信が成功した場合
                 if (_this.apiStatus) {
                   // フラッシュメッセージを表示
-                  _this.$store.dispatch('message/showMessage', {
-                    text: 'ログアウトしました',
-                    type: 'success',
+                  _this.$store.dispatch("message/showMessage", {
+                    text: "ログアウトしました",
+                    type: "success",
                     timeout: 2000
                   }, {
                     root: true
@@ -4104,7 +4058,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
                   _this.$router.push({
-                    name: 'top'
+                    name: "top"
                   });
                 }
 
@@ -4121,7 +4075,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // ドロワーメニュー表示中にクリックされた場合はドロワーメニューを閉じる
       if (this.isActiveDrawerMenu) {
         // 親コンポーネントに通知して親コンポーネント側のdataを変更する
-        this.$emit('close');
+        this.$emit("close");
       } // ドロップダウンメニューが開いている場合はドロップダウンメニューを閉じる
 
 
@@ -4134,10 +4088,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       // ドロワーメニュー表示中にクリックされた場合はアカウント設定画面へ遷移して
       // ドロワーメニューを閉じる
       if (this.isActiveDrawerMenu) {
+        // 既にアカウント設定画面を表示している状態でクリックした時にエラーにならないよう
+        // 第二引数にコールバックを指定する
         this.$router.push({
-          name: 'edit'
-        });
-        this.$emit('close');
+          name: "edit"
+        }, function () {});
+        this.$emit("close");
       } // その他の場合はドロップダウンメニューの開閉を切り替える
 
 
@@ -51480,7 +51436,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("h1", { staticClass: "p-navbar__title-text" }, [
-                  _vm._v("\n            CryptoTrend\n          ")
+                  _vm._v("CryptoTrend")
                 ])
               ])
             ],
