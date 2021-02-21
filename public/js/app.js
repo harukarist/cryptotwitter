@@ -2587,7 +2587,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/InvalidComponent.vue */ "./resources/js/components/InvalidComponent.vue");
 
 
 
@@ -2648,60 +2649,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
  // VuexのmapState関数をインポート
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    InvalidComponent: _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_3__.default //バリデーションメッセージ表示用コンポーネント
+
+  },
   data: function data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
       editForm: {
-        name: '',
-        email: ''
+        name: "",
+        email: ""
       },
       nameErrors: [],
       emailErrors: [],
-      successMessage: ''
+      successMessage: ""
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)({
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapState)({
     // authストアのステートを参照し、ユーザーデータを取得
     userData: function userData(state) {
       return state.auth.userData;
@@ -2724,11 +2692,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     // フロントエンド側のバリデーションチェック
     checkEditForm: function checkEditForm() {
-      var MSG_NAME_EMPTY = 'お名前を入力してください';
-      var MSG_NAME_MAX = '20文字以内で入力してください';
-      var MSG_EMAIL_EMPTY = 'メールアドレスを入力してください';
-      var MSG_EMAIL_TYPE = 'メールアドレスの形式で入力してください';
-      var MSG_EMAIL_MAX = '50文字以内で入力してください';
+      var MSG_NAME_EMPTY = "お名前を入力してください";
+      var MSG_NAME_MAX = "20文字以内で入力してください";
+      var MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      var MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      var MSG_EMAIL_MAX = "50文字以内で入力してください";
       this.nameErrors = [];
       this.emailErrors = []; // 名前のバリデーション
 
@@ -2773,23 +2741,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.$store.commit('loader/setIsLoading', true); //ローディング表示をオン
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
                 // dispatch()でauthストアのアクションを呼び出す
 
 
                 _context.next = 3;
-                return _this.$store.dispatch('auth/EditAccount', _this.editForm);
+                return _this.$store.dispatch("auth/EditAccount", _this.editForm);
 
               case 3:
-                _this.$store.commit('loader/setIsLoading', false); //ローディング表示をオフ
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
                 // API通信が成功した場合
 
 
                 if (_this.apiStatus) {
                   // フォーム上にサクセスメッセージを表示
-                  _this.$store.dispatch('message/showMessage', {
-                    text: 'アカウント情報を変更しました',
-                    type: 'success',
+                  _this.$store.dispatch("message/showMessage", {
+                    text: "アカウント情報を変更しました",
+                    type: "success",
                     timeout: 2000
                   }); // エラーメッセージをクリア
 
@@ -2808,7 +2776,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     clearError: function clearError() {
       // エラーメッセージをクリア
-      this.$store.commit('auth/setEditErrorMessages', null);
+      this.$store.commit("auth/setEditErrorMessages", null);
     },
     setUserData: function setUserData() {
       // DBに登録されたユーザー情報を編集フォームのv-modelに格納
@@ -2837,6 +2805,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
+/* harmony import */ var _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/InvalidComponent.vue */ "./resources/js/components/InvalidComponent.vue");
 
 
 
@@ -2921,68 +2890,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    InvalidComponent: _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_5__.default //バリデーションメッセージ表示用コンポーネント
+
+  },
   data: function data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変
       changePassForm: {
-        username: '',
-        current_password: '',
-        new_password: '',
-        new_password_confirmation: '' //Laravelではフィールド名+_confirmationとフィールドが同じ値かをバリデーション
+        username: "",
+        current_password: "",
+        new_password: "",
+        new_password_confirmation: "" //Laravelではフィールド名+_confirmationとフィールドが同じ値かをバリデーション
 
       },
       passwordErrors: [],
@@ -2994,9 +2916,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     // フロントエンド側のパスワードバリデーションチェック
     checkChangePassForm: function checkChangePassForm() {
-      var MSG_PASS_EMPTY = 'パスワードを入力してください';
-      var MSG_PASS_LESS = '8文字以上で入力してください';
-      var MSG_RETYPE = 'パスワードが一致していません';
+      var MSG_PASS_EMPTY = "パスワードを入力してください";
+      var MSG_PASS_LESS = "8文字以上で入力してください";
+      var MSG_RETYPE = "パスワードが一致していません";
       this.passwordErrors = [];
       this.newPasswordErrors = [];
       this.confirmErrors = []; // 現在のパスワードのバリデーション
@@ -3047,16 +2969,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.$store.commit('loader/setIsLoading', true); //ローディング表示をオン
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
 
 
                 _context.next = 3;
-                return axios.post('/api/password/change', _this.changePassForm);
+                return axios.post("/api/password/change", _this.changePassForm);
 
               case 3:
                 response = _context.sent;
 
-                _this.$store.commit('loader/setIsLoading', false); //ローディング表示をオフ
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
                 // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
 
 
@@ -3074,15 +2996,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this.$store.commit('error/setCode', response.status);
+                _this.$store.commit("error/setCode", response.status);
 
                 return _context.abrupt("return", false);
 
               case 13:
                 // レスポンスがOKの場合はフラッシュメッセージを表示
-                _this.$store.dispatch('message/showMessage', {
-                  text: 'パスワードを変更しました',
-                  type: 'success',
+                _this.$store.dispatch("message/showMessage", {
+                  text: "パスワードを変更しました",
+                  type: "success",
                   timeout: 2000
                 }); // エラーメッセージをクリア
 
@@ -3381,15 +3303,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3405,9 +3318,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       //オブジェクトの初期値を関数で指定する
       default: function _default() {
         return {
-          name: '',
-          email: '',
-          message: ''
+          name: "",
+          email: "",
+          message: ""
         };
       }
     }
@@ -3420,18 +3333,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       messageErrors: [],
       // サーバー側のバリデーションエラーメッセージ
       apiMessages: [],
-      apiResult: ''
+      apiResult: ""
     };
   },
   methods: {
     // フロントエンド側のバリデーションチェック
     checkForm: function checkForm() {
-      var MSG_NAME_EMPTY = 'お名前を入力してください';
-      var MSG_MESSAGE_EMPTY = 'お問い合わせを入力してください';
-      var MSG_EMAIL_EMPTY = 'メールアドレスを入力してください';
-      var MSG_EMAIL_TYPE = 'メールアドレスの形式で入力してください';
-      var MSG_EMAIL_MAX = '50文字以内で入力してください';
-      this.errorMessages = ''; // お名前のバリデーション
+      var MSG_NAME_EMPTY = "お名前を入力してください";
+      var MSG_MESSAGE_EMPTY = "お問い合わせを入力してください";
+      var MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      var MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      var MSG_EMAIL_MAX = "50文字以内で入力してください";
+      var MSG_TEXT_MAX = "お問い合わせ内容は1000文字以内で入力してください";
+      this.errorMessages = ""; // お名前のバリデーション
 
       if (!this.formData.name) {
         // 未入力チェック
@@ -3442,6 +3356,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.formData.message) {
         // 未入力チェック
         this.messageErrors.push(MSG_MESSAGE_EMPTY);
+      } else if (this.formData.message.length > 1000) {
+        // 文字数チェック
+        this.messageErrors.push(MSG_TEXT_MAX);
       } // メールアドレスのバリデーション
 
 
@@ -3482,17 +3399,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // サーバー側バリデーションメッセージをクリア
                 _this.apiMessages = [];
 
-                _this.$store.commit('loader/setIsLoading', true); //ローディング表示をオン
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
                 // 引数にv-modelの値を渡してサーバーのAPIを呼び出し
 
 
                 _context.next = 4;
-                return axios.post('/api/contact/confirm', _this.formData);
+                return axios.post("/api/contact/confirm", _this.formData);
 
               case 4:
                 response = _context.sent;
 
-                _this.$store.commit('loader/setIsLoading', false); //ローディング表示をオフ
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
                 // API通信が成功した場合
 
 
@@ -3502,7 +3419,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this.formData.email = response.data.email;
                   _this.formData.message = response.data.message; // $emitで親コンポーネントに通知して確認画面を表示
 
-                  _this.$emit('confirm', _this.formData);
+                  _this.$emit("confirm", _this.formData);
                 } // レスポンスのステータスがバリデーションエラーの場合はエラーメッセージを表示
 
 
@@ -3518,7 +3435,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 12:
                 // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
                 // 別モジュールのミューテーションをcommitするためroot: trueを指定する
-                _this.$store.commit('error/setCode', response.status);
+                _this.$store.commit("error/setCode", response.status);
 
               case 13:
               case "end":
@@ -6605,7 +6522,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/InvalidComponent.vue */ "./resources/js/components/InvalidComponent.vue");
 
 
 
@@ -6695,38 +6613,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
  // VuexのmapState関数をインポート
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    InvalidComponent: _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_2__.default //バリデーションメッセージ表示用コンポーネント
+
+  },
   data: function data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
@@ -6739,7 +6633,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       passwordErrors: []
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapState)({
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)({
     // authストアのステートを参照し、API通信の成否ステータスを取得
     apiStatus: function apiStatus(state) {
       return state.auth.apiStatus;
@@ -7123,6 +7017,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
+/* harmony import */ var _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/InvalidComponent.vue */ "./resources/js/components/InvalidComponent.vue");
 
 
 
@@ -7192,44 +7087,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    InvalidComponent: _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_4__.default //バリデーションメッセージ表示用コンポーネント
+
+  },
   data: function data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
       requestForm: {
-        email: ''
+        email: ""
       },
       // フロントエンド側のバリデーションエラーメッセージ
       emailErrors: [],
       // サーバー側からのメッセージとステータス
-      apiMessage: '',
+      apiMessage: "",
       isSent: false
     };
   },
   methods: {
     /**
-    * フロントエンド側のバリデーションチェック
-    */
+     * フロントエンド側のバリデーションチェック
+     */
     checkForm: function checkForm() {
-      var MSG_EMAIL_EMPTY = 'メールアドレスを入力してください';
-      var MSG_EMAIL_TYPE = 'メールアドレスの形式で入力してください';
-      var MSG_EMAIL_MAX = '50文字以内で入力してください';
+      var MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      var MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      var MSG_EMAIL_MAX = "50文字以内で入力してください";
       this.emailErrors = []; // メールアドレスのバリデーション
 
       if (!this.requestForm.email) {
@@ -7250,16 +7135,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
-    * メールアドレス形式チェック
-    */
+     * メールアドレス形式チェック
+     */
     validEmail: function validEmail(email) {
       var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return regex.test(email);
     },
 
     /**
-    * パスワードリセットメール送信WebAPI呼び出し
-    */
+     * パスワードリセットメール送信WebAPI呼び出し
+     */
     sendResetLink: function sendResetLink() {
       var _this = this;
 
@@ -7269,17 +7154,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _this.$store.commit('loader/setIsLoading', true); //ローディング表示をオン
+                _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
                 // サーバーのAPIを呼び出し
 
 
                 _context.next = 3;
-                return axios.post('/api/password/email', _this.requestForm);
+                return axios.post("/api/password/email", _this.requestForm);
 
               case 3:
                 response = _context.sent;
 
-                _this.$store.commit('loader/setIsLoading', false); //ローディング表示をオフ
+                _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
                 // API通信が成功した場合
 
 
@@ -7287,22 +7172,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   // Laravel側で設定したresultフラグを取得
                   result = response.data.result; // メール送信が完了した場合
 
-                  if (result === 'success') {
+                  if (result === "success") {
                     // フラグをtrueにして送信完了メッセージを表示
                     _this.isSent = true; // ページ最上部までスクロール
 
                     window.scrollTo({
                       top: 0,
-                      behavior: 'smooth'
+                      behavior: "smooth"
                     }); // メール送信が失敗した場合
-                  } else if (result === 'failed') {
+                  } else if (result === "failed") {
                     // Laravel側で設定したエラーメッセージを表示
                     _this.apiMessage = response.data.message;
                   }
                 } else {
                   // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
                   // 別モジュールのミューテーションをcommitするためroot: trueを指定する
-                  _this.$store.commit('error/setCode', response.status);
+                  _this.$store.commit("error/setCode", response.status);
                 }
 
               case 6:
@@ -7335,6 +7220,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _utility__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utility */ "./resources/js/utility.js");
+/* harmony import */ var _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/InvalidComponent.vue */ "./resources/js/components/InvalidComponent.vue");
 
 
 
@@ -7419,32 +7305,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    InvalidComponent: _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_5__.default //バリデーションメッセージ表示用コンポーネント
+
+  },
   data: function data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
@@ -7812,7 +7679,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_function_name_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! regenerator-runtime/runtime.js */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.mjs");
+/* harmony import */ var _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/InvalidComponent.vue */ "./resources/js/components/InvalidComponent.vue");
 
 
 
@@ -7928,87 +7796,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
  // VuexのmapState関数をインポート
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    InvalidComponent: _components_InvalidComponent_vue__WEBPACK_IMPORTED_MODULE_3__.default //バリデーションメッセージ表示用コンポーネント
+
+  },
   data: function data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
       registerForm: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
+        name: "",
+        email: "",
+        password: "",
+        password_confirmation: ""
       },
       nameErrors: [],
       emailErrors: [],
@@ -8016,7 +7819,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       confirmErrors: []
     };
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_3__.mapState)({
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_4__.mapState)({
     // authストアのステートを参照し、WebAPIの成否ステータスを取得
     apiStatus: function apiStatus(state) {
       return state.auth.apiStatus;
@@ -8033,14 +7836,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     // フロントエンド側のバリデーションチェック
     checkForm: function checkForm() {
-      var MSG_NAME_EMPTY = 'お名前を入力してください';
-      var MSG_NAME_MAX = '20文字以内で入力してください';
-      var MSG_EMAIL_EMPTY = 'メールアドレスを入力してください';
-      var MSG_EMAIL_TYPE = 'メールアドレスの形式で入力してください';
-      var MSG_EMAIL_MAX = '50文字以内で入力してください';
-      var MSG_PASS_EMPTY = 'パスワードを入力してください';
-      var MSG_PASS_LESS = '8文字以上で入力してください';
-      var MSG_RETYPE = 'パスワードが一致していません';
+      var MSG_NAME_EMPTY = "お名前を入力してください";
+      var MSG_NAME_MAX = "20文字以内で入力してください";
+      var MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      var MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      var MSG_EMAIL_MAX = "50文字以内で入力してください";
+      var MSG_PASS_EMPTY = "パスワードを入力してください";
+      var MSG_PASS_LESS = "8文字以上で入力してください";
+      var MSG_RETYPE = "パスワードが一致していません";
       this.nameErrors = [];
       this.emailErrors = [];
       this.passwordErrors = [];
@@ -8109,7 +7912,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch('auth/register', _this.registerForm);
+                return _this.$store.dispatch("auth/register", _this.registerForm);
 
               case 2:
                 if (!_this.apiStatus) {
@@ -8118,16 +7921,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
 
                 _context.next = 5;
-                return _this.$store.dispatch('message/showMessage', {
-                  text: 'ユーザー登録が完了しました！',
-                  type: 'success',
+                return _this.$store.dispatch("message/showMessage", {
+                  text: "ユーザー登録が完了しました！",
+                  type: "success",
                   timeout: 4000
                 });
 
               case 5:
                 // VueRouterのpush()でホーム画面へ遷移
                 _this.$router.push({
-                  name: 'home'
+                  name: "home"
                 });
 
               case 6:
@@ -8139,7 +7942,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     clearError: function clearError() {
-      this.$store.commit('auth/setRegisterErrorMessages', null);
+      this.$store.commit("auth/setRegisterErrorMessages", null);
     }
   }
 });
@@ -50115,118 +49918,98 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "c-form__group" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.editForm.name,
-              expression: "editForm.name"
-            }
-          ],
-          staticClass: "c-input c-input--large",
-          attrs: {
-            id: "username",
-            type: "text",
-            required: "",
-            autocomplete: "name"
-          },
-          domProps: { value: _vm.editForm.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c(
+        "div",
+        { staticClass: "c-form__group" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.editForm.name,
+                expression: "editForm.name"
               }
-              _vm.$set(_vm.editForm, "name", $event.target.value)
+            ],
+            staticClass: "c-input c-input--large",
+            attrs: {
+              id: "username",
+              type: "text",
+              required: "",
+              autocomplete: "name"
+            },
+            domProps: { value: _vm.editForm.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.editForm, "name", $event.target.value)
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _vm.nameErrors
-          ? _c(
-              "ul",
-              _vm._l(_vm.nameErrors, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.editErrors && _vm.editErrors.name
-          ? _c(
-              "ul",
-              _vm._l(_vm.editErrors.name, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
+          }),
+          _vm._v(" "),
+          _c("invalid-component", { attrs: { messages: _vm.nameErrors } }),
+          _vm._v(" "),
+          _vm.editErrors && _vm.editErrors.name
+            ? _c("invalid-component", {
+                attrs: { messages: _vm.editErrors.name }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "c-form__group" }, [
-        _c("label", { staticClass: "c-form__label", attrs: { for: "email" } }, [
-          _vm._v("メールアドレス")
-        ]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.editForm.email,
-              expression: "editForm.email"
-            }
-          ],
-          staticClass: "c-input c-input--large",
-          attrs: {
-            id: "email",
-            type: "email",
-            placeholder: "例）your.email@example.com",
-            required: "",
-            autocomplete: "email"
-          },
-          domProps: { value: _vm.editForm.email },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c(
+        "div",
+        { staticClass: "c-form__group" },
+        [
+          _c(
+            "label",
+            { staticClass: "c-form__label", attrs: { for: "email" } },
+            [_vm._v("メールアドレス")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.editForm.email,
+                expression: "editForm.email"
               }
-              _vm.$set(_vm.editForm, "email", $event.target.value)
+            ],
+            staticClass: "c-input c-input--large",
+            attrs: {
+              id: "email",
+              type: "email",
+              placeholder: "例）your.email@example.com",
+              required: "",
+              autocomplete: "email"
+            },
+            domProps: { value: _vm.editForm.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.editForm, "email", $event.target.value)
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _vm.emailErrors
-          ? _c(
-              "ul",
-              _vm._l(_vm.emailErrors, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.editErrors && _vm.editErrors.email
-          ? _c(
-              "ul",
-              _vm._l(_vm.editErrors.email, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
+          }),
+          _vm._v(" "),
+          _c("invalid-component", { attrs: { messages: _vm.emailErrors } }),
+          _vm._v(" "),
+          _vm.editErrors && _vm.editErrors.email
+            ? _c("invalid-component", {
+                attrs: { messages: _vm.editErrors.email }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._m(1)
     ]
@@ -50318,190 +50101,161 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "c-form__group" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.changePassForm.current_password,
-              expression: "changePassForm.current_password"
-            }
-          ],
-          staticClass: "c-input c-input--large",
-          attrs: {
-            id: "current_password",
-            type: "password",
-            placeholder: "現在のパスワードを入力",
-            required: "",
-            autocomplete: "current-password"
-          },
-          domProps: { value: _vm.changePassForm.current_password },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c(
+        "div",
+        { staticClass: "c-form__group" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.changePassForm.current_password,
+                expression: "changePassForm.current_password"
               }
-              _vm.$set(
-                _vm.changePassForm,
-                "current_password",
-                $event.target.value
-              )
+            ],
+            staticClass: "c-input c-input--large",
+            attrs: {
+              id: "current_password",
+              type: "password",
+              placeholder: "現在のパスワードを入力",
+              required: "",
+              autocomplete: "current-password"
+            },
+            domProps: { value: _vm.changePassForm.current_password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.changePassForm,
+                  "current_password",
+                  $event.target.value
+                )
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _vm.passwordErrors
-          ? _c(
-              "ul",
-              _vm._l(_vm.passwordErrors, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.apiMessages && _vm.apiMessages.current_password
-          ? _c(
-              "ul",
-              _vm._l(_vm.apiMessages.current_password, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
+          }),
+          _vm._v(" "),
+          _c("invalid-component", { attrs: { messages: _vm.passwordErrors } }),
+          _vm._v(" "),
+          _vm.apiMessages && _vm.apiMessages.current_password
+            ? _c("invalid-component", {
+                attrs: { messages: _vm.apiMessages.current_password }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "c-form__group" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.changePassForm.new_password,
-              expression: "changePassForm.new_password"
-            }
-          ],
-          staticClass: "c-input c-input--large",
-          attrs: {
-            id: "new_password",
-            type: "password",
-            placeholder: "新しいパスワードを入力",
-            required: "",
-            autocomplete: "new-password"
-          },
-          domProps: { value: _vm.changePassForm.new_password },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      _c(
+        "div",
+        { staticClass: "c-form__group" },
+        [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.changePassForm.new_password,
+                expression: "changePassForm.new_password"
               }
-              _vm.$set(_vm.changePassForm, "new_password", $event.target.value)
+            ],
+            staticClass: "c-input c-input--large",
+            attrs: {
+              id: "new_password",
+              type: "password",
+              placeholder: "新しいパスワードを入力",
+              required: "",
+              autocomplete: "new-password"
+            },
+            domProps: { value: _vm.changePassForm.new_password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.changePassForm,
+                  "new_password",
+                  $event.target.value
+                )
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _vm.newPasswordErrors
-          ? _c(
-              "ul",
-              _vm._l(_vm.newPasswordErrors, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.apiMessages && _vm.apiMessages.new_password
-          ? _c(
-              "ul",
-              _vm._l(_vm.apiMessages.new_password, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
+          }),
+          _vm._v(" "),
+          _c("invalid-component", {
+            attrs: { messages: _vm.newPasswordErrors }
+          }),
+          _vm._v(" "),
+          _vm.apiMessages && _vm.apiMessages.new_password
+            ? _c("invalid-component", {
+                attrs: { messages: _vm.apiMessages.new_password }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
-      _c("div", { staticClass: "c-form__group" }, [
-        _c(
-          "label",
-          {
-            staticClass: "c-form__label",
-            attrs: { for: "new_password_confirmation" }
-          },
-          [_vm._v("新しいパスワード（再入力）")]
-        ),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
+      _c(
+        "div",
+        { staticClass: "c-form__group" },
+        [
+          _c(
+            "label",
             {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.changePassForm.new_password_confirmation,
-              expression: "changePassForm.new_password_confirmation"
-            }
-          ],
-          staticClass: "c-input c-input--large",
-          attrs: {
-            id: "new_password_confirmation",
-            type: "password",
-            placeholder: "新しいパスワードを再度入力",
-            required: "",
-            autocomplete: "new-password"
-          },
-          domProps: { value: _vm.changePassForm.new_password_confirmation },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+              staticClass: "c-form__label",
+              attrs: { for: "new_password_confirmation" }
+            },
+            [_vm._v("新しいパスワード（再入力）")]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.changePassForm.new_password_confirmation,
+                expression: "changePassForm.new_password_confirmation"
               }
-              _vm.$set(
-                _vm.changePassForm,
-                "new_password_confirmation",
-                $event.target.value
-              )
+            ],
+            staticClass: "c-input c-input--large",
+            attrs: {
+              id: "new_password_confirmation",
+              type: "password",
+              placeholder: "新しいパスワードを再度入力",
+              required: "",
+              autocomplete: "new-password"
+            },
+            domProps: { value: _vm.changePassForm.new_password_confirmation },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(
+                  _vm.changePassForm,
+                  "new_password_confirmation",
+                  $event.target.value
+                )
+              }
             }
-          }
-        }),
-        _vm._v(" "),
-        _vm.confirmErrors
-          ? _c(
-              "ul",
-              _vm._l(_vm.confirmErrors, function(error) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.apiMessages && _vm.apiMessages.new_password_confirmation
-          ? _c(
-              "ul",
-              _vm._l(_vm.apiMessages.new_password_confirmation, function(
-                error
-              ) {
-                return _c("li", { key: error, staticClass: "c-valid__error" }, [
-                  _vm._v("\n        " + _vm._s(error) + "\n      ")
-                ])
-              }),
-              0
-            )
-          : _vm._e()
-      ]),
+          }),
+          _vm._v(" "),
+          _c("invalid-component", { attrs: { messages: _vm.confirmErrors } }),
+          _vm._v(" "),
+          _vm.apiMessages && _vm.apiMessages.new_password_confirmation
+            ? _c("invalid-component", {
+                attrs: { messages: _vm.apiMessages.new_password_confirmation }
+              })
+            : _vm._e()
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._m(2)
     ]
@@ -50893,7 +50647,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "c-form__label", attrs: { for: "name" } },
       [
-        _vm._v(" お名前"),
+        _vm._v("\n      お名前"),
         _c("span", { staticClass: "c-form__label--required" }, [_vm._v("必須")])
       ]
     )
@@ -50906,7 +50660,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "c-form__label", attrs: { for: "email" } },
       [
-        _vm._v(" メールアドレス"),
+        _vm._v("\n      メールアドレス"),
         _c("span", { staticClass: "c-form__label--required" }, [_vm._v("必須")])
       ]
     )
@@ -50919,7 +50673,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "c-form__label", attrs: { for: "message" } },
       [
-        _vm._v(" お問い合わせ内容"),
+        _vm._v("\n      お問い合わせ内容"),
         _c("span", { staticClass: "c-form__label--required" }, [_vm._v("必須")])
       ]
     )
@@ -54399,171 +54153,127 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "c-form__group" }, [
-            _c(
-              "label",
-              { staticClass: "c-form__label", attrs: { for: "login-email" } },
-              [_vm._v("\n          メールアドレス\n        ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.loginForm.email,
-                  expression: "loginForm.email"
-                }
-              ],
-              staticClass: "c-input c-input--large",
-              attrs: {
-                id: "login-email",
-                type: "email",
-                required: "",
-                autocomplete: "email",
-                autofocus: ""
-              },
-              domProps: { value: _vm.loginForm.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.loginForm, "email", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.emailErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.emailErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.loginErrors && _vm.loginErrors.email
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.loginErrors.email, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "c-form__group" }, [
-            _c(
-              "label",
-              {
-                staticClass: "c-form__label",
-                attrs: { for: "login-password" }
-              },
-              [_vm._v("パスワード")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.loginForm.password,
-                  expression: "loginForm.password"
-                }
-              ],
-              staticClass: "c-input c-input--large",
-              attrs: {
-                id: "login-password",
-                type: "password",
-                required: "",
-                autocomplete: "current-password"
-              },
-              domProps: { value: _vm.loginForm.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.loginForm, "password", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "u-font--right" },
-              [
-                _c(
-                  "router-link",
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _c(
+                "label",
+                { staticClass: "c-form__label", attrs: { for: "login-email" } },
+                [_vm._v("\n          メールアドレス\n        ")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "c-form__link",
-                    attrs: { to: { name: "password.request" } }
-                  },
-                  [
-                    _vm._v(
-                      "\n            パスワードをお忘れですか？\n          "
-                    )
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _vm.passwordErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.passwordErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.loginErrors && _vm.loginErrors.password
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.loginErrors.password, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.loginForm.email,
+                    expression: "loginForm.email"
+                  }
+                ],
+                staticClass: "c-input c-input--large",
+                attrs: {
+                  id: "login-email",
+                  type: "email",
+                  required: "",
+                  autocomplete: "email",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.loginForm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.loginForm, "email", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("invalid-component", { attrs: { messages: _vm.emailErrors } }),
+              _vm._v(" "),
+              _vm.loginErrors && _vm.loginErrors.email
+                ? _c("invalid-component", {
+                    attrs: { messages: _vm.loginErrors.email }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _c(
+                "label",
+                {
+                  staticClass: "c-form__label",
+                  attrs: { for: "login-password" }
+                },
+                [_vm._v("パスワード")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.loginForm.password,
+                    expression: "loginForm.password"
+                  }
+                ],
+                staticClass: "c-input c-input--large",
+                attrs: {
+                  id: "login-password",
+                  type: "password",
+                  required: "",
+                  autocomplete: "current-password"
+                },
+                domProps: { value: _vm.loginForm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.loginForm, "password", $event.target.value)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "u-font--right" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "c-form__link",
+                      attrs: { to: { name: "password.request" } }
+                    },
+                    [
+                      _vm._v(
+                        "\n            パスワードをお忘れですか？\n          "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("invalid-component", {
+                attrs: { messages: _vm.passwordErrors }
+              }),
+              _vm._v(" "),
+              _vm.loginErrors && _vm.loginErrors.password
+                ? _c("invalid-component", {
+                    attrs: { messages: _vm.loginErrors.password }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "c-form__group" }, [
             _c(
@@ -54829,7 +54539,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("h2", { staticClass: "c-container__title" }, [
-      _vm._v("\n    パスワードをお忘れの方\n  ")
+      _vm._v("パスワードをお忘れの方")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "c-form__wrapper" }, [
@@ -54860,7 +54570,7 @@ var render = function() {
                         staticClass: "c-form__label",
                         attrs: { for: "login-email" }
                       },
-                      [_vm._v(" メールアドレス ")]
+                      [_vm._v("\n            メールアドレス\n          ")]
                     ),
                     _vm._v(" "),
                     _c("input", {
@@ -54894,25 +54604,9 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.emailErrors
-                      ? _c(
-                          "ul",
-                          _vm._l(_vm.emailErrors, function(error) {
-                            return _c(
-                              "li",
-                              { key: error, staticClass: "c-valid__error" },
-                              [
-                                _vm._v(
-                                  "\n              " +
-                                    _vm._s(error) +
-                                    "\n            "
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      : _vm._e(),
+                    _c("invalid-component", {
+                      attrs: { messages: _vm.emailErrors }
+                    }),
                     _vm._v(" "),
                     _c("transition", { attrs: { name: "popup" } }, [
                       _vm.apiMessage
@@ -55059,58 +54753,47 @@ var render = function() {
           _vm._v(" "),
           _vm._m(0),
           _vm._v(" "),
-          _c("div", { staticClass: "c-form__group" }, [
-            _c(
-              "label",
-              { staticClass: "c-form__label", attrs: { for: "login-email" } },
-              [_vm._v("\n          メールアドレス\n        ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.resetForm.email,
-                  expression: "resetForm.email"
-                }
-              ],
-              staticClass: "c-input c-input--large c-input--box",
-              attrs: {
-                id: "email",
-                type: "text",
-                required: "",
-                autocomplete: "email"
-              },
-              domProps: { value: _vm.resetForm.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _c(
+                "label",
+                { staticClass: "c-form__label", attrs: { for: "login-email" } },
+                [_vm._v("\n          メールアドレス\n        ")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.resetForm.email,
+                    expression: "resetForm.email"
                   }
-                  _vm.$set(_vm.resetForm, "email", $event.target.value)
+                ],
+                staticClass: "c-input c-input--large c-input--box",
+                attrs: {
+                  id: "email",
+                  type: "text",
+                  required: "",
+                  autocomplete: "email"
+                },
+                domProps: { value: _vm.resetForm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.resetForm, "email", $event.target.value)
+                  }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _vm.emailErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.emailErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+              }),
+              _vm._v(" "),
+              _c("invalid-component", { attrs: { messages: _vm.emailErrors } })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c("transition", { attrs: { name: "popup" } }, [
             _vm.apiMessage
@@ -55120,116 +54803,98 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "c-form__group" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.resetForm.password,
-                  expression: "resetForm.password"
-                }
-              ],
-              staticClass: "c-input c-input--large c-input--box",
-              attrs: {
-                id: "password",
-                type: "password",
-                placeholder: "パスワードを入力",
-                required: "",
-                autocomplete: "new-password"
-              },
-              domProps: { value: _vm.resetForm.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.resetForm.password,
+                    expression: "resetForm.password"
                   }
-                  _vm.$set(_vm.resetForm, "password", $event.target.value)
+                ],
+                staticClass: "c-input c-input--large c-input--box",
+                attrs: {
+                  id: "password",
+                  type: "password",
+                  placeholder: "パスワードを入力",
+                  required: "",
+                  autocomplete: "new-password"
+                },
+                domProps: { value: _vm.resetForm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.resetForm, "password", $event.target.value)
+                  }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _vm.passwordErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.passwordErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+              }),
+              _vm._v(" "),
+              _c("invalid-component", {
+                attrs: { messages: _vm.passwordErrors }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "c-form__group" }, [
-            _c(
-              "label",
-              {
-                staticClass: "c-form__label",
-                attrs: { for: "password-confirmation" }
-              },
-              [_vm._v("パスワード（再入力）")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _c(
+                "label",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.resetForm.password_confirmation,
-                  expression: "resetForm.password_confirmation"
-                }
-              ],
-              staticClass: "c-input c-input--large c-input--box",
-              attrs: {
-                id: "password-confirmation",
-                type: "password",
-                placeholder: "パスワードを再度入力",
-                required: "",
-                autocomplete: "new-password"
-              },
-              domProps: { value: _vm.resetForm.password_confirmation },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  staticClass: "c-form__label",
+                  attrs: { for: "password-confirmation" }
+                },
+                [_vm._v("パスワード（再入力）")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.resetForm.password_confirmation,
+                    expression: "resetForm.password_confirmation"
                   }
-                  _vm.$set(
-                    _vm.resetForm,
-                    "password_confirmation",
-                    $event.target.value
-                  )
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.confirmErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.confirmErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
+                ],
+                staticClass: "c-input c-input--large c-input--box",
+                attrs: {
+                  id: "password-confirmation",
+                  type: "password",
+                  placeholder: "パスワードを再度入力",
+                  required: "",
+                  autocomplete: "new-password"
+                },
+                domProps: { value: _vm.resetForm.password_confirmation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.resetForm,
+                      "password_confirmation",
+                      $event.target.value
                     )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("invalid-component", {
+                attrs: { messages: _vm.confirmErrors }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _vm._m(2)
         ],
@@ -55690,7 +55355,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("h2", { staticClass: "c-container__title" }, [
-      _vm._v("\n    新規ユーザー登録\n  ")
+      _vm._v("新規ユーザー登録")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "c-form__wrapper" }, [
@@ -55706,282 +55371,206 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "c-form__group" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.registerForm.name,
-                  expression: "registerForm.name"
-                }
-              ],
-              staticClass: "c-input c-input--large",
-              attrs: {
-                id: "username",
-                type: "text",
-                placeholder: "クリプト太郎",
-                required: "",
-                autocomplete: "name",
-                autofocus: ""
-              },
-              domProps: { value: _vm.registerForm.name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.registerForm.name,
+                    expression: "registerForm.name"
                   }
-                  _vm.$set(_vm.registerForm, "name", $event.target.value)
+                ],
+                staticClass: "c-input c-input--large",
+                attrs: {
+                  id: "username",
+                  type: "text",
+                  placeholder: "クリプト太郎",
+                  required: "",
+                  autocomplete: "name",
+                  autofocus: ""
+                },
+                domProps: { value: _vm.registerForm.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.registerForm, "name", $event.target.value)
+                  }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _vm.nameErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.nameErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.registerErrors && _vm.registerErrors.name
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.registerErrors.name, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+              }),
+              _vm._v(" "),
+              _c("invalid-component", { attrs: { messages: _vm.nameErrors } }),
+              _vm._v(" "),
+              _vm.registerErrors && _vm.registerErrors.name
+                ? _c("invalid-component", {
+                    attrs: { messages: _vm.registerErrors.name }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "c-form__group" }, [
-            _c(
-              "label",
-              { staticClass: "c-form__label", attrs: { for: "email" } },
-              [_vm._v("メールアドレス")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.registerForm.email,
-                  expression: "registerForm.email"
-                }
-              ],
-              staticClass: "c-input c-input--large",
-              attrs: {
-                id: "email",
-                type: "email",
-                placeholder: "例）your.email@example.com",
-                required: "",
-                autocomplete: "email"
-              },
-              domProps: { value: _vm.registerForm.email },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _c(
+                "label",
+                { staticClass: "c-form__label", attrs: { for: "email" } },
+                [_vm._v("メールアドレス")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.registerForm.email,
+                    expression: "registerForm.email"
                   }
-                  _vm.$set(_vm.registerForm, "email", $event.target.value)
+                ],
+                staticClass: "c-input c-input--large",
+                attrs: {
+                  id: "email",
+                  type: "email",
+                  placeholder: "例）your.email@example.com",
+                  required: "",
+                  autocomplete: "email"
+                },
+                domProps: { value: _vm.registerForm.email },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.registerForm, "email", $event.target.value)
+                  }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _vm.emailErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.emailErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.registerErrors && _vm.registerErrors.email
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.registerErrors.email, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+              }),
+              _vm._v(" "),
+              _c("invalid-component", { attrs: { messages: _vm.emailErrors } }),
+              _vm._v(" "),
+              _vm.registerErrors && _vm.registerErrors.email
+                ? _c("invalid-component", {
+                    attrs: { messages: _vm.registerErrors.email }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "c-form__group" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.registerForm.password,
-                  expression: "registerForm.password"
-                }
-              ],
-              staticClass: "c-input c-input--large",
-              attrs: {
-                id: "password",
-                type: "password",
-                placeholder: "パスワードを入力",
-                required: "",
-                autocomplete: "new-password"
-              },
-              domProps: { value: _vm.registerForm.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.registerForm.password,
+                    expression: "registerForm.password"
                   }
-                  _vm.$set(_vm.registerForm, "password", $event.target.value)
+                ],
+                staticClass: "c-input c-input--large",
+                attrs: {
+                  id: "password",
+                  type: "password",
+                  placeholder: "パスワードを入力",
+                  required: "",
+                  autocomplete: "new-password"
+                },
+                domProps: { value: _vm.registerForm.password },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.registerForm, "password", $event.target.value)
+                  }
                 }
-              }
-            }),
-            _vm._v(" "),
-            _vm.passwordErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.passwordErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.registerErrors && _vm.registerErrors.password
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.registerErrors.password, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+              }),
+              _vm._v(" "),
+              _c("invalid-component", {
+                attrs: { messages: _vm.passwordErrors }
+              }),
+              _vm._v(" "),
+              _vm.registerErrors && _vm.registerErrors.password
+                ? _c("invalid-component", {
+                    attrs: { messages: _vm.registerErrors.password }
+                  })
+                : _vm._e()
+            ],
+            1
+          ),
           _vm._v(" "),
-          _c("div", { staticClass: "c-form__group" }, [
-            _c(
-              "label",
-              {
-                staticClass: "c-form__label",
-                attrs: { for: "password-confirmation" }
-              },
-              [_vm._v("パスワード（再入力）")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+          _c(
+            "div",
+            { staticClass: "c-form__group" },
+            [
+              _c(
+                "label",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.registerForm.password_confirmation,
-                  expression: "registerForm.password_confirmation"
-                }
-              ],
-              staticClass: "c-input c-input--large",
-              attrs: {
-                id: "password-confirmation",
-                type: "password",
-                placeholder: "パスワードを再度入力",
-                required: "",
-                autocomplete: "new-password"
-              },
-              domProps: { value: _vm.registerForm.password_confirmation },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+                  staticClass: "c-form__label",
+                  attrs: { for: "password-confirmation" }
+                },
+                [_vm._v("パスワード（再入力）")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.registerForm.password_confirmation,
+                    expression: "registerForm.password_confirmation"
                   }
-                  _vm.$set(
-                    _vm.registerForm,
-                    "password_confirmation",
-                    $event.target.value
-                  )
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.confirmErrors
-              ? _c(
-                  "ul",
-                  _vm._l(_vm.confirmErrors, function(error) {
-                    return _c(
-                      "li",
-                      { key: error, staticClass: "c-valid__error" },
-                      [
-                        _vm._v(
-                          "\n            " + _vm._s(error) + "\n          "
-                        )
-                      ]
+                ],
+                staticClass: "c-input c-input--large",
+                attrs: {
+                  id: "password-confirmation",
+                  type: "password",
+                  placeholder: "パスワードを再度入力",
+                  required: "",
+                  autocomplete: "new-password"
+                },
+                domProps: { value: _vm.registerForm.password_confirmation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.registerForm,
+                      "password_confirmation",
+                      $event.target.value
                     )
-                  }),
-                  0
-                )
-              : _vm._e()
-          ]),
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("invalid-component", {
+                attrs: { messages: _vm.confirmErrors }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "div",
             { staticClass: "c-form__info" },
             [
               _c("router-link", { attrs: { to: { name: "terms" } } }, [
-                _vm._v("\n          利用規約\n        ")
+                _vm._v(" 利用規約 ")
               ]),
               _vm._v("\n        および\n        "),
               _c("router-link", { attrs: { to: { name: "privacy" } } }, [

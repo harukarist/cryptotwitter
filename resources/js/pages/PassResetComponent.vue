@@ -19,15 +19,7 @@
             required
             autocomplete="email"
           />
-          <ul v-if="emailErrors">
-            <li
-              v-for="error in emailErrors"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
+          <invalid-component :messages="emailErrors" />
         </div>
         <transition name="popup">
           <p v-if="apiMessage" class="u-mb--l c-alert--danger">
@@ -48,15 +40,7 @@
             required
             autocomplete="new-password"
           />
-          <ul v-if="passwordErrors">
-            <li
-              v-for="error in passwordErrors"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
+          <invalid-component :messages="passwordErrors" />
         </div>
         <div class="c-form__group">
           <label for="password-confirmation" class="c-form__label"
@@ -71,15 +55,7 @@
             required
             autocomplete="new-password"
           />
-          <ul v-if="confirmErrors">
-            <li
-              v-for="error in confirmErrors"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
+          <invalid-component :messages="confirmErrors" />
         </div>
 
         <div class="c-form__button">
@@ -99,8 +75,12 @@
 
 <script>
 import { OK } from "../utility";
+import InvalidComponent from "../components/InvalidComponent.vue";
 
 export default {
+  components: {
+    InvalidComponent, //バリデーションメッセージ表示用コンポーネント
+  },
   data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数

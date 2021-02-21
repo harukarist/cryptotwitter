@@ -16,24 +16,11 @@
             autocomplete="email"
             autofocus
           />
-          <ul v-if="emailErrors">
-            <li
-              v-for="error in emailErrors"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
-          <ul v-if="loginErrors && loginErrors.email">
-            <li
-              v-for="error in loginErrors.email"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
+          <invalid-component :messages="emailErrors" />
+          <invalid-component
+            v-if="loginErrors && loginErrors.email"
+            :messages="loginErrors.email"
+          />
         </div>
         <div class="c-form__group">
           <label for="login-password" class="c-form__label">パスワード</label>
@@ -52,28 +39,12 @@
             >
               パスワードをお忘れですか？
             </router-link>
-            <!-- <a href="/pass/reset" class="c-form__link">
-              パスワードをお忘れですか？
-            </a> -->
           </div>
-          <ul v-if="passwordErrors">
-            <li
-              v-for="error in passwordErrors"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
-          <ul v-if="loginErrors && loginErrors.password">
-            <li
-              v-for="error in loginErrors.password"
-              :key="error"
-              class="c-valid__error"
-            >
-              {{ error }}
-            </li>
-          </ul>
+          <invalid-component :messages="passwordErrors" />
+          <invalid-component
+            v-if="loginErrors && loginErrors.password"
+            :messages="loginErrors.password"
+          />
         </div>
         <div class="c-form__group">
           <label class="c-checkbox__label" for="remember">
@@ -105,8 +76,12 @@
 
 <script>
 import { mapState } from "vuex"; // VuexのmapState関数をインポート
+import InvalidComponent from "../components/InvalidComponent.vue";
 
 export default {
+  components: {
+    InvalidComponent, //バリデーションメッセージ表示用コンポーネント
+  },
   data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
