@@ -1,78 +1,81 @@
 <template>
-  <form class="c-form--large" @submit.prevent="checkForm">
+  <form
+    class="c-form--large"
+    @submit.prevent="checkForm">
     <p class="c-form__text">
-      CryptoTrendについて、ご不明な点がありましたら<br class="u-sp--hidden" />
-      <a href="/#faq">よくあるご質問</a>をご確認ください。<br />
-      お問い合わせは下記のフォームにてお送りください。<br />
+      CryptoTrendについて、ご不明な点がありましたら<br class="u-sp--hidden">
+      <a href="/#faq">よくあるご質問</a>をご確認ください。<br>
+      お問い合わせは下記のフォームにてお送りください。<br>
     </p>
     <div class="c-form__group">
-      <label for="name" class="c-form__label">
+      <label
+        for="name"
+        class="c-form__label">
         お名前<span class="c-form__label--required">必須</span>
       </label>
       <div>
         <input
+          id="name"
+          v-model="formData.name"
           type="text"
           class="c-input c-input--large"
           :class="{ 'is-invalid': nameErrors.length }"
-          id="name"
           placeholder="山田 太郎"
-          v-model="formData.name"
-          required
-        />
+          required>
         <invalid-component :messages="nameErrors" />
         <invalid-component
           v-if="apiMessages && apiMessages.name"
-          :messages="apiMessages.name"
-        />
+          :messages="apiMessages.name" />
       </div>
     </div>
     <div class="c-form__group">
-      <label for="email" class="c-form__label">
+      <label
+        for="email"
+        class="c-form__label">
         メールアドレス<span class="c-form__label--required">必須</span>
       </label>
       <div>
         <input
+          id="email"
+          v-model="formData.email"
           type="email"
           class="c-input c-input--large"
-          id="email"
           placeholder="例）your.email@example.com"
           :class="{ 'is-invalid': emailErrors.length }"
-          v-model="formData.email"
           autocomplete="email"
-          required
-        />
+          required>
         <invalid-component :messages="emailErrors" />
         <invalid-component
           v-if="apiMessages && apiMessages.email"
-          :messages="apiMessages.email"
-        />
+          :messages="apiMessages.email" />
       </div>
     </div>
 
     <div class="c-form__group">
-      <label for="message" class="c-form__label">
+      <label
+        for="message"
+        class="c-form__label">
         お問い合わせ内容<span class="c-form__label--required">必須</span>
       </label>
       <div>
         <textarea
-          name="message"
           id="message"
+          v-model="formData.message"
+          name="message"
           class="c-input c-input__textarea c-input--large"
           :class="{ 'is-invalid': messageErrors.length }"
-          v-model="formData.message"
           placeholder="お問い合わせ内容を入力してください"
-          required
-        >
-        </textarea>
+          required />
         <invalid-component :messages="messageErrors" />
         <invalid-component
           v-if="apiMessages && apiMessages.message"
-          :messages="apiMessages.message"
-        />
+          :messages="apiMessages.message" />
       </div>
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn--main c-btn--large">
+      <button
+        type="submit"
+        class="c-btn--main c-btn--large">
         入力内容を確認
       </button>
     </div>
@@ -81,7 +84,6 @@
 
 <script>
 import { OK, UNPROCESSABLE_ENTITY } from "../utility";
-import { mapState } from "vuex"; // VuexのmapState関数をインポート
 import InvalidComponent from "../components/InvalidComponent.vue";
 
 export default {
@@ -116,7 +118,7 @@ export default {
   },
   methods: {
     // フロントエンド側のバリデーションチェック
-    checkForm(e) {
+    checkForm() {
       const MSG_NAME_EMPTY = "お名前を入力してください";
       const MSG_MESSAGE_EMPTY = "お問い合わせを入力してください";
       const MSG_EMAIL_EMPTY = "メールアドレスを入力してください";

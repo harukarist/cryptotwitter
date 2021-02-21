@@ -1,27 +1,32 @@
 <template>
-  <form class="c-form--small" @submit.prevent="checkChangePassForm">
+  <form
+    class="c-form--small"
+    @submit.prevent="checkChangePassForm">
     <input
-      name="username"
       v-model="changePassForm.username"
+      name="username"
       autocomplete="username"
-      style="display: none"
-    />
+      style="display: none">
     <div class="c-form__group">
-      <label for="current_password" class="c-form__label">
+      <label
+        for="current_password"
+        class="c-form__label">
         現在のパスワード
         <span class="c-form__notes">半角英数字8文字以上</span>
       </label>
       <input
+        id="current_password"
+        v-model="changePassForm.current_password"
         type="password"
         class="c-input c-input--large"
-        id="current_password"
         placeholder="現在のパスワードを入力"
-        v-model="changePassForm.current_password"
         required
-        autocomplete="current-password"
-      />
+        autocomplete="current-password">
       <ul v-if="passwordErrors">
-        <li v-for="error in passwordErrors" :key="error" class="c-valid__error">
+        <li
+          v-for="error in passwordErrors"
+          :key="error"
+          class="c-valid__error">
           {{ error }}
         </li>
       </ul>
@@ -29,32 +34,31 @@
         <li
           v-for="error in apiMessages.current_password"
           :key="error"
-          class="c-valid__error"
-        >
+          class="c-valid__error">
           {{ error }}
         </li>
       </ul>
     </div>
     <div class="c-form__group">
-      <label for="new_password" class="c-form__label">
+      <label
+        for="new_password"
+        class="c-form__label">
         新しいパスワード
         <span class="c-form__notes">半角英数字8文字以上</span>
       </label>
       <input
+        id="new_password"
+        v-model="changePassForm.new_password"
         type="password"
         class="c-input c-input--large"
-        id="new_password"
         placeholder="新しいパスワードを入力"
-        v-model="changePassForm.new_password"
         required
-        autocomplete="new-password"
-      />
+        autocomplete="new-password">
       <ul v-if="newPasswordErrors">
         <li
           v-for="error in newPasswordErrors"
           :key="error"
-          class="c-valid__error"
-        >
+          class="c-valid__error">
           {{ error }}
         </li>
       </ul>
@@ -62,27 +66,28 @@
         <li
           v-for="error in apiMessages.new_password"
           :key="error"
-          class="c-valid__error"
-        >
+          class="c-valid__error">
           {{ error }}
         </li>
       </ul>
     </div>
     <div class="c-form__group">
-      <label for="new_password_confirmation" class="c-form__label"
-        >新しいパスワード（再入力）</label
-      >
+      <label
+        for="new_password_confirmation"
+        class="c-form__label">新しいパスワード（再入力）</label>
       <input
+        id="new_password_confirmation"
+        v-model="changePassForm.new_password_confirmation"
         type="password"
         class="c-input c-input--large"
-        id="new_password_confirmation"
         placeholder="新しいパスワードを再度入力"
-        v-model="changePassForm.new_password_confirmation"
         required
-        autocomplete="new-password"
-      />
+        autocomplete="new-password">
       <ul v-if="confirmErrors">
-        <li v-for="error in confirmErrors" :key="error" class="c-valid__error">
+        <li
+          v-for="error in confirmErrors"
+          :key="error"
+          class="c-valid__error">
           {{ error }}
         </li>
       </ul>
@@ -90,14 +95,15 @@
         <li
           v-for="error in apiMessages.new_password_confirmation"
           :key="error"
-          class="c-valid__error"
-        >
+          class="c-valid__error">
           {{ error }}
         </li>
       </ul>
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn--accent c-btn--large">
+      <button
+        type="submit"
+        class="c-btn--accent c-btn--large">
         パスワードを変更
       </button>
     </div>
@@ -105,7 +111,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex"; // VuexのmapState関数をインポート
 import { OK, UNPROCESSABLE_ENTITY } from "../utility";
 
 export default {
@@ -126,7 +131,7 @@ export default {
   },
   methods: {
     // フロントエンド側のパスワードバリデーションチェック
-    checkChangePassForm(e) {
+    checkChangePassForm() {
       const MSG_PASS_EMPTY = "パスワードを入力してください";
       const MSG_PASS_LESS = "8文字以上で入力してください";
       const MSG_RETYPE = "パスワードが一致していません";

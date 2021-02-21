@@ -1,6 +1,9 @@
 <template>
   <ul v-if="messages">
-    <li v-for="message in messages" :key="message" class="c-valid__error">
+    <li
+      v-for="message in messages"
+      :key="message"
+      class="c-valid__error">
       {{ message }}
     </li>
   </ul>
@@ -8,12 +11,12 @@
 
 <script>
 export default {
-  props: {
-    messages: {
-      type: Array,
-      required: true,
-    },
-  },
-};
+	props: {
+		messages: {
+			type: Array,
+			required: true,
+		},
+	},
+}
 </script>
 

@@ -113,7 +113,6 @@ class FollowTargetController extends Controller
       'follow' => true, //フォローを相手に通知するか
     );
     $ENDPOINT = "friendships/create";
-    // レートリミットは1日あたり400件
 
     // TwitterAPIでターゲットをフォロー
     $result = $connect->post($ENDPOINT, $params);

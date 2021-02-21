@@ -4,16 +4,16 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import './bootstrap'; //設定ファイルbootstrap.jsをインポート
-import Vue from 'vue';
-import router from './router'; // router.jsからルーティング定義をインポート
-import store from './store'; // ストアをインポート
-import AppComponent from './AppComponent.vue'; // コンテンツのルートコンポーネント
-import MessageComponent from './components/MessageComponent.vue'; // フラッシュメッセージ
-import HeaderComponent from "./components/HeaderComponent";
-import FooterComponent from "./components/FooterComponent";
-import LoaderComponent from "./components/LoaderComponent";
-import '../sass/app.scss'; //Sassの起点ファイルをインポート
+import './bootstrap' //設定ファイルbootstrap.jsをインポート
+import Vue from 'vue'
+import router from './router' // router.jsからルーティング定義をインポート
+import store from './store' // ストアをインポート
+import AppComponent from './AppComponent.vue' // コンテンツのルートコンポーネント
+import MessageComponent from './components/MessageComponent.vue' // フラッシュメッセージ
+import HeaderComponent from './components/HeaderComponent'
+import FooterComponent from './components/FooterComponent'
+import LoaderComponent from './components/LoaderComponent'
+import '../sass/app.scss' //Sassの起点ファイルをインポート
 
 /**
  * The following block of code may be used to automatically register your
@@ -34,24 +34,24 @@ import '../sass/app.scss'; //Sassの起点ファイルをインポート
  */
 
 const createApp = async () => {
-    // 画面リロード時にVueインスタンスを再生成してもユーザー情報が表示されるよう、生成前に非同期処理でログインチェックを行う
-    const userLogin = store.dispatch("auth/currentUser");
-    const userTwitter = store.dispatch("twitter/checkAuth");
-    await Promise.all([userLogin, userTwitter]);
+	// 画面リロード時にVueインスタンスを再生成してもユーザー情報が表示されるよう、生成前に非同期処理でログインチェックを行う
+	const userLogin = store.dispatch('auth/currentUser')
+	const userTwitter = store.dispatch('twitter/checkAuth')
+	await Promise.all([userLogin, userTwitter])
 
-    // Vueインスタンスを生成
-    new Vue({
-        el: '#app',
-        router, // Vue Routerを読み込む
-        store, // Vuexのストアを読み込む
-        components: {
-            AppComponent,
-            MessageComponent,
-            HeaderComponent,
-            FooterComponent,
-            LoaderComponent
-        },
-    });
+	// Vueインスタンスを生成
+	new Vue({
+		el: '#app',
+		router, // Vue Routerを読み込む
+		store, // Vuexのストアを読み込む
+		components: {
+			AppComponent,
+			MessageComponent,
+			HeaderComponent,
+			FooterComponent,
+			LoaderComponent
+		},
+	})
 }
 // 初回起動時のログインチェック、Vueインスタンス生成を呼び出し
-createApp();
+createApp()

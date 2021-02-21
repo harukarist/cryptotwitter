@@ -1,30 +1,33 @@
 <template>
   <div class="p-target">
     <div class="p-target__list">
-      <h5 class="p-target__title">仮想通貨関連アカウント</h5>
+      <h5 class="p-target__title">
+        仮想通貨関連アカウント
+      </h5>
       <pagination-info
         :current-page="currentPage"
         :per-page="perPage"
         :total-num="totalNum"
-        :items-length="targets.length"
-      />
+        :items-length="targets.length" />
       <search-form-component
-        @search="searchTargets"
-        @clear="clearResult"
         :total-num="totalNum"
         :searched-param="searchedParam"
         item-name="仮想通貨関連アカウント"
-      />
+        @search="searchTargets"
+        @clear="clearResult" />
 
       <twitter-target-item
         v-for="target in targets"
         :key="target.id"
         :item="target"
         @follow="createFollow"
-        @unfollow="destroyFollow"
-      />
-      <div v-if="!searchedParam && totalNum === 0" class="u-font--center">
-        <p v-if="useAutoFollow">アカウントはすべて自動フォロー済みです</p>
+        @unfollow="destroyFollow" />
+      <div
+        v-if="!searchedParam && totalNum === 0"
+        class="u-font--center">
+        <p v-if="useAutoFollow">
+          アカウントはすべて自動フォロー済みです
+        </p>
         <p v-if="!useAutoFollow">
           仮想通貨関連アカウントが取得できませんでした
         </p>
@@ -37,14 +40,12 @@
           :current-page="currentPage"
           :last-page="lastPage"
           :per-page="perPage"
-          :total-num="totalNum"
-        />
+          :total-num="totalNum" />
         <pagination-info
           :current-page="currentPage"
           :per-page="perPage"
           :total-num="totalNum"
-          :items-length="targets.length"
-        />
+          :items-length="targets.length" />
       </div>
     </div>
   </div>
@@ -73,12 +74,6 @@ export default {
       default: 1,
     },
   },
-  computed: {
-    ...mapGetters({
-      // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
-      useAutoFollow: "twitter/useAutoFollow",
-    }),
-  },
   data() {
     return {
       targets: [], //仮想通貨関連アカウント一覧を格納する配列を用意
@@ -89,6 +84,22 @@ export default {
       directoryName: "twitter", //ページネーションリンクに付与するディレクトリ
       searchedParam: "", //検索したキーワード（ページネーション のクエリパラメータの生成、キーワード検索フォームの検索結果表示に使用）
     };
+  },
+  computed: {
+    ...mapGetters({
+      // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
+      useAutoFollow: "twitter/useAutoFollow",
+    }),
+  },
+  watch: {
+    // ページネーション遷移時にコンポーネントの再生成が必要になるため、
+    // $routeを監視し、ページ切り替え時にデータ取得を実行する
+    $route: {
+      async handler() {
+        await this.fetchTargets();
+      },
+      immediate: true, //コンポーネント生成時も実行
+    },
   },
   methods: {
     // 検索コンポーネントからキーワードを受け通り、仮想通貨アカウントを検索
@@ -195,16 +206,6 @@ export default {
         type: "success",
         timeout: 2000,
       });
-    },
-  },
-  watch: {
-    // ページネーション遷移時にコンポーネントの再生成が必要になるため、
-    // $routeを監視し、ページ切り替え時にデータ取得を実行する
-    $route: {
-      async handler() {
-        await this.fetchTargets();
-      },
-      immediate: true, //コンポーネント生成時も実行
     },
   },
 };

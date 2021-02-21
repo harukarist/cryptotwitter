@@ -12,20 +12,20 @@ export const UNAUTHORIZED = 419 //認証セッション切れ（Laravel独自コ
  * @returns {String} キーに対応する値
  */
 export function getCookieValue(searchKey) {
-  if (typeof searchKey === 'undefined') {
-    return ''
-  }
+	if (typeof searchKey === 'undefined') {
+		return ''
+	}
 
-  let val = ''
+	let val = ''
 
-  // document.cookieで取得したクッキー（形式は name=12345;token=67890;key=abcde）を
-  // ; で分割し、さらに = で分割して searchKeyと一致するkeyのvalueを取得
-  document.cookie.split(';').forEach(cookie => {
-    const [key, value] = cookie.split('=')
-    if (key === searchKey) {
-      return val = value
-    }
-  })
+	// document.cookieで取得したクッキー（形式は name=12345;token=67890;key=abcde）を
+	// ; で分割し、さらに = で分割して searchKeyと一致するkeyのvalueを取得
+	document.cookie.split(';').forEach(cookie => {
+		const [key, value] = cookie.split('=')
+		if (key === searchKey) {
+			return val = value
+		}
+	})
 
-  return val
+	return val
 }

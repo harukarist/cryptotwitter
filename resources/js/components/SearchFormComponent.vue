@@ -1,26 +1,34 @@
 <template>
   <div class="c-search">
-    <form class="c-search__form" @submit.prevent="search">
-      <span class="c-search__icon"><i class="fas fa-search"></i></span>
+    <form
+      class="c-search__form"
+      @submit.prevent="search">
+      <span class="c-search__icon"><i class="fas fa-search" /></span>
       <input
+        v-model="searchWord"
         type="text"
         class="c-input c-search__input"
         name="search"
-        v-model="searchWord"
-        placeholder="キーワードを入力して検索"
-      />
+        placeholder="キーワードを入力して検索">
       <span class="c-search__clear-icon">
-        <i v-show="searchWord" class="fas fa-times" @click="clearWord"></i>
+        <i
+          v-show="searchWord"
+          class="fas fa-times"
+          @click="clearWord" />
       </span>
     </form>
-    <div v-if="searchedParam && totalNum === 0" class="c-search__notfound">
+    <div
+      v-if="searchedParam && totalNum === 0"
+      class="c-search__notfound">
       <p class="u-font--center">
         「{{ searchedParam }}」を含む{{ itemName }}が見つかりませんでした
       </p>
     </div>
-    <div v-if="searchedParam && totalNum > 0" class="c-search__found u-mb--xl">
+    <div
+      v-if="searchedParam && totalNum > 0"
+      class="c-search__found u-mb--xl">
       <p class="u-font--center">
-        「{{ searchedParam }}」を含む{{ itemName }}が<br class="u-sp--only" />
+        「{{ searchedParam }}」を含む{{ itemName }}が<br class="u-sp--only">
         {{ totalNum }}件見つかりました
       </p>
     </div>
@@ -29,33 +37,33 @@
 
 <script>
 export default {
-  props: {
-    totalNum: {
-      type: Number,
-      required: true,
-    },
-    searchedParam: {
-      type: String,
-      required: true,
-    },
-    itemName: {
-      type: String,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      searchWord: "", // 検索キーワード（v-modelでフォームの入力値と紐付け）
-    };
-  },
-  methods: {
-    search() {
-      this.$emit("search", this.searchWord);
-    },
-    clearWord() {
-      this.searchWord = "";
-      this.$emit("clear");
-    },
-  },
-};
+	props: {
+		totalNum: {
+			type: Number,
+			required: true,
+		},
+		searchedParam: {
+			type: String,
+			required: true,
+		},
+		itemName: {
+			type: String,
+			required: true,
+		},
+	},
+	data() {
+		return {
+			searchWord: '', // 検索キーワード（v-modelでフォームの入力値と紐付け）
+		}
+	},
+	methods: {
+		search() {
+			this.$emit('search', this.searchWord)
+		},
+		clearWord() {
+			this.searchWord = ''
+			this.$emit('clear')
+		},
+	},
+}
 </script>

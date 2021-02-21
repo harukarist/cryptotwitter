@@ -1,16 +1,22 @@
 <template>
   <div class="c-container--fluid">
     <HeroComponent />
-    <div id="about" ref="about">
+    <div
+      id="about"
+      ref="about">
       <AboutComponent />
     </div>
     <TroubleComponent />
     <SolutionComponent />
     <ActionComponent />
-    <div id="reason" ref="reason">
+    <div
+      id="reason"
+      ref="reason">
       <ReasonComponent />
     </div>
-    <div id="faq" ref="faq">
+    <div
+      id="faq"
+      ref="faq">
       <FaqComponent />
     </div>
     <ActionComponent />
@@ -41,6 +47,13 @@ export default {
       //VueRouterで取得したURL中のハッシュを取得
       hash: this.$route.hash,
     };
+  },
+  watch: {
+    // $routeを監視し、トップページを表示時にヘッダーのトップページリンクがクリックされたら
+    // そのアンカーポイントへ移動
+    $route(to) {
+      this.pageScroll(to.hash);
+    },
   },
   mounted() {
     //this.$nextTick()でDOMの読み込み完了時に実行
@@ -74,13 +87,6 @@ export default {
       // その要素にスクロール
       el.scrollIntoView({ behavior: "smooth" });
       this.hash = "";
-    },
-  },
-  watch: {
-    // $routeを監視し、トップページを表示時にヘッダーのトップページリンクがクリックされたら
-    // そのアンカーポイントへ移動
-    $route(to, from) {
-      this.pageScroll(to.hash);
     },
   },
 };

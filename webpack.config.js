@@ -32,22 +32,30 @@ module.exports = {
   module: {
     rules: [
       {
-        // .vueファイルの場合はvue-loaderを使う
+        // .vueファイルの設定
         test: /\.vue$/,
-        loader: "vue-loader",
-        options: {
-          loaders: {
-            js: 'babel-loader',
-            scss: 'vue-style-loader!css-loader!sass-loader', // <style lang="scss">
-            sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
-          }
-        }
+        use: [
+          {
+            loader: "vue-loader",
+            options: {
+              loaders: {
+                js: 'babel-loader',
+                scss: 'vue-style-loader!css-loader!sass-loader', // <style lang="scss">
+                sass: 'vue-style-loader!css-loader!sass-loader?indentedSyntax' // <style lang="sass">
+              }
+            }
+          },
+        ]
       },
-      // Babelの設定
+      // .jsファイルの設定
       {
         test: /\.js$/,
         exclude: /node_modules/, //node_modulesは除く
-        loader: "babel-loader",
+        use: [
+          {
+            loader: "babel-loader",
+          },
+        ]
       },
       // Sassの設定
       {

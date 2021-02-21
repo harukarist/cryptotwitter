@@ -82,6 +82,8 @@ class AutoFollow extends Command
             } else {
                 // 今日のログレコードが未作成の場合は1日の上限（400件）を残り回数にセット
                 $remain_num = 400;
+                // 各アカウントのフォロー数のリミットは1日あたり400件
+                // https://help.twitter.com/ja/rules-and-policies/twitter-limits
             }
 
             // ユーザーの残り回数が0以下の場合は次のユーザーの自動フォローへ進む
@@ -138,7 +140,7 @@ class AutoFollow extends Command
             dump("{$twitter_user->user_name}さんのアカウントで {$follow_total}件自動フォローしました");
             logger()->info("{$twitter_user->user_name}さんのアカウントで {$follow_total}件自動フォローしました");
 
-            // 残り回数（1日最大1000件）から今回のフォロー合計数を減らす
+            // 残り回数から今回のフォロー合計数を減らす
             $remain_num -= $follow_total;
 
             // 自動フォローログをDBに保存

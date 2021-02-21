@@ -10,7 +10,10 @@
         "watch:webpack": "npm run development -- --watch",
         "watch": "run-p serve watch:server watch:webpack",
         "watch-poll": "npm run watch -- --watch-poll",
-        "prod": "npm run production"
+        "prod": "npm run production",
+        "lint": "./node_modules/.bin/eslint ./public/js/app.js",
+        "lint:fix": "eslint --fix ./resources/js/**/*.{js,vue}",
+        "lint:public": "eslint --fix ./public/js/app.js"
     },
     "devDependencies": {
         "@babel/core": "^7.12.10",
@@ -25,8 +28,9 @@
         "core-js": "^3.8.3",
         "cross-env": "^7.0",
         "css-loader": "^5.0.1",
-        "eslint": "^7.18.0",
+        "eslint": "^7.20.0",
         "eslint-loader": "^4.0.2",
+        "eslint-plugin-vue": "^7.6.0",
         "jquery": "^3.2",
         "laravel-mix": "^6.0.10",
         "lodash": "^4.17.19",

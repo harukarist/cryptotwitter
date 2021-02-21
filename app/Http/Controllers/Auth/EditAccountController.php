@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Follow;
+use App\Autofollow;
+use App\AutofollowLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -63,11 +66,11 @@ class EditAccountController extends Controller
             // ログインユーザーのTwitterアカウント情報が登録されている場合は関連レコードを削除
             if ($twitter_user) {
                 // ログインユーザーのフォローリストを削除
-                DB::table('follows')->where('twitter_user_id', $twitter_user->id)->delete();
+                Follow::where('twitter_user_id', $twitter_user->id)->delete();
                 // ログインユーザーの自動フォローログを削除
-                DB::table('autofollow_logs')->where('twitter_user_id', $twitter_user->id)->delete();
+                AutofollowLog::where('twitter_user_id', $twitter_user->id)->delete();
                 // ログインユーザーの自動フォロー履歴を削除
-                DB::table('autofollows')->where('twitter_user_id', $twitter_user->id)->delete();
+                Autofollow::where('twitter_user_id', $twitter_user->id)->delete();
                 // ログインユーザーのTwitterアカウント情報を削除
                 $twitter_user->delete();
             }

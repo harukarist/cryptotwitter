@@ -1,44 +1,49 @@
 <template>
   <div class="c-container--bg">
     <section class="c-section">
-      <h5 class="c-section__title">Twitterフォロー</h5>
+      <h5 class="c-section__title">
+        Twitterフォロー
+      </h5>
       <p class="c-section__text">
         Twitterの仮想通貨関連アカウントを<br
-          class="u-sp--only"
-        />集めました。<br />
-        自動フォロー機能を使うことで<br />
-        アカウントをまとめてフォローできます。<br />
+          class="u-sp--only">集めました。<br>
+        自動フォロー機能を使うことで<br>
+        アカウントをまとめてフォローできます。<br>
       </p>
 
       <twitter-login />
 
-      <div v-if="useAutoFollow" class="c-tab c-fade-in p-twitter__list">
+      <div
+        v-if="useAutoFollow"
+        class="c-tab c-fade-in p-twitter__list">
         <ul class="c-tab__list">
           <li
             class="c-tab__item c-tab__item--two"
-            :class="{ 'c-tab__item--active': !showAutoFollow }"
-          >
+            :class="{ 'c-tab__item--active': !showAutoFollow }">
             <RouterLink :to="{ name: 'twitter.index' }">
-              未フォローの<br class="u-sp--only" />アカウントを表示
+              未フォローの<br class="u-sp--only">アカウントを表示
             </RouterLink>
           </li>
           <li
             class="c-tab__item c-tab__item--two"
-            :class="{ 'c-tab__item--active': showAutoFollow }"
-          >
+            :class="{ 'c-tab__item--active': showAutoFollow }">
             <RouterLink :to="{ name: 'autofollow.list' }">
-              自動フォロー履歴<br class="u-sp--only" />を表示
+              自動フォロー履歴<br class="u-sp--only">を表示
             </RouterLink>
           </li>
         </ul>
 
         <div v-if="showAutoFollow">
-          <transition name="popup" appear>
+          <transition
+            name="popup"
+            appear>
             <AutoFollowList :page="page" />
           </transition>
         </div>
         <div v-else>
-          <transition name="popup" appear>
+          <transition
+            name="popup"
+            appear>
             <TwitterTargetList :page="page" />
           </transition>
         </div>
@@ -51,59 +56,59 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex"; // VuexのmapState関数,mapGetters関数をインポート
-import TwitterLogin from "../components/TwitterLogin.vue";
-import TwitterTargetList from "../components/TwitterTargetList.vue";
-import AutoFollowList from "../components/AutoFollowList.vue";
+import { mapGetters } from 'vuex' // VuexのmapGetters関数をインポート
+import TwitterLogin from '../components/TwitterLogin.vue'
+import TwitterTargetList from '../components/TwitterTargetList.vue'
+import AutoFollowList from '../components/AutoFollowList.vue'
 
 export default {
-  components: {
-    TwitterLogin,
-    TwitterTargetList,
-    AutoFollowList,
-  },
-  // ページネーションのページ番号をrouter.jsから受け取る
-  props: {
-    page: {
-      type: Number,
-      required: false,
-      default: 0,
-    },
-  },
-  data() {
-    return {
-      showAutoFollow: false,
-    };
-  },
-  computed: {
-    ...mapGetters({
-      // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
-      isTwitterLogin: "twitter/check",
-      // twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
-      useAutoFollow: "twitter/useAutoFollow",
-    }),
-  },
-  methods: {
-    checkThisPath() {
-      if (
-        this.$route.path ===
-        this.$router.resolve({ name: "autofollow.list" }).href
-      ) {
-        this.showAutoFollow = true;
-      } else {
-        this.showAutoFollow = false;
-      }
-    },
-  },
-  watch: {
-    // ページリンク切り替え時にコンポーネントの再生成が必要になるため、
-    // $routeを監視し、ページ切り替え時にデータ取得を実行する
-    $route: {
-      async handler() {
-        await this.checkThisPath();
-      },
-      immediate: true, //コンポーネント生成時も実行
-    },
-  },
-};
+	components: {
+		TwitterLogin,
+		TwitterTargetList,
+		AutoFollowList,
+	},
+	// ページネーションのページ番号をrouter.jsから受け取る
+	props: {
+		page: {
+			type: Number,
+			required: false,
+			default: 0,
+		},
+	},
+	data() {
+		return {
+			showAutoFollow: false,
+		}
+	},
+	computed: {
+		...mapGetters({
+			// twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
+			isTwitterLogin: 'twitter/check',
+			// twitterストアのuseAutoFollowゲッターでユーザーの自動フォロー利用有無を取得
+			useAutoFollow: 'twitter/useAutoFollow',
+		}),
+	},
+	watch: {
+		// ページリンク切り替え時にコンポーネントの再生成が必要になるため、
+		// $routeを監視し、ページ切り替え時にデータ取得を実行する
+		$route: {
+			async handler() {
+				await this.checkThisPath()
+			},
+			immediate: true, //コンポーネント生成時も実行
+		},
+	},
+	methods: {
+		checkThisPath() {
+			if (
+				this.$route.path ===
+        this.$router.resolve({ name: 'autofollow.list' }).href
+			) {
+				this.showAutoFollow = true
+			} else {
+				this.showAutoFollow = false
+			}
+		},
+	},
+}
 </script>

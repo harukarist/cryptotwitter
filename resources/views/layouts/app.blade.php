@@ -50,7 +50,7 @@
         <app-component></app-component>
         <!-- セッション経由のフラッシュメッセージを表示 -->
         @if (session('message'))
-        <message-component message="{{ session('message') }}" type="{{ session('type') ?? 'success' }}" timeout="{{ session('timeout') ?? '3000' }}" />
+        <message-component message="{{ session('message') }}" type="{{ session('type') ?? 'success' }}" timeout="{{ session('timeout') ?? 3000 }}" />
         @endif
         
     </div>

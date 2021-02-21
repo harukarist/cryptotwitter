@@ -1,95 +1,106 @@
 <template>
   <div class="c-container--bg">
-    <h2 class="c-container__title">パスワードの再設定</h2>
+    <h2 class="c-container__title">
+      パスワードの再設定
+    </h2>
     <div class="c-form__wrapper">
-      <form class="c-form--small" @submit.prevent="checkForm">
-        <input type="hidden" name="token" v-model="resetForm.token" />
+      <form
+        class="c-form--small"
+        @submit.prevent="checkForm">
+        <input
+          v-model="resetForm.token"
+          type="hidden"
+          name="token">
         <p class="c-section__text">
-          新しいパスワードを設定してください。<br />
+          新しいパスワードを設定してください。<br>
         </p>
         <div class="c-form__group">
-          <label for="login-email" class="c-form__label">
+          <label
+            for="login-email"
+            class="c-form__label">
             メールアドレス
           </label>
           <input
+            id="email"
+            v-model="resetForm.email"
             type="text"
             class="c-input c-input--large c-input--box"
-            id="email"
             required
-            v-model="resetForm.email"
-            autocomplete="email"
-          />
+            autocomplete="email">
           <ul v-if="emailErrors">
             <li
               v-for="error in emailErrors"
               :key="error"
-              class="c-valid__error"
-            >
+              class="c-valid__error">
               {{ error }}
             </li>
           </ul>
         </div>
         <transition name="popup">
-          <p v-if="apiMessage" class="u-mb--l c-alert--danger">
+          <p
+            v-if="apiMessage"
+            class="u-mb--l c-alert--danger">
             {{ apiMessage }}
           </p>
         </transition>
         <div class="c-form__group">
-          <label for="password" class="c-form__label">
+          <label
+            for="password"
+            class="c-form__label">
             パスワード
             <span class="c-form__notes">半角英数字8文字以上</span>
           </label>
           <input
+            id="password"
+            v-model="resetForm.password"
             type="password"
             class="c-input c-input--large c-input--box"
-            id="password"
             placeholder="パスワードを入力"
-            v-model="resetForm.password"
             required
-            autocomplete="new-password"
-          />
+            autocomplete="new-password">
           <ul v-if="passwordErrors">
             <li
               v-for="error in passwordErrors"
               :key="error"
-              class="c-valid__error"
-            >
+              class="c-valid__error">
               {{ error }}
             </li>
           </ul>
         </div>
         <div class="c-form__group">
-          <label for="password-confirmation" class="c-form__label"
-            >パスワード（再入力）</label
-          >
+          <label
+            for="password-confirmation"
+            class="c-form__label">パスワード（再入力）</label>
           <input
+            id="password-confirmation"
+            v-model="resetForm.password_confirmation"
             type="password"
             class="c-input c-input--large c-input--box"
-            id="password-confirmation"
             placeholder="パスワードを再度入力"
-            v-model="resetForm.password_confirmation"
             required
-            autocomplete="new-password"
-          />
+            autocomplete="new-password">
           <ul v-if="confirmErrors">
             <li
               v-for="error in confirmErrors"
               :key="error"
-              class="c-valid__error"
-            >
+              class="c-valid__error">
               {{ error }}
             </li>
           </ul>
         </div>
 
         <div class="c-form__button">
-          <button type="submit" class="c-btn--main-outline c-btn--large">
+          <button
+            type="submit"
+            class="c-btn--main-outline c-btn--large">
             送信する
           </button>
         </div>
       </form>
       <div class="c-form__link">
-        <RouterLink :to="{ name: 'password.request' }" class="c-form__link">
+        <RouterLink
+          :to="{ name: 'password.request' }"
+          class="c-form__link">
           メールアドレスを再度入力する
         </RouterLink>
       </div>
@@ -98,7 +109,7 @@
 </template>
 
 <script>
-import { OK, UNPROCESSABLE_ENTITY } from "../utility";
+import { OK } from "../utility";
 
 export default {
   data() {
@@ -116,11 +127,16 @@ export default {
       apiMessage: "",
     };
   },
+  created() {
+    // ページ読み込み時にURLのトークンを格納
+    this.resetForm.token = this.$route.params["token"];
+    this.resetForm.email = this.$route.query.email;
+  },
   methods: {
     /**
      * フロントエンド側のバリデーションチェック
      */
-    checkForm(e) {
+    checkForm() {
       const MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
       const MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
       const MSG_EMAIL_MAX = "50文字以内で入力してください";
@@ -223,11 +239,6 @@ export default {
         this.$store.commit("error/setCode", response.status);
       }
     },
-  },
-  created() {
-    // ページ読み込み時にURLのトークンを格納
-    this.resetForm.token = this.$route.params["token"];
-    this.resetForm.email = this.$route.query.email;
   },
 };
 </script>
