@@ -25,11 +25,11 @@
     </fade-in-component>
 
     <fade-in-component>
-      <RouterLink
+      <router-link
         :to="{ name: 'register' }"
         class="c-btn--white c-btn--large c-btn--arrow p-action__btn">
         今すぐ無料ではじめる
-      </RouterLink>
+      </router-link>
     </fade-in-component>
   </div>
 </template>

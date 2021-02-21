@@ -5596,37 +5596,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5646,10 +5615,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -6398,42 +6363,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -6454,10 +6383,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      column: 'tweet_hour',
+      column: "tweet_hour",
       items: [],
       //トレンド一覧を格納
-      updatedAt: '',
+      updatedAt: "",
       //更新日時を格納
       targets: [],
       //仮想通貨関連アカウント一覧を格納
@@ -6468,23 +6397,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     // 表示中のトレンド
     activeColumn: function activeColumn() {
-      if (this.column === 'tweet_hour') {
-        return '1時間';
-      } else if (this.column === 'tweet_day') {
-        return '24時間';
-      } else if (this.column === 'tweet_week') {
-        return '1週間';
+      if (this.column === "tweet_hour") {
+        return "1時間";
+      } else if (this.column === "tweet_day") {
+        return "24時間";
+      } else if (this.column === "tweet_week") {
+        return "1週間";
       }
     },
     // クリックされたタブに応じてデータを返却
     clicked: function clicked() {
-      if (this.column === 'tweet_hour') {
+      if (this.column === "tweet_hour") {
         // 過去1時間のトレンド上位3件を返却
         return this.items.trend_hour;
-      } else if (this.column === 'tweet_day') {
+      } else if (this.column === "tweet_day") {
         // 過去1日のトレンド上位3件を返却
         return this.items.trend_day;
-      } else if (this.column === 'tweet_week') {
+      } else if (this.column === "tweet_week") {
         // 過去1週間のトレンド上位3件を返却
         return this.items.trend_week;
       }
@@ -6501,7 +6430,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  _this.$store.commit('loader/setIsLoading', true); //ローディング表示をオン
+                  _this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
 
 
                   _context.next = 3;
@@ -6516,7 +6445,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   return _this.fetchNews();
 
                 case 7:
-                  _this.$store.commit('loader/setIsLoading', false); //ローディング表示をオフ
+                  _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
 
 
                 case 8:
@@ -6543,7 +6472,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context2.prev = _context2.next) {
               case 0:
                 _context2.next = 2;
-                return axios.get('/api/trend/latest');
+                return axios.get("/api/trend/latest");
 
               case 2:
                 response = _context2.sent;
@@ -6554,7 +6483,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 // 通信失敗の場合
-                _this2.$store.commit('error/setCode', response.status);
+                _this2.$store.commit("error/setCode", response.status);
 
                 return _context2.abrupt("return", false);
 
@@ -6583,7 +6512,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 _context3.next = 2;
-                return axios.get('/api/twitter/latest');
+                return axios.get("/api/twitter/latest");
 
               case 2:
                 response = _context3.sent;
@@ -6593,7 +6522,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                _this3.$store.commit('error/setCode', response.status);
+                _this3.$store.commit("error/setCode", response.status);
 
                 return _context3.abrupt("return", false);
 
@@ -6621,7 +6550,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios.get('/api/news/latest');
+                return axios.get("/api/news/latest");
 
               case 2:
                 response = _context4.sent;
@@ -6632,7 +6561,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 // 通信失敗の場合
-                _this4.$store.commit('error/setCode', response.status);
+                _this4.$store.commit("error/setCode", response.status);
 
                 return _context4.abrupt("return", false);
 
@@ -6651,13 +6580,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // clicked()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour: function sortByHour() {
-      this.column = 'tweet_hour';
+      this.column = "tweet_hour";
     },
     sortByDay: function sortByDay() {
-      this.column = 'tweet_day';
+      this.column = "tweet_day";
     },
     sortByWeek: function sortByWeek() {
-      this.column = 'tweet_week';
+      this.column = "tweet_week";
     }
   }
 });
@@ -6795,23 +6724,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
  // VuexのmapState関数をインポート
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6819,9 +6731,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
       loginForm: {
-        email: '',
-        password: '',
-        remember: ''
+        email: "",
+        password: "",
+        remember: ""
       },
       emailErrors: [],
       passwordErrors: []
@@ -6844,11 +6756,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: {
     // フロントエンド側のバリデーションチェック
     checkForm: function checkForm() {
-      var MSG_EMAIL_EMPTY = 'メールアドレスを入力してください';
-      var MSG_EMAIL_TYPE = 'メールアドレスの形式で入力してください';
-      var MSG_EMAIL_MAX = '50文字以内で入力してください';
-      var MSG_PASS_EMPTY = 'パスワードを入力してください';
-      var MSG_PASS_LESS = 'パスワードが異なります';
+      var MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      var MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      var MSG_EMAIL_MAX = "50文字以内で入力してください";
+      var MSG_PASS_EMPTY = "パスワードを入力してください";
+      var MSG_PASS_LESS = "パスワードが異なります";
       this.emailErrors = [];
       this.passwordErrors = []; // メールアドレスのバリデーション
 
@@ -6894,21 +6806,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _this.$store.dispatch('auth/login', _this.loginForm);
+                return _this.$store.dispatch("auth/login", _this.loginForm);
 
               case 2:
                 // API通信が成功した場合
                 if (_this.apiStatus) {
                   // フラッシュメッセージを表示
-                  _this.$store.dispatch('message/showMessage', {
-                    text: 'ログインしました',
-                    type: 'success',
+                  _this.$store.dispatch("message/showMessage", {
+                    text: "ログインしました",
+                    type: "success",
                     timeout: 2000
                   }); // VueRouterのpush()でホーム画面へ遷移
 
 
                   _this.$router.push({
-                    name: 'home'
+                    name: "home"
                   });
                 }
 
@@ -6921,7 +6833,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }))();
     },
     clearError: function clearError() {
-      this.$store.commit('auth/setLoginErrorMessages', null);
+      this.$store.commit("auth/setLoginErrorMessages", null);
     }
   }
 });
@@ -7531,62 +7443,39 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
       resetForm: {
-        email: '',
-        password: '',
-        password_confirmation: '',
-        token: ''
+        email: "",
+        password: "",
+        password_confirmation: "",
+        token: ""
       },
       emailErrors: [],
       passwordErrors: [],
       confirmErrors: [],
-      apiMessage: ''
+      apiMessage: ""
     };
   },
   created: function created() {
     // ページ読み込み時にURLのトークンを格納
-    this.resetForm.token = this.$route.params['token'];
+    this.resetForm.token = this.$route.params["token"];
     this.resetForm.email = this.$route.query.email;
   },
   methods: {
     /**
-    * フロントエンド側のバリデーションチェック
-    */
+     * フロントエンド側のバリデーションチェック
+     */
     checkForm: function checkForm() {
-      var MSG_EMAIL_EMPTY = 'メールアドレスを入力してください';
-      var MSG_EMAIL_TYPE = 'メールアドレスの形式で入力してください';
-      var MSG_EMAIL_MAX = '50文字以内で入力してください';
-      var MSG_PASS_EMPTY = 'パスワードを入力してください';
-      var MSG_PASS_LESS = '8文字以上で入力してください';
-      var MSG_RETYPE = 'パスワードが一致していません';
+      var MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
+      var MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
+      var MSG_EMAIL_MAX = "50文字以内で入力してください";
+      var MSG_PASS_EMPTY = "パスワードを入力してください";
+      var MSG_PASS_LESS = "8文字以上で入力してください";
+      var MSG_RETYPE = "パスワードが一致していません";
       this.emailErrors = [];
       this.passwordErrors = [];
       this.confirmErrors = []; // メールアドレスのバリデーション
@@ -7632,16 +7521,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
 
     /**
-    * メールアドレス形式チェック
-    */
+     * メールアドレス形式チェック
+     */
     validEmail: function validEmail(email) {
       var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return regex.test(email);
     },
 
     /**
-    * パスワードリセット処理WebAPI呼び出し
-    */
+     * パスワードリセット処理WebAPI呼び出し
+     */
     resetPassword: function resetPassword() {
       var _this = this;
 
@@ -7652,7 +7541,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.post('/api/password/reset', _this.resetForm);
+                return axios.post("/api/password/reset", _this.resetForm);
 
               case 2:
                 response = _context.sent;
@@ -7665,34 +7554,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // Laravel側で設定したresultフラグを取得
                 result = response.data.result; // パスワード変更が完了した場合
 
-                if (!(result === 'success')) {
+                if (!(result === "success")) {
                   _context.next = 13;
                   break;
                 }
 
                 // ログイン処理を実行
                 // setUserDataミューテーションでuserDataステートを更新
-                _this.$store.commit('auth/setUserData', response.data.user); // ログインユーザーのTwitterアカウント情報とフォロー済みリストを更新
+                _this.$store.commit("auth/setUserData", response.data.user); // ログインユーザーのTwitterアカウント情報とフォロー済みリストを更新
 
 
-                _this.$store.dispatch('twitter/updateTwitterUser'); // VueRouterのpush()でホーム画面へ遷移
+                _this.$store.dispatch("twitter/updateTwitterUser"); // VueRouterのpush()でホーム画面へ遷移
 
 
                 _this.$router.push({
-                  name: 'home'
+                  name: "home"
                 }); // フラッシュメッセージを表示
 
 
-                _this.$store.dispatch('message/showMessage', {
-                  text: 'パスワードを変更しました',
-                  type: 'success',
+                _this.$store.dispatch("message/showMessage", {
+                  text: "パスワードを変更しました",
+                  type: "success",
                   timeout: 2000
                 });
 
                 return _context.abrupt("return");
 
               case 13:
-                if (!(result === 'failed')) {
+                if (!(result === "failed")) {
                   _context.next = 16;
                   break;
                 }
@@ -7707,7 +7596,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 18:
                 // 失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
-                _this.$store.commit('error/setCode', response.status);
+                _this.$store.commit("error/setCode", response.status);
 
               case 19:
               case "end":
@@ -7730,8 +7619,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -52902,7 +52789,7 @@ var render = function() {
         "fade-in-component",
         [
           _c(
-            "RouterLink",
+            "router-link",
             {
               staticClass:
                 "c-btn--white c-btn--large c-btn--arrow p-action__btn",
@@ -52945,9 +52832,7 @@ var render = function() {
     { staticClass: "p-faq" },
     [
       _c("fade-in-component", [
-        _c("h3", { staticClass: "p-faq__title" }, [
-          _vm._v("\n      よくあるご質問\n    ")
-        ])
+        _c("h3", { staticClass: "p-faq__title" }, [_vm._v("よくあるご質問")])
       ]),
       _vm._v(" "),
       _c("fade-in-component", [
@@ -52964,7 +52849,7 @@ var render = function() {
                     attrs: { slot: "title" },
                     slot: "title"
                   },
-                  [_vm._v("\n            費用はかかりますか？\n          ")]
+                  [_vm._v("費用はかかりますか？")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -52997,7 +52882,7 @@ var render = function() {
                     attrs: { slot: "title" },
                     slot: "title"
                   },
-                  [_vm._v("\n            どうやって使うの？\n          ")]
+                  [_vm._v("どうやって使うの？")]
                 ),
                 _vm._v(" "),
                 _c(
@@ -53013,8 +52898,8 @@ var render = function() {
                     ),
                     _c("br"),
                     _vm._v("\n            まずは"),
-                    _c("RouterLink", { attrs: { to: { name: "register" } } }, [
-                      _vm._v("\n              ユーザー登録\n            ")
+                    _c("router-link", { attrs: { to: { name: "register" } } }, [
+                      _vm._v("\n              ユーザー登録 ")
                     ]),
                     _vm._v(
                       "にて、メールアドレスとパスワードでアカウント登録いただくと、\n            仮想通貨のツイート数ランキング、Twitterアカウント一覧、ニュース一覧をご覧いただけます。"
@@ -53107,7 +52992,7 @@ var render = function() {
                       "\n            パスワードをお忘れの方は\n            "
                     ),
                     _c(
-                      "RouterLink",
+                      "router-link",
                       { attrs: { to: { name: "password.request" } } },
                       [
                         _vm._v(
@@ -53252,7 +53137,7 @@ var render = function() {
           { staticClass: "p-hero__action c-fade-in" },
           [
             _c(
-              "RouterLink",
+              "router-link",
               {
                 staticClass: "c-btn--white c-btn--large c-btn--arrow u-mb--l",
                 attrs: { to: { name: "register" } }
@@ -53261,7 +53146,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
-              "RouterLink",
+              "router-link",
               { staticClass: "p-hero__link", attrs: { to: { name: "login" } } },
               [_vm._v("\n          アカウントをお持ちの方はこちら\n        ")]
             )
@@ -54087,7 +53972,7 @@ var render = function() {
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("section", { staticClass: "c-section" }, [
       _c("h5", { staticClass: "c-section__title" }, [
-        _vm._v("\n      リアルタイムトレンド\n    ")
+        _vm._v("リアルタイムトレンド")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "p-home__contents c-fade-in" }, [
@@ -54269,11 +54154,7 @@ var render = function() {
                           : _c(
                               "p",
                               { staticClass: "u-font--small u-font--muted" },
-                              [
-                                _vm._v(
-                                  "\n                    不明\n                  "
-                                )
-                              ]
+                              [_vm._v("不明")]
                             )
                       ]),
                       _vm._v(" "),
@@ -54293,11 +54174,7 @@ var render = function() {
                           : _c(
                               "p",
                               { staticClass: "u-font--small u-font--muted" },
-                              [
-                                _vm._v(
-                                  "\n                    不明\n                  "
-                                )
-                              ]
+                              [_vm._v("不明")]
                             )
                       ])
                     ]
@@ -54342,7 +54219,7 @@ var render = function() {
     _vm._v(" "),
     _c("section", { staticClass: "c-section" }, [
       _c("h5", { staticClass: "c-section__title" }, [
-        _vm._v("\n      仮想通貨 最新Twitterアカウント\n    ")
+        _vm._v("仮想通貨 最新Twitterアカウント")
       ]),
       _vm._v(" "),
       _c(
@@ -54355,7 +54232,7 @@ var render = function() {
               { staticClass: "p-target__list p-home__twitter" },
               [
                 _vm._l(_vm.targets, function(target) {
-                  return _c("TwitterTargetItem", {
+                  return _c("twitter-target-item", {
                     key: target.id,
                     attrs: { item: target, "is-login": false }
                   })
@@ -54366,7 +54243,7 @@ var render = function() {
                   { staticClass: "p-readmore__wrapper" },
                   [
                     _c(
-                      "RouterLink",
+                      "router-link",
                       {
                         staticClass:
                           "c-btn--accent-outline c-btn--arrow p-readmore__link",
@@ -54388,7 +54265,7 @@ var render = function() {
     _vm._v(" "),
     _c("section", { staticClass: "c-section" }, [
       _c("h5", { staticClass: "c-section__title" }, [
-        _vm._v("\n      仮想通貨 最新ニュース\n    ")
+        _vm._v("仮想通貨 最新ニュース")
       ]),
       _vm._v(" "),
       _c(
@@ -54435,7 +54312,7 @@ var render = function() {
             { staticClass: "p-readmore__wrapper" },
             [
               _c(
-                "RouterLink",
+                "router-link",
                 {
                   staticClass:
                     "c-btn--accent-outline c-btn--arrow p-readmore__link",
@@ -54459,17 +54336,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "c-table__thead" }, [
       _c("tr", [
-        _c("th", { staticClass: "c-table--left" }, [
-          _vm._v("\n                  順位\n                ")
-        ]),
+        _c("th", { staticClass: "c-table--left" }, [_vm._v("順位")]),
         _vm._v(" "),
-        _c("th", { staticClass: "c-table--left" }, [
-          _vm._v("\n                  銘柄名\n                ")
-        ]),
+        _c("th", { staticClass: "c-table--left" }, [_vm._v("銘柄名")]),
         _vm._v(" "),
-        _c("th", { staticClass: "c-table--center" }, [
-          _vm._v("\n                  ツイート数\n                ")
-        ]),
+        _c("th", { staticClass: "c-table--center" }, [_vm._v("ツイート数")]),
         _vm._v(" "),
         _c("th", { staticClass: "c-table--right" }, [
           _vm._v("\n                  過去24時間の"),
@@ -54513,9 +54384,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-container--bg" }, [
-    _c("h2", { staticClass: "c-container__title" }, [
-      _vm._v("\n    ログイン\n  ")
-    ]),
+    _c("h2", { staticClass: "c-container__title" }, [_vm._v("ログイン")]),
     _vm._v(" "),
     _c("div", { staticClass: "c-form__wrapper" }, [
       _c(
@@ -54534,7 +54403,7 @@ var render = function() {
             _c(
               "label",
               { staticClass: "c-form__label", attrs: { for: "login-email" } },
-              [_vm._v(" メールアドレス ")]
+              [_vm._v("\n          メールアドレス\n        ")]
             ),
             _vm._v(" "),
             _c("input", {
@@ -54765,7 +54634,7 @@ var render = function() {
         { staticClass: "c-form__link" },
         [
           _c(
-            "RouterLink",
+            "router-link",
             {
               staticClass: "c-form__link",
               attrs: { to: { name: "register" } }
@@ -55151,7 +55020,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("h2", { staticClass: "c-container__title" }, [
-      _vm._v("\n    パスワードの再設定\n  ")
+      _vm._v("パスワードの再設定")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "c-form__wrapper" }, [
@@ -55194,7 +55063,7 @@ var render = function() {
             _c(
               "label",
               { staticClass: "c-form__label", attrs: { for: "login-email" } },
-              [_vm._v(" メールアドレス ")]
+              [_vm._v("\n          メールアドレス\n        ")]
             ),
             _vm._v(" "),
             _c("input", {
@@ -55372,7 +55241,7 @@ var render = function() {
         { staticClass: "c-form__link" },
         [
           _c(
-            "RouterLink",
+            "router-link",
             {
               staticClass: "c-form__link",
               attrs: { to: { name: "password.request" } }
@@ -55451,7 +55320,7 @@ var render = function() {
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("section", { staticClass: "c-section" }, [
       _c("h2", { staticClass: "c-section__title" }, [
-        _vm._v("\n      プライバシーポリシー\n    ")
+        _vm._v("プライバシーポリシー")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "c-section__contents" }, [
@@ -55462,7 +55331,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("h3", { staticClass: "c-section__subtitle--left" }, [
-          _vm._v("\n        第1条（個人情報）\n      ")
+          _vm._v("第1条（個人情報）")
         ]),
         _vm._v(" "),
         _c("p", { staticClass: "c-section__text--left" }, [
@@ -55472,7 +55341,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("h3", { staticClass: "c-section__subtitle--left" }, [
-          _vm._v("\n        第2条（個人情報の収集方法）\n      ")
+          _vm._v("第2条（個人情報の収集方法）")
         ]),
         _vm._v(" "),
         _c("p", { staticClass: "c-section__text--left" }, [
@@ -55494,19 +55363,19 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("h3", { staticClass: "c-section__subtitle--left" }, [
-          _vm._v("\n        第4条（利用目的の変更）\n      ")
+          _vm._v("第4条（利用目的の変更）")
         ]),
         _vm._v(" "),
         _vm._m(1),
         _vm._v(" "),
         _c("h3", { staticClass: "c-section__subtitle--left" }, [
-          _vm._v("\n        第5条（個人情報の第三者提供）\n      ")
+          _vm._v("第5条（個人情報の第三者提供）")
         ]),
         _vm._v(" "),
         _vm._m(2),
         _vm._v(" "),
         _c("h3", { staticClass: "c-section__subtitle--left" }, [
-          _vm._v("\n        第6条（個人情報の開示）\n      ")
+          _vm._v("第6条（個人情報の開示）")
         ]),
         _vm._v(" "),
         _vm._m(3),
@@ -55518,7 +55387,7 @@ var render = function() {
         _vm._m(4),
         _vm._v(" "),
         _c("h3", { staticClass: "c-section__subtitle--left" }, [
-          _vm._v("\n        第8条（個人情報の利用停止等）\n      ")
+          _vm._v("第8条（個人情報の利用停止等）")
         ]),
         _vm._v(" "),
         _vm._m(5),
@@ -55530,7 +55399,7 @@ var render = function() {
         _vm._m(6),
         _vm._v(" "),
         _c("h3", { staticClass: "c-section__subtitle--left" }, [
-          _vm._v("\n        第10条（お問い合わせ窓口）\n      ")
+          _vm._v("第10条（お問い合わせ窓口）")
         ]),
         _vm._v(" "),
         _c(
@@ -55538,21 +55407,17 @@ var render = function() {
           { staticClass: "c-section__text--left" },
           [
             _vm._v("\n        本ポリシーに関するお問い合わせは、\n        "),
-            _c("RouterLink", { attrs: { to: { name: "contact" } } }, [
-              _vm._v("\n          お問い合わせフォーム\n        ")
+            _c("router-link", { attrs: { to: { name: "contact" } } }, [
+              _vm._v("\n          お問い合わせフォーム ")
             ]),
             _vm._v("へお願いいたします。\n      ")
           ],
           1
         ),
         _vm._v(" "),
-        _c("p", { staticClass: "u-font--right" }, [
-          _vm._v("\n        以上\n      ")
-        ]),
+        _c("p", { staticClass: "u-font--right" }, [_vm._v("以上")]),
         _vm._v(" "),
-        _c("p", { staticClass: "u-font--right" }, [
-          _vm._v("\n        2021年2月1日 制定\n      ")
-        ])
+        _c("p", { staticClass: "u-font--right" }, [_vm._v("2021年2月1日 制定")])
       ])
     ])
   ])
@@ -55567,7 +55432,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("li", [
         _vm._v(
-          "ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）"
+          "\n          ユーザーからのお問い合わせに回答するため（本人確認を行うことを含む）\n        "
         )
       ]),
       _vm._v(" "),
@@ -55589,7 +55454,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("li", [
         _vm._v(
-          "ユーザーにご自身の登録情報の閲覧や変更、削除、ご利用状況の閲覧を行っていただくため"
+          "\n          ユーザーにご自身の登録情報の閲覧や変更、削除、ご利用状況の閲覧を行っていただくため\n        "
         )
       ]),
       _vm._v(" "),
@@ -55630,7 +55495,7 @@ var staticRenderFns = [
         _c("ol", { staticClass: "c-list__ordered" }, [
           _c("li", [
             _vm._v(
-              "人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき"
+              "\n              人の生命、身体または財産の保護のために必要がある場合であって、本人の同意を得ることが困難であるとき\n            "
             )
           ]),
           _vm._v(" "),
@@ -55659,7 +55524,7 @@ var staticRenderFns = [
               _vm._v(" "),
               _c("li", [
                 _vm._v(
-                  "本人の求めに応じて個人情報の第三者への提供を停止すること"
+                  "\n                  本人の求めに応じて個人情報の第三者への提供を停止すること\n                "
                 )
               ]),
               _vm._v(" "),
@@ -55676,13 +55541,13 @@ var staticRenderFns = [
         _c("ol", { staticClass: "c-list__ordered" }, [
           _c("li", [
             _vm._v(
-              "当社が利用目的の達成に必要な範囲内において個人情報の取扱いの全部または一部を委託する場合"
+              "\n              当社が利用目的の達成に必要な範囲内において個人情報の取扱いの全部または一部を委託する場合\n            "
             )
           ]),
           _vm._v(" "),
           _c("li", [
             _vm._v(
-              "合併その他の事由による事業の承継に伴って個人情報が提供される場合"
+              "\n              合併その他の事由による事業の承継に伴って個人情報が提供される場合\n            "
             )
           ]),
           _vm._v(" "),
@@ -55707,12 +55572,14 @@ var staticRenderFns = [
         _c("ol", { staticClass: "c-list__ordered" }, [
           _c("li", [
             _vm._v(
-              "本人または第三者の生命、身体、財産その他の権利利益を害するおそれがある場合"
+              "\n              本人または第三者の生命、身体、財産その他の権利利益を害するおそれがある場合\n            "
             )
           ]),
           _vm._v(" "),
           _c("li", [
-            _vm._v("当社の業務の適正な実施に著しい支障を及ぼすおそれがある場合")
+            _vm._v(
+              "\n              当社の業務の適正な実施に著しい支障を及ぼすおそれがある場合\n            "
+            )
           ]),
           _vm._v(" "),
           _c("li", [_vm._v("その他法令に違反することとなる場合")])
@@ -55721,7 +55588,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("li", [
         _vm._v(
-          "前項の定めにかかわらず、履歴情報および特性情報などの個人情報以外の情報については、原則として開示いたしません。"
+          "\n          前項の定めにかかわらず、履歴情報および特性情報などの個人情報以外の情報については、原則として開示いたしません。\n        "
         )
       ])
     ])
