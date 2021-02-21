@@ -1,4 +1,3 @@
-
 <template>
   <div class="c-container--bg">
     <section class="c-section c-section--bg">

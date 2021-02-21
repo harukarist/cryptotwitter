@@ -1,15 +1,18 @@
 <template>
   <transition
     name="modal"
-    appear>
+    appear
+  >
     <div
       class="c-modal__wrapper"
-      @click.self="$emit('close')">
+      @click.self="$emit('close')"
+    >
       <div class="c-modal__dialog">
         <div class="c-modal__header">
           <i
             class="fas fa-times c-modal__close"
-            @click="$emit('close')" />
+            @click="$emit('close')"
+          />
         </div>
         <div class="c-modal__body">
           <slot name="text" />
@@ -18,7 +21,8 @@
           <slot name="btn" />
           <button
             class="c-btn--main c-modal__footer-btn"
-            @click="$emit('close')">
+            @click="$emit('close')"
+          >
             取り消し
           </button>
         </div>

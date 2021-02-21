@@ -17,7 +17,7 @@
       }
       &:before {
         counter-increment: item; //カウンタを1ずつ増やす
-        content: counter(item)'.'; //リストタイプ
+        // content: counter(item)'.'; //リストタイプ
         padding-right: 0.5em;
       }
     }
@@ -29,7 +29,7 @@
         padding-left: 1.5em;
       }
       li {
-        text-indent: -1.7em;
+        // text-indent: -1.7em;
         &:before {
           content: '('counter(item)')'; //リストタイプ
           padding-right: 0.5em;

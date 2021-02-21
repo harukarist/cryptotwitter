@@ -1,15 +1,15 @@
 const state = {
-	isLoading: false
+  isLoading: false,
 }
 
 const mutations = {
-	setIsLoading(state, status) {
-		state.isLoading = status
-	},
+  setIsLoading(state, status) {
+    state.isLoading = status
+  },
 }
 
 export default {
-	namespaced: true,
-	state,
-	mutations
+  namespaced: true,
+  state,
+  mutations,
 }
