@@ -199,7 +199,7 @@ export default {
      */
     async resetPassword() {
       // サーバーのAPIを呼び出し
-      const response = await axios.post("/api/password/reset", this.resetForm);
+      const response = await axios.post("/api/password/update", this.resetForm);
 
       // API通信が成功した時
       if (response.status === OK) {

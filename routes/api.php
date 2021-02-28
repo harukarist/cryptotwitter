@@ -23,7 +23,7 @@ Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 // パスワードリセットメール送信API
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
 // パスワードリセット処理API
-Route::post('/password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+Route::post('/password/update', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 // お問い合わせフォーム入力内容確認API
 Route::post('/contact/confirm', 'ContactController@confirm')->name('contact.confirm');

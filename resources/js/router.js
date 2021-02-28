@@ -119,7 +119,7 @@ const router = new VueRouter({
 			meta: { onlyGuest: true }, //ログイン前のみアクセス可能
 		},
 		{
-			path: '/password/reset/:token',
+			path: '/password/reset/form/:token',
 			name: 'password.reset',
 			component: PassResetComponent,
 			meta: { onlyGuest: true }, //ログイン前のみアクセス可能

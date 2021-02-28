@@ -47,7 +47,7 @@ class ResetPasswordController extends Controller
     {
         // トークンとメールアドレスをクエリパラメータに含めたパスをリダイレクト先に指定して
         // Vueコンポーネントのパスワードリセットフォームを表示する
-        return redirect("/password/reset/{$token}?email={$request->email}");
+        return redirect("/password/reset/form/{$token}?email={$request->email}");
     }
 
     /**
