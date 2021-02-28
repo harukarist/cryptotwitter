@@ -39,6 +39,7 @@ const actions = {
    * Twitter認証チェックアクション
    */
   async checkAuth(context) {
+    console.log('checkAuth');
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
@@ -68,12 +69,11 @@ const actions = {
    */
   // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
   async updateTwitterUser(context) {
+    console.log('updateTwitterUser');
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    context.commit('loader/setIsLoading', true, { root: true }) //ローディング表示をオン
     const response = await axios.post('/api/auth/twitter/update')
-    context.commit('loader/setIsLoading', false, { root: true }) //ローディング表示をオフ
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更

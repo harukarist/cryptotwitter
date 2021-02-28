@@ -14,7 +14,7 @@ const state = {
 
 // ステートの値から状態を算出するゲッター
 const getters = {
-// ユーザーが認証済みかどうかをチェックする
+  // ユーザーが認証済みかどうかをチェックする
   check: (state) => !!state.userData, //ログインチェック（userDataが取得できていれば二重否定でtrueを返す）
   userName: (state) => (state.userData ? state.userData.name : ''), //ユーザー名を格納（nullの場合は空文字を返す）
 }
@@ -22,7 +22,7 @@ const getters = {
 // ステートの値を同期処理で更新するミューテーション
 // ミューテーションでは必ず第一引数にステートを指定する
 const mutations = {
-// userDataステートの値を更新する処理
+  // userDataステートの値を更新する処理
   setUserData(state, userData) {
     state.userData = userData
   },
@@ -46,9 +46,9 @@ const mutations = {
 
 // 非同期処理を行い、ミューテーションにcommitするアクション
 const actions = {
-/**
- * ユーザー登録処理
- */
+  /**
+   * ユーザー登録処理
+   */
   // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
   async register(context, data) {
     // setApiStatusミューテーションでステータスを初期化
@@ -95,8 +95,12 @@ const actions = {
       // setUserDataミューテーションでuserDataステートを更新
       context.commit('setUserData', response.data)
 
-      // dispatch()でtwitterストアのupdateTwitterUserアクションを呼び出す
+      // dispatch()でtwitterストアのcheckAuthアクションを呼び出して
+      // ログインユーザーの認証済みTwitterアカウントがあれば取得
       // 別モジュールのアクションを呼び出すため、第三引数にroot: trueを指定する
+      context.dispatch('twitter/checkAuth', '', { root: true })
+      // dispatch()でtwitterストアのupdateTwitterUserアクションを呼び出して
+      // ログインユーザーのTwitterアカウント情報を最新データに更新
       context.dispatch('twitter/updateTwitterUser', '', { root: true })
       return false //処理を終了
     }
