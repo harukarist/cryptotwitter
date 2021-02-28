@@ -50,7 +50,7 @@ class AutoFollow extends Command
      */
     public function handle()
     {
-        $MAX_PER_ONCE = 1; //1回のコマンド実行で自動フォローするアカウント数の上限（15分に15回まで）
+        $MAX_PER_ONCE = 15; //1回のコマンド実行で自動フォローするアカウント数の上限（15分に15回まで）
         $MAX_PER_DAY = 400; //1日あたりのフォロー数の上限（1日あたり400件）
         // 各アカウントのフォロー数のリミットは1日あたり400件
         // https://help.twitter.com/ja/rules-and-policies/twitter-limits
@@ -111,11 +111,6 @@ class AutoFollow extends Command
 
             // 自動フォロー対象のコレクションからTwitterIDのみ抽出し、配列に変換
             $target_ids = $diff_autofollows->pluck('twitter_id')->toArray();
-
-            dump(count($target_users));
-            dump(count($diff_follows));
-            dump(count($diff_autofollows));
-            dump(count($target_ids));
 
             // 自動フォロー対象のTwitterIDが存在しない場合
             if (!$target_ids) {
