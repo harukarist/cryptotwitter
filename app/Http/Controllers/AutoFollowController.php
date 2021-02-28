@@ -50,8 +50,8 @@ class AutoFollowController extends Controller
             $items = Autofollow::with('target_user')
                 ->where('twitter_user_id', $twitter_id)
                 ->whereHas('target_user', $whereHas)
-                ->distinct('target_id') //重複データを除く
                 ->orderBy('created_at', 'DESC')
+                ->distinct() //重複データを除く
                 ->paginate(10);
             // json形式で返却
             return $items;
@@ -61,8 +61,8 @@ class AutoFollowController extends Controller
         // ログインユーザーの自動フォロー履歴（autofollowsテーブルとリレーション先のtarget_userテーブルのレコード）をページネーション形式で取得
         $items = Autofollow::with('target_user')
             ->where('twitter_user_id',  $twitter_id)
-            ->distinct('target_id') //重複データを除く
             ->orderBy('created_at', 'DESC')
+            ->distinct() //重複データを除く
             ->paginate(10);
         // json形式で返却
         return $items;
