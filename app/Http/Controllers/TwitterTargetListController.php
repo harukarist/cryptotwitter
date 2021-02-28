@@ -72,7 +72,8 @@ class TwitterTargetListController extends Controller
     if (!isset(Auth::user()->twitter_user)) {
       // ツイートIDが存在する有効な仮想通貨アカウントをTwitterAPIからの最新取得順にページネーション表示
       $targets = TargetUser::whereNotNull('tweet_id')
-        ->orderBy('id', 'DESC')->paginate(10);
+        ->orderBy('id', 'DESC')
+        ->paginate(10);
       // 自動でJSONに変換して返却
       return $targets;
     }
@@ -83,7 +84,8 @@ class TwitterTargetListController extends Controller
     // フォロー済み配列のIDを除いた仮想通貨アカウントをTwitterAPIからの最新取得順にページネーション表示
     $targets = TargetUser::whereNotNull('tweet_id')
       ->whereNotIn('id', $follow_ids)
-      ->orderBy('id', 'DESC')->paginate(10);
+      ->orderBy('id', 'DESC')
+      ->paginate(10);
 
     // 取得できなかった場合は NotFoundエラーを返却
     if (!$targets) {
