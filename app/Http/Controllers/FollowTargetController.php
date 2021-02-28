@@ -113,9 +113,6 @@ class FollowTargetController extends Controller
 
     // ユーザーのTwitterIDとターゲットのTwitterIDを、TwitterAPIのパラメータに指定
     $params = array(
-      'user_id' => $target_id,
-    );
-    $params = array(
       'source_id' => $twitter_id,
       'target_id' => $target_id,
     );
@@ -123,10 +120,6 @@ class FollowTargetController extends Controller
     // エンドポイントとパラメータを指定して、TwitterAPIでフォロー状況を取得
     $result = $connect->get($ENDPOINT, $params);
 
-    // 取得できなかった場合はNotFoundエラーを返却
-    if (!$result) {
-      return abort(404);
-    }
     // 結果を呼び出し元のメソッドに返却
     return $result;
   }

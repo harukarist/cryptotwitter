@@ -50,7 +50,7 @@ class AutoFollow extends Command
      */
     public function handle()
     {
-        $MAX_PER_ONCE = 15; //1回のコマンド実行で自動フォローするアカウント数の上限（15分に15回まで）
+        $MAX_PER_ONCE = 1; //1回のコマンド実行で自動フォローするアカウント数の上限（15分に15回まで）
         $MAX_PER_DAY = 400; //1日あたりのフォロー数の上限（1日あたり400件）
         // 各アカウントのフォロー数のリミットは1日あたり400件
         // https://help.twitter.com/ja/rules-and-policies/twitter-limits
@@ -101,12 +101,21 @@ class AutoFollow extends Command
 
             // フォロー済みの仮想通貨アカウントのコレクションをfollowsテーブルから取得
             $follows = $twitter_user->follows()->get();
+            // 自動フォローした仮想通貨アカウントのコレクションをautofollowsテーブルから取得
+            $autofollows = $twitter_user->autofollows()->get();
 
-            // 仮想通貨アカウント一覧からフォロー済みアカウントを除いた自動フォロー対象のアカウントオブジェクトを取得
-            $diff = $target_users->diff($follows);
+            // 仮想通貨アカウント一覧からフォロー済みアカウントを除いたコレクションを取得
+            $diff_follows = $target_users->diff($follows);
+            // フォロー済みアカウントを除いたコレクションから自動フォロー済みアカウントを除いたコレクションを取得
+            $diff_autofollows = $diff_follows->diff($autofollows);
 
-            // 自動フォロー対象のアカウントオブジェクトからTwitterIDのみ抽出し、配列に変換
-            $target_ids = $diff->pluck('twitter_id')->toArray();
+            // 自動フォロー対象のコレクションからTwitterIDのみ抽出し、配列に変換
+            $target_ids = $diff_autofollows->pluck('twitter_id')->toArray();
+
+            dump(count($target_users));
+            dump(count($diff_follows));
+            dump(count($diff_autofollows));
+            dump(count($target_ids));
 
             // 自動フォロー対象のTwitterIDが存在しない場合
             if (!$target_ids) {
@@ -120,9 +129,9 @@ class AutoFollow extends Command
             // 自動フォロー対象のTwitterIDの個数がリクエスト上限より少ない場合は、TwitterIDの個数をリクエスト上限に変更
             if ($ids_count < $max_requests) {
                 $max_requests = $ids_count;
-                dump("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントは残り{$ids_count}個です");
-                logger()->info("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントは残り{$ids_count}個です");
             }
+            dump("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントは残り{$ids_count}個です");
+            logger()->info("{$twitter_user->user_name}さんがフォローできる仮想通貨アカウントは残り{$ids_count}個です");
 
             // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
             $connect = UsersTwitterOAuth::userOAuth($twitter_user);
