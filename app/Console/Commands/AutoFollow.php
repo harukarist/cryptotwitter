@@ -13,7 +13,7 @@ use App\Http\Controllers\FollowTargetController;
 
 /**
  * 自動フォローをONにしているユーザーのTwitterアカウントで
- * 仮想通貨アカウントの自動フォローを実行するクラス
+ * 仮想通貨アカウントの自動フォローを実行するコマンド
  */
 class AutoFollow extends Command
 {
@@ -112,15 +112,19 @@ class AutoFollow extends Command
             // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
             $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
-            $follow_total = 0;
-            for ($i = 1; $i <= $MAX_REQUESTS; $i++) {
+            $follow_total = 0; // 今回のフォロー合計数をカウントする変数
+
+            // フォロー合計数が上限に達するまでターゲットの自動フォローを実行
+            for ($i = 1; $follow_total < $MAX_REQUESTS; $i++) {
                 // TwitterIDの配列からキーをランダムに1件抽出
                 $key = array_rand($target_ids);
                 // ターゲット配列から抽出したキーを持つターゲットのTwitterIDを取得
                 $target_id = $target_ids[$key];
+
                 // ユーザーとターゲットのTwitterIDを指定してTwitterAPIでフォローを行うメソッドを実行
                 $result = FollowTargetController::createFollow($twitter_user, $target_id, $connect);
-                // ターゲットをフォローした場合
+
+                // ターゲットをフォローした場合（戻り値の$result['is_done']がtrueの場合）
                 if ($result['is_done']) {
                     // ターゲットのtarget_usersテーブル上の主キー'id'を取得
                     $target = TargetUser::select('id')->where('twitter_id', $target_id)->first();
