@@ -55,7 +55,6 @@ class FetchTwpro extends Command
             $limit = $this->checkTwproLimit();
 
             $limit_count = $limit->rest; //残りAPI利用可能回数
-            dump("リクエスト回数はあと" . $limit_count . "回");
             logger()->info("リクエスト回数はあと" . $limit_count . "回");
 
             $until = $limit->until; //次にrest値が復帰する日時(Unix時間)
@@ -144,7 +143,6 @@ class FetchTwpro extends Command
 
         dump("{$create_total}件のユーザー情報を新規保存しました");
         dump("{$update_total}件のユーザー情報を更新しました");
-        dump("{$req_count}回リクエスト済み");
         logger()->info("{$create_total}件のユーザー情報を新規保存しました");
         logger()->info("{$update_total}件のユーザー情報を更新しました");
         logger()->info("{$req_count}回リクエスト済み");

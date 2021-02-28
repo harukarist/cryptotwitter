@@ -60,9 +60,10 @@ class Kernel extends ConsoleKernel
         // 毎日深夜1:00にTwitterAPIで仮想通貨アカウントを取得するコマンドを実行
         $schedule->command('fetch:targets')
             ->dailyAt('01:00');
+        // TwitterAPIでの仮想通貨アカウント取得後、TwproAPIで仮想通貨アカウントを取得するコマンドを実行
         $schedule->command('fetch:twpro')
             ->dailyAt('01:00');
-        // Twproでの仮想通貨アカウント取得後に、未取得の最新ツイートを取得するコマンドを実行
+        // TwproAPIでの仮想通貨アカウント取得後、未取得の最新ツイートを取得するコマンドを実行
         $schedule->command('fetch:targetsTweet')
             ->dailyAt('01:10');
 

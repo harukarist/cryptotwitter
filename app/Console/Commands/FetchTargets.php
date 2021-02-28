@@ -73,7 +73,6 @@ class FetchTargets extends Command
                 // リクエスト残り回数が初期値より大きければ、初期値をリクエスト回数とする
                 $remain_count = $MAX_REQUEST;
             }
-            dump("リクエスト回数はあと" . $remain_count . "回");
             logger()->info("リクエスト回数はあと" . $remain_count . "回");
 
             // 検索パラメータを生成
@@ -161,7 +160,6 @@ class FetchTargets extends Command
 
             // APIから返ってきたオブジェクトにエラープロパティがあれば処理を終了
             if (array_key_exists('errors', $users_arr)) {
-                dump("{$params['page']}ページ目にユーザー情報は存在しません");
                 logger()->info("{$params['page']}ページ目にユーザー情報は存在しません");
                 break;
             }
@@ -185,7 +183,6 @@ class FetchTargets extends Command
 
         dump("{$create_total}件のユーザー情報を新規保存しました");
         dump("{$update_total}件のユーザー情報を更新しました");
-        dump("{$req_count}回リクエスト済み");
         logger()->info("{$create_total}件のユーザー情報を新規保存しました");
         logger()->info("{$update_total}件のユーザー情報を更新しました");
         logger()->info("{$req_count}回リクエスト済み");
