@@ -95,9 +95,9 @@ class FetchTargetsTweet extends Command
             $limit_obj = $status->resources->statuses;
             $limit_arr = (array)$limit_obj;
 
-            if (array_key_exists('statuses/user_timeline', $limit_arr)) {
-                if (property_exists($limit_arr['statuses/user_timeline'], 'remaining')) {
-                    $limit_count = $limit_arr['statuses/user_timeline']->remaining; // 残り使用回数
+            if (array_key_exists('/statuses/user_timeline', $limit_arr)) {
+                if (property_exists($limit_arr['/statuses/user_timeline'], 'remaining')) {
+                    $limit_count = $limit_arr['/statuses/user_timeline']->remaining; // 残り使用回数
                     logger()->info("残り:{$limit_count}回");
                     return $limit_count;
                 }
@@ -138,7 +138,7 @@ class FetchTargetsTweet extends Command
 
             try {
                 // TwitterAPIで対象ターゲットユーザーの最新ツイートを検索し、返却された検索結果を変数に格納
-                $result = Twitter::get("statuses/user_timeline", $params);
+                $result = Twitter::get("/statuses/user_timeline", $params);
             } catch (TwitterOAuthException $e) {
                 dump("エラーが発生しました");
                 logger()->info("エラーが発生しました");

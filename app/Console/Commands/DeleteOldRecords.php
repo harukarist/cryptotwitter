@@ -66,7 +66,7 @@ class DeleteOldRecords extends Command
      */
     public function deleteTweets()
     {
-        $STORAGE_DAYS = 8; //レコードを保存しておく日数
+        $STORAGE_DAYS = 7; //レコードを保存しておく日数
         $storage_started = $this->today->copy()->subDays($STORAGE_DAYS);
         $deleted = Tweet::where('tweeted_at', '<', $storage_started)->delete();
         dump("{$storage_started}以前のツイートレコードを{$deleted}件削除しました");
@@ -78,7 +78,7 @@ class DeleteOldRecords extends Command
      */
     public function deleteFetchTweetsLogs()
     {
-        $STORAGE_DAYS = 8; //レコードを保存しておく日数
+        $STORAGE_DAYS = 7; //レコードを保存しておく日数
         $storage_started = $this->today->copy()->subDays($STORAGE_DAYS);
         $deleted = DB::table('fetch_tweets_logs')->where('since_at', '<', $storage_started)->delete();
         dump("{$storage_started}以前のツイート取得ログレコードを{$deleted}件削除しました");
@@ -90,7 +90,7 @@ class DeleteOldRecords extends Command
      */
     public function deleteFetchTargetsLogs()
     {
-        $STORAGE_DAYS = 8; //レコードを保存しておく日数
+        $STORAGE_DAYS = 7; //レコードを保存しておく日数
         $storage_started = $this->today->copy()->subDays($STORAGE_DAYS);
         $deleted = DB::table('fetch_targets_logs')->where('created_at', '<', $storage_started)->delete();
         dump("{$storage_started}以前のターゲットユーザー取得ログレコードを{$deleted}件削除しました");
@@ -102,7 +102,7 @@ class DeleteOldRecords extends Command
      */
     public function deleteAutoFollowLogs()
     {
-        $STORAGE_DAYS = 8; //レコードを保存しておく日数
+        $STORAGE_DAYS = 7; //レコードを保存しておく日数
         $storage_started = $this->today->copy()->subDays($STORAGE_DAYS);
         $deleted = DB::table('autofollow_logs')->where('created_at', '<', $storage_started)->delete();
         dump("{$storage_started}以前の自動フォローログログレコードを{$deleted}件削除しました");
