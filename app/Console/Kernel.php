@@ -15,14 +15,16 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    // バッチ処理を実行するCommandクラスを登録する
+    // バッチ処理を実行するCommandクラスをコマンド変数に登録する
     protected $commands = [
         Commands\AutoFollow::Class,
+        Commands\DeleteOldRecords::Class,
+        Commands\FetchNews::Class,
+        Commands\FetchTargets::Class,
+        Commands\FetchTargetsTweet::Class,
         Commands\FetchTweetsLatest::Class,
         Commands\FetchTweetsWeekly::Class,
         Commands\FetchTwpro::Class,
-        Commands\FetchTargets::Class,
-        Commands\FetchNews::Class,
         Commands\UpdatePrices::Class,
         Commands\UpdateTweetCount::Class,
     ];
@@ -33,34 +35,38 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    // Commandを定期的に実行するタスクスケジュールの設定
+    // Commandを定期的に実行するタスクスケジュールを設定するメソッド
     protected function schedule(Schedule $schedule)
     {
-        // 15分毎に自動フォローを実行する
+        // 15分毎に自動フォローを行うコマンドを実行
         $schedule->command('follow:autofollow')
             ->everyFifteenMinutes();
 
-        // 10分毎に仮想通貨関連のツイート検索、各銘柄のツイート数の集計を実行する
+        // 10分毎にTwitterAPIで仮想通貨関連ツイートを取得するコマンドを実行
         $schedule->command('fetch:latestTweets')
             ->everyTenMinutes();
+        // 仮想通貨関連ツイート取得後、各銘柄のツイート数を集計するコマンドを実行
         $schedule->command('update:tweetCount')
             ->everyTenMinutes();
 
-        // 10分毎に仮想通貨の価格チェックを実行する
+        // 10分毎に仮想通貨銘柄の価格を更新するコマンドを実行
         $schedule->command('update:prices')
             ->everyTenMinutes();
 
-        // 15分毎にニュース検索を実行する
+        // 15分毎にGoogleニュースを取得するコマンドを実行
         $schedule->command('fetch:news')
             ->everyFifteenMinutes();
 
-        // 毎日深夜1:00にTwitterアカウント一覧を更新する
+        // 毎日深夜1:00にTwitterAPIで仮想通貨アカウントを取得するコマンドを実行
         $schedule->command('fetch:targets')
             ->dailyAt('01:00');
         $schedule->command('fetch:twpro')
             ->dailyAt('01:00');
+        // Twproでの仮想通貨アカウント取得後に、未取得の最新ツイートを取得するコマンドを実行
+        $schedule->command('fetch:targetsTweet')
+            ->dailyAt('01:10');
 
-        // 毎日深夜2:13に古いツイート及び取得ログレコードを削除する
+        // 毎日深夜2:13に古いツイート及び取得ログレコードを削除するコマンドを実行
         $schedule->command('delete:records')
             ->dailyAt('02:13');
     }
