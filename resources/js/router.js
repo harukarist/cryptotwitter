@@ -113,13 +113,13 @@ const router = new VueRouter({
 			meta: { onlyGuest: true }, //ログイン前のみアクセス可能
 		},
 		{
-			path: '/pass/request',
+			path: '/password/request',
 			name: 'password.request',
 			component: PassRequestComponent,
 			meta: { onlyGuest: true }, //ログイン前のみアクセス可能
 		},
 		{
-			path: '/pass/reset/:token',
+			path: '/password/reset/:token',
 			name: 'password.reset',
 			component: PassResetComponent,
 			meta: { onlyGuest: true }, //ログイン前のみアクセス可能
