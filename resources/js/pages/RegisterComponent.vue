@@ -1,10 +1,18 @@
 <template>
   <div class="c-container--bg">
-    <h2 class="c-container__title">新規ユーザー登録</h2>
+    <h2 class="c-container__title">
+      新規ユーザー登録
+    </h2>
     <div class="c-form__wrapper">
-      <form class="c-form--small" @submit.prevent="checkForm">
+      <form
+        class="c-form--small"
+        @submit.prevent="checkForm"
+      >
         <div class="c-form__group">
-          <label for="username" class="c-form__label">
+          <label
+            for="username"
+            class="c-form__label"
+          >
             お名前
             <span class="c-form__notes">20文字以内</span>
           </label>
@@ -17,7 +25,7 @@
             required
             autocomplete="name"
             autofocus
-          />
+          >
           <invalid-component :messages="nameErrors" />
           <invalid-component
             v-if="registerErrors && registerErrors.name"
@@ -25,7 +33,10 @@
           />
         </div>
         <div class="c-form__group">
-          <label for="email" class="c-form__label">メールアドレス</label>
+          <label
+            for="email"
+            class="c-form__label"
+          >メールアドレス</label>
           <input
             id="email"
             v-model="registerForm.email"
@@ -34,7 +45,7 @@
             placeholder="例）your.email@example.com"
             required
             autocomplete="email"
-          />
+          >
           <invalid-component :messages="emailErrors" />
           <invalid-component
             v-if="registerErrors && registerErrors.email"
@@ -42,7 +53,10 @@
           />
         </div>
         <div class="c-form__group">
-          <label for="password" class="c-form__label">
+          <label
+            for="password"
+            class="c-form__label"
+          >
             パスワード
             <span class="c-form__notes">半角英数字8文字以上</span>
           </label>
@@ -54,7 +68,7 @@
             placeholder="パスワードを入力"
             required
             autocomplete="new-password"
-          />
+          >
           <invalid-component :messages="passwordErrors" />
           <invalid-component
             v-if="registerErrors && registerErrors.password"
@@ -62,9 +76,10 @@
           />
         </div>
         <div class="c-form__group">
-          <label for="password-confirmation" class="c-form__label"
-            >パスワード（再入力）</label
-          >
+          <label
+            for="password-confirmation"
+            class="c-form__label"
+          >パスワード（再入力）</label>
           <input
             id="password-confirmation"
             v-model="registerForm.password_confirmation"
@@ -73,11 +88,13 @@
             placeholder="パスワードを再度入力"
             required
             autocomplete="new-password"
-          />
+          >
           <invalid-component :messages="confirmErrors" />
         </div>
         <div class="c-form__info">
-          <router-link :to="{ name: 'terms' }"> 利用規約 </router-link>
+          <router-link :to="{ name: 'terms' }">
+            利用規約
+          </router-link>
           および
           <router-link :to="{ name: 'privacy' }">
             プライバシーポリシー
@@ -85,13 +102,19 @@
           に同意の上、ご登録ください。
         </div>
         <div class="c-form__button">
-          <button type="submit" class="c-btn--accent c-btn--large">
+          <button
+            type="submit"
+            class="c-btn--accent c-btn--large"
+          >
             ユーザー登録
           </button>
         </div>
       </form>
       <div class="c-form__link">
-        <router-link :to="{ name: 'login' }" class="c-form__link">
+        <router-link
+          :to="{ name: 'login' }"
+          class="c-form__link"
+        >
           アカウントをお持ちの方はこちら
         </router-link>
       </div>

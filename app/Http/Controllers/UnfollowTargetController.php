@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Http\Controllers\Auth\UsersTwitterOAuth;
 
+/**
+ * フロント側からのリクエストを元に、ログインユーザーのTwitterアカウントで
+ * 指定された仮想通貨アカウント（ターゲット）1件をフォロー解除するクラス
+ */
 class UnfollowTargetController extends Controller
 {
   /**
@@ -24,12 +28,15 @@ class UnfollowTargetController extends Controller
     if (!$twitter_user) {
       return abort(404);
     }
-    $unfollow = self::destroyFollow($twitter_user, $target_id);
-    return $unfollow;
+    // ログインユーザーとターゲットのTwitterIDを引数に指定して
+    // ターゲットをフォロー解除するメソッドを実行
+    $result = self::destroyFollow($twitter_user, $target_id);
+    // 結果をVue側に返却する
+    return $result;
   }
 
   /**
-   * ターゲット1件をフォロー解除
+   * ユーザーのTwitterアカウントとターゲットの仮想通貨アカウントとの関係に応じた処理を行うメソッド
    */
   static public function destroyFollow(object $twitter_user, string $target_id)
   {
@@ -68,30 +75,31 @@ class UnfollowTargetController extends Controller
   }
 
   /**
-   * ターゲットをフォロー解除するメソッド
+   * ターゲットの仮想通貨アカウント1件をTwitterAPIでフォロー解除するメソッド
    */
   static public function unfollowTarget($twitter_user, $target_id, $connect)
   {
-
+    // ターゲットのTwitterIDをTwitterAPIのパラメータに指定
     $params = array(
       'user_id' => $target_id,
     );
+    // アカウントフォロー解除のエンドポイントを指定
     $endpoint = "friendships/destroy";
-    // レートリミット上限なし
+    // フォロー解除の上限は規定されていないため、レートリミットチェックは行わない
 
-    // TwitterAPIでターゲットをフォロー解除
+    // エンドポイントとパラメータを指定して、TwitterAPIでターゲットをフォロー解除
     $result = $connect->post($endpoint, $params);
 
-    // 取得できなかった場合はNotFoundエラーを返却
+    // 結果が取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }
 
-    // target_usersテーブルから該当TwitterIDのレコードを取得
+    // target_usersテーブルから該当ターゲットのTwitterIDを指定してレコードを取得
     $target = TargetUser::where('twitter_id', $target_id)->first();
-    // followsテーブルからユーザーとフォロー相手のidを削除
+    // followsテーブルからユーザーと該当ターゲットのidを削除し、未フォロー状態とする
     $twitter_user->follows()->detach($target->id);
-
+    // 結果を呼び出し元のメソッドに返却
     return $result;
   }
 }

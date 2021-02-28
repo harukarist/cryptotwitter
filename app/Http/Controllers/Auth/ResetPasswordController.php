@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 /**
- * パスワードリマインダーメール送信後のパスワードリセットを行う
- * コントローラー
+ * パスワード再設定メールに書かれたURLを経由した
+ * パスワードリセットフォームの表示、及び、
+ * ログインユーザーのパスワードリセット処理を行うコントローラー
  */
 class ResetPasswordController extends Controller
 {
@@ -28,28 +29,31 @@ class ResetPasswordController extends Controller
 
 
     /**
-     * vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php のResetsPasswordsトレイトを使用
+     * vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php のResetsPasswordsトレイトを使用する
      */
     use ResetsPasswords;
 
     /**
      * Where to redirect users after resetting their password.
-     *
+     * パスワードリセット後のリダイレクト先として、ホーム画面を指定
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
-     * リセットメールのURLからリクエストされるパスワードリセットフォームを表示
+     * パスワードリセットフォームを表示するためのメソッド
      */
     public function showResetForm(Request $request, $token = null)
     {
-        // Vueコンポーネントのパスワードリセットフォームを表示
-        return redirect("/pass/reset/{$token}?email={$request->email}");
+        // トークンとメールアドレスをクエリパラメータに含めたパスをリダイレクト先に指定して
+        // Vueコンポーネントのパスワードリセットフォームを表示する
+        return redirect("/password/reset/{$token}?email={$request->email}");
     }
 
     /**
-     * パスワードリセット処理を上書き
+     * ResetsPasswordsトレイトのパスワードリセット処理を
+     * BladeテンプレートではなくVueコンポーネントにレスポンスを返すように
+     * 処理を上書きするためのメソッド
      */
     public function reset(Request $request)
     {
@@ -61,18 +65,19 @@ class ResetPasswordController extends Controller
                 $this->resetPassword($user, $password);
             }
         );
-        // bladeテンプレートの返却ではなく、Vueコンポーネントにメッセージと成否フラグを返却するように変更
+        // パスワード変更が成功した時、失敗した時の処理を指定する下記のメソッドで
+        // Vueコンポーネントにメッセージと成否フラグを返却する
         return $response == Password::PASSWORD_RESET
             ? $this->sendResetResponse($request, $response)
             : $this->sendResetFailedResponse($request, $response);
     }
 
     /**
-     * パスワード変更が成功した時の処理
+     * パスワード変更が成功した時の処理を指定するメソッド
      */
     protected function sendResetResponse(Request $request, $response)
     {
-        // Vueコンポーネントにメッセージと成否フラグを返却
+        // Vueコンポーネントにメッセージと成否フラグを返却する
         return ([
             'status' => trans($response), //バリデーションメッセージ
             'result' => 'success', //成否フラグ
@@ -81,11 +86,11 @@ class ResetPasswordController extends Controller
     }
 
     /**
-     * パスワード変更が失敗した時の処理
+     * パスワード変更が失敗した時の処理を指定するメソッド
      */
     protected function sendResetFailedResponse(Request $request, $response)
     {
-        // Vueコンポーネントにメッセージと成否フラグを返却
+        // Vueコンポーネントにメッセージと成否フラグを返却する
         return ([
             'status' => trans($response), //バリデーションメッセージ
             'result' => 'failed', //成否フラグ

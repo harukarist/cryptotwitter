@@ -1,8 +1,16 @@
 <template>
-  <form class="c-form--large" @submit.prevent="sendContact">
-    <p class="c-form__text">下記の内容で送信してよろしいですか？<br /></p>
+  <form
+    class="c-form--large"
+    @submit.prevent="sendContact"
+  >
+    <p class="c-form__text">
+      下記の内容で送信してよろしいですか？<br>
+    </p>
     <div class="c-form__group">
-      <label for="name" class="c-form__label">
+      <label
+        for="name"
+        class="c-form__label"
+      >
         お名前<span class="c-form__label--required">必須</span>
       </label>
       <div class="c-form__confirm-text">
@@ -10,7 +18,10 @@
       </div>
     </div>
     <div class="c-form__group">
-      <label for="email" class="c-form__label">
+      <label
+        for="email"
+        class="c-form__label"
+      >
         メールアドレス<span class="c-form__label--required">必須</span>
       </label>
       <div class="c-form__confirm-text">
@@ -19,18 +30,31 @@
     </div>
 
     <div class="c-form__group">
-      <label for="message" class="c-form__label">
+      <label
+        for="message"
+        class="c-form__label"
+      >
         お問い合わせ内容<span class="c-form__label--required">必須</span>
       </label>
       <div class="c-form__confirm-text">
-        <p class="u-font__br">{{ formData.message }}</p>
+        <p>
+          {{ formData.message }}
+        </p>
       </div>
     </div>
     <div class="c-form__button">
-      <div class="c-btn--danger u-mb--m" @click.prevent="goBack">
+      <div
+        class="c-btn--danger u-mb--m"
+        @click.prevent="goBack"
+      >
         内容を修正する
       </div>
-      <button type="submit" class="c-btn--main u-mb--m">送信する</button>
+      <button
+        type="submit"
+        class="c-btn--main u-mb--m"
+      >
+        送信する
+      </button>
     </div>
   </form>
 </template>

@@ -1,14 +1,26 @@
 <template>
   <div class="c-container--bg">
-    <h2 class="c-container__title">パスワードの再設定</h2>
+    <h2 class="c-container__title">
+      パスワードの再設定
+    </h2>
     <div class="c-form__wrapper">
-      <form class="c-form--small" @submit.prevent="checkForm">
-        <input v-model="resetForm.token" type="hidden" name="token" />
+      <form
+        class="c-form--small"
+        @submit.prevent="checkForm"
+      >
+        <input
+          v-model="resetForm.token"
+          type="hidden"
+          name="token"
+        >
         <p class="c-section__text">
-          新しいパスワードを設定してください。<br />
+          新しいパスワードを設定してください。<br>
         </p>
         <div class="c-form__group">
-          <label for="login-email" class="c-form__label">
+          <label
+            for="login-email"
+            class="c-form__label"
+          >
             メールアドレス
           </label>
           <input
@@ -18,16 +30,22 @@
             class="c-input c-input--large c-input--box"
             required
             autocomplete="email"
-          />
+          >
           <invalid-component :messages="emailErrors" />
         </div>
         <transition name="popup">
-          <p v-if="apiMessage" class="u-mb--l c-alert--danger">
+          <p
+            v-if="apiMessage"
+            class="u-mb--l c-alert--danger"
+          >
             {{ apiMessage }}
           </p>
         </transition>
         <div class="c-form__group">
-          <label for="password" class="c-form__label">
+          <label
+            for="password"
+            class="c-form__label"
+          >
             パスワード
             <span class="c-form__notes">半角英数字8文字以上</span>
           </label>
@@ -39,13 +57,14 @@
             placeholder="パスワードを入力"
             required
             autocomplete="new-password"
-          />
+          >
           <invalid-component :messages="passwordErrors" />
         </div>
         <div class="c-form__group">
-          <label for="password-confirmation" class="c-form__label"
-            >パスワード（再入力）</label
-          >
+          <label
+            for="password-confirmation"
+            class="c-form__label"
+          >パスワード（再入力）</label>
           <input
             id="password-confirmation"
             v-model="resetForm.password_confirmation"
@@ -54,18 +73,24 @@
             placeholder="パスワードを再度入力"
             required
             autocomplete="new-password"
-          />
+          >
           <invalid-component :messages="confirmErrors" />
         </div>
 
         <div class="c-form__button">
-          <button type="submit" class="c-btn--main-outline c-btn--large">
+          <button
+            type="submit"
+            class="c-btn--main-outline c-btn--large"
+          >
             送信する
           </button>
         </div>
       </form>
       <div class="c-form__link">
-        <router-link :to="{ name: 'password.request' }" class="c-form__link">
+        <router-link
+          :to="{ name: 'password.request' }"
+          class="c-form__link"
+        >
           メールアドレスを再度入力する
         </router-link>
       </div>

@@ -14,17 +14,24 @@ use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\FollowListController;
 use App\Http\Controllers\Auth\UsersTwitterOAuth;
 
-// TwitterAPIでのTwitterログイン処理を行うコントローラー
+/**
+ * TwitterAPIでのTwitterログイン処理、及び
+ * ユーザーのTwitterアカウント情報の取得・更新を行うコントローラー
+ */
 class TwitterAuthController extends Controller
 {
     public function __construct()
     {
-        // authミドルウェアの認証から除外するメソッドを指定
+        // TwitterAPIからのコールバックを受け取るメソッド、
+        // ユーザーのTwitterアカウント情報を取得するメソッドを
+        // authミドルウェアの認証から除外する
         $this->middleware('auth')->except(['handleProviderCallback', 'checkTwitterUserAuth']);
     }
 
     /**
-     * アプリケーションの初期描画時にログインユーザーのTwitterアカウント情報を取得する処理
+     * アプリケーションの初期描画時にユーザーのTwitterアカウント情報を取得するメソッド。
+     * ユーザーのTwitterアカウントがDBに保存されていればフロントエンド側に返却し
+     * 画面上にユーザーのTwitterアカウント名やアバターを表示させる。
      */
     public function checkTwitterUserAuth()
     {
@@ -38,7 +45,9 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * ログイン時にログインユーザーのTwitterアカウント情報とフォロー済みリストを更新する処理
+     * ユーザーがメールアドレスとパスワードでログインした際に、
+     * 最新のTwitterアカウント情報を表示させるため、
+     * ユーザーのTwitterアカウント情報とフォロー済みリストを更新するメソッド
      */
     public function updateTwitterUser()
     {
@@ -49,7 +58,7 @@ class TwitterAuthController extends Controller
 
         // Twitterアカウント情報がある場合
         if ($twitter_user) {
-            // ユーザーのTwitterアカウントでのoAuth認証のコネクションを取得
+            // ユーザーのTwitterアカウントでoAuth認証のコネクションを取得
             $connect = UsersTwitterOAuth::userOAuth($twitter_user);
             // Twitterアカウント情報取得用のパラメータを設定
             $params = array(
@@ -76,7 +85,7 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * Twitter認証ページへのリダイレクト処理
+     * TwitterAPIの認証ページへリダイレクト処理を行うメソッド
      */
     public function redirectToProvider()
     {
@@ -85,7 +94,7 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * Twitter認証ページから戻ってきた後のログイン認証処理
+     * Twitter認証ページから戻ってきた後のログイン認証を行うメソッド
      */
     public function handleProviderCallback()
     {
@@ -139,22 +148,22 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * DBのユーザー情報取得 または アカウント新規作成の処理
+     * ユーザーのTwitterアカウント情報がDBに保存されていれば取得し、
+     * 登録されていなければ新規登録を行うメソッド
      */
     public function updateOrCreateTwitterUser($oauth_user)
     {
         // ログインユーザーのユーザーIDを取得
         $user_id = Auth::id();
 
-        // Twitter認証したTwitterIDがテーブルに保存済みであればレコードを1件取得
+        // ユーザーがTwitterAPIで認証を行ったTwitterIDがDBに保存済みであればレコードを1件取得
         $registeredUser = TwitterUser::where('twitter_id', $oauth_user->id)->first();
         // 同一のTwitterIDが登録済みで、かつログインユーザー以外のものである場合は登録しない
         if ($registeredUser && $registeredUser->user_id !== $user_id) {
             return '';
         }
 
-        clock($oauth_user);
-        // ログインユーザーIDに紐づくTwitterユーザー情報があれば情報更新し、なければ新規作成する
+        // ログインユーザーIDに紐づくTwitterユーザー情報があればDBの情報を更新し、なければ新規登録する
         $twitter_user = TwitterUser::updateOrCreate(
             ['user_id' => $user_id, 'twitter_id' => $oauth_user->id],
             [
@@ -170,17 +179,17 @@ class TwitterAuthController extends Controller
     }
 
     /**
-     * Twitterアカウント連携の解除
+     * ユーザーがアカウント設定画面にて Twitterアカウント連携の解除をリクエストした際に
+     * DBに登録されたTwitterアカウント情報を削除するメソッド
      */
     public function deleteTwitterUser()
     {
+        // ログインユーザーに紐づくTwitterアカウント情報を取得
         $user_id = Auth::id();
-        // ログインユーザーに紐づくTwitterアカウント情報を削除
         $twitter_user = TwitterUser::where('user_id', $user_id)->first();
 
-
         try {
-            // ログインユーザーのTwitterアカウント情報が取得できた場合は関連レコードを削除
+            // ログインユーザーのTwitterアカウント情報が取得できた場合は、関連レコードを削除する
             if ($twitter_user) {
                 // ログインユーザーのフォローリストを削除
                 Follow::where('twitter_user_id', $twitter_user->id)->delete();

@@ -45,10 +45,9 @@ class AutoFollow extends Command
 
     /**
      * Execute the console command.
-     *
+     * コマンドで実行するメソッド
      * @return mixed
      */
-    // コマンドで実行する処理
     public function handle()
     {
         // ログファイルに書き込む

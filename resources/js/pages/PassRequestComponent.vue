@@ -1,30 +1,38 @@
 <template>
   <div class="c-container--bg">
-    <h2 class="c-container__title">パスワードをお忘れの方</h2>
+    <h2 class="c-container__title">
+      パスワードをお忘れの方
+    </h2>
 
     <div class="c-form__wrapper">
-      <form class="c-form--large" @submit.prevent="checkForm">
+      <form
+        class="c-form--large"
+        @submit.prevent="checkForm"
+      >
         <div v-if="isSent">
           <p class="c-form__text">
             パスワード変更ページのURLを<br
               class="u-sp--hidden"
-            />メールアドレスに送信しました。<br />
+            >メールアドレスに送信しました。<br>
             メールに記載された内容にしたがって、<br
               class="u-sp--hidden"
-            />パスワードの再設定をお願いいたします。<br />
+            >パスワードの再設定をお願いいたします。<br>
           </p>
         </div>
         <div v-else>
           <p class="c-form__text">
             ユーザー登録時にご登録いただいたメールアドレスを<br
               class="u-sp--hidden"
-            />ご入力ください。<br />
+            >ご入力ください。<br>
             メールアドレス宛に、パスワード変更ページのURLが<br
               class="u-sp--hidden"
-            />記載されたメールが送信されます。<br />
+            >記載されたメールが送信されます。<br>
           </p>
           <div class="c-form__group">
-            <label for="login-email" class="c-form__label">
+            <label
+              for="login-email"
+              class="c-form__label"
+            >
               メールアドレス
             </label>
             <input
@@ -34,24 +42,33 @@
               class="c-input c-input--large"
               required
               autocomplete="email"
-            />
+            >
             <invalid-component :messages="emailErrors" />
             <transition name="popup">
-              <p v-if="apiMessage" class="u-mb--l c-alert--danger">
+              <p
+                v-if="apiMessage"
+                class="u-mb--l c-alert--danger"
+              >
                 {{ apiMessage }}
               </p>
             </transition>
           </div>
 
           <div class="c-form__button">
-            <button type="submit" class="c-btn--main-outline c-btn--large">
+            <button
+              type="submit"
+              class="c-btn--main-outline c-btn--large"
+            >
               送信する
             </button>
           </div>
         </div>
       </form>
       <div class="c-form__link">
-        <router-link :to="{ name: 'login' }" class="c-form__link">
+        <router-link
+          :to="{ name: 'login' }"
+          class="c-form__link"
+        >
           ログインページへ戻る
         </router-link>
       </div>

@@ -8,8 +8,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * お問い合わせフォームのメール送信に必要な情報をまとめた
- * Mailableクラス
+ * サーバーエラー発生時に管理者宛に通知メールを送信するためのMailableクラス
+ * （メール送信処理は app/Exceptions/Handler.php で実行）
  */
 class ExceptionMail extends Mailable
 {
@@ -22,7 +22,7 @@ class ExceptionMail extends Mailable
      */
     public function __construct($error)
     {
-        // フォームに入力された各項目を格納
+        // エラー内容を格納
         $this->error = $error;
     }
 

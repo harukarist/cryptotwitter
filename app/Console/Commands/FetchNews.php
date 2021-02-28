@@ -6,6 +6,11 @@ use App\NewsList;
 use Illuminate\Console\Command;
 use App\Http\Controllers\FetchNewsController;
 
+
+/**
+ * GoogleニュースAPIで仮想通貨関連のキーワードを含むニュースを検索して
+ * DBに保存するコマンド
+ */
 class FetchNews extends Command
 {
     /**
@@ -36,10 +41,9 @@ class FetchNews extends Command
 
     /**
      * Execute the console command.
-     *
+     * コマンドで実行するメソッド
      * @return mixed
      */
-    // コマンドで実行する処理
     public function handle()
     {
         //ログファイルに書き込む
@@ -48,19 +52,21 @@ class FetchNews extends Command
         // Googleニュースの検索キーワード
         $KEYWORDS = ['仮想通貨', '暗号資産', 'ビットコイン'];
 
-        // キーワードを指定してGoogleニュース検索メソッドを実行
+        // キーワードを指定してGoogleNewsRSSでニュース取得するメソッドを実行
         foreach ($KEYWORDS as $keyword) {
             $this->requestAndCreate($keyword);
         }
         logger()->info('GoogleNews保存バッチを実行しました <<<<');
     }
 
-    // GoogleNewsRSSで指定キーワードを含むGoogleニュースを取得
+    // 
+    /**
+     * GoogleNewsRSSで指定キーワードを含むGoogleニュースを取得するメソッド
+     */
     public function requestAndCreate($keyword)
     {
         set_time_limit(90); // PHPの最大実行時間を指定
         $max_num = 100; // 保存する記事数（取得上限は100件）
-
 
         // キーワード検索のベースURL 
         $API_BASE_URL = "https://news.google.com/rss/search?q=";

@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\curlRequestController;
 
-// TwproAPIで仮想通貨関連Twitterアカウントを取得、TwitterAPIで最新ツイートを取得し、保存する処理
+/**
+ * 「TwproAPI」でキーワードを含む仮想通貨関連Twitterアカウントを取得し、DBに保存するコマンド
+ */
 class FetchTwpro extends Command
 {
     /**
@@ -39,7 +41,7 @@ class FetchTwpro extends Command
 
     /**
      * Execute the console command.
-     * コマンドで実行する処理
+     * コマンドで実行するメソッド
      * @return mixed
      */
     public function handle()
@@ -95,18 +97,20 @@ class FetchTwpro extends Command
 
 
     /**
-     * TwproAPIでレートリミットを取得
+     * TwproAPIでレートリミットを取得するメソッド
      */
     public function checkTwproLimit()
     {
+        // レートリミット取得エンドポイントのURLを指定
         $url = 'https://twpro.jp/1/limit';
 
+        // cURLで該当URLのAPIから情報を取得するメソッドを実行し、結果を返却
         $limit = curlRequestController::curl($url);
         return $limit;
     }
 
     /**
-     * TwproAPIでキーワードを含むTwitterアカウントを検索
+     * TwproAPIでキーワードを含むTwitterアカウントを検索・取得するメソッド
      */
     public function requestUsersByTwpro($params)
     {
@@ -115,10 +119,10 @@ class FetchTwpro extends Command
         $req_count = 1;
         // 検索パラメーターの配列をクエリ文字列に変換
         $query = http_build_query($params);
-        // リクエストURLを生成
+        // Twitterアカウント検索エンドポイントのリクエストURLを生成
         $url = 'http://api.twpro.jp/1/search?' . $query;
 
-        // cURLでAPIにリクエストし、ユーザー情報を取得
+        // cURLで該当URLのAPIから情報を取得するメソッドを実行し、キーワードを含むTwitterアカウントを検索
         $users_json = curlRequestController::curl($url);
 
         // TwproAPIから返却された検索結果の件数をカウント
@@ -158,7 +162,7 @@ class FetchTwpro extends Command
     }
 
     /**
-     * 検索結果からTwitterアカウント情報を取り出し、DBに保存
+     * 検索結果からTwitterアカウント情報を取り出し、DBに保存するメソッド
      */
     public function createRecord($users_arr)
     {

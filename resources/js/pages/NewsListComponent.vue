@@ -1,11 +1,13 @@
 <template>
   <div class="c-container--bg">
     <section class="c-section">
-      <h5 class="c-section__title">関連ニュース一覧</h5>
+      <h5 class="c-section__title">
+        関連ニュース一覧
+      </h5>
       <p class="c-section__text">
         仮想通貨に関する最新ニュースを<br
           class="u-sp--only"
-        />お届けします。<br />
+        >お届けします。<br>
       </p>
       <div class="p-news c-fade-in">
         <pagination-info
@@ -22,8 +24,17 @@
           @clear="clearResult"
         />
 
-        <transition-group tag="div" name="popup" appear class="p-news__item">
-          <div v-for="item in news" :key="item.title" class="p-news__item">
+        <transition-group
+          tag="div"
+          name="popup"
+          appear
+          class="p-news__item"
+        >
+          <div
+            v-for="item in news"
+            :key="item.title"
+            class="p-news__item"
+          >
             <div class="p-news__info">
               <span class="p-news__date">
                 {{ item.published_date }}
@@ -33,7 +44,10 @@
               </span>
             </div>
             <h5 class="p-news__title">
-              <a :href="item.url" target="_blank">
+              <a
+                :href="item.url"
+                target="_blank"
+              >
                 {{ item.title }}
               </a>
             </h5>

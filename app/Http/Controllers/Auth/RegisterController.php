@@ -42,17 +42,18 @@ class RegisterController extends Controller
 
     /**
      * Create a new controller instance.
-     *
+     * コントローラーのインスタンスを生成するコンストラクタ
      * @return void
      */
     public function __construct()
     {
+        // ゲスト権限のミドルウェアを指定し、未認証ユーザーのみアクセス可能とする
         $this->middleware('guest');
     }
 
     /**
      * Get a validator for an incoming registration request.
-     * ユーザー登録フォームのバリデーション
+     * ユーザー登録フォームのバリデーションチェックを行うメソッド
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
@@ -75,7 +76,7 @@ class RegisterController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     * usersテーブルにユーザーレコードを登録する処理
+     * usersテーブルにユーザー情報のレコードを登録するメソッド
      * @param  array  $data
      * @return \App\User
      */
@@ -90,7 +91,7 @@ class RegisterController extends Controller
 
     /**
      * The user has been registered.
-     * ユーザ登録完了後の処理
+     * ユーザ登録完了後の処理を行うメソッド
      */
     protected function registered(Request $request, $user)
     {

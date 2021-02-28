@@ -30,7 +30,7 @@ class LoginController extends Controller
 
     /**
      * Where to redirect users after login.
-     *
+     * ログイン後のリダイレクト先にホーム画面を指定
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
@@ -42,13 +42,13 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        // ログアウト以外は未認証ユーザーのみアクセス可能
+        // ログアウト処理のメソッド（AuthenticatesUsersトレイトに記述）以外はゲスト権限のミドルウェアを指定し、未認証ユーザーのみアクセス可能とする
         $this->middleware('guest')->except('logout');
     }
 
 
     /**
-     * ログイン完了後の処理
+     * ログイン完了後の処理を行うメソッド
      */
     protected function authenticated(Request $request, $user)
     {
@@ -58,7 +58,7 @@ class LoginController extends Controller
     }
 
     /**
-     * ログアウト時の処理.
+     * ログアウト処理実行後の処理を行うメソッド
      */
     protected function loggedOut(Request $request)
     {

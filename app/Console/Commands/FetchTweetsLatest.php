@@ -12,17 +12,8 @@ use Illuminate\Support\Facades\Artisan;
 use Abraham\TwitterOAuth\TwitterOAuthException;
 
 /**
- * 仮想通貨トレンド表示で使用する各銘柄のツイート数の集計元となるツイートを
- * TwitterAPIで取得し、tweetsテーブルに保存する処理。
- * fetch_tweets_logsテーブルのログレコードから未取得の時間帯を調べ、
- * 10分毎に時間帯を区切って過去の時間帯から順に取得する。
- * TwitterAPIでは、1つの時間帯の中で新しいツイートから古いツイートの順
- * （ツイートIDの降順）にツイートを取得する。
- * 全ツイートを取得しきれなかった場合は、検索対象となった最も古いツイートIDが
- * max_idとしてTwitterAPIから返却されるため、
- * fetch_tweets_logsテーブルのnext_idカラムにmax_idを保存しておき、
- * 次のリクエスト時にそのmax_idをパラメータに指定して
- * さらに古いツイートを取得する。
+ * 仮想通貨トレンド表示で使用する、各銘柄のツイート数の集計元となる
+ * 仮想通貨関連のツイートをTwitterAPIで取得し、tweetsテーブルに保存するコマンド
  */
 class FetchTweetsLatest extends Command
 {
@@ -54,18 +45,30 @@ class FetchTweetsLatest extends Command
 
     /**
      * Execute the console command.
-     * コマンドで実行する処理
+     * コマンドで実行するメソッド
      * @return mixed
      */
     public function handle()
     {
+        /**
+         * fetch_tweets_logsテーブルのログレコードから未取得の時間帯を調べ、
+         * 10分毎に時間帯を区切って過去の時間帯から順に取得する。
+         * TwitterAPIでは、1つの時間帯の中で新しいツイートから古いツイートの順
+         * （ツイートIDの降順）にツイートを取得する。
+         * 全ツイートを取得しきれなかった場合は、検索対象となった最も古いツイートIDが
+         * max_idとしてTwitterAPIから返却されるため、
+         * fetch_tweets_logsテーブルのnext_idカラムにmax_idを保存しておき、
+         * 次のリクエスト時にそのmax_idをパラメータに指定して
+         * さらに古いツイートを取得する。
+         */
+
         // ツイート検索のリクエスト上限の初期値（API指定の上限は15分間に180回）
         $MAX_REQUEST = 180;
 
         //ログファイルに書き込む
         logger()->info('>>>> ツイート保存バッチを実行します');
 
-        // TwitterAPIのリクエスト残り回数を取得
+        // TwitterAPIのリクエスト残り回数を取得するメソッドを実行
         $limit_count = $this->checkLimit();
 
         // リクエスト上限が0以下の場合は処理を終了
@@ -121,7 +124,7 @@ class FetchTweetsLatest extends Command
                 // next_id（次回の取得予定ID）をAPIパラメータのmax_id（取得開始id)に指定して、ログデータと同じ時間帯でmax_idより前のツイートを取得する
                 $since_at = $last_since; //ログデータと同じ開始日時から検索
                 $until_at = $last_until; //ログデータと同じ終了日時まで検索
-                // 検索開始日時、終了日時を指定して検索パラメータを生成
+                // 検索開始日時、終了日時を指定して検索パラメータを生成するメソッドを実行
                 $params = $this->getParams($since_at, $until_at);
                 $params['max_id'] = $log->next_id; //next_idをAPIのmax_id（取得開始id)に指定
             } else {
@@ -129,14 +132,14 @@ class FetchTweetsLatest extends Command
                 $since_at = $last_until; //ログデータの終了日時から検索
                 $until_at = $last_until->copy()->addMinutes(10); //ログデータの終了日時から10分後まで検索
 
-                // 検索開始日時、終了日時を指定して検索パラメータを生成
+                // 検索開始日時、終了日時を指定して検索パラメータを生成するメソッドを実行
                 $params = $this->getParams($since_at, $until_at);
             }
 
             dump($since_at . "〜" . $until_at . "のツイートを取得");
             logger()->info($since_at . "〜" . $until_at . "のツイートを取得");
 
-            // TwitterAPIでツイートを検索し、該当データを保存
+            // TwitterAPIでツイートを検索し、該当データを保存するメソッドを実行
             [$total_count, $max_id, $req_count] = $this->requestAndSaveTweets($remain_count, $params);
 
             // 対象時間帯のログをDBに保存
@@ -168,7 +171,9 @@ class FetchTweetsLatest extends Command
 
 
 
-    // TwitterAPIでレートリミットを取得
+    /**
+     * TwitterAPIでレートリミットを取得するメソッド
+     */
     public function checkLimit()
     {
         //残り使用可能回数をTwitterAPIでチェック
@@ -200,7 +205,9 @@ class FetchTweetsLatest extends Command
     }
 
 
-    // 検索用パラメーターを生成
+    /**
+     * 検索用パラメーターを生成するメソッド
+     */
     public function getParams($since_at, $until_at)
     {
         // trendsテーブルから検索キーワードのカラム'tweet_words'を取得
@@ -232,7 +239,9 @@ class FetchTweetsLatest extends Command
     }
 
 
-    // TwitterAPIでツイートを検索
+    /**
+     * TwitterAPIでツイートを検索し、DB保存メソッドで保存するメソッド
+     */
     public function requestAndSaveTweets($remain_count, $params)
     {
         $total_count = 0; //ツイートの合計保存件数
@@ -260,7 +269,7 @@ class FetchTweetsLatest extends Command
 
             // 検索結果がある場合
             if (property_exists($tweets_obj, 'statuses')) {
-                // DBにレコードを保存
+                // DBにレコードを保存するメソッドを実行
                 $records_count = $this->createRecord($tweets_obj->statuses);
                 dump($records_count . "件のツイートを保存しました");
                 logger()->info($records_count . "件のツイートを保存しました");
@@ -290,7 +299,9 @@ class FetchTweetsLatest extends Command
         return [$total_count, $max_id, $req_count];
     }
 
-    // 検索結果からツイート文章を取り出し、DBに保存
+    /**
+     * 検索結果からツイート文章を取り出し、DBに保存するメソッド
+     */
     public function createRecord($statuses)
     {
         $tweets = [];
@@ -317,7 +328,10 @@ class FetchTweetsLatest extends Command
         return count($tweets);
     }
 
-    // 検索結果のメタデータからクエリ文字列next_resultsの中のmax_id（今回の検索終了TwitterID）を取得
+    /**
+     * 検索結果のメタデータを引数で受け取り、
+     * クエリ文字列next_resultsの中のmax_id（今回の検索終了TwitterID）を取得するメソッド
+     */
     public function fetchMaxId($metadata)
     {
         // TwitterAPIから返却されたメタデータにrefresh_urlがある場合

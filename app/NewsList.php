@@ -6,6 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * GoogleNewsRSSで取得したGoogleニュースのデータを
+ * news_listsテーブルで管理するためのモデル
+ */
 class NewsList extends Model
 {
     // ソフトデリート用のトレイトを追加
@@ -20,7 +24,7 @@ class NewsList extends Model
     ];
 
     /**
-     * 返却するJSONに含めない項目
+     * モデルから取得するデータに含めないカラムの指定
      * @var array
      */
     protected $hidden = [

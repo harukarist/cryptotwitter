@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
+/**
+ * アカウント設定画面でのパスワード変更フォームの
+ * バリデーションチェックを行うフォームリクエストクラス
+ */
 class ChangePasswordRequest extends FormRequest
 {
     /**

@@ -9,8 +9,8 @@ use Abraham\TwitterOAuth\TwitterOAuthException;
 
 /**
  * TwproAPIから取得した仮想通貨アカウントなど、
- * 最新ツイートが取得できなかった仮想通貨アカウントの最新ツイートを
- * TwitterAPIから取得するコマンド
+ * 最新ツイートがDBに保存されていない仮想通貨アカウントの最新ツイートを
+ * TwitterAPIから取得してDBに保存するコマンド
  */
 class FetchTargetsTweet extends Command
 {
@@ -42,7 +42,7 @@ class FetchTargetsTweet extends Command
 
     /**
      * Execute the console command.
-     * コマンドで実行する処理
+     * コマンドで実行するメソッド
      * @return mixed
      */
     public function handle()
@@ -76,7 +76,7 @@ class FetchTargetsTweet extends Command
     }
 
     /**
-     * TwitterAPIでレートリミットを取得
+     * TwitterAPIでレートリミットを取得するメソッド
      */
     public function checkLimit()
     {
@@ -105,8 +105,9 @@ class FetchTargetsTweet extends Command
         }
         return 0;
     }
+
     /**
-     * TwitterAPIでキーワードを含むTwitterアカウントを検索
+     * TwitterAPIでキーワードを含むTwitterアカウントを検索するメソッド
      */
     public function requestTargetsTweets($targets, $remain_count)
     {

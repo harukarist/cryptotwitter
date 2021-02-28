@@ -7,7 +7,12 @@ use App\Trend;
 use App\Tweet;
 use Carbon\Carbon;
 
-// テーブルに保存した仮想通貨関連ツイートから各銘柄の検索キーワードを含む件数を集計する
+// 
+/**
+ * tweetsテーブルに保存した仮想通貨関連ツイートを元に、
+ * 過去1時間・過去24時間・過去1週間の期間別に
+ * 各銘柄の検索キーワードを含むツイート件数を集計するコマンド
+ */
 class UpdateTweetCount extends Command
 {
     /**
@@ -48,10 +53,9 @@ class UpdateTweetCount extends Command
 
     /**
      * Execute the console command.
-     *
+     * コマンドで実行するメソッド
      * @return mixed
      */
-    // コマンドで実行する処理
     public function handle()
     {
         logger()->info('>>>> ツイート数の集計バッチ処理を実行します');

@@ -11,7 +11,10 @@
       >
         {{ flashMessage }}
       </p>
-      <i class="fas fa-times p-message-large__close" @click="closeMessage()" />
+      <i
+        class="fas fa-times p-message-large__close"
+        @click="closeMessage()"
+      />
     </div>
   </transition>
 </template>

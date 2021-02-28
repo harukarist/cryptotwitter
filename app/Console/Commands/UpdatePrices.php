@@ -7,7 +7,10 @@ use App\Batch;
 use App\Trend;
 use Carbon\Carbon;
 
-// 最高取引価格、最安取引価格を取得するZaifAPIを呼び出し、DBに保存する処理
+/**
+ * 「ZaifAPI」で仮想通貨銘柄の最高取引価格、最安取引価格を取得し、
+ * DBに保存された価格と異なる場合は最新価格に更新するコマンド
+ */
 class UpdatePrices extends Command
 {
     /**
@@ -38,10 +41,9 @@ class UpdatePrices extends Command
 
     /**
      * Execute the console command.
-     *
+     * コマンドで実行するメソッド
      * @return mixed
      */
-    // コマンドで実行する処理
     public function handle()
     {
         logger()->info('>>>> 取引価格の更新バッチ処理を実行します');
@@ -97,11 +99,13 @@ class UpdatePrices extends Command
             ['batch_finished_at' => Carbon::now()],
         );
 
-        return;
         logger()->info('取引価格の更新バッチ処理を実行しました <<<<');
+        return;
     }
 
-    // ZaifAPIで過去24時間の最高取引価格、最安取引価格を取得
+    /**
+     * ZaifAPIで過去24時間の最高取引価格、最安取引価格を取得するメソッド
+     */
     public function getPricesFromZaif(string $currency_pair)
     {
         // ZaifAPI エンドポイントURL

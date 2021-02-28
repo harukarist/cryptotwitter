@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\TargetUser;
-use App\TwitterUser;
 use App\Facades\Twitter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,11 +10,16 @@ use Illuminate\Support\Facades\Auth;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use App\Http\Controllers\Auth\UsersTwitterOAuth;
 
+/**
+ * フロント側からのリクエストを元に、ログインユーザーのTwitterアカウントで
+ * 指定された仮想通貨アカウント（ターゲット）1件をフォローするクラス
+ */
 class FollowTargetController extends Controller
 {
   /**
-   * WebAPからのリクエストを元に、ログインユーザーのTwitterアカウントで
-   * ターゲットをフォローする処理
+   * フロント側からターゲットのTwitterIDを受け取り、
+   * ログインユーザーのTwitterアカウントでoAuth認証を行った後、
+   * ターゲットをフォローするメソッドを実行し、結果をフロント側に返却するメソッド
    */
   public function createUsersFollow(string $target_id)
   {
@@ -29,20 +33,23 @@ class FollowTargetController extends Controller
     // ユーザーのTwitterアカウントでoAuth認証するメソッドを実行
     $connect = UsersTwitterOAuth::userOAuth($twitter_user);
 
-    // ログインユーザーとターゲットのTwitterIDを指定してターゲットをフォローするメソッドを実行
-    $follow = self::createFollow($twitter_user, $target_id, $connect);
-    return $follow;
+    // ログインユーザーとターゲットのTwitterID、ユーザーのoAuth認証結果を引数に指定して
+    // ターゲットをフォローするメソッドを実行
+    $result = self::createFollow($twitter_user, $target_id, $connect);
+    // 結果をVue側に返却する
+    return $result;
   }
 
   /**
-   * ログインユーザーのTwitterアカウントでターゲットのTwitterアカウントをフォローする処理
+   * ユーザーのTwitterアカウントとターゲットの仮想通貨アカウントとの関係に応じた処理を行うメソッド
+   * (フロント側からのリクエストによるフォローの他、バッチ処理による自動フォローでもこのメソッドを使用する)
    */
   static public function createFollow(object $twitter_user, string $target_id, $connect)
   {
-    // ログインユーザーのTwitterIDを取得
+    // ユーザーのTwitterIDを取得
     $twitter_id = $twitter_user->twitter_id;
 
-    // ログインユーザーとターゲットとの関係性を取得するメソッドを実行
+    // ユーザーとターゲットとの関係性を取得するメソッドを実行
     $result = self::fetchFriendship($twitter_id, $target_id, $connect);
 
     // 関係性を取得できなかった場合はエラーを返却
@@ -87,22 +94,24 @@ class FollowTargetController extends Controller
   }
 
   /**
-   * ユーザーのTwitterアカウントとターゲットアカウントの関係性を取得するメソッド
+   * ユーザーのTwitterアカウントとターゲットの仮想通貨アカウントとの関係性を
+   * TwitterAPIから取得するメソッド
    */
   static public function fetchFriendship($twitter_id, $target_id, $connect)
   {
-    // ユーザーのTwitterAPIレートリミットをチェック(上限は 180回/15min)
+    // カテゴリーとエンドポイントを指定して、ユーザーのTwitterAPIレートリミットをチェック(上限は 180回/15min)
     $CATEGORY = "friendships";
     $ENDPOINT = "/friendships/show";
+    // レートリミットチェック用のメソッドを実行
     $limit = UsersTwitterOAuth::checkLimit($connect, $CATEGORY, $ENDPOINT);
 
-    // フォロー状況チェック/friendships/show のレートリミットが上限に達していたら処理を終了
+    // フォロー状況チェック（/friendships/show）のレートリミットが上限に達している場合は処理を終了
     if (!$limit) {
       logger()->info("フォロー状況チェックのリクエスト上限に達しました");
       return false;
     }
 
-    // ユーザーのTwitterIDとフォロー対象のTwitterIDをTwitterAPIのパラメータに指定
+    // ユーザーのTwitterIDとターゲットのTwitterIDを、TwitterAPIのパラメータに指定
     $params = array(
       'user_id' => $target_id,
     );
@@ -111,43 +120,45 @@ class FollowTargetController extends Controller
       'target_id' => $target_id,
     );
 
-    // TwitterAPIでフォロー状況を取得
+    // エンドポイントとパラメータを指定して、TwitterAPIでフォロー状況を取得
     $result = $connect->get($ENDPOINT, $params);
 
     // 取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }
-
+    // 結果を呼び出し元のメソッドに返却
     return $result;
   }
 
   /**
-   * ターゲットをフォローするメソッド
+   * ターゲットの仮想通貨アカウント1件をTwitterAPIでフォローするメソッド
    */
   static public function followTarget($twitter_user, $target_id, $connect)
   {
-
+    // ターゲットのTwitterIDをTwitterAPIのパラメータに指定
     $params = array(
       'user_id' => $target_id,
       'follow' => true, //フォローを相手に通知するか
     );
+    // アカウントフォローのエンドポイントを指定
     $ENDPOINT = "friendships/create";
+    // フォロー上限は規定されていないため、レートリミットチェックは行わない
 
-    // TwitterAPIでターゲットをフォロー
+    // エンドポイントとパラメータを指定して、TwitterAPIでターゲットをフォロー
     $result = $connect->post($ENDPOINT, $params);
 
-    // 取得できなかった場合はNotFoundエラーを返却
+    // 結果が取得できなかった場合はNotFoundエラーを返却
     if (!$result) {
       return abort(404);
     }
-    // target_usersテーブルから該当TwitterIDのレコードを取得
+    // target_usersテーブルから該当ターゲットのTwitterIDを指定してレコードを取得
     $target = TargetUser::where('twitter_id', $target_id)->first();
     // followsテーブルに登録済みであれば一旦削除
     $twitter_user->follows()->detach($target->id);
-    // followsテーブルにユーザーとフォロー相手のidを登録
+    // followsテーブルにユーザーと該当ターゲットのidを登録し、フォロー済みとする
     $twitter_user->follows()->attach($target->id);
-
+    // 結果を呼び出し元のメソッドに返却
     return $result;
   }
 }

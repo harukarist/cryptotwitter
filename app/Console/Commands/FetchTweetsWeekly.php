@@ -9,9 +9,13 @@ use App\Console\Commands\FetchTweetsLatest; //FetchTweetsLatestを継承
 /**
  * 7日前の0:00から現在時刻の1時間前までの１週間を対象に
  * fetch_tweets_logsテーブルのログレコードを1時間毎に調べ、
- * ツイート未取得の時間帯があれば、ツイートを検索してDBに保存する処理。
+ * ツイート未取得の時間帯があれば、ツイートを検索してDBに保存するコマンド。
+ * 
+ * 親クラスFetchTweetsLatestで最新ツイート取得コマンドを実行した際に
+ * 取得ログデータがDBに存在しない場合、または最終ログデータが1時間以上前の場合のみ、
+ * 親クラスからこのコマンドが呼び出される。
  * レートリミットの取得、検索用パラメーター生成、ツイート検索、DB保存の処理は
- * 親クラスのメソッドを継承する。
+ * 親クラスFetchTweetsLatestのメソッドを継承する。
  */
 class FetchTweetsWeekly extends FetchTweetsLatest
 {
@@ -43,7 +47,7 @@ class FetchTweetsWeekly extends FetchTweetsLatest
 
     /**
      * Execute the console command.
-     * コマンドで実行する処理
+     * コマンドで実行するメソッド
      * @return mixed
      */
     public function handle()

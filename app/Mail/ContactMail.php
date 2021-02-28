@@ -8,8 +8,9 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * お問い合わせフォームのメール送信に必要な情報をまとめた
- * Mailableクラス
+ * お問い合わせフォームから問い合わせを送信したユーザーのメールアドレス宛に、
+ * 受付完了メールを送信するためのMailableクラス
+ * （メール送信処理は app/Http/Controllers/ContactController.php で実行）
  */
 class ContactMail extends Mailable
 {
@@ -24,19 +25,16 @@ class ContactMail extends Mailable
     {
         // フォームに入力された各項目を格納
         $this->contact = $inputs;
-        // $this->name = $inputs['name'];
-        // $this->email = $inputs['email'];
-        // $this->message  = $inputs['message'];
     }
 
     /**
      * Build the message.
-     * 問合せ受付完了メールのメッセージを作成
+     * お問い合わせ受付完了メールのメッセージを作成
      * @return $this
      */
     public function build()
     {
-        // 問合せ受付完了メールのテンプレートcontact.blade.phpに入力内容を渡す
+        // お問い合わせ受付完了メールのテンプレートcontact.blade.phpに入力内容を渡す
         return $this
             ->subject('お問い合わせを受け付けました')
             ->view('email.contact')

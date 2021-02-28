@@ -8,6 +8,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Abraham\TwitterOAuth\TwitterOAuthException;
 
+/**
+ * TwitterAPIで仮想通貨関連のキーワードを含むTwitterアカウントを取得して
+ * DBに保存するコマンド
+ */
 class FetchTargets extends Command
 {
     /**
@@ -38,7 +42,7 @@ class FetchTargets extends Command
 
     /**
      * Execute the console command.
-     * コマンドで実行する処理
+     * コマンドで実行するメソッド
      * @return mixed
      */
     public function handle()
@@ -90,7 +94,7 @@ class FetchTargets extends Command
 
 
     /**
-     * TwitterAPIでレートリミットを取得
+     * TwitterAPIでレートリミットを取得するメソッド
      */
     public function checkLimit()
     {
@@ -122,7 +126,7 @@ class FetchTargets extends Command
     }
 
     /**
-     * TwitterAPIでキーワードを含むTwitterアカウントを検索
+     * TwitterAPIでキーワードを含むTwitterアカウントを検索するメソッド
      */
     public function requestUsers($remain_count, $params)
     {
@@ -199,7 +203,7 @@ class FetchTargets extends Command
     }
 
     /**
-     * 検索結果からTwitterアカウント情報を取り出し、DBに保存
+     * 検索結果からTwitterアカウント情報を取り出し、DBに保存するメソッド
      */
     public function createRecord($users_arr)
     {

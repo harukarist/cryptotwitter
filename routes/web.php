@@ -11,27 +11,26 @@
 |
 */
 
-// メールURL経由でのパスワードリセットフォーム表示
+// パスワード再発行メールURL経由でのパスワードリセットフォーム表示
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
-Route::get('/test', function () {
-    // routeから作成したメールクラスを呼び出し
-    return new App\Mail\TestMail;
-});
+// TwitterAPIからのコールバック処理
+Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
 
-
+// ログイン後のユーザーのみアクセス可能なルーティング
 Route::group(['middleware' => 'auth'], function () {
     // Twitterログイン認証（TwitterAPIへのリダイレクト）
     Route::get('/auth/twitter/login', 'Auth\TwitterAuthController@redirectToProvider');
-    // Twitterログイン認証（TwitterAPIからのコールバック）
-    Route::get('/auth/twitter/callback', 'Auth\TwitterAuthController@handleProviderCallback');
 });
 
-// 初回アクセス時のみLaravel側でapp.blade.phpを表示し、
+// 上記以外のルートは初回アクセス時のみLaravel側でapp.blade.phpを表示し、
 // 以後はフロント側のVueRouterでルーティングを行う。
-// {any?} で任意'.+'のパスパラメータ any を受け入れる。
+// VueRouterのルーティングは下記にて指定。
+// resources/js/router.js
 Route::middleware(['cors'])->group(function () {
+    // {any?} で任意のパスパラメータ'any'を受け入れる
     Route::get('/{any?}', function () {
         return view('layouts.app');
+        // パスパラメータ'any'がある場合の形式を'.+'（任意の文字1文字以上）とする
     })->where('any', '.+');
 });

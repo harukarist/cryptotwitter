@@ -1,6 +1,6 @@
 <?php
 
-// abraham/twitteroauth用の設定
+// Abraham\TwitterOAuthでのOAuth認証に使用する環境変数を指定
 return [
   'api_key' => env('TWITTER_API_KEY', ''),
   'secret_key' => env('TWITTER_API_SECRET', ''),

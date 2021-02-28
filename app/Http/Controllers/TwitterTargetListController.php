@@ -8,18 +8,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * ログイン後に最初に表示されるホーム画面と、
- * Twitterフォロー画面に表示する仮想通貨関連アカウントの情報を
- * JSON形式で返却するクラス
+ * Twitterフォロー画面に表示する「仮想通貨関連アカウント」の一覧データ、及び
+ * ホーム画面に表示する最新Twitterアカウント情報をDBから取得して
+ * JSON形式で返却するコントローラー
  */
 class TwitterTargetListController extends Controller
 {
   /**
-   * Twitterアカウント一覧取得処理
+   * Twitterフォロー画面に表示する「仮想通貨関連アカウント」の一覧データを
+   * DBから取得して返却するメソッド。
+   * 初回表示時などキーワード指定がない場合はDBから全データをページネーション形式で返却し、
+   * キーワード検索フォームからキーワードが送信された場合は、該当キーワードを含む
+   * 仮想通貨アカウントのデータのみをページネーション形式で返却する。
    */
   public function index(Request $request)
   {
-    // 検索リクエストがあった場合は検索キーワードを格納
+    // キーワード検索フォームからの検索リクエストがある場合は、検索キーワードを格納
     if ($request->search) {
       $search_word = $request->search;
     } else {
@@ -30,9 +34,10 @@ class TwitterTargetListController extends Controller
     if (!empty($search_word)) {
       // ログインユーザーのTwitterアカウントが未登録の場合
       if (!isset(Auth::user()->twitter_user)) {
-        // ツイートIDが存在する有効なアカウントで、かつ以下のいずれかのカラムに検索キーワードを含む
-        // 仮想通貨アカウントを取得（クロージャーで複数条件を指定）
-        // ツイートIDがnullのレコードは除く（凍結アカウント、削除済みアカウント、鍵付きアカウント、ツイートが1件もないアカウントのため、仮想通貨アカウント一覧には表示しない）
+        // ツイートIDが存在する有効なアカウント(※)で、かつ
+        // 以下のいずれかのカラムに検索キーワードを含む
+        // 仮想通貨アカウントデータをDBから取得（クロージャーで複数条件を指定）
+        // ※ツイートIDがnull（凍結アカウント、削除済みアカウント、鍵付きアカウント、ツイートが1件もないアカウント）ではないアカウントのみ表示する
         $targets = TargetUser::whereNotNull('tweet_id')
           ->where(function ($query) use ($search_word) {
             $query->where('profile_text', 'LIKE', '%' . $search_word . '%')
@@ -43,10 +48,11 @@ class TwitterTargetListController extends Controller
           ->orderBy('id', 'DESC')
           ->paginate(10);
       } else {
-        // ログインユーザーのTwitterアカウントが登録済みの場合
+        // ログインユーザーのTwitterアカウントが登録済みの場合は未フォローのアカウントのみ取得する
         // フォロー済みの仮想通貨アカウントIDを配列に格納
         $follow_ids = Auth::user()->twitter_user->follows->pluck('id')->toArray();
-        // フォロー済みを除いた仮想通貨アカウントをAPIからの最新取得順にページネーション表示
+        // フォロー済み配列のIDを除いた未フォローの有効アカウントで、かつ検索キーワードを含む
+        // 仮想通貨アカウントデータをDBから取得（クロージャーで複数条件を指定）
         $targets = TargetUser::whereNotNull('tweet_id')
           ->whereNotIn('id', $follow_ids)
           ->where(function ($query) use ($search_word) {
@@ -64,18 +70,17 @@ class TwitterTargetListController extends Controller
 
     // 検索キーワードの指定がなく、ログインユーザーのTwitterアカウントが未登録の場合
     if (!isset(Auth::user()->twitter_user)) {
-      // ツイートIDが存在する有効な仮想通貨アカウントをAPIからの最新取得順にページネーション表示
+      // ツイートIDが存在する有効な仮想通貨アカウントをTwitterAPIからの最新取得順にページネーション表示
       $targets = TargetUser::whereNotNull('tweet_id')
         ->orderBy('id', 'DESC')->paginate(10);
       // 自動でJSONに変換して返却
       return $targets;
     }
 
-
     // 検索キーワードの指定がなく、ログインユーザーのTwitterアカウントが登録済みの場合
     // フォロー済みの仮想通貨アカウントIDを配列に格納
     $follow_ids = Auth::user()->twitter_user->follows->pluck('id')->toArray();
-    // フォロー済みを除いた仮想通貨アカウントをAPIからの最新取得順にページネーション表示
+    // フォロー済み配列のIDを除いた仮想通貨アカウントをTwitterAPIからの最新取得順にページネーション表示
     $targets = TargetUser::whereNotNull('tweet_id')
       ->whereNotIn('id', $follow_ids)
       ->orderBy('id', 'DESC')->paginate(10);
@@ -84,12 +89,12 @@ class TwitterTargetListController extends Controller
     if (!$targets) {
       return abort(404);
     }
-    // 自動でJSONに変換して返却
+    // JSON形式で返却
     return $targets;
   }
 
   /**
-   * ホーム画面の最新データ表示処理
+   * ホーム画面に表示する最新Twitterアカウントデータを返却するメソッド
    */
   public function showLatest()
   {

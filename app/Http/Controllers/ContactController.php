@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CreateContactRequest;
 
 /**
- * お問い合わせフォームから送信された内容の確認と
- * メール送信を行うクラス
+ * お問い合わせフォームから送信された入力内容の確認と
+ * メール送信を行うコントローラー
  */
 class ContactController extends Controller
 {
     /**
      * CreateContactRequestでお問い合わせフォームから送信された内容を
      * バリデーションチェックし、問題なければ
-     * vueの入力内容確認ページに入力内容を返却する。
+     * vueの入力内容確認ページに入力内容を返却するメソッド
      */
     public function confirm(CreateContactRequest $request)
     {
@@ -30,7 +30,7 @@ class ContactController extends Controller
 
     /**
      * vueの入力内容確認ページから送信された内容を
-     * バリデーションチェックし、問題なければメールを送信する。
+     * バリデーションチェックし、問題なければメールを送信するメソッド
      */
     public function send(CreateContactRequest $request)
     {

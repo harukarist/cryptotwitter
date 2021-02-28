@@ -8,8 +8,9 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * お問い合わせフォームのメール送信に必要な情報をまとめた
- * Mailableクラス
+ * お問い合わせフォームから問い合わせが送信された場合に、
+ * 管理者宛に通知メールを送信するためのMailableクラス
+ * （メール送信処理は app/Http/Controllers/ContactController.php で実行）
  */
 class ContactAdmin extends Mailable
 {
@@ -28,12 +29,12 @@ class ContactAdmin extends Mailable
 
     /**
      * Build the message.
-     * 問合せ受付完了メールのメッセージを作成
+     * お問い合わせ通知メールのメッセージを作成
      * @return $this
      */
     public function build()
     {
-        // 問合せ受付完了メールのテンプレートcontact.blade.phpに入力内容を渡す
+        // お問い合わせ通知メールのテンプレートcontact_admin.blade.phpに入力内容を渡す
         return $this
             ->subject('【' . config('app.name') . '】お問い合わせが届きました')
             ->view('email.contact_admin')

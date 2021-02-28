@@ -10,7 +10,8 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 /**
  * 例外が投げられた時の処理を定義する例外ハンドラクラス
- * サーバーエラー発生時に、管理者メールアドレス宛にメール通知する処理をreportメソッドで指定。
+ * サーバーエラー発生時に、管理者メールアドレス宛に
+ * サーバーエラー発生メールを送信する処理をreportメソッドで指定する。
  */
 class Handler extends ExceptionHandler
 {
@@ -64,14 +65,6 @@ class Handler extends ExceptionHandler
                     $error['file']    = $exception->getFile();
                     $error['line']    = $exception->getLine();
                     $error['url']     = url()->current();
-
-                    // // config/mail.phpで設定したメールアドレス宛にエラー通知メールを送信（.envのMAIL_FROM_ADDRESSと同一）
-                    // Mail::send(['text' => 'email.exception'], ["error" => $error], function (Message $message) {
-                    //     $message
-                    //         ->to(config('mail.from.address'))
-                    //         ->from(config('mail.from.address'))
-                    //         ->subject('【' . config('app.name') . '】[' . ENV('APP_ENV') . '] サーバーエラー発生');
-                    // });
 
                     // Mailファサードでメールを送信
                     // （app/Mail のMailableクラスを使用する）

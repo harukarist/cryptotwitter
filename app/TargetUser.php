@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * TwitterAPIで取得した仮想通貨関連アカウントを
+ * target_usersテーブルで管理するためのモデル
+ */
 class TargetUser extends Model
 {
     // ソフトデリート用のトレイトを追加
@@ -36,13 +40,13 @@ class TargetUser extends Model
      * 返却するJSONに含める項目
      * @var array
      */
-    // ログインユーザーがターゲットをフォロー済みかどうかを表示
+    // ログインユーザーがフォロー済みの仮想通貨アカウントかどうかをアクセサで表示
     protected $appends = [
         'followed_by_user',
     ];
 
     /**
-     * 返却するJSONに含めない項目
+     * モデルから取得するデータに含めないカラムの指定
      * @var array
      */
     protected $hidden = [
@@ -57,7 +61,9 @@ class TargetUser extends Model
     }
 
     /**
-     * アクセサ - followed_by_user
+     * それぞれの仮想通貨アカウントについて、
+     * ログインユーザーのTwitterアカウントがフォロー済みかどうかを
+     * true/falseで返却するアクセサ（followed_by_user）
      * @return boolean
      */
     public function getFollowedByUserAttribute()
@@ -66,22 +72,27 @@ class TargetUser extends Model
         if (!isset(Auth::user()->twitter_user)) {
             return false;
         }
-        // ログインユーザーが該当Twitterアカウントをフォロー済みかを返す（followsテーブルにログインユーザーのtwitterIDと該当TwitterアカウントのIDのセットが存在するか）
+        // target_usersテーブルに保存された仮想通貨アカウントの各々について、
+        // followsテーブルに、ログインユーザーに紐づくtwitter_usersテーブルのidと
+        // target_usersテーブルのidのセットが存在するかどうかを。true/falseで返却
         return $this->follows->contains(Auth::user()->twitter_user->id);
     }
 
     /**
-     * リレーションシップ - followsテーブル,autofollowsテーブル
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * followsテーブルとのリレーションシップ（多対多）
      */
     public function follows()
     {
         // TwitterUserとTargetUserは、followsテーブルを中間テーブルとした多対多の関係
-        // 第３引数は中間テーブルにおけるこのモデルの外部キー名、第４引数は結合するモデルの外部キー名
-        // withTimestamps()で、followsテーブルへの操作時にタイムスタンプを更新する設定を追加
         return $this->belongsToMany('App\TwitterUser', 'follows', 'target_id', 'twitter_user_id')
             ->withTimestamps();
+        // 第３引数は中間テーブルにおけるこのモデルの外部キー名、第４引数は結合するモデルの外部キー名
+        // withTimestamps()で、followsテーブルへの操作時にタイムスタンプを更新する設定を追加
     }
+
+    /**
+     * autofollowsテーブルとのリレーションシップ（多対多）
+     */
     public function autofollows()
     {
         // TwitterUserとTargetUserは、autofollowsテーブルを中間テーブルとした多対多の関係

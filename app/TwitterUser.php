@@ -5,6 +5,10 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * ログインユーザーがTwitterOAuth認証したTwitterアカウント情報を
+ * twitter_usersテーブルで管理するためのモデル
+ */
 class TwitterUser extends Model
 {
     // ソフトデリート用のSoftDeletesトレイトを使用
@@ -23,7 +27,7 @@ class TwitterUser extends Model
     ];
 
     /**
-     * 返却するJSONに含めない項目
+     * モデルから取得するデータに含めないカラムの指定
      * @var array
      */
     protected $hidden = [
@@ -31,8 +35,7 @@ class TwitterUser extends Model
     ];
 
     /**
-     * リレーションシップ - usersテーブル
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * usersテーブルとのリレーションシップ（1対1）
      */
     public function user()
     {
@@ -40,17 +43,20 @@ class TwitterUser extends Model
     }
 
     /**
-     * リレーションシップ - followsテーブル,autofollowsテーブル
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * followsテーブルとのリレーションシップ（多対多）
      */
     public function follows()
     {
         // TwitterUserとTargetUserは、followsテーブルを中間テーブルとした多対多の関係
-        // 第３引数は中間テーブルにおけるこのモデルの外部キー名、第４引数は結合するモデルの外部キー名
-        // withTimestamps()で、followsテーブルへの操作時にタイムスタンプを更新する設定を追加
         return $this->belongsToMany('App\TargetUser', 'follows', 'twitter_user_id', 'target_id')
             ->withTimestamps();
+        // 第３引数は中間テーブルにおけるこのモデルの外部キー名、第４引数は結合するモデルの外部キー名
+        // withTimestamps()で、followsテーブルへの操作時にタイムスタンプを更新する設定を追加
     }
+
+    /**
+     * autofollowsテーブルとのリレーションシップ（多対多）
+     */
     public function autofollows()
     {
         // TwitterUserとTargetUserは、autofollowsテーブルを中間テーブルとした多対多の関係

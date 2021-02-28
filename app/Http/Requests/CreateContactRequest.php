@@ -4,6 +4,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * お問い合わせフォームに入力された内容の
+ * バリデーションチェックを行うフォームリクエストクラス
+ */
 class CreateContactRequest extends FormRequest
 {
     /**

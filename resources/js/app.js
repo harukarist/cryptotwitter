@@ -9,10 +9,8 @@ import Vue from 'vue'
 import router from './router' // router.jsからルーティング定義をインポート
 import store from './store' // ストアをインポート
 import AppComponent from './AppComponent.vue' // コンテンツのルートコンポーネント
-import MessageComponent from './components/MessageComponent.vue' // フラッシュメッセージ
-import HeaderComponent from './components/HeaderComponent'
-import FooterComponent from './components/FooterComponent'
-import LoaderComponent from './components/LoaderComponent'
+import MessageComponent from './components/MessageComponent.vue' // Laravelからのフラッシュメッセージ用コンポーネント
+import HeaderComponent from './components/HeaderComponent' //ヘッダーコンポーネント
 import '../sass/app.scss' //Sassの起点ファイルをインポート
 
 /**
@@ -48,8 +46,6 @@ const createApp = async () => {
 			AppComponent,
 			MessageComponent,
 			HeaderComponent,
-			FooterComponent,
-			LoaderComponent
 		},
 	})
 }

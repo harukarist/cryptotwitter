@@ -9,6 +9,9 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use App\Notifications\PasswordResetNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * ログインユーザー情報をusersテーブルで管理するためのモデル
+ */
 class User extends Authenticatable
 {
     // ソフトデリート用のSoftDeletesトレイトを使用
@@ -45,8 +48,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * リレーションシップ - twitter_usersテーブル
-     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     * twitter_usersテーブルとのリレーションシップ（1対1）
      */
     public function twitter_user()
     {

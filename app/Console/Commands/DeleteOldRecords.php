@@ -6,9 +6,11 @@ use App\Tweet;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\FetchPriceController;
-use App\Http\Controllers\DeleteOldRecordsController;
 
+
+/**
+ * 所定の保管期間を過ぎた古いレコードをDBから削除するコマンド
+ */
 class DeleteOldRecords extends Command
 {
     /**
@@ -46,10 +48,9 @@ class DeleteOldRecords extends Command
 
     /**
      * Execute the console command.
-     *
+     * コマンドで実行するメソッド
      * @return mixed
      */
-    // コマンドで実行する処理
     public function handle()
     {
         logger()->info('>>>> レコード削除処理を実行します');
@@ -60,7 +61,9 @@ class DeleteOldRecords extends Command
         logger()->info('レコード削除処理を実行しました <<<<');
     }
 
-    // 保存期間を過ぎた古いツイートレコードをテーブルから削除する処理
+    /**
+     * 保存期間を過ぎた古いツイートレコードをテーブルから削除するメソッド
+     */
     public function deleteTweets()
     {
         $STORAGE_DAYS = 8; //レコードを保存しておく日数
@@ -69,7 +72,10 @@ class DeleteOldRecords extends Command
         dump("{$storage_started}以前のツイートレコードを{$deleted}件削除しました");
         logger()->info("{$storage_started}以前のツイートレコードを{$deleted}件削除しました");
     }
-    // 保存期間を過ぎた古いツイート取得ログレコードをテーブルから削除する処理
+
+    /**
+     * 保存期間を過ぎた古いツイート取得ログレコードをテーブルから削除するメソッド
+     */
     public function deleteFetchTweetsLogs()
     {
         $STORAGE_DAYS = 8; //レコードを保存しておく日数
@@ -78,7 +84,10 @@ class DeleteOldRecords extends Command
         dump("{$storage_started}以前のツイート取得ログレコードを{$deleted}件削除しました");
         logger()->info("{$storage_started}以前のツイート取得ログレコードを{$deleted}件削除しました");
     }
-    // 保存期間を過ぎた古いターゲットユーザー取得ログレコードをテーブルから削除する処理
+
+    /**
+     * 保存期間を過ぎた古いターゲットユーザー取得ログレコードをテーブルから削除するメソッド
+     */
     public function deleteFetchTargetsLogs()
     {
         $STORAGE_DAYS = 8; //レコードを保存しておく日数
@@ -87,7 +96,10 @@ class DeleteOldRecords extends Command
         dump("{$storage_started}以前のターゲットユーザー取得ログレコードを{$deleted}件削除しました");
         logger()->info("{$storage_started}以前のターゲットユーザー取得ログレコードを{$deleted}件削除しました");
     }
-    // 保存期間を過ぎた古い自動フォローログレコードをテーブルから削除する処理
+
+    /**
+     * 保存期間を過ぎた古い自動フォローログレコードをテーブルから削除するメソッド
+     */
     public function deleteAutoFollowLogs()
     {
         $STORAGE_DAYS = 8; //レコードを保存しておく日数

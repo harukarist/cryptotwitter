@@ -7,6 +7,10 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * アカウント設定画面でのお名前・メールアドレス変更フォームに入力された内容の
+ * バリデーションチェックを行うフォームリクエストクラス
+ */
 class EditAccountRequest extends FormRequest
 {
     /**

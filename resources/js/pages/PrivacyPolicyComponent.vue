@@ -1,18 +1,24 @@
 <template>
   <div class="c-container--bg">
     <section class="c-section">
-      <h2 class="c-section__title">プライバシーポリシー</h2>
+      <h2 class="c-section__title">
+        プライバシーポリシー
+      </h2>
       <div class="c-section__contents">
         <p class="c-section__text--left">
           CryptoTrend（以下、「当社」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）におけるプライバシー情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
         </p>
 
-        <h3 class="c-section__subtitle--left">第1条（個人情報）</h3>
+        <h3 class="c-section__subtitle--left">
+          第1条（個人情報）
+        </h3>
         <p class="c-section__text--left">
           「個人情報」とは、個人情報保護法にいう「個人情報」を指すものとし、生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日、住所、電話番号、連絡先その他の記述等により特定の個人を識別できる情報及び容貌、指紋、声紋にかかるデータ、及び健康保険証の保険者番号などの当該情報単体から特定の個人を識別できる情報（個人識別情報）を指します。
         </p>
 
-        <h3 class="c-section__subtitle--left">第2条（個人情報の収集方法）</h3>
+        <h3 class="c-section__subtitle--left">
+          第2条（個人情報の収集方法）
+        </h3>
         <p class="c-section__text--left">
           当社は、ユーザーが利用登録をする際に氏名、生年月日、住所、電話番号、メールアドレス、銀行口座番号、クレジットカード番号、運転免許証番号などの個人情報をお尋ねすることがあります。また、ユーザーと提携先などとの間でなされたユーザーの個人情報を含む取引記録や決済に関する情報を、当社の提携先（情報提供元、広告主、広告配信先などを含みます。以下、｢提携先｣といいます。）などから収集することがあります。
         </p>
@@ -42,7 +48,9 @@
           <li>上記の利用目的に付随する目的</li>
         </ol>
 
-        <h3 class="c-section__subtitle--left">第4条（利用目的の変更）</h3>
+        <h3 class="c-section__subtitle--left">
+          第4条（利用目的の変更）
+        </h3>
         <ol class="c-list__ordered">
           <li>
             当社は、利用目的が変更前と関連性を有すると合理的に認められる場合に限り、個人情報の利用目的を変更するものとします。
@@ -52,7 +60,9 @@
           </li>
         </ol>
 
-        <h3 class="c-section__subtitle--left">第5条（個人情報の第三者提供）</h3>
+        <h3 class="c-section__subtitle--left">
+          第5条（個人情報の第三者提供）
+        </h3>
         <ol class="c-list__ordered">
           <li>
             当社は、次に掲げる場合を除いて、あらかじめユーザーの同意を得ることなく、第三者に個人情報を提供することはありません。ただし、個人情報保護法その他の法令で認められる場合を除きます。
@@ -96,7 +106,9 @@
           </li>
         </ol>
 
-        <h3 class="c-section__subtitle--left">第6条（個人情報の開示）</h3>
+        <h3 class="c-section__subtitle--left">
+          第6条（個人情報の開示）
+        </h3>
         <ol class="c-list__ordered">
           <li>
             当社は、本人から個人情報の開示を求められたときは、本人に対し、遅滞なくこれを開示します。ただし、開示することにより次のいずれかに該当する場合は、その全部または一部を開示しないこともあり、開示しない決定をした場合には、その旨を遅滞なく通知します。なお、個人情報の開示に際しては、1件あたり1,000円の手数料を申し受けます。
@@ -130,7 +142,9 @@
           </li>
         </ol>
 
-        <h3 class="c-section__subtitle--left">第8条（個人情報の利用停止等）</h3>
+        <h3 class="c-section__subtitle--left">
+          第8条（個人情報の利用停止等）
+        </h3>
         <ol class="c-list__ordered">
           <li>
             当社は、本人から、個人情報が、利用目的の範囲を超えて取り扱われているという理由、または不正の手段により取得されたものであるという理由により、その利用の停止または消去（以下、「利用停止等」といいます。）を求められた場合には、遅滞なく必要な調査を行います。
@@ -158,16 +172,22 @@
           </li>
         </ol>
 
-        <h3 class="c-section__subtitle--left">第10条（お問い合わせ窓口）</h3>
+        <h3 class="c-section__subtitle--left">
+          第10条（お問い合わせ窓口）
+        </h3>
         <p class="c-section__text--left">
           本ポリシーに関するお問い合わせは、
           <router-link :to="{ name: 'contact' }">
-            お問い合わせフォーム </router-link
-          >へお願いいたします。
+            お問い合わせフォーム
+          </router-link>へお願いいたします。
         </p>
 
-        <p class="u-font--right">以上</p>
-        <p class="u-font--right">2021年2月1日 制定</p>
+        <p class="u-font--right">
+          以上
+        </p>
+        <p class="u-font--right">
+          2021年2月1日 制定
+        </p>
       </div>
     </section>
   </div>

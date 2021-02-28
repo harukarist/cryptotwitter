@@ -34,29 +34,26 @@ class ForgotPasswordController extends Controller
     use SendsPasswordResetEmails;
 
     /**
-     * パスワードリマインダフォーム表示
+     * パスワードリマインダーフォームを表示するメソッド
      */
     public function showLinkRequestForm()
     {
-        // return view('auth.passwords.email');
-        return redirect('/pass/request');
+        // Vueコンポーネントのパスワードリマインダーフォームを表示
+        return redirect('/password/request');
     }
 
     /**
-     * パスワードリセットメール送信
+     * パスワードリセットメールを送信するメソッド
      */
     public function sendResetLinkEmail(Request $request)
     {
-        //パスワードリセットメール送信のリクエストをチェックする
+        //パスワードリセットメール送信のリクエストをバリデーションチェック
         $this->validateEmail($request);
         $response = $this->broker()->sendResetLink(
             $request->only('email')
         );
 
-        // $response = $this->broker()->sendResetLink(
-        //     $this->credentials($request)
-        // );
-        // 結果をJSON形式で返却
+        // バリデーションチェック結果をJSON形式で返却
         return $response == Password::RESET_LINK_SENT
             ? response()->json([
                 'message' => trans($response),

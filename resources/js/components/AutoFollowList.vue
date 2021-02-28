@@ -1,7 +1,9 @@
 <template>
   <div class="p-target">
     <div class="p-target__list">
-      <h5 class="p-target__title">自動フォロー履歴</h5>
+      <h5 class="p-target__title">
+        自動フォロー履歴
+      </h5>
       <pagination-info
         :current-page="currentPage"
         :per-page="perPage"
@@ -23,12 +25,18 @@
         @follow="createFollow"
         @unfollow="destroyFollow"
       >
-        <div slot="follow_date" class="u-font--muted u-font--small u-mb--m">
+        <div
+          slot="follow_date"
+          class="u-font--muted u-font--small u-mb--m"
+        >
           フォロー日時: {{ target.created_at }}
         </div>
       </twitter-target-item>
 
-      <p v-if="!searchedParam && totalNum === 0" class="u-font--center">
+      <p
+        v-if="!searchedParam && totalNum === 0"
+        class="u-font--center"
+      >
         自動フォロー履歴はまだありません
       </p>
 

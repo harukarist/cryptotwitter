@@ -1,7 +1,9 @@
 <template>
   <div class="p-target">
     <div class="p-target__list">
-      <h5 class="p-target__title">仮想通貨関連アカウント</h5>
+      <h5 class="p-target__title">
+        仮想通貨関連アカウント
+      </h5>
       <pagination-info
         :current-page="currentPage"
         :per-page="perPage"
@@ -23,8 +25,13 @@
         @follow="createFollow"
         @unfollow="destroyFollow"
       />
-      <div v-if="!searchedParam && totalNum === 0" class="u-font--center">
-        <p v-if="useAutoFollow">アカウントはすべて自動フォロー済みです</p>
+      <div
+        v-if="!searchedParam && totalNum === 0"
+        class="u-font--center"
+      >
+        <p v-if="useAutoFollow">
+          アカウントはすべて自動フォロー済みです
+        </p>
         <p v-if="!useAutoFollow">
           仮想通貨関連アカウントが取得できませんでした
         </p>

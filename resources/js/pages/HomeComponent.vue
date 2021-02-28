@@ -1,7 +1,9 @@
 <template>
   <div class="c-container--bg">
     <section class="c-section">
-      <h5 class="c-section__title">リアルタイムトレンド</h5>
+      <h5 class="c-section__title">
+        リアルタイムトレンド
+      </h5>
       <div class="p-home__contents c-fade-in">
         <div class="c-tab p-home__contents">
           <ul class="c-tab__list">
@@ -10,21 +12,21 @@
               :class="{ 'c-tab__item--active': column === 'tweet_hour' }"
               @click="sortByHour"
             >
-              過去1時間の<br class="u-md--only" />ツイート
+              過去1時間の<br class="u-md--only">ツイート
             </li>
             <li
               class="c-tab__item c-tab__item--three"
               :class="{ 'c-tab__item--active': column === 'tweet_day' }"
               @click="sortByDay"
             >
-              過去24時間の<br class="u-md--only" />ツイート
+              過去24時間の<br class="u-md--only">ツイート
             </li>
             <li
               class="c-tab__item c-tab__item--three"
               :class="{ 'c-tab__item--active': column === 'tweet_week' }"
               @click="sortByWeek"
             >
-              過去1週間の<br class="u-md--only" />ツイート
+              過去1週間の<br class="u-md--only">ツイート
             </li>
           </ul>
 
@@ -32,15 +34,21 @@
             <table class="c-table">
               <thead class="c-table__thead">
                 <tr>
-                  <th class="c-table--left">順位</th>
-                  <th class="c-table--left">銘柄名</th>
-                  <th class="c-table--center">ツイート数</th>
+                  <th class="c-table--left">
+                    順位
+                  </th>
+                  <th class="c-table--left">
+                    銘柄名
+                  </th>
+                  <th class="c-table--center">
+                    ツイート数
+                  </th>
                   <th class="c-table--right">
-                    過去24時間の<br class="u-sp-hidden" />最高取引価格<br />
+                    過去24時間の<br class="u-sp-hidden">最高取引価格<br>
                     （円）
                   </th>
                   <th class="c-table--right">
-                    過去24時間の<br class="u-sp-hidden" />最低取引価格<br />
+                    過去24時間の<br class="u-sp-hidden">最低取引価格<br>
                     （円）
                   </th>
                 </tr>
@@ -82,31 +90,56 @@
                     </a>
                   </td>
                   <td class="p-trend__tweet-td">
-                    <p v-if="column === 'tweet_hour'" class="u-font__num">
+                    <p
+                      v-if="column === 'tweet_hour'"
+                      class="u-font__num"
+                    >
                       {{ trend.tweet_hour | localeNum }}
                     </p>
-                    <p v-if="column === 'tweet_day'" class="u-font__num">
+                    <p
+                      v-if="column === 'tweet_day'"
+                      class="u-font__num"
+                    >
                       {{ trend.tweet_day | localeNum }}
                     </p>
-                    <p v-if="column === 'tweet_week'" class="u-font__num">
+                    <p
+                      v-if="column === 'tweet_week'"
+                      class="u-font__num"
+                    >
                       {{ trend.tweet_week | localeNum }}
                     </p>
                   </td>
                   <td class="p-trend__price-td">
-                    <p v-if="trend.high" class="p-trend__price">
+                    <p
+                      v-if="trend.high"
+                      class="p-trend__price"
+                    >
                       <span class="u-font__num">{{
                         trend.high | round | localeNum
                       }}</span>
                     </p>
-                    <p v-else class="u-font--small u-font--muted">不明</p>
+                    <p
+                      v-else
+                      class="u-font--small u-font--muted"
+                    >
+                      不明
+                    </p>
                   </td>
                   <td class="p-trend__price-td">
-                    <p v-if="trend.low" class="p-trend__price">
+                    <p
+                      v-if="trend.low"
+                      class="p-trend__price"
+                    >
                       <span class="u-font__num">{{
                         trend.low | round | localeNum
                       }}</span>
                     </p>
-                    <p v-else class="u-font--small u-font--muted">不明</p>
+                    <p
+                      v-else
+                      class="u-font--small u-font--muted"
+                    >
+                      不明
+                    </p>
                   </td>
                 </tr>
               </tbody>
@@ -131,7 +164,9 @@
     </section>
 
     <section class="c-section">
-      <h5 class="c-section__title">仮想通貨 最新Twitterアカウント</h5>
+      <h5 class="c-section__title">
+        仮想通貨 最新Twitterアカウント
+      </h5>
       <div class="p-target p-home__contents">
         <fade-in-component>
           <div class="p-target__list p-home__twitter">
@@ -155,7 +190,9 @@
     </section>
 
     <section class="c-section">
-      <h5 class="c-section__title">仮想通貨 最新ニュース</h5>
+      <h5 class="c-section__title">
+        仮想通貨 最新ニュース
+      </h5>
       <div class="p-news p-home__contents">
         <fade-in-component>
           <div class="p-home__row">
@@ -170,7 +207,10 @@
                 </span>
               </div>
               <h5 class="p-news__title">
-                <a :href="item.url" target="_blank">
+                <a
+                  :href="item.url"
+                  target="_blank"
+                >
                   {{ item.title }}
                 </a>
               </h5>
@@ -245,6 +285,19 @@ export default {
       }
     },
   },
+  watch: {
+    // $routeを監視し、ページ切り替え時にデータ取得を実行
+    $route: {
+      async handler() {
+        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
+        await this.fetchTrends();
+        await this.fetchTargets();
+        await this.fetchNews();
+        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
+      },
+      immediate: true, //コンポーネント生成時も実行
+    },
+  },
   methods: {
     // axiosでトレンド一覧取得APIにリクエスト
     async fetchTrends() {
@@ -296,19 +349,6 @@ export default {
     },
     sortByWeek() {
       this.column = "tweet_week";
-    },
-  },
-  watch: {
-    // $routeを監視し、ページ切り替え時にデータ取得を実行
-    $route: {
-      async handler() {
-        this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
-        await this.fetchTrends();
-        await this.fetchTargets();
-        await this.fetchNews();
-        this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-      },
-      immediate: true, //コンポーネント生成時も実行
     },
   },
 };

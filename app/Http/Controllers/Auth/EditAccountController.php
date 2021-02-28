@@ -11,31 +11,32 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\EditAccountRequest;
-
 /**
- * ユーザー名、メールアドレスの変更 及び
- * 退会処理を行うコントローラー
+ * ログイン後の「アカウント設定」ページでの
+ * ユーザー情報（お名前・メールアドレス）の変更リクエスト、及び
+ * アカウントの削除リクエストを受け取り、
+ * ユーザー情報の変更、削除を行うコントローラー
  */
 class EditAccountController extends Controller
 {
     public function __construct()
     {
+        // 認証済みユーザーのみアクセス可能
         $this->middleware('auth');
     }
 
     /**
-     * ユーザー名、メールアドレスの変更処理
-     * EditAccountRequestでバリデーションチェックを行い
-     * バリデーションOKであればDBのユーザー情報を更新する
+     * ユーザー情報（お名前・メールアドレス）編集メソッド
+     * EditAccountRequestでバリデーションチェックを行い、結果がOKであれば
+     * DBのユーザー情報と比較し、変更があれば更新する。
      */
     public function EditAccount(EditAccountRequest $request)
     {
-        // ログインユーザーのユーザーIDを取得
+        // usersテーブルからログインユーザーのユーザー情報を取得
         $user_id = Auth::id();
-        // ログインユーザーのユーザー情報を取得
         $user = User::find($user_id);
 
-        //DBの内容と変更があれば更新
+        // 編集フォームに入力されたお名前・メールアドレスの情報がusersテーブルの内容と異なっている場合は更新する
         if ($user->name !== $request->name) {
             $user->name = $request->name;
             $user->save();
@@ -50,8 +51,7 @@ class EditAccountController extends Controller
     }
 
     /**
-     * ユーザー情報とユーザーに紐づく関連情報を
-     * DBから削除する処理
+     * ユーザーアカウント、及びユーザーに紐づく情報をDBから削除し、退会処理を行うメソッド
      */
     public function withdrawAccount()
     {
@@ -64,6 +64,7 @@ class EditAccountController extends Controller
 
         try {
             // ログインユーザーのTwitterアカウント情報が登録されている場合は関連レコードを削除
+            // （論理削除するため、Eloquentを使用する）
             if ($twitter_user) {
                 // ログインユーザーのフォローリストを削除
                 Follow::where('twitter_user_id', $twitter_user->id)->delete();

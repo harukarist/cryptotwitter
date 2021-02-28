@@ -1,7 +1,13 @@
 <template>
-  <form class="c-form--small" @submit.prevent="checkEditForm">
+  <form
+    class="c-form--small"
+    @submit.prevent="checkEditForm"
+  >
     <div class="c-form__group">
-      <label for="username" class="c-form__label">
+      <label
+        for="username"
+        class="c-form__label"
+      >
         お名前
         <span class="c-form__notes">20文字以内</span>
       </label>
@@ -12,7 +18,7 @@
         class="c-input c-input--large"
         required
         autocomplete="name"
-      />
+      >
       <invalid-component :messages="nameErrors" />
       <invalid-component
         v-if="editErrors && editErrors.name"
@@ -20,7 +26,10 @@
       />
     </div>
     <div class="c-form__group">
-      <label for="email" class="c-form__label">メールアドレス</label>
+      <label
+        for="email"
+        class="c-form__label"
+      >メールアドレス</label>
       <input
         id="email"
         v-model="editForm.email"
@@ -29,7 +38,7 @@
         placeholder="例）your.email@example.com"
         required
         autocomplete="email"
-      />
+      >
       <invalid-component :messages="emailErrors" />
       <invalid-component
         v-if="editErrors && editErrors.email"
@@ -37,7 +46,10 @@
       />
     </div>
     <div class="c-form__button">
-      <button type="submit" class="c-btn--accent c-btn--large">
+      <button
+        type="submit"
+        class="c-btn--accent c-btn--large"
+      >
         アカウント情報を変更
       </button>
     </div>
