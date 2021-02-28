@@ -108,6 +108,7 @@ class AutoFollow extends Command
             $diff_follows = $target_users->diff($follows);
             // フォロー済みアカウントを除いたコレクションから自動フォロー済みアカウントを除いたコレクションを取得
             $diff_autofollows = $diff_follows->diff($autofollows);
+            dump($diff_autofollows);
 
             // 自動フォロー対象のコレクションからTwitterIDのみ抽出し、配列に変換
             $target_ids = $diff_autofollows->pluck('twitter_id')->toArray();
