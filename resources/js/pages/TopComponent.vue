@@ -1,25 +1,16 @@
 <template>
   <div class="c-container--fluid">
     <hero-component />
-    <div
-      id="about"
-      ref="about"
-    >
+    <div id="about" ref="about">
       <about-component />
     </div>
     <trouble-component />
     <solution-component />
     <action-component />
-    <div
-      id="reason"
-      ref="reason"
-    >
+    <div id="reason" ref="reason">
       <reason-component />
     </div>
-    <div
-      id="faq"
-      ref="faq"
-    >
+    <div id="faq" ref="faq">
       <faq-component />
     </div>
     <action-component />
@@ -63,18 +54,13 @@ export default {
     this.$nextTick(function () {
       // URL中にhashがある場合
       if (this.hash) {
+        // 該当の要素までスクロールするメソッドを実行
         this.pageScroll(this.hash);
-        // // #を除いた文字列を取得
-        // const refName = this.hash.replace("#", "");
-        // // this.scrollToAnchorPoint(refName);
-        // setTimeout(() => {
-        //   // 正しい高さを取得できるよう、画像の読み込みを待ってからスクロールメソッドを実行
-        //   this.scrollToAnchorPoint(refName);
-        // }, 100);
       }
     });
   },
   methods: {
+    // ハッシュの値をref属性名に持つ要素へスクロールするメソッド
     pageScroll(hash) {
       // #を除いた文字列を取得
       const refName = hash.replace("#", "");

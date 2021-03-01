@@ -249,9 +249,6 @@ export default {
     // $routeを監視し、ページ切り替え時にデータ取得を実行
     $route: {
       async handler() {
-        // await this.fetchTrends();
-        // await this.fetchTargets();
-        // await this.fetchNews();
         const fetchTrends = this.fetchTrends();
         const fetchTargets = this.fetchTargets();
         const fetchNews = this.fetchNews();
