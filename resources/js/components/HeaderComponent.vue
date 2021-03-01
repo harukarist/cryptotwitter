@@ -1,127 +1,105 @@
 <template>
-  <div class="container-fluid bg-dark mb-3">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-dark">
-        <!-- active-class="is-active"で、該当ディレクトリ内にいる時のみis-activeクラスを付与 -->
-        <!-- home '/'のみ、子のディレクトリは内包しないよう、exactオプションを使用 -->
-        <!-- サイトロゴ -->
-        <RouterLink
-          :to="{ name: 'home.index' }"
-          active-class="active"
-          exact
-          class="navbar-brand"
+  <nav class="p-navbar">
+    <!-- サイトロゴ -->
+    <div class="p-navbar__title">
+      <router-link :to="{ name: 'top' }">
+        <img
+          src="/img/logo.png"
+          class="p-navbar__title-logo"
         >
+        <h1 class="p-navbar__title-text">
           CryptoTrend
-        </RouterLink>
-
-        <!-- トグルアイコン -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- ログイン済みユーザー向けメニュー -->
-        <div v-if="isLogin" class="collapse navbar-collapse" id="navbarNav">
-          <ul class="p-navbar navbar-nav">
-            <li class="p-navbar__item nav-item">
-              <RouterLink
-                :to="{ name: 'trend.index' }"
-                active-class="active"
-                class="nav-link"
-              >
-                トレンド一覧
-              </RouterLink>
-            </li>
-            <li class="p-navbar__item nav-item">
-              <RouterLink
-                :to="{ name: 'twitter.index' }"
-                active-class="active"
-                class="nav-link"
-              >
-                Twitterフォロー
-              </RouterLink>
-            </li>
-            <li class="p-navbar__item nav-item">
-              <RouterLink
-                :to="{ name: 'news.index' }"
-                active-class="active"
-                class="nav-link"
-              >
-                関連ニュース
-              </RouterLink>
-            </li>
-            <li class="p-navbar__item nav-item">
-              {{ username }}
-            </li>
-            <li class="p-navbar__item nav-item">
-              <a class="nav-link" @click="logout">Logout</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- 未ログインユーザー向けメニュー -->
-        <div v-if="!isLogin" class="collapse navbar-collapse" id="navbarNav">
-          <ul class="p-navbar navbar-nav">
-            <li class="p-navbar__item nav-item">
-              <RouterLink
-                :to="{ name: 'register' }"
-                active-class="active"
-                class="nav-link"
-              >
-                無料ユーザー登録
-              </RouterLink>
-            </li>
-            <li class="p-navbar__item nav-item">
-              <RouterLink
-                :to="{ name: 'login' }"
-                active-class="active"
-                class="nav-link"
-              >
-                ログイン
-              </RouterLink>
-            </li>
-          </ul>
-        </div>
-      </nav>
+        </h1>
+      </router-link>
     </div>
-  </div>
+
+    <!-- スマホ用アクションメニュー -->
+    <div class="p-navbar__sp">
+      <!-- 未ログイン時のアクションボタン -->
+      <ul
+        v-if="!isLogin"
+        class="p-nav-menu__action"
+      >
+        <li
+          class="p-nav-menu__action-item-btn"
+          @click="closeDrawerMenu"
+        >
+          <router-link
+            :to="{ name: 'register' }"
+            class="c-btn--accent p-nav-menu__action-btn"
+          >
+            ユーザー登録
+          </router-link>
+        </li>
+        <li
+          class="p-nav-menu__action-item-btn"
+          @click="closeDrawerMenu"
+        >
+          <router-link
+            :to="{ name: 'login' }"
+            class="c-btn--main-outline p-nav-menu__action-btn"
+          >
+            ログイン
+          </router-link>
+        </li>
+      </ul>
+      <!-- ハンバーガーアイコン -->
+      <div
+        ref="toggleIcon"
+        class="p-navbar__toggle"
+        :class="{ 'is-active': isActiveDrawerMenu }"
+        @click="toggleDrawerMenu"
+      >
+        <span class="p-navbar__toggle--line" />
+        <span class="p-navbar__toggle--line" />
+        <span class="p-navbar__toggle--line" />
+        <span class="p-navbar__toggle--text" />
+      </div>
+    </div>
+
+    <!-- ナビメニュー  -->
+    <header-nav-menu
+      :is-active-drawer-menu="isActiveDrawerMenu"
+      @close="closeDrawerMenu"
+    />
+  </nav>
 </template>
 
 <script>
+import { mapState, mapGetters } from 'vuex' // VuexのmapState関数,mapGetters関数をインポート
+import HeaderNavMenu from './HeaderNavMenu.vue'
+
 export default {
+  components: {
+    HeaderNavMenu,
+  },
+  data() {
+    return {
+      isActiveDrawerMenu: false,
+    }
+  },
   computed: {
-    apiStatus() {
-      // ストアのapiStatusステートを参照し、API通信の成否ステータスを取得
-      return this.$store.state.auth.apiStatus;
-    },
-    isLogin() {
+    ...mapState({
+      // authストアのステートを参照し、API通信の成否ステータスを取得
+      apiStatus: (state) => state.auth.apiStatus,
+    }),
+    ...mapGetters({
       // authストアのcheckゲッターでユーザーのログイン状態をチェック
-      return this.$store.getters["auth/check"];
-    },
-    username() {
-      // authストアのusernameゲッターでユーザー名を取得
-      return this.$store.getters["auth/username"];
-    },
+      isLogin: 'auth/check',
+    }),
+  },
+  created() {
+    // ページ読み込み時にフラグを初期化
+    this.closeDrawerMenu()
   },
   methods: {
-    async logout() {
-      // dispatch()でauthストアのlogoutアクションを呼び出す
-      await this.$store.dispatch("auth/logout");
-
-      // API通信が成功した場合
-      if (this.apiStatus) {
-        // VueRouterのpush()でトップ画面に遷移
-        this.$router.push("/");
-      }
-      // context.commit("setUser", null);
+    toggleDrawerMenu() {
+      this.isActiveDrawerMenu = !this.isActiveDrawerMenu
+    },
+    closeDrawerMenu() {
+      // ドロワーメニューを閉じる
+      this.isActiveDrawerMenu = false
     },
   },
-};
+}
 </script>

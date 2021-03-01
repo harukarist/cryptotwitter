@@ -1,0 +1,87 @@
+.p-solution {
+  background: $bg-color--white;
+  padding: $header-height+$space--l $space--xl;
+  text-align: center;
+  @include mq(){
+    padding: $header-height+$space--l $space--m;
+  }
+  &__title {
+    color: $font-color--dark;
+    font-size: $font-size--xl;
+    border-bottom: 3px solid $bg-color--accent;
+    display: inline-block;
+    padding-bottom: $space--m;
+    margin-bottom: $space--xxxl;
+    @include mq(){
+      font-size: $font-size--l;
+    }
+  }
+  &__contents {
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+    max-width: $site-width;
+    justify-content: center;
+    box-sizing: border-box;
+    @include mq(medium){
+      width: 100%;
+      padding-left: $space--m;
+      padding-right: $space--m;
+    }
+    @include mq(){
+      flex-direction: column;
+    }
+  }
+  &__item {
+    margin-right: $space--xxl;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: calc(100% / 3  - ((#{$space--xxl} * 2) / 3) ); //1行に3アイテムを均等配置
+    box-sizing: border-box;
+    &:nth-child(3n) {
+      margin-right: 0; //3番目の要素は右に余白を空けない
+    }
+    @include mq(){
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      margin: $space--l auto;
+    }
+  }
+  &__description {
+    text-align: left;
+    display: inline-block;
+    margin-bottom: $space--l;
+    @include mq(){
+      margin-left: $space--s;
+    }
+  }
+  &__heading {
+    color: $font-color--dark;
+    font-size: $font-size--l;
+    margin-bottom: $space--xl;
+    line-height: 1.7;
+  }
+  &__text {
+    color: $font-color--default;
+    font-size: $font-size--default;
+    text-align: justify;
+    line-height: 1.8;
+    @include mq(){
+      margin-bottom: $space--l;
+    }
+  }
+  &__img-wrapper {
+    width: 120px;
+    align-self: center; //画像の縦横比を維持
+    margin: 0 auto; //左右中央揃え
+    display: inline-block;
+    img {
+      min-width: 100%;
+      max-width: initial;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+  }
+}

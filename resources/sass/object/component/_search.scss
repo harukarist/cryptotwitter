@@ -1,0 +1,30 @@
+.c-search {
+  padding-top: $space--s;
+  padding-bottom: $space--xxl;
+  &__form {
+    position: relative;
+    margin-bottom: $space--l;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: $bg-color--border;
+  }
+  &__input {
+    width: 100%;
+    height: 48px;
+    padding-left: 32px;
+    padding-right: 8px;
+  }
+  &__clear-icon {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    font-size: 20px;
+    transform: translateY(-50%);
+    color: $bg-color--border;
+  }
+}

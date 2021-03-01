@@ -96,8 +96,8 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
+            'expire' => 60, //パスワードリセットトークンの有効時間（分）
+            'throttle' => 60, //要求制限のスロットル時間（秒）
         ],
     ],
 

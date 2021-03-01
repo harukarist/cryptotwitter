@@ -1,0 +1,20 @@
+.slide-down {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.4s ease-in-out;
+    overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
+  }
+  &-leave-active {
+    // position: absolute;
+  }
+  // 上からスライドイン
+  &-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  // 上にスライドアウト
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

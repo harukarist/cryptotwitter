@@ -1,0 +1,50 @@
+.c-modal {
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  &__dialog {
+    background: $bg-color--white;
+    border-radius: 4px;
+    overflow: hidden;
+    padding: $space--l $space--xl;
+  }
+  &__header {
+    position: relative;
+  }
+  &__close {
+    right: 0;
+    font-size: 20px;
+    color: $font-color--muted;
+  }
+  &__body {
+    text-align: center;
+    padding: $space--l;
+    line-height: 1.8;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    @include mq(){
+      flex-direction: column;
+    }
+    &-btn {
+      min-width: 200px;
+      margin: $space--m;
+      @include mq(){
+        width: 90%;
+      }
+    }
+  }
+}

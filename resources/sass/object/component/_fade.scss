@@ -1,0 +1,28 @@
+/* フェードインアニメーション */
+.c-fade-in {
+  animation: fadeIn 1.2s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(200px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.c-fade-in--small {
+  animation: fadeInSmall 0.5s;
+}
+@keyframes fadeInSmall {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}

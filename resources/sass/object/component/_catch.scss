@@ -1,0 +1,25 @@
+.c-catch {
+  position: relative;
+  display: inline-block;
+  padding: 0 45px;
+  @include mq(){
+    padding: 0  35px;
+  }
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    width: 38px; //斜め線の長さ
+    height: 2px; //斜め線の太さ
+    background-color: $bg-color--accent;
+  }
+  &:before {
+    left:0;
+    transform: rotate(60deg);
+  }
+  &:after {
+    right: 0;
+    transform: rotate(-60deg);
+  }
+}

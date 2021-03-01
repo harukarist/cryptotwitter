@@ -1,0 +1,29 @@
+.c-accordion {
+  background-color: $bg-color--white;
+  &__title {
+    position: relative; //矢印アイコンの配置基準
+    transition: all .3s ease-in;
+    &::before { // 矢印アイコン
+      content: '\f107';
+      font-family: FontAwesome;
+      font-size: 24px;
+      color: $font-color--muted;
+      padding: 0;
+      margin-left: $space--s;
+      position: absolute;
+      right: 10px;
+      top: 50%; //矢印アイコンをボックスの上下中央に配置
+      transform: translateY(-50%); //要素自身の高さの半分だけ上にずらす
+    }
+    &.is-opened {
+      background: $bg-color--light;
+      &::before { // 矢印アイコン
+        content: '\f106';
+        font-family: FontAwesome;
+      }
+    }
+    &.is-hovered {
+      background: rgba($bg-color--accent, 0.3);
+    }
+  }
+}

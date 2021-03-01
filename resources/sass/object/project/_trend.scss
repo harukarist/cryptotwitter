@@ -1,0 +1,132 @@
+.p-trend {
+  padding-bottom: $space--xxl;
+  &__head {
+    padding-top: $space--l;
+    padding-bottom: $space--s;
+    margin: 0 $space--l;
+    display: flex;
+    justify-content: space-between;
+    @include mq(){
+      margin: 0 $space--m;
+    }
+  }
+
+  //銘柄選択メニュー
+  &__select {
+    padding: $space--l;
+    margin-bottom: $space--l;
+    border: 1px solid $bg-color--border;
+    border-radius: 4px;
+    position: relative;
+    transition : all .5s ease-in-out;
+    &-text {
+      text-align: center;
+      color: $font-color--muted;
+      font-size: $font-size--m;
+    }
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: $space--m;
+    }
+    &-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: $bg-color--border
+    }
+    &-item {
+      flex-grow: 1;
+      margin-right: $space--m;
+      line-height: 1.0;
+      width: calc(100% / 6 - ((#{$space--m} * 5) / 6)); //1行に6銘柄を均等配置
+      &:nth-child(6n) {
+        margin-right: 0; //6番目の要素は右に余白を空けない
+      }
+      @include mq(medium) {
+        margin-right: $space--s;
+        width: calc(100% / 6 - ((#{$space--s} * 5) / 6));
+      }
+      @include mq() {
+        margin-right: $space--s;
+        width: calc(100% / 3 - ((#{$space--s} * 2) / 3)); //スマホ表示時は1行に2銘柄を均等配置
+        &:nth-child(3n) {
+          margin-right: 0; //2番目の要素は右に余白を空けない
+        }
+      }
+    }
+    &-footer {
+      text-align: right;
+      margin-right: $space--l;
+      @include mq() {
+        text-align: center;
+        margin-right: 0;
+      }
+    }
+  }
+  
+  // ツイートランキングの順位表示
+  &__order-td {
+    @include mq() {
+      padding: $space--m 2px;
+    }
+  }
+  &__order {
+    text-align: center;
+    background: $bg-color--dark;
+    color: $font-color--white;
+    display: inline-block;
+    border-radius: 50%; //正円の背景を表示
+    width: $font-size--l;
+    height: $font-size--l;
+    line-height: $font-size--l;
+    font-size: $font-size--s;
+    font-weight: bold;
+    letter-spacing: 0; //左右中央に揃える
+    &--gold {
+      background: $bg-color--gold;
+      color: $font-color--white;
+    }
+    &--silver {
+      background: $bg-color--silver;
+      color: $font-color--white;
+    }
+    &--bronze {
+      background: $bg-color--bronze;
+      color: $font-color--white;
+    }
+  }
+  // 銘柄名の表示
+  &__name-td {
+    // @include mq(){
+    //   width: 90px;
+    // }
+  }
+  &__name {
+    font-weight: bold;
+    font-size: $font-size--default;
+    font-family: $font-family--theme;
+    letter-spacing: 0.15em;
+    @include mq(){
+      letter-spacing: 0.08em;
+    }
+    &--small {
+      font-size: $font-size--s;
+    }
+  }
+  // ツイート数
+  &__tweet-td {
+    text-align: center;
+    @include mq(){
+      width: 80px;
+    }
+  }
+  // 取引価格
+  &__price-td {
+    text-align: right;
+    @include mq(){
+      width: 90px;
+    }
+  }
+}

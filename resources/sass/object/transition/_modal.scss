@@ -1,0 +1,21 @@
+.modal {
+  // モーダル外部のトランジション
+  &-enter-active, &-leave-active {
+    transition: all 0.4s;
+    // モーダルウィンドウのトランジション
+    .c-modal__window {
+      transition: all 0.4s;
+    }
+  }
+  // モーダルウィンドウの非表示後にモーダル外部の背景を消す
+  &-leave-active {
+    transition: opacity 0.4s ease 0.2s;
+  }
+  &-enter, &-leave-to {
+    opacity: 0;
+    .c-modal__window  {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+  }
+}

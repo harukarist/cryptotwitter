@@ -1,0 +1,76 @@
+// ==================================
+// base
+// ==================================
+html, body {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  font-family: $font-family--default;
+  font-size: $font-size--default;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-size-adjust: 100%;
+  color: $font-color--default;
+  background: $bg-color--white;
+}
+
+p, a, h1, h2, h3, h4, h5, h6, li {
+  // フォントをスムーズに表示
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-feature-settings: "palt"; //自動カーニングで文字詰め
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+a {
+  color: $font-color--link;
+  text-decoration: none;
+  transition: .3s ease-in-out;
+  &:hover {
+    color: $font-color--hover;
+    transition: .3s;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: bottom;
+}
+
+ul {
+  list-style-type: none;
+}
+
+// フォームのデフォルトスタイルをリセット
+input, button, textarea, select {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+input[type="search"] {
+  appearance: textfield;
+  -webkit-appearance: textfield;
+  -webkit-search-decoration: none;
+  // -webkit-box-sizing: content-box;
+}
+input[type="search"]:focus {
+  outline-offset: -2px;
+}
+input[type="search"]::-webkit-search-decoration {
+  display: none;
+}
+// フォームのフォントを指定
+input, textarea, select {
+  font-family: $font-family--default;
+  font-size: 100%;
+  text-align: left;
+}

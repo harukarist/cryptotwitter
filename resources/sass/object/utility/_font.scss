@@ -1,0 +1,35 @@
+.u-font {
+  &__num {
+    font-family: $font-family--theme;
+    font-weight: bold;
+  }
+  &--small {
+    font-size: $font-size--m;
+    @include mq() {
+      font-size: $font-size--s;
+    }
+  }
+  &--large {
+    font-size: $font-size--xxl;
+    margin: 0 4px;
+    @include mq() {
+      font-size: $font-size--xl;
+    }
+  }
+  &--muted {
+    color: $font-color--muted;
+  }
+  &--left {
+    text-align: left;
+  }
+  &--center {
+    text-align: center;
+  }
+  &--right {
+    text-align: right;
+  }
+  &__br {
+    white-space: pre-wrap; //改行タグで折り返す
+    word-wrap: break-word; //ボックス幅をはみ出す長さの英文を折り返す
+  }
+}

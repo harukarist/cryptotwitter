@@ -4,15 +4,14 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-// require('./bootstrap');
-
-// window.Vue = require('vue');
-
-import './bootstrap'
-import Vue from 'vue';
-import router from './router'; // router.jsからルーティング定義をインポート
+import './bootstrap' //設定ファイルbootstrap.jsをインポート
+import Vue from 'vue'
+import router from './router' // router.jsからルーティング定義をインポート
 import store from './store' // ストアをインポート
-import App from './App.vue'; // ルートコンポーネントをインポート 
+import AppComponent from './AppComponent.vue' // コンテンツのルートコンポーネント
+import MessageComponent from './components/MessageComponent.vue' // Laravelからのフラッシュメッセージ用コンポーネント
+import HeaderComponent from './components/HeaderComponent' //ヘッダーコンポーネント
+import '../sass/app.scss' //Sassの起点ファイルをインポート
 
 /**
  * The following block of code may be used to automatically register your
@@ -32,19 +31,23 @@ import App from './App.vue'; // ルートコンポーネントをインポート
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vueインスタンス生成前に非同期処理でauthストアのcurrentUserアクションを呼び出して
-// ログインチェックを行う
 const createApp = async () => {
-    await store.dispatch('auth/currentUser');
+	// 画面リロード時にVueインスタンスを再生成してもユーザー情報が表示されるよう、生成前に非同期処理でログインチェックを行う
+	const userLogin = store.dispatch('auth/currentUser')
+	const userTwitter = store.dispatch('twitter/checkAuth')
+	await Promise.all([userLogin, userTwitter])
 
-    // currentUserアクションの処理が終わったらVueインスタンスを生成
-    new Vue({
-        el: '#app',
-        router, // Vue Routerを読み込む
-        store, // Vuexのストアを読み込む
-        components: { App }, // ルートコンポーネントを宣言
-        template: '<App />' // ルートコンポーネントを描画
-    });
+	// Vueインスタンスを生成
+	new Vue({
+		el: '#app',
+		router, // Vue Routerを読み込む
+		store, // Vuexのストアを読み込む
+		components: {
+			AppComponent,
+			MessageComponent,
+			HeaderComponent,
+		},
+	})
 }
 // 初回起動時のログインチェック、Vueインスタンス生成を呼び出し
-createApp();
+createApp()

@@ -1,0 +1,123 @@
+.p-reason {
+  background: $bg-color--main;
+  // padding: $space--xxxl $space--xl;
+  padding: $header-height+$space--l $space--xl;
+  text-align: center;
+  color: $font-color--white;
+  &__title {
+    color: $font-color--white;
+    font-size: $font-size--xl;
+    border-bottom: 3px solid $bg-color--white;
+    display: inline-block;
+    padding-bottom: $space--m;
+    margin-bottom: $space--xxxl;
+    @include mq(){
+      border: none;
+    }
+  }
+  &__contents {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 100%;
+    max-width: $site-width;
+    div:nth-child(even) { //子要素を違い違いに配置
+      flex-direction: row-reverse;
+      align-self: flex-end;
+      .p-reason__img-wrapper {
+        margin-right: $space--xl;
+        @include mq(){
+          margin: 0 auto;
+        }
+      }
+    }
+    div:nth-child(odd) {
+      .p-reason__img-wrapper {
+        margin-left: $space--xl;
+        @include mq(){
+          margin: 0 auto;
+        }
+      }
+    }
+    @include mq(medium){
+      width: 100%;
+      padding: $space--l;
+      box-sizing: border-box;
+    }
+    @include mq(){
+      padding: 0;
+      div:nth-child(even) { //子要素を違い違いに配置
+        flex-direction: inherit;
+      }
+    }
+  }
+  &__item {
+    padding: $space--xxl;
+    background-color: $bg-color--white;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin-bottom: 80px;
+    box-sizing: border-box;
+    &:last-child {
+      margin-bottom: 10px;
+    }
+    @include mq(medium){
+      width: 95%;
+    }
+    @include mq(){
+      padding: $space--xxl;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+  }
+  &__description {
+    width: 70%;
+    @include mq(){
+      width: 100%;
+    }
+  }
+  &__img-wrapper {
+    width: 30%;
+    @include mq(){
+      width: 200px;
+      margin: 0 auto;
+    }
+  }
+  &__num {
+    position: absolute;
+    top: -1.2em;
+    left: 0;
+    font-size: $space--xxxl;
+    color: $bg-color--main-light;
+    font-weight: bold;
+    @include mq(){
+      right: 0;
+    }
+  }
+  &__heading {
+    color: $font-color--dark;
+    font-size: $font-size--l;
+    font-weight: bold;
+    margin-bottom: $space--l;
+    text-align: left;
+    @include mq(){
+      font-size: $font-size--l;
+      font-weight: bold;
+    }
+  }
+  &__text {
+    color: $font-color--default;
+    font-size: $font-size--default;
+    text-align: left;
+    text-align: justify;
+    line-height: 1.8;
+    @include mq(){
+    margin-bottom: $space--xxl;
+    }
+  }
+}

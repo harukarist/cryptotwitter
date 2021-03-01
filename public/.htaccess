@@ -1,4 +1,10 @@
 <IfModule mod_rewrite.c>
+    <FilesMatch "\.(ttf|otf|eot|woff)$">
+        <IfModule mod_headers.c>
+            Header set Access-Control-Allow-Origin "*"
+        </IfModule>
+    </FilesMatch>
+
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>

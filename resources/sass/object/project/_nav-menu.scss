@@ -1,0 +1,274 @@
+.p-nav-menu {
+  color: $font-color--link;
+  // ドロワーメニュー（スマホ・タブレットのみ表示）
+  @include mq(medium) {
+    position: fixed;
+    top: 0;
+    right: -100vw; //初期描画時は画面外（右端）に配置
+    width: 100vw;
+    height: 100vh;
+    overflow-y: auto; //デバイスの高さから溢れる場合はスクロールを表示
+    z-index: 4;
+    box-sizing: border-box;
+    transition : all .5s ease-in-out;
+    // ハンバーガーアイコン押下時
+    &.is-visible {
+      display: block;
+      transform: translateX(-100vw); //右端にあったメニューが100％左に移動
+    }
+  }
+  &__contents {
+    @include mq(medium) {
+      background: rgba($bg-color--light, .95);
+      width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      box-sizing: border-box;
+      position: absolute;
+      right: 0;
+      padding-left: $space--l;
+      padding-top: $header-height; //閉じるボタン分の高さ
+      text-align: center;
+    }
+  }
+  &__sp-title { // ドロワーメニュー用ロゴ
+    display: none;
+    @include mq(medium) {
+      display: block;
+      z-index: 4;
+      a {
+        color: $font-color--dark;
+      }
+      padding-bottom: $space--s;
+    }
+  }
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; //子要素を上下中央揃え
+    // ドロワーメニュー
+    @include mq(medium) {
+      flex-direction: column;
+    }
+  }
+  &__list {
+    display: flex;
+    align-items: center;
+    margin-right: $space--l;
+    // ドロワーメニュー
+    @include mq(medium) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: none;
+      margin: $space--xl auto $space--xxl;
+    }
+  }
+  &__item {
+    margin: 0 $space--l;
+    &:first-child {
+      margin-left: $space--s;
+    }
+    &:last-child {
+      margin-right: $space--s;
+    }
+    @include mq(large){
+      margin: 0 $space--m;
+    }
+    // ドロワーメニュー
+    @include mq(medium){
+      margin: $space--m $space--m;
+      &:first-child {
+        margin-left: $space--m;
+      }
+      &:last-child {
+        margin-right: $space--m;
+      }
+    }
+  }
+  &__item-btn {
+    margin: 0 $space--s;
+    // ドロワーメニュー
+    @include mq(medium){
+      margin: $space--l auto;
+      width: 100%;
+    }
+  }
+  &__link {
+    color: $font-color--dark;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    font-size: $font-size--default;
+    height: $header-height; //擬似要素の下線をヘッダー下と合わせる
+    display: flex;
+    align-items: center; //リンク文字を上下中央に揃える
+    position: relative; //擬似要素でabsoluteを指定
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: 0 auto; //中央からスタート
+      width: 0;
+      transition: width .2s ease-in-out;  //widthを変化
+    }
+    &:hover {
+      color: $font-color--accent-light;
+      transform: scale(0.97, 1); //ホバー時に文字を縮める
+    }
+    &.is-active { //現在表示しているページのメニュー描画
+      color: $font-color--accent;
+      &::before {
+        width: 100%; //擬似要素の下線幅を0から100%に伸ばす
+        border-bottom: 2px solid $bg-color--accent;
+      }
+    }
+    // ドロワーメニュー
+    @include mq(medium) {
+      text-align: center;
+      padding: 0;
+      height: 40px;
+      &::before {
+        margin: 0; //左端からスタート
+      }
+    }
+  }
+  &__btn {
+    font-size: $font-size--default;
+    padding-top: $space--s;
+    padding-bottom: $space--s;
+    // ドロワーメニュー
+    @include mq(medium) {
+      font-size: $font-size--m;
+      padding-top: $space--l;
+      padding-bottom: $space--l;
+      width: 90%;
+      max-width: 180px;
+    }
+  }
+  &__dropdown {
+    height: $header-height;
+    display: flex;
+    align-items: center;
+    padding-left: $space--m;
+    padding-right: $space--m;
+    transition : all .5s ease-in-out;
+    &:hover {
+      background: rgba($bg-color--light, .95);
+    }
+    @include mq(large) {
+      padding-left: $space--s;
+      padding-right: $space--s;
+    }
+    // ドロワーメニュー
+    @include mq(medium) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  &__dropdown-head {
+    display: flex;
+    align-items: center;
+    color: $font-color--dark;
+  }
+  &__avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    vertical-align: baseline;
+    margin-right: $space--s;
+  }
+  &__username {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis; //幅を超えるユーザー名は...で省略
+    white-space: nowrap;
+    font-size: $font-size--m;
+    margin-right: $space--s;
+    max-width: 200px;
+  }
+  &__dropdown-icon {
+    display: inline-block;
+    // ドロワーメニューではドロップダウンアイコンを非表示
+    @include mq(medium) {
+      display: none;
+    }
+  }
+  &__dropdown-menu {
+    position: absolute;
+    top: $header-height;
+    background: $bg-color--white;
+    box-shadow: $shadow-color--s;
+    min-width: 200px;
+    @include mq(xlarge){
+      right: 10px;
+    }
+    // ドロワーメニュー
+    @include mq(medium) {
+      left: 0;
+      right: 0;
+      border: none;
+      background: none;
+      box-shadow: none;
+    }
+  }
+  &__dropdown-list {
+    // ドロワーメニュー
+    @include mq(medium) {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: $space--xxxl;
+      margin: 0 auto;
+    }
+  }
+  &__dropdown-item {
+    margin: $space--l $space--xl;
+    // ドロワーメニュー
+    @include mq(medium) {
+      margin: $space--m $space--l;
+    }
+  }
+  &__dropdown-link {
+    color: $font-color--dark;
+    &:hover {
+      color: $font-color--hover;
+      transform: scale(0.97, 1); //ホバー時に文字を縮める
+    }
+    &.is-active { //現在表示しているページのメニュー描画
+      color: $font-color--accent;
+    }
+    // ドロワーメニュー
+    @include mq(medium) {
+      text-align: center;
+      padding: 0;
+      height: 40px;
+    }
+  }
+  &__action {
+    display: none;
+    @include mq(medium) {
+      display: flex;
+      align-items: center;
+      margin-right: $space--l;
+      &-item-btn {
+        margin: 0 $space--s;
+      }
+      &-btn {
+        font-size: $font-size--default;
+        padding-top: $space--s;
+        padding-bottom: $space--s;
+      }
+    }
+    @include mq() {
+      display: none;
+    }
+  }
+}

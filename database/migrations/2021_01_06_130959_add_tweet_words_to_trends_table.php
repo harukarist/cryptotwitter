@@ -14,7 +14,7 @@ class AddTweetWordsToTrendsTable extends Migration
     public function up()
     {
         Schema::table('trends', function (Blueprint $table) {
-            $table->string('tweet_words')->after('used_api_type')->comment('ツイート数検索時に使用するキーワード');
+            $table->string('tweet_words')->after('use_api')->comment('ツイート数検索時に使用するキーワード');
         });
     }
 

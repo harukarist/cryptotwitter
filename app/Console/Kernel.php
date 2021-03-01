@@ -5,7 +5,9 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-// バッチ処理を行うタスクスケジューラー
+/**
+ * バッチ処理を指定のタイミングで実行するためのタスクスケジューラー
+ */
 class Kernel extends ConsoleKernel
 {
     /**
@@ -13,13 +15,18 @@ class Kernel extends ConsoleKernel
      *
      * @var array
      */
-    // 作成したCommandを登録する
+    // バッチ処理を実行するCommandクラスをコマンド変数に登録する
     protected $commands = [
-        Commands\UpdatePrices::Class,
-        Commands\FetchTweets::Class,
-        Commands\FetchUsers::Class,
-        Commands\FetchTwpro::Class,
-        Commands\UpdateTweets::Class,
+        Commands\AutoFollow::class,
+        Commands\DeleteOldRecords::class,
+        Commands\FetchNews::class,
+        Commands\FetchTargets::class,
+        Commands\FetchTargetsTweet::class,
+        Commands\FetchTweetsLatest::class,
+        Commands\FetchTweetsWeekly::class,
+        Commands\FetchTwpro::class,
+        Commands\UpdatePrices::class,
+        Commands\UpdateTweetCount::class,
     ];
 
     /**
@@ -28,40 +35,41 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    // Commandを定期的に実行するタスクスケジュールの設定
+    // Commandを定期的に実行するタスクスケジュールを設定するメソッド
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-
-        // everyHour()で1時間毎に仮想通貨の価格チェックを実行する
-        // hourlyAt()で毎時5分に仮想通貨の価格チェックを実行する
-        $schedule->command('update:prices')
-            ->hourlyAt(5);
-        // everyFifteenMinutes()で15分毎にツイート検索を実行する
-        $schedule->command('fetch:tweets')
+        // 15分毎に仮想通貨アカウントの自動フォローを行うコマンドを実行
+        $schedule->command('follow:autofollow')
             ->everyFifteenMinutes();
-        // daily()で毎日深夜12時にTwitterアカウントの検索を実行する
-        // $schedule->command('fetch:users')
-        //     ->daily();
-        $schedule->command('fetch:users')
-            ->everyFiveMinutes();
 
+        // 10分毎にTwitterAPIで仮想通貨関連ツイートを取得するコマンドを実行
+        $schedule->command('fetch:latestTweets')
+            ->everyTenMinutes();
+        // 仮想通貨関連ツイート取得後、各銘柄のツイート数を集計するコマンドを実行
+        $schedule->command('update:tweetCount')
+            ->everyTenMinutes();
 
+        // 10分毎に仮想通貨銘柄の価格を更新するコマンドを実行
+        $schedule->command('update:prices')
+            ->everyTenMinutes();
+
+        // 15分毎にGoogleニュースを取得するコマンドを実行
+        $schedule->command('fetch:news')
+            ->everyFifteenMinutes();
+
+        // 毎日深夜1:00にTwitterAPIで仮想通貨アカウントを取得するコマンドを実行
+        $schedule->command('fetch:targets')
+            ->dailyAt('01:00');
+        // TwitterAPIでの仮想通貨アカウント取得後、TwproAPIで仮想通貨アカウントを取得するコマンドを実行
         $schedule->command('fetch:twpro')
-            ->everyMinute();
+            ->dailyAt('01:00');
+        // TwproAPIでの仮想通貨アカウント取得後、未取得の最新ツイートを取得するコマンドを実行
+        $schedule->command('fetch:targetsTweet')
+            ->dailyAt('01:10');
 
-        // everyMinute() 毎分
-        // everyFiveMinutes()
-        // everyTenMinutes()
-        // everyFifteenMinutes()
-        // everyThirtyMinutes()
-        // hourly()
-        // hourlyAt(17)
-        // daily(17)
-        // dailyAt('13:00')
-        // dailyAt('13:00')
-
+        // 毎日深夜2:13に古いツイート及び取得ログレコードを削除するコマンドを実行
+        $schedule->command('delete:records')
+            ->dailyAt('02:13');
     }
 
     /**

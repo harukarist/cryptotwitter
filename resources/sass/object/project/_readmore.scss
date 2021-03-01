@@ -1,0 +1,17 @@
+.p-readmore {
+  &__wrapper {
+    text-align: center;
+    margin: $space--l auto;
+    width: 100%;
+  }
+  &__link {
+    width: 300px;
+    color: $font-color--accent;
+    &:hover {
+      color: $font-color--white;
+    }
+    @include mq(){
+      width: 100%;
+    }
+  }
+}

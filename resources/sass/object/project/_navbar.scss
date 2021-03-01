@@ -1,0 +1,109 @@
+.p-navbar {
+  max-width: $site-width;
+  margin-left: auto;
+  margin-right: auto;
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  &__title {
+    margin-left: $space--m;
+    a {
+      color: $font-color--dark;
+      &:hover {
+        transform: scale(0.97); //ホバー時にボタンを縮める
+      }
+    }
+    &-logo {
+      margin-right: $space--s;
+      display: inline-block;
+      vertical-align: middle;
+      position: relative;
+      top: 2px;
+    }
+    &-text {
+      font-weight: bold;
+      display: inline-block;
+      vertical-align: middle;
+      font-family: $font-family--theme;
+      font-size: $font-size--l;
+      letter-spacing: 0.04em
+    }
+  }
+  &__sp {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+  &__toggle {
+    display: none; //トグルメニューはPCサイトでは非表示
+    @include mq(medium) {
+      display: block; 
+    }
+    transition: all .4s;
+    box-sizing: border-box;
+    position: relative;
+    top: 0px;
+    right: 0px;
+    width: $header-height;
+    height: $header-height;
+    text-align: center;
+    z-index: 5;
+    // 三本線
+    &--line {
+      display: inline-block;
+      transition: all .4s;
+      box-sizing: border-box;
+      position: absolute;
+      transform: translateX(-50%);
+      width: 70%;
+      height: 3px;
+      background-color: $font-color--dark;
+      border-radius: 3px;
+      &:nth-of-type(1) {
+        top: 10px;
+      }
+      &:nth-of-type(2) {
+        top: 22px;
+      }
+      &:nth-of-type(3) {
+        top: 34px;
+      }
+    }
+    // アイコンテキスト
+    &--text {
+      transition: all .4s;
+      font-size: $font-size--s;
+      color: $font-color--dark;
+      position: absolute;
+      transform: translateX(-50%);
+      bottom : 0;
+      &::after {
+        content: 'MENU';
+      }
+    }
+    // 三本線を×線にするアニメーション
+    &.is-active span {
+      &:nth-of-type(1) {
+        transform: translate(-50%, 12px) rotate(-45deg);
+        -webkit-transform: translate(-50%, 12px) rotate(-45deg);
+      }
+      &:nth-of-type(2) {
+        opacity: 0;
+      }
+      &:nth-of-type(3) {
+        transform: translate(-50%, -12px) rotate(45deg);
+        -webkit-transform: translate(-50%, -12px) rotate(45deg);
+      }
+      // アイコンテキスト
+      &:nth-of-type(4) {
+        &::after {
+          content: 'CLOSE';
+        }
+      }
+    }
+  }
+
+}

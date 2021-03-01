@@ -1,4 +1,4 @@
-window._ = require('lodash');
+window._ = require('lodash')
 import { getCookieValue } from './utility' // クッキーを取得する処理を追加
 
 /**
@@ -8,10 +8,10 @@ import { getCookieValue } from './utility' // クッキーを取得する処理�
  */
 
 try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+	window.Popper = require('popper.js').default
+	window.$ = window.jQuery = require('jquery')
 
-    require('bootstrap');
+	// require('bootstrap');
 } catch (e) { }
 
 /**
@@ -21,22 +21,23 @@ try {
  */
 
 // axiosライブラリを使用してAjax通信を行う
-window.axios = require('axios');
+window.axios = require('axios')
 
 // Ajaxリクエストを示すX-Requested-Withヘッダーを付与
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 
 // リクエスト時にaxiosのインターセプターでクッキーのXSRF-TOKENをヘッダーに添付し、
 // ヘッダー情報からCSRFトークンチェックが行えるようにする
 window.axios.interceptors.request.use(config => {
-    config.headers['X-XSRF-TOKEN'] = getCookieValue('XSRF-TOKEN')
-    return config
+	// クッキーからトークンを取り出してヘッダーに添付
+	config.headers['X-XSRF-TOKEN'] = getCookieValue('XSRF-TOKEN')
+	return config
 })
 
 // axiosのインターセプターでレスポンス受け取り時の処理を上書き
 window.axios.interceptors.response.use(
-    response => response, //成功時はそのままresponseを返す
-    error => error.response || error //失敗時はエラーレスポンスを1つにまとめる
+	response => response, //成功時はそのままresponseを返す
+	error => error.response || error //失敗時はエラーレスポンスを1つにまとめる
 )
 
 /**

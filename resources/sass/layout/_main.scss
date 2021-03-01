@@ -1,0 +1,6 @@
+#main {
+  width: 100vw;
+  min-height: 80vh;
+  background: $bg-color--default;
+  padding-top: $header-height; //固定ヘッダー分の高さを空ける
+}

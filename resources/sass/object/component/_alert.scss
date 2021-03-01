@@ -1,0 +1,45 @@
+%alertBase {
+  padding: $space--m $space--l;
+  margin: $space--m $space--m;
+  border-radius: 4px;
+  text-align: center;
+  @include mq(){
+    margin: $space--m 0;
+  }
+}
+
+.c-alert {
+  @extend %alertBase;
+  &--success {
+    @extend %alertBase;
+    color: $font-color--white;
+    background-color: rgba($bg-color--success, 0.98);
+  }
+  &--danger {
+    @extend %alertBase;
+    color: $font-color--white;
+    background-color: rgba($bg-color--danger, 0.98);
+  }
+  &--notice {
+    @extend %alertBase;
+    color: $font-color--white;
+    background-color: rgba($bg-color--notice, 0.98);
+  }
+  &__inline {
+    &--success {
+      @extend %alertBase;
+      color: $font-color--success;
+      background-color: rgba($bg-color--success-light, 0.98);
+    }
+    &--danger {
+      @extend %alertBase;
+      color: $font-color--danger;
+      background-color: rgba($bg-color--danger-light, 0.98);
+    }
+    &--notice {
+      @extend %alertBase;
+      color: $font-color--notice;
+      background-color: rgba($bg-color--notice-light, 0.98);
+    }
+  }
+}

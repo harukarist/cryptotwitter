@@ -1,0 +1,44 @@
+.p-home {
+  &__contents {
+    width: 90%;
+    margin: 10px auto;
+    @include mq() {
+      width: 100%;
+    }
+  }
+  &__row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    border: none;
+    @include mq() {
+      flex-direction: column;
+      font-size: $font-size--m;
+    }
+  }
+  &__twitter {
+    border: none;
+    width: 90%;
+    margin: 10px auto;
+    @include mq() {
+      width: 100%;
+    }
+  }
+  &__item {
+    margin-right: $space--xxl;
+    margin-bottom: $space--l;
+    flex-grow: 1;
+    width: calc(100% / 3  - ((#{$space--xxl} * 2) / 3) ); //1行に3アイテムを均等配置
+    &:nth-child(3n) {
+      margin-right: 0; //3番目の要素は右に余白を空けない
+    }
+    @include mq() {
+      margin-right: 0;
+      margin-bottom: $space--l;
+      width: 100%;
+
+    }
+  }
+}

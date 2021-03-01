@@ -1,0 +1,29 @@
+.p-footer {
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: $space--m;
+  }
+  &__item {
+    margin: 0 $space--l;
+    &:first-child {
+      margin-left: $space--s;
+    }
+    &:last-child {
+      margin-right: $space--s;
+    }
+  }
+  &__link {
+    color: $font-color--muted;
+    font-size: $font-size--s;
+    &:hover {
+      color: $font-color--hover;
+      transform: scale(0.97, 1); //ホバー時に文字を縮める
+    }
+  }
+  &__copyright {
+    color: $font-color--muted;
+    font-size: $font-size--s;
+  }
+}

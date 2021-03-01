@@ -1,0 +1,62 @@
+.c-section {
+  max-width: $site-width;
+  background: $bg-color--white;
+  margin-top: $space--xl;
+  margin-bottom: $space--xxxl;
+  margin-left: auto;
+  margin-right: auto;
+  padding: $space--xl;
+  @include mq(medium) {
+    margin-top: 0;
+  }
+  @include mq() {
+    margin-top: 0;
+    padding: $space--l;
+  }
+  &--bg {
+    background: $bg-color--default;
+  }
+  &__title {
+    text-align: center;
+    color: $font-color--dark;
+    font-size: $font-size--xl;
+    font-weight: bold;
+    font-feature-settings: "palt"; //自動カーニングで文字詰め
+    margin-top: $space--l;
+    margin-bottom: $space--xxxl;
+    position: relative;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -10px;
+      margin: 0 auto;
+      width: 20px;
+      border-bottom: 2px solid $bg-color--border;
+    }
+    @include mq() {
+      font-size: $font-size--l;
+      margin-top: $space--xl;
+      margin-bottom: $space--xl;
+    }
+  }
+  &__contents {
+    padding: $space--l;
+  }
+  &__text {
+    text-align: center;
+    line-height: 1.8;
+    margin-bottom: $space--xxl;
+  }
+  &__subtitle--left {
+    text-align: left;
+    margin-bottom: $space--m;
+  }
+  &__text--left {
+    text-align: left;
+    line-height: 1.8;
+    margin-bottom: $space--l;
+  }
+}

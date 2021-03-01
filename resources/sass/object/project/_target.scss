@@ -1,0 +1,115 @@
+.p-target {
+  &__list {
+    position: relative;
+    text-align: center;
+    width: 90%;
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: $space--xxxl;
+    padding: $space--xl $space--l;
+    border: solid 2px rgba($bg-color--twitter, 0.6);
+    border-radius: 8px;
+    @include mq(){
+      width: 96%;
+    }
+  }
+  &__title {
+    color: rgba($bg-color--twitter, 0.9);
+    background: $bg-color--white;
+    font-weight: bold;
+    position: absolute; //ボックスの枠線上に表示
+    top: 0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    white-space: nowrap; //改行を防ぐ
+    padding: 0 $space--m;
+    margin-bottom: $space--l;
+  }
+  &__item {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $space--xxxl;
+  }
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: $space--m;
+    @include mq() {
+      flex-direction: column; //スマホ画面ではボタンを縦方向に配置
+      align-items: baseline;
+    }
+  }
+  &__head-left {
+    display: flex;
+    @include mq() {
+      margin-bottom: $space--m;
+    }
+  }
+  &__head-right {
+    width: 140px;
+    @include mq() {
+      align-self: center;
+      width: 100%;
+      text-align: center;
+    }
+  }
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  &__name {
+    margin-left: $space--l;
+  }
+  &__btn {
+    width: 140px;
+    padding: $space--s;
+    @include mq() {
+      width: 90%;
+      font-size: $font-size--m;
+    }
+  }
+  &__body {
+    margin-bottom: $space--m;
+  }
+  &__profile {
+    color: $font-color--muted;
+    margin-bottom: $space--s;
+    word-wrap: break-word; //ボックス幅をはみ出す長さの英文を折り返す
+  }
+  &__follow {
+    color: $font-color--muted;
+    @include mq() {
+      font-size: $font-size--m;
+      // text-align: center;
+    }
+  }
+  &__num {
+    font-weight: bold;
+    color: $font-color--default;
+  }
+  &__aside {
+    margin-right: $space--l;
+    @include mq() {
+      margin-right: $space--s;
+    }
+  }
+
+  &__tweet {
+    background: $bg-color--light;
+    padding: $space--l;
+    border-radius: 4px;
+  }
+  &__tweeted-text {
+    margin-bottom: $space--s;
+    word-wrap: break-word; //ボックス幅をはみ出す長さの英文を折り返す
+  }
+  &__tweeted-at {
+    color: $font-color--muted;
+    text-align: right;
+    font-size: $font-size--s;
+  }
+}
