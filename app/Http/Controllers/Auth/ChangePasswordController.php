@@ -34,8 +34,5 @@ class ChangePasswordController extends Controller
 
         // レスポンスを返却
         return response()->json(['status' => 200]);
-
-        // 他のデバイスからのログインを全てログアウトするため、
-        // app/Http/Kernel.php の AuthenticateSessionミドルウェアを有効にする
     }
 }
