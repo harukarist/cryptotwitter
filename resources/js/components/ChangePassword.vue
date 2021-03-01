@@ -1,19 +1,13 @@
 <template>
-  <form
-    class="c-form--small"
-    @submit.prevent="checkChangePassForm"
-  >
+  <form class="c-form--small" @submit.prevent="checkChangePassForm">
     <input
       v-model="changePassForm.username"
       name="username"
       autocomplete="username"
       style="display: none"
-    >
+    />
     <div class="c-form__group">
-      <label
-        for="current_password"
-        class="c-form__label"
-      >
+      <label for="current_password" class="c-form__label">
         現在のパスワード
         <span class="c-form__notes">半角英数字8文字以上</span>
       </label>
@@ -25,7 +19,7 @@
         placeholder="現在のパスワードを入力"
         required
         autocomplete="current-password"
-      >
+      />
       <invalid-component :messages="passwordErrors" />
       <invalid-component
         v-if="apiMessages && apiMessages.current_password"
@@ -33,10 +27,7 @@
       />
     </div>
     <div class="c-form__group">
-      <label
-        for="new_password"
-        class="c-form__label"
-      >
+      <label for="new_password" class="c-form__label">
         新しいパスワード
         <span class="c-form__notes">半角英数字8文字以上</span>
       </label>
@@ -48,7 +39,7 @@
         placeholder="新しいパスワードを入力"
         required
         autocomplete="new-password"
-      >
+      />
       <invalid-component :messages="newPasswordErrors" />
       <invalid-component
         v-if="apiMessages && apiMessages.new_password"
@@ -56,10 +47,9 @@
       />
     </div>
     <div class="c-form__group">
-      <label
-        for="new_password_confirmation"
-        class="c-form__label"
-      >新しいパスワード（再入力）</label>
+      <label for="new_password_confirmation" class="c-form__label"
+        >新しいパスワード（再入力）</label
+      >
       <input
         id="new_password_confirmation"
         v-model="changePassForm.new_password_confirmation"
@@ -68,7 +58,7 @@
         placeholder="新しいパスワードを再度入力"
         required
         autocomplete="new-password"
-      >
+      />
       <invalid-component :messages="confirmErrors" />
       <invalid-component
         v-if="apiMessages && apiMessages.new_password_confirmation"
@@ -76,10 +66,7 @@
       />
     </div>
     <div class="c-form__button">
-      <button
-        type="submit"
-        class="c-btn--accent c-btn--large"
-      >
+      <button type="submit" class="c-btn--accent c-btn--large">
         パスワードを変更
       </button>
     </div>
@@ -118,6 +105,7 @@ export default {
       this.passwordErrors = [];
       this.newPasswordErrors = [];
       this.confirmErrors = [];
+      this.apiMessages = [];
 
       // 現在のパスワードのバリデーション
       if (!this.changePassForm.current_password) {
