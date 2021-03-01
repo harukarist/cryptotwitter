@@ -186,6 +186,8 @@ const actions = {
       context.commit('setApiStatus', true)
       // setUserDataミューテーションでuserDataステートを更新
       context.commit('setUserData', response.data)
+      // バリデーションエラーメッセージをクリアする
+      context.commit('setEditErrorMessages', null)
       return false //処理を終了
     }
     // API通信が失敗した場合はステータスをfalseに変更

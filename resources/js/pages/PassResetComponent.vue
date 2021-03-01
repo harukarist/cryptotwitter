@@ -141,6 +141,7 @@ export default {
       this.emailErrors = [];
       this.passwordErrors = [];
       this.confirmErrors = [];
+      this.apiMessage = [];
 
       // メールアドレスのバリデーション
       if (!this.resetForm.email) {

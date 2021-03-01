@@ -1,18 +1,10 @@
 <template>
   <div class="c-container--bg">
-    <h2 class="c-container__title">
-      ログイン
-    </h2>
+    <h2 class="c-container__title">ログイン</h2>
     <div class="c-form__wrapper">
-      <form
-        class="c-form--small"
-        @submit.prevent="checkForm"
-      >
+      <form class="c-form--small" @submit.prevent="checkForm">
         <div class="c-form__group">
-          <label
-            for="login-email"
-            class="c-form__label"
-          >
+          <label for="login-email" class="c-form__label">
             メールアドレス
           </label>
           <input
@@ -23,7 +15,7 @@
             required
             autocomplete="email"
             autofocus
-          >
+          />
           <invalid-component :messages="emailErrors" />
           <invalid-component
             v-if="loginErrors && loginErrors.email"
@@ -31,10 +23,7 @@
           />
         </div>
         <div class="c-form__group">
-          <label
-            for="login-password"
-            class="c-form__label"
-          >パスワード</label>
+          <label for="login-password" class="c-form__label">パスワード</label>
           <input
             id="login-password"
             v-model="loginForm.password"
@@ -42,7 +31,7 @@
             class="c-input c-input--large"
             required
             autocomplete="current-password"
-          >
+          />
           <div class="u-font--right">
             <router-link
               :to="{ name: 'password.request' }"
@@ -58,34 +47,26 @@
           />
         </div>
         <div class="c-form__group">
-          <label
-            class="c-checkbox__label"
-            for="remember"
-          >
+          <label class="c-checkbox__label" for="remember">
             <input
               id="remember"
               v-model="loginForm.remember"
               class="c-checkbox__input"
               type="checkbox"
-            >
+            />
             <span class="c-checkbox__dummyInput" />
-            <span class="c-checkbox__text">ログイン状態を保持する</span></label>
+            <span class="c-checkbox__text">ログイン状態を保持する</span></label
+          >
         </div>
 
         <div class="c-form__button">
-          <button
-            type="submit"
-            class="c-btn--main-outline c-btn--large"
-          >
+          <button type="submit" class="c-btn--main-outline c-btn--large">
             ログイン
           </button>
         </div>
       </form>
       <div class="c-form__link">
-        <router-link
-          :to="{ name: 'register' }"
-          class="c-form__link"
-        >
+        <router-link :to="{ name: 'register' }" class="c-form__link">
           アカウントをお持ちでない方はこちら
         </router-link>
       </div>
@@ -186,6 +167,7 @@ export default {
       }
     },
     clearError() {
+      // authストアでバリデーションエラーメッセージをクリアする
       this.$store.commit("auth/setLoginErrorMessages", null);
     },
   },

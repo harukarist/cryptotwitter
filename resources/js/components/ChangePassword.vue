@@ -147,6 +147,7 @@ export default {
         this.changePassword();
       }
     },
+    
     // パスワード変更WebAPI呼び出し
     async changePassword() {
       this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
