@@ -3,6 +3,7 @@
 use App\Trend;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
 
 class TrendsTableSeeder extends Seeder
 {
@@ -52,7 +53,7 @@ class TrendsTableSeeder extends Seeder
             [
                 'currency_name' => 'XRP',
                 'currency_ja' => 'リップル',
-                'currency_pair' => 'xrp_jpy',
+                'currency_pair' => '',
                 'use_api' => 0,
                 'tweet_words' => 'XRP OR リップル'
             ],
@@ -66,7 +67,7 @@ class TrendsTableSeeder extends Seeder
             [
                 'currency_name' => 'LTC',
                 'currency_ja' => 'ライトコイン',
-                'currency_pair' => 'ltc_jpy',
+                'currency_pair' => '',
                 'use_api' => 0,
                 'tweet_words' => 'LTC OR ライトコイン'
             ],
@@ -87,7 +88,7 @@ class TrendsTableSeeder extends Seeder
             [
                 'currency_name' => 'XLM',
                 'currency_ja' => 'ステラルーメン',
-                'currency_pair' => 'xlm_jpy',
+                'currency_pair' => '',
                 'use_api' => 0,
                 'tweet_words' => 'XLM OR ステラルーメン'
             ],
@@ -152,6 +153,6 @@ class TrendsTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
-        }
+        };
     }
 }
