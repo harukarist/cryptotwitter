@@ -108,8 +108,6 @@ class AutoFollow extends Command
             $diff_follows = $target_users->diff($follows);
             // フォロー済みアカウントを除いたコレクションから自動フォロー済みアカウントを除いたコレクションを取得
             $diff_autofollows = $diff_follows->diff($autofollows);
-            dump($diff_autofollows);
-
             // 自動フォロー対象のコレクションからTwitterIDのみ抽出し、配列に変換
             $target_ids = $diff_autofollows->pluck('twitter_id')->toArray();
 
@@ -134,8 +132,8 @@ class AutoFollow extends Command
 
             $follow_total = 0; // 今回のフォロー合計数をカウントする変数
 
-            // フォロー合計数が上限に達するまでターゲットの自動フォローを実行
-            for ($i = 1; $follow_total < $max_requests; $i++) {
+            // リクエスト上限回数までターゲットの自動フォローを実行
+            for ($i = 1; $i < $max_requests; $i++) {
                 // TwitterIDの配列からキーをランダムに1件抽出
                 $key = array_rand($target_ids);
                 // ターゲット配列から抽出したキーを持つターゲットのTwitterIDを取得
