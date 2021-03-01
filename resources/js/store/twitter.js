@@ -39,7 +39,6 @@ const actions = {
    * Twitter認証チェックアクション
    */
   async checkAuth(context) {
-    console.log('checkAuth');
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
@@ -69,7 +68,6 @@ const actions = {
    */
   // アクションの第一引数に、commit()などを持つコンテキストオブジェクトを渡す
   async updateTwitterUser(context) {
-    console.log('updateTwitterUser');
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し

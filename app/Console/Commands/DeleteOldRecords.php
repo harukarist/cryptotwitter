@@ -58,6 +58,7 @@ class DeleteOldRecords extends Command
         $this->deleteFetchTweetsLogs();
         $this->deleteFetchTargetsLogs();
         $this->deleteAutoFollowLogs();
+        $this->fetchUpdatedAt();
         logger()->info('レコード削除処理を実行しました <<<<');
     }
 
@@ -107,5 +108,17 @@ class DeleteOldRecords extends Command
         $deleted = DB::table('autofollow_logs')->where('created_at', '<', $storage_started)->delete();
         dump("{$storage_started}以前の自動フォローログログレコードを{$deleted}件削除しました");
         logger()->info("{$storage_started}以前の自動フォローログログレコードを{$deleted}件削除しました");
+    }
+
+    public function fetchUpdatedAt()
+    {
+        $logs = DB::table('fetch_tweets_logs')->get();
+        foreach ($logs as $log) {
+            if ($log->updated_at) {
+                continue;
+            }
+            DB::table('fetch_tweets_logs')->where('id', $log->id)
+                ->update(['updated_at' => $log->created_at]);
+        }
     }
 }
