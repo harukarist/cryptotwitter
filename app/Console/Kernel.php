@@ -17,16 +17,16 @@ class Kernel extends ConsoleKernel
      */
     // バッチ処理を実行するCommandクラスをコマンド変数に登録する
     protected $commands = [
-        Commands\AutoFollow::Class,
-        Commands\DeleteOldRecords::Class,
-        Commands\FetchNews::Class,
-        Commands\FetchTargets::Class,
-        Commands\FetchTargetsTweet::Class,
-        Commands\FetchTweetsLatest::Class,
-        Commands\FetchTweetsWeekly::Class,
-        Commands\FetchTwpro::Class,
-        Commands\UpdatePrices::Class,
-        Commands\UpdateTweetCount::Class,
+        Commands\AutoFollow::class,
+        Commands\DeleteOldRecords::class,
+        Commands\FetchNews::class,
+        Commands\FetchTargets::class,
+        Commands\FetchTargetsTweet::class,
+        Commands\FetchTweetsLatest::class,
+        Commands\FetchTweetsWeekly::class,
+        Commands\FetchTwpro::class,
+        Commands\UpdatePrices::class,
+        Commands\UpdateTweetCount::class,
     ];
 
     /**
@@ -38,7 +38,7 @@ class Kernel extends ConsoleKernel
     // Commandを定期的に実行するタスクスケジュールを設定するメソッド
     protected function schedule(Schedule $schedule)
     {
-        // 15分毎に自動フォローを行うコマンドを実行
+        // 15分毎に仮想通貨アカウントの自動フォローを行うコマンドを実行
         $schedule->command('follow:autofollow')
             ->everyFifteenMinutes();
 
