@@ -156,12 +156,12 @@ export default {
       await this.$store.dispatch("auth/login", this.loginForm);
       // API通信が成功した場合
       if (this.apiStatus) {
-        // // フラッシュメッセージを表示
-        // this.$store.dispatch("message/showMessage", {
-        //   text: "ログインしました",
-        //   type: "success",
-        //   timeout: 2000,
-        // });
+        // フラッシュメッセージを表示
+        this.$store.dispatch("message/showMessage", {
+          text: "ログインしました",
+          type: "success",
+          timeout: 2000,
+        });
         // VueRouterのpush()でホーム画面へ遷移
         this.$router.push({ name: "home" });
       }
