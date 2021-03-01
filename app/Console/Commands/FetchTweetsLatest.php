@@ -112,13 +112,6 @@ class FetchTweetsLatest extends Command
                 break;
             }
 
-            // 最終ログデータの終了日時と現在時刻の差が1時間を超える場合
-            if ($last_until->diffInHours($carbon_now) > 1) {
-                // 以降の処理は行わず、1時間毎にツイートを取得するメソッドを実行
-                Artisan::call('fetch:weeklyTweets');
-                return;
-            }
-
             // ログデータのnext_idカラムに値がある場合
             if ($log->next_id) {
                 // next_id（次回の取得予定ID）をAPIパラメータのmax_id（取得開始id)に指定して、ログデータと同じ時間帯でmax_idより前のツイートを取得する
@@ -150,6 +143,7 @@ class FetchTweetsLatest extends Command
                 'begin_id' => $log->next_id ?? '',
                 'next_id' => $max_id,
                 'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
 
             dump($req_count . "回リクエスト済み");

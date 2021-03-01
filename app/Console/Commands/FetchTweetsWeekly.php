@@ -134,6 +134,7 @@ class FetchTweetsWeekly extends FetchTweetsLatest
                 'begin_id' => $log->next_id ?? '',
                 'next_id' => $max_id,
                 'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
 
             dump($req_count . "回リクエスト済み");
