@@ -42,9 +42,7 @@ const actions = {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
     // サーバーのAPIを呼び出し
-    context.commit('loader/setIsLoading', true, { root: true }) //ローディング表示をオン
     const response = await axios.post('/api/auth/twitter/check')
-    context.commit('loader/setIsLoading', false, { root: true }) //ローディング表示をオフ
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更
@@ -70,8 +68,10 @@ const actions = {
   async updateTwitterUser(context) {
     // setApiStatusミューテーションでステータスを初期化
     context.commit('setApiStatus', null)
+    context.commit('loader/setIsLoading', true, { root: true }) //ローディング表示をオン
     // サーバーのAPIを呼び出し
     const response = await axios.post('/api/auth/twitter/update')
+    context.commit('loader/setIsLoading', false, { root: true }) //ローディング表示をオフ
     // API通信が成功した場合
     if (response.status === OK) {
       // setApiStatusミューテーションでステータスをtrueに変更

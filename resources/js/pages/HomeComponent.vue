@@ -263,9 +263,7 @@ export default {
   methods: {
     // axiosでトレンド一覧取得APIにリクエスト
     async fetchTrends() {
-      this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
       const response = await axios.get("/api/trend/latest");
-      this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
 
       if (response.status !== OK) {
         // 通信失敗の場合

@@ -5,6 +5,7 @@ const state = {
 const mutations = {
   setIsLoading(state, status) {
     state.isLoading = status
+    console.log(status);
   },
 }
 
