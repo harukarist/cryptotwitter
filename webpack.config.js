@@ -66,10 +66,6 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader
           },
-          // style-loaderでlinkタグにCSSを展開
-          // {
-          //   loader: 'style-loader'
-          // },
           // css-loaderでCSSをJSモジュールに変換
           {
             loader: "css-loader",

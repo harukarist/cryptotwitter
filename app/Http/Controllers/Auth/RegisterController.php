@@ -63,7 +63,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:20'],
             'email' => [
                 'required', 'string', 'email', 'max:50',
-                // 'unique:users'
                 Rule::unique('users')->where(function ($query) {
                     // 論理削除されていないレコードのみ、emailカラムのunique制約を指定
                     return $query->whereNull('deleted_at');

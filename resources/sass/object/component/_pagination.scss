@@ -30,7 +30,6 @@
     //スマホ表示時はページ番号を表示せず、矢印リンクのみ表示
     @include mq(){
       width: calc(100% / 4);
-      // border-radius: 4px;
       a {
         border-radius: 4px; //スマホは角丸の背景
         &:hover{

@@ -59,7 +59,6 @@ class FetchNews extends Command
         logger()->info('GoogleNews保存バッチを実行しました <<<<');
     }
 
-    // 
     /**
      * GoogleNewsRSSで指定キーワードを含むGoogleニュースを取得するメソッド
      */

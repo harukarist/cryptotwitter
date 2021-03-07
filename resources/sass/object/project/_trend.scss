@@ -98,11 +98,6 @@
     }
   }
   // 銘柄名の表示
-  &__name-td {
-    // @include mq(){
-    //   width: 90px;
-    // }
-  }
   &__name {
     font-weight: bold;
     font-size: $font-size--default;

@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'CryptoTrend') }}</title>
+    <meta name="description" content="CryptoTrendは仮想通貨のTwitterトレンド分析、Twitterアカウントの自動フォロー、最新ニュースのチェックをサポートする無料サービスです">
+    <meta name="keywords" content="仮想通貨,暗号資産,Twitter,自動フォロー,ニュース,無料,ビットコイン,イーサリアム">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

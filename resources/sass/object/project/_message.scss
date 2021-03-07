@@ -18,9 +18,6 @@ $dialog-height: 250px;
   font-weight: bold;
   font-size: $font-size--default;
   letter-spacing: 1.8;
-  // @include mq(){
-  //   padding: $space--m;
-  // }
   &__close {
     position: absolute;
     right: 10px;

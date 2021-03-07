@@ -13,7 +13,6 @@
   // スマホサイトは横幅いっぱい
   @include mq() {
     width: 100%;
-    // box-sizing: border-box;
   }
   &__item {
     margin-bottom: $space--xxl;

@@ -7,7 +7,6 @@ use App\Trend;
 use App\Tweet;
 use Carbon\Carbon;
 
-// 
 /**
  * tweetsテーブルに保存した仮想通貨関連ツイートを元に、
  * 過去1時間・過去24時間・過去1週間の期間別に

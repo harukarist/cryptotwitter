@@ -57,7 +57,7 @@ const actions = {
     // 非同期処理でサーバーのAPIを呼び出し
     const response = await axios.post('/api/register', data)
     // 通信失敗時のcatch処理はbootstrap.jsでaxiosのインターセプターにまとめて記載
-    // .catch(err => err.response || err)
+
     // API通信が成功した場合
     if (response.status === CREATED) {
       // setApiStatusミューテーションでステータスをtrueに変更

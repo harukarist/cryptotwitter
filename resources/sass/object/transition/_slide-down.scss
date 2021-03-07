@@ -4,9 +4,6 @@
     transition: all 0.4s ease-in-out;
     overflow: hidden; //アニメーション中にコンテンツの中身がはみ出すのを防ぐ
   }
-  &-leave-active {
-    // position: absolute;
-  }
   // 上からスライドイン
   &-enter {
     opacity: 0;

@@ -25,8 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 // 上記以外のルートは初回アクセス時のみLaravel側でapp.blade.phpを表示し、
 // 以後はフロント側のVueRouterでルーティングを行う。
-// VueRouterのルーティングは下記にて指定。
-// resources/js/router.js
+// VueRouterのルーティングは resources/js/router.js にて指定。
 Route::middleware(['cors'])->group(function () {
     // {any?} で任意のパスパラメータ'any'を受け入れる
     Route::get('/{any?}', function () {

@@ -84,7 +84,6 @@
     color: $font-color--muted;
     @include mq() {
       font-size: $font-size--m;
-      // text-align: center;
     }
   }
   &__num {
