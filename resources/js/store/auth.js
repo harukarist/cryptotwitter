@@ -16,7 +16,6 @@ const state = {
 const getters = {
   // ユーザーが認証済みかどうかをチェックする
   check: (state) => !!state.userData, //ログインチェック（userDataが取得できていれば二重否定でtrueを返す）
-  userName: (state) => (state.userData ? state.userData.name : ''), //ユーザー名を格納（nullの場合は空文字を返す）
 }
 
 // ステートの値を同期処理で更新するミューテーション

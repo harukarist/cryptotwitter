@@ -4,37 +4,20 @@
     :class="{ 'is-visible': isActiveDrawerMenu }"
     @click.self="closeMenu"
   >
-    <transition
-      name="drawer-menu"
-      appear
-    >
+    <transition name="drawer-menu" appear>
       <div class="p-nav-menu__contents">
         <!-- ドロワーメニュー用ロゴ -->
-        <div
-          class="p-nav-menu__sp-title"
-          @click="closeMenu"
-        >
+        <div class="p-nav-menu__sp-title" @click="closeMenu">
           <router-link :to="{ name: 'top' }">
-            <img
-              src="/img/logo.png"
-              class="p-navbar__title-logo"
-            >
-            <h1 class="p-navbar__title-text">
-              CryptoTrend
-            </h1>
+            <img src="/img/logo.png" class="p-navbar__title-logo" />
+            <h1 class="p-navbar__title-text">CryptoTrend</h1>
           </router-link>
         </div>
 
         <!-- ログイン済みユーザー向けメニュー -->
-        <div
-          v-if="isLogin"
-          class="p-nav-menu__inner"
-        >
+        <div v-if="isLogin" class="p-nav-menu__inner">
           <ul class="p-nav-menu__list">
-            <li
-              class="p-nav-menu__item"
-              @click="closeMenu"
-            >
+            <li class="p-nav-menu__item" @click="closeMenu">
               <router-link
                 :to="{ name: 'trend.index' }"
                 active-class="is-active"
@@ -43,10 +26,7 @@
                 トレンド一覧
               </router-link>
             </li>
-            <li
-              class="p-nav-menu__item"
-              @click="closeMenu"
-            >
+            <li class="p-nav-menu__item" @click="closeMenu">
               <router-link
                 :to="{ name: 'twitter.index' }"
                 active-class="is-active"
@@ -55,10 +35,7 @@
                 Twitterフォロー
               </router-link>
             </li>
-            <li
-              class="p-nav-menu__item"
-              @click="closeMenu"
-            >
+            <li class="p-nav-menu__item" @click="closeMenu">
               <router-link
                 :to="{ name: 'news.index' }"
                 active-class="is-active"
@@ -69,21 +46,14 @@
             </li>
           </ul>
           <!-- ドロップダウンメニュー -->
-          <div
-            class="p-nav-menu__dropdown"
-            @click.self="clickDropdownHead"
-          >
-            <div
-              class="p-nav-menu__dropdown-head"
-              @click="clickDropdownHead"
-            >
+          <div class="p-nav-menu__dropdown" @click.self="clickDropdownHead">
+            <div class="p-nav-menu__dropdown-head" @click="clickDropdownHead">
               <img
                 :src="usersAvatar"
                 class="p-nav-menu__avatar"
-                :alt="`${userName}'s avatar`"
+                :alt="`${usersTwitter.user_name}'s avatar`"
                 @error="noImage"
-              >
-              <span class="p-nav-menu__username">{{ userName }}</span>
+              />
               <i
                 v-if="!isActiveDrawerMenu"
                 class="fas fa-caret-down p-nav-menu__dropdown-icon"
@@ -94,10 +64,7 @@
               class="p-nav-menu__dropdown-menu"
             >
               <ul class="p-nav-menu__dropdown-list">
-                <li
-                  class="p-nav-menu__dropdown-item"
-                  @click="closeMenu"
-                >
+                <li class="p-nav-menu__dropdown-item" @click="closeMenu">
                   <router-link
                     :to="{ name: 'edit' }"
                     active-class="is-active"
@@ -106,14 +73,12 @@
                     アカウント設定
                   </router-link>
                 </li>
-                <li
-                  class="p-nav-menu__dropdown-item"
-                  @click="closeMenu"
-                >
+                <li class="p-nav-menu__dropdown-item" @click="closeMenu">
                   <a
                     class="p-nav-menu__link p-nav-menu__dropdown-link"
                     @click="logout"
-                  >ログアウト</a>
+                    >ログアウト</a
+                  >
                 </li>
               </ul>
             </div>
@@ -124,30 +89,21 @@
         <div v-if="!isLogin">
           <ul class="p-nav-menu__list">
             <li class="p-nav-menu__item">
-              <a
-                href="/#about"
-                class="p-nav-menu__link"
-                @click="closeMenu"
-              >CryptoTrendとは？</a>
+              <a href="/#about" class="p-nav-menu__link" @click="closeMenu"
+                >CryptoTrendとは？</a
+              >
             </li>
             <li class="p-nav-menu__item">
-              <a
-                href="/#reason"
-                class="p-nav-menu__link"
-                @click="closeMenu"
-              >選ばれる理由</a>
+              <a href="/#reason" class="p-nav-menu__link" @click="closeMenu"
+                >選ばれる理由</a
+              >
             </li>
             <li class="p-nav-menu__item">
-              <a
-                href="/#faq"
-                class="p-nav-menu__link"
-                @click="closeMenu"
-              >よくあるご質問</a>
+              <a href="/#faq" class="p-nav-menu__link" @click="closeMenu"
+                >よくあるご質問</a
+              >
             </li>
-            <li
-              class="p-nav-menu__item-btn"
-              @click="closeMenu"
-            >
+            <li class="p-nav-menu__item-btn" @click="closeMenu">
               <router-link
                 :to="{ name: 'register' }"
                 class="c-btn--accent p-nav-menu__btn"
@@ -155,10 +111,7 @@
                 ユーザー登録
               </router-link>
             </li>
-            <li
-              class="p-nav-menu__item-btn"
-              @click="closeMenu"
-            >
+            <li class="p-nav-menu__item-btn" @click="closeMenu">
               <router-link
                 :to="{ name: 'login' }"
                 class="c-btn--main-outline p-nav-menu__btn"
@@ -196,9 +149,9 @@ export default {
     ...mapGetters({
       // authストアのcheckゲッターでユーザーのログイン状態をチェック
       isLogin: "auth/check",
-      // authストアのuserNameゲッターでユーザー名を取得
-      userName: "auth/userName",
-      // authストアのuserNameゲッターでユーザー名を取得
+      // twitterストアのusersTwitterゲッターで登録済みTwitterアカウントがあれば取得
+      usersTwitter: "twitter/usersTwitter",
+      // twitterストアのusersAvatarゲッターでアバター画像のパスを取得
       usersAvatar: "twitter/usersAvatar",
     }),
   },

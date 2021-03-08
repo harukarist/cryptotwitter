@@ -1,8 +1,6 @@
 <template>
   <div class="c-container--bg">
-    <h2 class="c-container__title">
-      お問い合わせ
-    </h2>
+    <h2 class="c-container__title">お問い合わせ</h2>
     <div class="c-form__wrapper">
       <contact-form
         v-if="!isConfirm && !isSent"
@@ -15,10 +13,7 @@
         @sent="formSent"
         @back="formBack"
       />
-      <contact-sent
-        v-if="isSent"
-        :form-data="formData"
-      />
+      <contact-sent v-if="isSent" :form-data="formData" />
     </div>
   </div>
 </template>
@@ -64,7 +59,6 @@ export default {
       // ユーザー情報がある場合
       if (this.userData) {
         // DBに登録されたユーザー情報を編集フォームのv-modelに格納
-        this.formData.name = this.userData.name ?? "";
         this.formData.email = this.userData.email ?? "";
       }
     },

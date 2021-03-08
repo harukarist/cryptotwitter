@@ -33,13 +33,11 @@ class EditAccountRequest extends FormRequest
         $user_id = Auth::id();
         $myEmail = User::find($user_id)->email;
         return [
-            'name' => ['required', 'string', 'max:20'],
             'email' => [
                 'required', 'string', 'email', 'max:50',
                 Rule::unique('users', 'email')
-                    ->whereNull('deleted_at') // 論理削除されていないレコードのみチェック
-                    ->whereNot('email', $myEmail)
-            ], //ユーザー自身のメールアドレスは重複チェックから除く
+                    ->whereNull('deleted_at') // 論理削除されていないusersテーブルのレコードのみemailのユニーク制約を有効にする
+            ],
         ];
     }
 }

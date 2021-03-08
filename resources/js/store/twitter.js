@@ -10,7 +10,9 @@ const state = {
 // ステートの値から状態を算出するゲッター
 const getters = {
   check: (state) => !!state.usersTwitter, //ログインチェック（二重否定で確実に真偽値を返す）
+  // 登録済みTwitterアカウントがあればアカウント情報を取得（未登録の場合は空文字を返す）
   usersTwitter: (state) => (state.usersTwitter ? state.usersTwitter : ''),
+  // 登録済みTwitterアカウントがあればアバター画像のパスを取得（未登録の場合はnoimage画像のパスを返す）
   usersAvatar: (state) => (state.usersTwitter ? state.usersTwitter.twitter_avatar : '/img/avatar_noimage.png'),
   useAutoFollow: (state) => (state.usersTwitter ? state.usersTwitter.use_autofollow : false),
 }

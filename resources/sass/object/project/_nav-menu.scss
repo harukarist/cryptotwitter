@@ -185,15 +185,6 @@
     vertical-align: baseline;
     margin-right: $space--s;
   }
-  &__username {
-    display: inline-block;
-    overflow: hidden;
-    text-overflow: ellipsis; //幅を超えるユーザー名は...で省略
-    white-space: nowrap;
-    font-size: $font-size--m;
-    margin-right: $space--s;
-    max-width: 200px;
-  }
   &__dropdown-icon {
     display: inline-block;
     // ドロワーメニューではドロップダウンアイコンを非表示

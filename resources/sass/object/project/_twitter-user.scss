@@ -9,10 +9,6 @@
   @include mq() {
     width: 100%;
   }
-  &__head {
-    font-size: $font-size--m;
-    margin-bottom: $space--m;
-  }
   &__contents {
     display: inline-block;
     overflow: hidden;

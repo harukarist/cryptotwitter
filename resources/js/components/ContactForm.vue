@@ -1,18 +1,12 @@
 <template>
-  <form
-    class="c-form--large"
-    @submit.prevent="checkForm"
-  >
+  <form class="c-form--large" @submit.prevent="checkForm">
     <p class="c-form__text">
-      CryptoTrendについて、ご不明な点がありましたら<br class="u-sp--hidden">
-      <a href="/#faq">よくあるご質問</a>をご確認ください。<br>
-      お問い合わせは下記のフォームにてお送りください。<br>
+      CryptoTrendについて、ご不明な点がありましたら<br class="u-sp--hidden" />
+      <a href="/#faq">よくあるご質問</a>をご確認ください。<br />
+      お問い合わせは下記のフォームにてお送りください。<br />
     </p>
     <div class="c-form__group">
-      <label
-        for="name"
-        class="c-form__label"
-      >
+      <label for="name" class="c-form__label">
         お名前<span class="c-form__label--required">必須</span>
       </label>
       <div>
@@ -24,7 +18,7 @@
           :class="{ 'is-invalid': nameErrors.length }"
           placeholder="山田 太郎"
           required
-        >
+        />
         <invalid-component :messages="nameErrors" />
         <invalid-component
           v-if="apiMessages && apiMessages.name"
@@ -33,10 +27,7 @@
       </div>
     </div>
     <div class="c-form__group">
-      <label
-        for="email"
-        class="c-form__label"
-      >
+      <label for="email" class="c-form__label">
         メールアドレス<span class="c-form__label--required">必須</span>
       </label>
       <div>
@@ -49,7 +40,7 @@
           :class="{ 'is-invalid': emailErrors.length }"
           autocomplete="email"
           required
-        >
+        />
         <invalid-component :messages="emailErrors" />
         <invalid-component
           v-if="apiMessages && apiMessages.email"
@@ -59,10 +50,7 @@
     </div>
 
     <div class="c-form__group">
-      <label
-        for="message"
-        class="c-form__label"
-      >
+      <label for="message" class="c-form__label">
         お問い合わせ内容<span class="c-form__label--required">必須</span>
       </label>
       <div>
@@ -83,10 +71,7 @@
       </div>
     </div>
     <div class="c-form__button">
-      <button
-        type="submit"
-        class="c-btn--main c-btn--large"
-      >
+      <button type="submit" class="c-btn--main c-btn--large">
         入力内容を確認
       </button>
     </div>

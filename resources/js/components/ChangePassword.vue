@@ -1,11 +1,5 @@
 <template>
   <form class="c-form--small" @submit.prevent="checkChangePassForm">
-    <input
-      v-model="changePassForm.username"
-      name="username"
-      autocomplete="username"
-      style="display: none"
-    />
     <div class="c-form__group">
       <label for="current_password" class="c-form__label">
         現在のパスワード
@@ -85,7 +79,6 @@ export default {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変
       changePassForm: {
-        username: "",
         current_password: "",
         new_password: "",
         new_password_confirmation: "", //Laravelではフィールド名+_confirmationとフィールドが同じ値かをバリデーション
@@ -174,10 +167,6 @@ export default {
       this.passwordErrors = [];
       this.newPasswordErrors = [];
       this.confirmErrors = [];
-    },
-    setUserData() {
-      // DBに登録されたユーザー情報をパスワード変更フォームのv-modelに格納
-      this.changePassForm.username = this.userData.username;
     },
   },
 };

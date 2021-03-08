@@ -36,11 +36,7 @@ class EditAccountController extends Controller
         $user_id = Auth::id();
         $user = User::find($user_id);
 
-        // 編集フォームに入力されたお名前・メールアドレスの情報がusersテーブルの内容と異なっている場合は更新する
-        if ($user->name !== $request->name) {
-            $user->name = $request->name;
-            $user->save();
-        }
+        // 編集フォームに入力されたメールアドレスの情報がusersテーブルの内容と異なっている場合は更新する
         if ($user->email !== $request->email) {
             $user->email = $request->email;
             $user->save();

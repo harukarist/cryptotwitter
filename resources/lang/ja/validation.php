@@ -137,7 +137,6 @@ return [
     */
 
     'attributes' => [
-        "name" => "お名前",
         "email" => "メールアドレス",
         "password" => "パスワード",
         "password_confirmation" => "パスワード(確認用)",

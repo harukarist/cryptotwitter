@@ -2,9 +2,6 @@
   <div class="c-fade-in--small">
     <div v-if="isTwitterLogin">
       <div class="p-twitter-user">
-        <p class="p-twitter-user__head">
-          {{ userName }}さんのTwitterアカウント
-        </p>
         <div class="p-twitter-user__contents">
           <img
             :src="usersTwitter.twitter_avatar"
@@ -98,8 +95,6 @@ export default {
       usersTwitter: 'twitter/usersTwitter',
       // twitterストアのcheckゲッターでユーザーのTwitterログイン状態をチェック
       isTwitterLogin: 'twitter/check',
-      // authストアのuserNameゲッターでユーザー名を取得
-      userName: 'auth/userName',
     }),
   },
   methods: {

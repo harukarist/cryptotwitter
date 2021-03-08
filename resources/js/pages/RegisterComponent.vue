@@ -10,30 +10,6 @@
       >
         <div class="c-form__group">
           <label
-            for="username"
-            class="c-form__label"
-          >
-            お名前
-            <span class="c-form__notes">20文字以内</span>
-          </label>
-          <input
-            id="username"
-            v-model="registerForm.name"
-            type="text"
-            class="c-input c-input--large"
-            placeholder="クリプト太郎"
-            required
-            autocomplete="name"
-            autofocus
-          >
-          <invalid-component :messages="nameErrors" />
-          <invalid-component
-            v-if="registerErrors && registerErrors.name"
-            :messages="registerErrors.name"
-          />
-        </div>
-        <div class="c-form__group">
-          <label
             for="email"
             class="c-form__label"
           >メールアドレス</label>
@@ -134,12 +110,10 @@ export default {
     return {
       // v-modelでフォームの入力値と紐付けるデータ変数
       registerForm: {
-        name: "",
         email: "",
         password: "",
         password_confirmation: "",
       },
-      nameErrors: [],
       emailErrors: [],
       passwordErrors: [],
       confirmErrors: [],
@@ -160,8 +134,6 @@ export default {
   methods: {
     // フロントエンド側のバリデーションチェック
     checkForm() {
-      const MSG_NAME_EMPTY = "お名前を入力してください";
-      const MSG_NAME_MAX = "20文字以内で入力してください";
       const MSG_EMAIL_EMPTY = "メールアドレスを入力してください";
       const MSG_EMAIL_TYPE = "メールアドレスの形式で入力してください";
       const MSG_EMAIL_MAX = "50文字以内で入力してください";
@@ -169,19 +141,10 @@ export default {
       const MSG_PASS_LESS = "8文字以上で入力してください";
       const MSG_RETYPE = "パスワードが一致していません";
 
-      this.nameErrors = [];
       this.emailErrors = [];
       this.passwordErrors = [];
       this.confirmErrors = [];
 
-      // 名前のバリデーション
-      if (!this.registerForm.name) {
-        // 未入力チェック
-        this.nameErrors.push(MSG_NAME_EMPTY);
-      } else if (this.registerForm.name.length > 20) {
-        // 文字数チェック
-        this.nameErrors.push(MSG_NAME_MAX);
-      }
       // メールアドレスのバリデーション
       if (!this.registerForm.email) {
         // 未入力チェック
@@ -215,8 +178,7 @@ export default {
         this.confirmErrors.push(MSG_RETYPE);
       }
       // エラーメッセージを格納した配列を全て結合
-      const results = this.nameErrors.concat(
-        this.emailErrors,
+      const results = this.emailErrors.concat(
         this.passwordErrors,
         this.confirmErrors
       );
