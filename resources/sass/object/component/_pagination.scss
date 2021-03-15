@@ -16,27 +16,9 @@
     line-height: 40px;
     letter-spacing: 0;
     font-weight: bold;
-    a {
-      display: block;
-      color: $font-color--dark;
-      background: rgba($bg-color--light, 0.8);
-      display: block; //クリック可能範囲を広げる
-      border-radius: 50%; //PC、タブレットは正円の背景
-      &:hover{
-        background: rgba($bg-color--dark, 0.2);
-        color: $font-color--white;
-      }
-    }
-    //スマホ表示時はページ番号を表示せず、矢印リンクのみ表示
+    //スマホ表示時は矢印リンク4つのみ表示
     @include mq(){
       width: calc(100% / 4);
-      a {
-        border-radius: 4px; //スマホは角丸の背景
-        &:hover{
-          color: $font-color--dark;
-          background: rgba($bg-color--light, 0.8);
-        }
-      }
     }
     & + & {
       border-left: none; //要素が重なる場合は左の枠線を非表示
@@ -44,17 +26,34 @@
     &.is-disabled {
       opacity: 0.2; //1ページ目と最終ページは矢印ボタンを半透明に
     }
-    &.is-active {
-      a {
-        background: $bg-color--accent;
-        color: $font-color--white;
-      }
-    }
   }
   &__item--page {
     //スマホ表示時はページ番号を表示せず、矢印リンクのみ表示
     @include mq(){
       display: none;
+    }
+  }
+  &__link {
+    display: block;
+    color: $font-color--dark;
+    background: rgba($bg-color--light, 0.8);
+    display: block; //クリック可能範囲を広げる
+    border-radius: 50%; //PC、タブレットは正円の背景
+    &:hover{
+      background: rgba($bg-color--dark, 0.2);
+      color: $font-color--white;
+    }
+    &.is-active {
+      background: $bg-color--accent;
+      color: $font-color--white;
+    }
+    //スマホ表示時はページ番号を表示せず、矢印リンクのみ表示
+    @include mq(){
+      border-radius: 4px; //スマホは角丸の背景
+      &:hover{
+        color: $font-color--dark;
+        background: rgba($bg-color--light, 0.8);
+      }
     }
   }
   &__info{

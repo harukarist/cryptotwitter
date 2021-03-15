@@ -15,30 +15,25 @@
   &--right {
     text-align: right;
   }
-  &__thead {
-    tr {
-      border-bottom: 1px solid $bg-color--border;
-    }
-    th {
-      padding: $space--s;
-      vertical-align: middle;
-      font-size: $font-size--s;
-      @include mq(){
-        padding: $space--m 2px;
-        font-size: 0.6em;
-      }
+  &__tr {
+    border-bottom: 1px solid $bg-color--border;
+  }
+  &__th {
+    padding: $space--s;
+    vertical-align: middle;
+    font-size: $font-size--s;
+    @include mq(){
+      padding: $space--m 2px;
+      font-size: 0.6em;
     }
   }
   &__tbody {
     overflow: hidden;
-    tr {
-      border-bottom: 1px solid $bg-color--border;
-    }
-    td {
-      padding: $space--m $space--s;
-      @include mq() {
-        font-size: 0.8em;
-      }
+  }
+  &__td {
+    padding: $space--m $space--s;
+    @include mq() {
+      font-size: 0.8em;
     }
   }
 }

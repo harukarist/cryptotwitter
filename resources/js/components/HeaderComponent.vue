@@ -2,7 +2,7 @@
   <nav class="p-navbar">
     <!-- サイトロゴ -->
     <div class="p-navbar__title">
-      <router-link :to="{ name: 'top' }">
+      <router-link :to="{ name: 'top' }" class="p-navbar__title-link">
         <img
           src="/img/logo.png"
           class="p-navbar__title-logo"

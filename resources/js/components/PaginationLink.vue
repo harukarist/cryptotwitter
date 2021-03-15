@@ -1,71 +1,50 @@
 <template>
   <ul class="c-pagination__list">
-    <li
-      v-show="!isFirstPage"
-      class="c-pagination__item"
-    >
-      <router-link :to="linkToFirst">
+    <li v-show="!isFirstPage" class="c-pagination__item">
+      <router-link :to="linkToFirst" class="c-pagination__link">
         <i class="fas fa-angle-double-left" />
       </router-link>
     </li>
-    <li
-      v-show="isFirstPage"
-      class="c-pagination__item is-disabled"
-    >
+    <li v-show="isFirstPage" class="c-pagination__item is-disabled">
       <i class="fas fa-angle-double-left" />
     </li>
 
-    <li
-      v-show="!isFirstPage"
-      class="c-pagination__item"
-    >
-      <router-link :to="linkToPrev">
+    <li v-show="!isFirstPage" class="c-pagination__item">
+      <router-link :to="linkToPrev" class="c-pagination__link">
         <i class="fas fa-angle-left" />
       </router-link>
     </li>
-    <li
-      v-show="isFirstPage"
-      class="c-pagination__item is-disabled"
-    >
+    <li v-show="isFirstPage" class="c-pagination__item is-disabled">
       <i class="fas fa-angle-left" />
     </li>
     <li
       v-for="page in pageRange"
       :key="page"
       class="c-pagination__item c-pagination__item--page"
-      :class="isCurrent(page) ? 'is-active' : ''"
     >
-      <router-link :to="linkToPage(page)">
+      <router-link
+        :to="linkToPage(page)"
+        class="c-pagination__link"
+        :class="isCurrent(page) ? 'is-active' : ''"
+      >
         {{ page }}
       </router-link>
     </li>
-    <li
-      v-show="!isLastPage"
-      class="c-pagination__item"
-    >
-      <router-link :to="linkToNext">
+    <li v-show="!isLastPage" class="c-pagination__item">
+      <router-link :to="linkToNext" class="c-pagination__link">
         <i class="fas fa-angle-right" />
       </router-link>
     </li>
-    <li
-      v-show="!isLastPage"
-      class="c-pagination__item"
-    >
-      <router-link :to="linkToLast">
+    <li v-show="!isLastPage" class="c-pagination__item">
+      <router-link :to="linkToLast" class="c-pagination__link">
         <i class="fas fa-angle-double-right" />
       </router-link>
     </li>
 
-    <li
-      v-show="isLastPage"
-      class="c-pagination__item is-disabled"
-    >
+    <li v-show="isLastPage" class="c-pagination__item is-disabled">
       <i class="fas fa-angle-right" />
     </li>
-    <li
-      v-show="isLastPage"
-      class="c-pagination__item is-disabled"
-    >
+    <li v-show="isLastPage" class="c-pagination__item is-disabled">
       <i class="fas fa-angle-double-right" />
     </li>
   </ul>

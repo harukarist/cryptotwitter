@@ -3,7 +3,7 @@
     counter-reset: item; //ol要素でリスト番号のカウンタをリセット
     list-style-type: none;
     padding-bottom: $space--l;
-    li {
+    &-item {
       padding-left: 1.0em;
       padding-right: 1.0em;
       text-align: justify;
@@ -11,9 +11,10 @@
         padding-left: 0.5em;
         padding-right: 0.5em;
       }
-      &:before {
+      &:before { //リスト番号
         counter-increment: item; //カウンタを1ずつ増やす
-        padding-right: 0.5em;
+        content: counter(item)'.'; //リストタイプ
+        padding-right: 1.0em;
       }
     }
     & & {
@@ -23,11 +24,11 @@
       @include mq(medium){
         padding-left: 1.5em;
       }
-      li {
-        &:before {
-          content: '('counter(item)')'; //リストタイプ
-          padding-right: 0.5em;
-        }
+    }
+    &-item &-item {
+      &:before { //子要素のリスト番号
+        content: '('counter(item)')'; //リストタイプ
+        padding-right: 0.5em;
       }
     }
   }

@@ -9,7 +9,7 @@
   box-sizing: border-box;
   &__title {
     margin-left: $space--m;
-    a {
+    &-link {
       color: $font-color--dark;
       &:hover {
         transform: scale(0.97); //ホバー時にボタンを縮める

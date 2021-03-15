@@ -8,7 +8,7 @@
       <div class="p-nav-menu__contents">
         <!-- ドロワーメニュー用ロゴ -->
         <div class="p-nav-menu__sp-title" @click="closeMenu">
-          <router-link :to="{ name: 'top' }">
+          <router-link :to="{ name: 'top' }" class="p-navbar__title-link">
             <img src="/img/logo.png" class="p-navbar__title-logo" />
             <h1 class="p-navbar__title-text">CryptoTrend</h1>
           </router-link>

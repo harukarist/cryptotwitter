@@ -31,15 +31,15 @@
           <div class="p-trend">
             <table class="c-table">
               <thead class="c-table__thead">
-                <tr>
-                  <th class="c-table--left">順位</th>
-                  <th class="c-table--left">銘柄名</th>
-                  <th class="c-table--center">ツイート数</th>
-                  <th class="c-table--right">
+                <tr class="c-table__tr">
+                  <th class="c-table__th c-table--left">順位</th>
+                  <th class="c-table__th c-table--left">銘柄名</th>
+                  <th class="c-table__th c-table--center">ツイート数</th>
+                  <th class="c-table__th c-table--right">
                     過去24時間の<br class="u-sp-hidden" />最高取引価格<br />
                     （円）
                   </th>
-                  <th class="c-table--right">
+                  <th class="c-table__th c-table--right">
                     過去24時間の<br class="u-sp-hidden" />最低取引価格<br />
                     （円）
                   </th>
@@ -49,9 +49,9 @@
                 <tr
                   v-for="(trend, index) in clicked"
                   :key="trend.id"
-                  class="p-trend__item"
+                  class="c-table__tr p-trend__item"
                 >
-                  <td class="p-trend__order-td">
+                  <td class="c-table__td p-trend__order-td">
                     <span
                       class="p-trend__order"
                       :class="{
@@ -63,7 +63,7 @@
                       {{ index + 1 }}
                     </span>
                   </td>
-                  <td class="p-trend__name-td">
+                  <td class="c-table__td p-trend__name-td">
                     <a
                       :href="`https://twitter.com/search?q=${trend.currency_name}`"
                       target="_blank"
@@ -81,7 +81,7 @@
                       </span>
                     </a>
                   </td>
-                  <td class="p-trend__tweet-td">
+                  <td class="c-table__td p-trend__tweet-td">
                     <p v-if="column === 'tweet_hour'" class="u-font__num">
                       {{ trend.tweet_hour | localeNum }}
                     </p>
@@ -92,7 +92,7 @@
                       {{ trend.tweet_week | localeNum }}
                     </p>
                   </td>
-                  <td class="p-trend__price-td">
+                  <td class="c-table__td p-trend__price-td">
                     <p v-if="trend.high" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.high | round | localeNum
@@ -100,7 +100,7 @@
                     </p>
                     <p v-else class="u-font--small u-font--muted">不明</p>
                   </td>
-                  <td class="p-trend__price-td">
+                  <td class="c-table__td p-trend__price-td">
                     <p v-if="trend.low" class="p-trend__price">
                       <span class="u-font__num">{{
                         trend.low | round | localeNum

@@ -77,11 +77,11 @@
     align-self: center; //画像の縦横比を維持
     margin: 0 auto; //左右中央揃え
     display: inline-block;
-    img {
-      min-width: 100%;
-      max-width: initial;
-      object-fit: cover;
-      object-position: 50% 50%;
-    }
+  }
+  &__img {
+    min-width: 100%;
+    max-width: initial;
+    object-fit: cover;
+    object-position: 50% 50%;
   }
 }
