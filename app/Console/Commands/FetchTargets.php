@@ -109,15 +109,15 @@ class FetchTargets extends Command
 
         // 検索APIの残り使用可能回数が存在する場合は回数の値を取得
         if (property_exists($status, 'resources')) {
+            // APIから取得したオブジェクトの'users'プロパティの中身を配列に変換
             $limit_obj = $status->resources->users;
             $limit_arr = (array)$limit_obj;
 
-            if (array_key_exists('/users/search', $limit_arr)) {
-                if (property_exists($limit_arr['/users/search'], 'remaining')) {
-                    $limit_count = $limit_arr['/users/search']->remaining; // 残り使用回数
-                    logger()->info("残り:{$limit_count}回");
-                    return $limit_count;
-                }
+            // 配列に'/users/search'キーがあり、かつ、その中に'remaining'プロパティ(残り使用回数)がある場合、その値を返却
+            if (array_key_exists('/users/search', $limit_arr) && property_exists($limit_arr['/users/search'], 'remaining')) {
+                $limit_count = $limit_arr['/users/search']->remaining; // 残り使用回数
+                logger()->info("残り:{$limit_count}回");
+                return $limit_count;
             }
         }
 

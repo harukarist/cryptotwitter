@@ -89,13 +89,16 @@ class AutoFollow extends Command
             // ユーザーの残り回数が0以下の場合は次のユーザーの自動フォローへ進む
             if ($remain_num < 0) {
                 continue; //次のループへ
-            } else if ($remain_num < $MAX_PER_ONCE) {
-                // ユーザーの残り回数が1回のリクエスト上限より少ない場合は、残り回数をリクエスト上限として設定
+            }
+            
+            // ユーザーの残り回数が1回のリクエスト上限より少ない場合は、残り回数をリクエスト上限として設定
+            if ($remain_num < $MAX_PER_ONCE) {
                 $max_requests = $remain_num;
             } else {
-                // その他の場合は1回のリクエスト上限を設定
+                // その他の場合は初期値のリクエスト上限を設定
                 $max_requests = $MAX_PER_ONCE;
             }
+            
             // ユーザーTwitterアカウントのフォロー済みアカウント一覧をfollowsテーブルに保存するメソッドを実行
             FollowListController::createOrUpdateFollowList($twitter_user);
 

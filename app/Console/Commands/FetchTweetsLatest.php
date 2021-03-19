@@ -182,16 +182,16 @@ class FetchTweetsLatest extends Command
 
         // 検索APIの残り使用可能回数が存在する場合は回数の値を取得
         if (property_exists($status, 'resources')) {
+            // APIから取得したオブジェクトの'search'プロパティの中身を配列に変換
             $limit_obj = $status->resources->search;
             $limit_arr = (array)$limit_obj;
 
-            if (array_key_exists('/search/tweets', $limit_arr)) {
-                if (property_exists($limit_arr['/search/tweets'], 'remaining')) {
-                    $limit_count = $limit_arr['/search/tweets']->remaining; // 残り使用回数
-                    dump("ツイート検索のAPI使用可能回数:{$limit_count}回");
-                    logger()->info("ツイート検索のAPI使用可能回数:{$limit_count}回");
-                    return $limit_count;
-                }
+            // 配列に'/search/tweets'キーがあり、かつ、その中に'remaining'プロパティ(残り使用回数)がある場合、その値を返却
+            if (array_key_exists('/search/tweets', $limit_arr) && property_exists($limit_arr['/search/tweets'], 'remaining')) {
+                $limit_count = $limit_arr['/search/tweets']->remaining; // 残り使用回数
+                dump("ツイート検索のAPI使用可能回数:{$limit_count}回");
+                logger()->info("ツイート検索のAPI使用可能回数:{$limit_count}回");
+                return $limit_count;
             }
         }
         // その他の場合は0を返却
@@ -261,32 +261,31 @@ class FetchTweetsLatest extends Command
                 break;
             }
 
-            // 検索結果がある場合
-            if (property_exists($tweets_obj, 'statuses')) {
-                // DBにレコードを保存するメソッドを実行
-                $records_count = $this->createRecord($tweets_obj->statuses);
-                dump($records_count . "件のツイートを保存しました");
-                logger()->info($records_count . "件のツイートを保存しました");
-                $total_count += $records_count;
-
-                // レスポンスのメタデータから次の検索開始IDを取得
-                $max_id = $this->fetchMaxId($tweets_obj->search_metadata);
-
-                // APIから返却されたメタデータに次の検索開始ID（$max_id）がある場合
-                if ($max_id) {
-                    $next_id = $max_id - 1; //今回の取得対象にmax_idも含まれているため、次回はそのIDより1小さいIDからスタート
-                    $params['max_id'] = $next_id;
-                    logger()->info("次の開始位置：" . $next_id);
-                    continue;
-                } else {
-                    // メタデータに次の検索開始ID（$max_id）がない場合はループを抜ける
-                    logger()->info("最後まで取得しました" . $max_id);
-                    break;
-                }
-            } else {
-                // 検索結果が存在しない場合はループを抜ける
+            // 検索結果が存在しない場合はループを抜ける
+            if (!property_exists($tweets_obj, 'statuses')) {
                 logger()->info("検索結果は0件でした");
                 $max_id = '';
+                break;
+            }
+
+            // 検索結果がある場合はDBにレコードを保存するメソッドを実行
+            $records_count = $this->createRecord($tweets_obj->statuses);
+            dump($records_count . "件のツイートを保存しました");
+            logger()->info($records_count . "件のツイートを保存しました");
+            $total_count += $records_count;
+
+            // レスポンスのメタデータから次の検索開始IDを取得
+            $max_id = $this->fetchMaxId($tweets_obj->search_metadata);
+
+            // APIから返却されたメタデータに次の検索開始ID（$max_id）がある場合
+            if ($max_id) {
+                $next_id = $max_id - 1; //今回の取得対象にmax_idも含まれているため、次回はそのIDより1小さいIDからスタート
+                $params['max_id'] = $next_id;
+                logger()->info("次の開始位置：" . $next_id);
+                continue;
+            } else {
+                // メタデータに次の検索開始ID（$max_id）がない場合はループを抜ける
+                logger()->info("最後まで取得しました" . $max_id);
                 break;
             }
         }

@@ -92,15 +92,15 @@ class FetchTargetsTweet extends Command
 
         // 検索APIの残り使用可能回数が存在する場合は回数の値を取得
         if (property_exists($status, 'resources')) {
+            // APIから取得したオブジェクトの'statuses'プロパティの中身を配列に変換
             $limit_obj = $status->resources->statuses;
             $limit_arr = (array)$limit_obj;
 
-            if (array_key_exists('/statuses/user_timeline', $limit_arr)) {
-                if (property_exists($limit_arr['/statuses/user_timeline'], 'remaining')) {
-                    $limit_count = $limit_arr['/statuses/user_timeline']->remaining; // 残り使用回数
-                    logger()->info("残り:{$limit_count}回");
-                    return $limit_count;
-                }
+            // 配列に'/statuses/user_timeline'キーがあり、かつ、その中に'remaining'プロパティ(残り使用回数)がある場合、その値を返却
+            if (array_key_exists('/statuses/user_timeline', $limit_arr) && property_exists($limit_arr['/statuses/user_timeline'], 'remaining')) {
+                $limit_count = $limit_arr['/statuses/user_timeline']->remaining; // 残り使用回数
+                logger()->info("残り:{$limit_count}回");
+                return $limit_count;
             }
         }
         return 0;

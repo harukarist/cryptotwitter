@@ -168,41 +168,44 @@ class FetchTwpro extends Command
         $update_count = 0;
 
         $query = [];
-        // 検索結果がある場合
-        if ($users_arr) {
-            // 取得したユーザー件数分ループを回し、必要なデータを配列に格納
-            foreach ($users_arr as $user) {
-                $query = [
-                    'twitter_id' => $user->id,  //ユーザーID
-                    'user_name' => $user->name, //ユーザー名
-                    'screen_name' => $user->screen_name, //@から始まるアカウント名
-                    'follow_num' => $user->friends_count, //フォロー数
-                    'follower_num' => $user->followers_count, //フォロワー数
-                    'profile_text' => $user->description, //プロフィール文章
-                    'profile_img' => $user->profile_image_url_https, //プロフィールアイコンURL
-                    'url' => $user->url, //URL
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
 
-                // 該当のTwitterIDを持つレコードをテーブルから1件取得
-                $target = DB::table('target_users')->where('twitter_id', $user->id)->first();
-                if (!$target) {
-                    // レコードがなければ新規作成
-                    DB::table('target_users')->insert($query);
-                    $create_count++;
-                } else {
-                    // レコードがあれば更新
-                    DB::table('target_users')->where('twitter_id', $user->id)->update($query);
-                    $update_count++;
-                }
-            }
-            // 新規保存したレコード件数、更新したレコード件数を返却
-            $count['create'] = $create_count; // 新規保存したレコード件数
-            $count['update'] = $update_count; // 更新したレコード件数
+        // 検索結果がない場合は何もせず返却
+        if (!$users_arr) {
+            $count['create'] = 0; // 新規保存したレコード件数
+            $count['update'] = 0; // 更新したレコード件数
             return $count;
         }
 
-        return;
+        // 取得したユーザー件数分ループを回し、必要なデータを配列に格納
+        foreach ($users_arr as $user) {
+            $query = [
+                'twitter_id' => $user->id,  //ユーザーID
+                'user_name' => $user->name, //ユーザー名
+                'screen_name' => $user->screen_name, //@から始まるアカウント名
+                'follow_num' => $user->friends_count, //フォロー数
+                'follower_num' => $user->followers_count, //フォロワー数
+                'profile_text' => $user->description, //プロフィール文章
+                'profile_img' => $user->profile_image_url_https, //プロフィールアイコンURL
+                'url' => $user->url, //URL
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+
+            // 該当のTwitterIDを持つレコードをテーブルから1件取得
+            $target = DB::table('target_users')->where('twitter_id', $user->id)->first();
+            if (!$target) {
+                // レコードがなければ新規作成
+                DB::table('target_users')->insert($query);
+                $create_count++;
+            } else {
+                // レコードがあれば更新
+                DB::table('target_users')->where('twitter_id', $user->id)->update($query);
+                $update_count++;
+            }
+        }
+        // 新規保存したレコード件数、更新したレコード件数を返却
+        $count['create'] = $create_count; // 新規保存したレコード件数
+        $count['update'] = $update_count; // 更新したレコード件数
+        return $count;
     }
 }

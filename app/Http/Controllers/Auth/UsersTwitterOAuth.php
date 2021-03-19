@@ -55,8 +55,8 @@ class UsersTwitterOAuth
     }
     // TwitterAPIから返却されたオブジェクトに'resources'プロパティがある場合は、残り使用可能回数を返却
     if (property_exists($result, 'resources')) {
-      // 'resources'プロパティの中に、引数で受け取ったカテゴリーのプロパティがある場合
       $resources_obj = $result->resources;
+      // 'resources'プロパティの中に、引数で受け取ったカテゴリーのプロパティがある場合
       if (property_exists($resources_obj, $category)) {
         // 引数で受け取ったカテゴリー及びエンドポイントの残り使用回数を変数に格納して返却
         $remain_count = $resources_obj->$category->$endpoint->remaining; // 残り使用回数
