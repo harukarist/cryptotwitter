@@ -223,26 +223,21 @@ export default {
   computed: {
     // 表示中のトレンド
     activeColumn() {
-      if (this.column === "tweet_hour") {
-        return "1時間";
-      } else if (this.column === "tweet_day") {
-        return "24時間";
-      } else if (this.column === "tweet_week") {
-        return "1週間";
-      }
+      const tab_names = {
+        tweet_hour: "1時間",
+        tweet_day: "24時間",
+        tweet_week: "1週間",
+      };
+      return tab_names[this.column];
     },
     // クリックされたタブに応じてデータを返却
     clicked() {
-      if (this.column === "tweet_hour") {
-        // 過去1時間のトレンド上位3件を返却
-        return this.items.trend_hour;
-      } else if (this.column === "tweet_day") {
-        // 過去1日のトレンド上位3件を返却
-        return this.items.trend_day;
-      } else if (this.column === "tweet_week") {
-        // 過去1週間のトレンド上位3件を返却
-        return this.items.trend_week;
-      }
+      const tab_datas = {
+        tweet_hour: this.items.trend_hour, // 過去1時間のトレンド上位3件
+        tweet_day: this.items.trend_day, // 過去1日のトレンド上位3件
+        tweet_week: this.items.trend_week, // 過去1週間のトレンド上位3件
+      };
+      return tab_datas[this.column];
     },
   },
   watch: {

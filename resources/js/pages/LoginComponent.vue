@@ -122,10 +122,12 @@ export default {
       if (!this.loginForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.loginForm.email.length > 50) {
+      }
+      if (this.loginForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.loginForm.email)) {
+      }
+      if (!this.validEmail(this.loginForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       }
@@ -133,7 +135,8 @@ export default {
       if (!this.loginForm.password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.loginForm.password.length < 8) {
+      }
+      if (this.loginForm.password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       }

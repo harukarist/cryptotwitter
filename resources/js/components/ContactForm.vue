@@ -144,7 +144,8 @@ export default {
       if (!this.innerData.name) {
         // 未入力チェック
         this.nameErrors.push(MSG_NAME_EMPTY);
-      } else if (this.innerData.name.length > 20) {
+      }
+      if (this.innerData.name.length > 20) {
         // 文字数チェック
         this.nameErrors.push(MSG_NAME_MAX);
       }
@@ -153,7 +154,8 @@ export default {
       if (!this.innerData.message) {
         // 未入力チェック
         this.messageErrors.push(MSG_MESSAGE_EMPTY);
-      } else if (this.innerData.message.length > 1000) {
+      }
+      if (this.innerData.message.length > 1000) {
         // 文字数チェック
         this.messageErrors.push(MSG_MESSAGE_MAX);
       }
@@ -162,10 +164,12 @@ export default {
       if (!this.innerData.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.innerData.email.length > 50) {
+      }
+      if (this.innerData.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.innerData.email)) {
+      }
+      if (!this.validEmail(this.innerData.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       }

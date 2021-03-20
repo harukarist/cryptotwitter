@@ -96,10 +96,12 @@ export default {
       if (!this.requestForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.requestForm.email.length > 50) {
+      }
+      if (this.requestForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.requestForm.email)) {
+      }
+      if (!this.validEmail(this.requestForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       }
@@ -128,29 +130,26 @@ export default {
         this.requestForm
       );
       this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-      // API通信が成功した場合
-      if (response.status === OK) {
-        // Laravel側で設定したresultフラグを取得
-        const result = response.data.result;
-        // メール送信が完了した場合
-        if (result === "success") {
-          // フラグをtrueにして送信完了メッセージを表示
-          this.isSent = true;
-          // ページ最上部までスクロール
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-          // メール送信が失敗した場合
-        } else if (result === "failed") {
-          // Laravel側で設定したエラーメッセージを表示
-          this.apiMessage = response.data.message;
-        }
-      } else {
-        // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
-        // 別モジュールのミューテーションをcommitするためroot: trueを指定する
+      // API通信が失敗した場合
+      if (response.status !== OK) {
+        // errorモジュールのsetCodeミューテーションでステータスを更新して処理を終了
         this.$store.commit("error/setCode", response.status);
+        return;
       }
+      // API通信が成功した場合は、Laravel側で設定したresultフラグを取得
+      const result = response.data.result;
+      // メール送信が失敗した場合、Laravel側で設定したエラーメッセージを表示して処理を終了
+      if (result === "failed") {
+        this.apiMessage = response.data.message;
+        return;
+      }
+      // メール送信が完了した場合、フラグをtrueにして送信完了メッセージを表示
+      this.isSent = true;
+      // ページ最上部までスクロール
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
     },
   },
 };

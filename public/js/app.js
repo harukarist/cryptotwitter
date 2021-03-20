@@ -1912,30 +1912,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  if (!(val === _utility__WEBPACK_IMPORTED_MODULE_3__.INTERNAL_SERVER_ERROR)) {
-                    _context.next = 4;
-                    break;
+                  // サーバー内部エラーの場合はエラーメッセージを表示
+                  if (val === _utility__WEBPACK_IMPORTED_MODULE_3__.INTERNAL_SERVER_ERROR) {
+                    _this.$store.dispatch("message/showMessage", {
+                      text: "システムエラーが発生しました。お手数ですが、時間を置いて再度お試しください。",
+                      type: "danger",
+                      timeout: 2000
+                    });
                   }
 
-                  _this.$store.dispatch("message/showMessage", {
-                    text: "システムエラーが発生しました。お手数ですが、時間を置いて再度お試しください。",
-                    type: "danger",
-                    timeout: 2000
-                  });
-
-                  _context.next = 12;
-                  break;
-
-                case 4:
                   if (!(val === _utility__WEBPACK_IMPORTED_MODULE_3__.UNAUTHORIZED)) {
-                    _context.next = 11;
+                    _context.next = 6;
                     break;
                   }
 
-                  _context.next = 7;
+                  _context.next = 4;
                   return axios.get("/api/refresh-token");
 
-                case 7:
+                case 4:
                   // ストアの古いuserDataをクリア
                   _this.$store.commit("auth/setUserData", null); // ログイン画面へ遷移
 
@@ -1944,10 +1938,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     name: "login"
                   });
 
-                  _context.next = 12;
-                  break;
-
-                case 11:
+                case 6:
                   if (val === _utility__WEBPACK_IMPORTED_MODULE_3__.NOT_FOUND) {
                     // 404エラーの場合はNotFoundページを表示
                     _this.$router.push({
@@ -1955,7 +1946,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     });
                   }
 
-                case 12:
+                case 7:
                 case "end":
                   return _context.stop();
               }
@@ -2699,10 +2690,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.editForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.editForm.email.length > 50) {
+      }
+
+      if (this.editForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.editForm.email)) {
+      }
+
+      if (!this.validEmail(this.editForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       } // エラーメッセージがなければユーザー情報変更WebAPIを呼び出す
@@ -2903,7 +2898,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.changePassForm.current_password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.changePassForm.current_password.length < 8) {
+      }
+
+      if (this.changePassForm.current_password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       } // 新しいパスワードのバリデーション
@@ -2912,7 +2909,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.changePassForm.new_password) {
         // 未入力チェック
         this.newPasswordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.changePassForm.new_password.length < 8) {
+      }
+
+      if (this.changePassForm.new_password.length < 8) {
         // 文字数チェック
         this.newPasswordErrors.push(MSG_PASS_LESS);
       } // パスワード再入力のバリデーション
@@ -2921,10 +2920,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.changePassForm.new_password_confirmation) {
         // 未入力チェック
         this.confirmErrors.push(MSG_PASS_EMPTY);
-      } else if (this.changePassForm.new_password_confirmation.length < 8) {
+      }
+
+      if (this.changePassForm.new_password_confirmation.length < 8) {
         // 文字数チェック
         this.confirmErrors.push(MSG_PASS_LESS);
-      } else if (this.changePassForm.new_password !== this.changePassForm.new_password_confirmation) {
+      }
+
+      if (this.changePassForm.new_password !== this.changePassForm.new_password_confirmation) {
         // パスワード一致チェック
         this.confirmErrors.push(MSG_RETYPE);
       } // エラーメッセージを格納した配列を全て結合
@@ -2960,16 +2963,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
                 if (!(response.status === _utility__WEBPACK_IMPORTED_MODULE_4__.UNPROCESSABLE_ENTITY)) {
-                  _context.next = 10;
+                  _context.next = 8;
                   break;
                 }
 
                 _this.apiMessages = response.data.errors;
                 return _context.abrupt("return", false);
 
-              case 10:
+              case 8:
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
-                  _context.next = 13;
+                  _context.next = 11;
                   break;
                 }
 
@@ -2977,7 +2980,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 return _context.abrupt("return", false);
 
-              case 13:
+              case 11:
                 // レスポンスがOKの場合はフラッシュメッセージを表示
                 _this.$store.dispatch("message/showMessage", {
                   text: "パスワードを変更しました",
@@ -2990,7 +2993,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.newPasswordErrors = [];
                 _this.confirmErrors = [];
 
-              case 17:
+              case 15:
               case "end":
                 return _context.stop();
             }
@@ -3362,7 +3365,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.innerData.name) {
         // 未入力チェック
         this.nameErrors.push(MSG_NAME_EMPTY);
-      } else if (this.innerData.name.length > 20) {
+      }
+
+      if (this.innerData.name.length > 20) {
         // 文字数チェック
         this.nameErrors.push(MSG_NAME_MAX);
       } // メッセージのバリデーション
@@ -3371,7 +3376,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.innerData.message) {
         // 未入力チェック
         this.messageErrors.push(MSG_MESSAGE_EMPTY);
-      } else if (this.innerData.message.length > 1000) {
+      }
+
+      if (this.innerData.message.length > 1000) {
         // 文字数チェック
         this.messageErrors.push(MSG_MESSAGE_MAX);
       } // メールアドレスのバリデーション
@@ -3380,10 +3387,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.innerData.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.innerData.email.length > 50) {
+      }
+
+      if (this.innerData.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.innerData.email)) {
+      }
+
+      if (!this.validEmail(this.innerData.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       } // エラーメッセージを格納した配列を全て結合
@@ -6358,26 +6369,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     // 表示中のトレンド
     activeColumn: function activeColumn() {
-      if (this.column === "tweet_hour") {
-        return "1時間";
-      } else if (this.column === "tweet_day") {
-        return "24時間";
-      } else if (this.column === "tweet_week") {
-        return "1週間";
-      }
+      var tab_names = {
+        tweet_hour: "1時間",
+        tweet_day: "24時間",
+        tweet_week: "1週間"
+      };
+      return tab_names[this.column];
     },
     // クリックされたタブに応じてデータを返却
     clicked: function clicked() {
-      if (this.column === "tweet_hour") {
-        // 過去1時間のトレンド上位3件を返却
-        return this.items.trend_hour;
-      } else if (this.column === "tweet_day") {
-        // 過去1日のトレンド上位3件を返却
-        return this.items.trend_day;
-      } else if (this.column === "tweet_week") {
-        // 過去1週間のトレンド上位3件を返却
-        return this.items.trend_week;
-      }
+      var tab_datas = {
+        tweet_hour: this.items.trend_hour,
+        // 過去1時間のトレンド上位3件
+        tweet_day: this.items.trend_day,
+        // 過去1日のトレンド上位3件
+        tweet_week: this.items.trend_week // 過去1週間のトレンド上位3件
+
+      };
+      return tab_datas[this.column];
     }
   },
   watch: {
@@ -6694,10 +6703,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.loginForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.loginForm.email.length > 50) {
+      }
+
+      if (this.loginForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.loginForm.email)) {
+      }
+
+      if (!this.validEmail(this.loginForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       } // パスワードのバリデーション
@@ -6706,7 +6719,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.loginForm.password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.loginForm.password.length < 8) {
+      }
+
+      if (this.loginForm.password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       } // エラーメッセージを格納した配列を全て結合
@@ -7157,10 +7172,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.requestForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.requestForm.email.length > 50) {
+      }
+
+      if (this.requestForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.requestForm.email)) {
+      }
+
+      if (!this.validEmail(this.requestForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       } // エラーメッセージがなければパスワードリセットメール送信WebAPIを呼び出す
@@ -7202,32 +7221,41 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 response = _context.sent;
 
                 _this.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
-                // API通信が成功した場合
+                // API通信が失敗した場合
 
 
-                if (response.status === _utility__WEBPACK_IMPORTED_MODULE_3__.OK) {
-                  // Laravel側で設定したresultフラグを取得
-                  result = response.data.result; // メール送信が完了した場合
-
-                  if (result === "success") {
-                    // フラグをtrueにして送信完了メッセージを表示
-                    _this.isSent = true; // ページ最上部までスクロール
-
-                    window.scrollTo({
-                      top: 0,
-                      behavior: "smooth"
-                    }); // メール送信が失敗した場合
-                  } else if (result === "failed") {
-                    // Laravel側で設定したエラーメッセージを表示
-                    _this.apiMessage = response.data.message;
-                  }
-                } else {
-                  // その他の失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
-                  // 別モジュールのミューテーションをcommitするためroot: trueを指定する
-                  _this.$store.commit("error/setCode", response.status);
+                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_3__.OK)) {
+                  _context.next = 8;
+                  break;
                 }
 
-              case 6:
+                // errorモジュールのsetCodeミューテーションでステータスを更新して処理を終了
+                _this.$store.commit("error/setCode", response.status);
+
+                return _context.abrupt("return");
+
+              case 8:
+                // API通信が成功した場合は、Laravel側で設定したresultフラグを取得
+                result = response.data.result; // メール送信が失敗した場合、Laravel側で設定したエラーメッセージを表示して処理を終了
+
+                if (!(result === "failed")) {
+                  _context.next = 12;
+                  break;
+                }
+
+                _this.apiMessage = response.data.message;
+                return _context.abrupt("return");
+
+              case 12:
+                // メール送信が完了した場合、フラグをtrueにして送信完了メッセージを表示
+                _this.isSent = true; // ページ最上部までスクロール
+
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth"
+                });
+
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -7267,31 +7295,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -7413,10 +7416,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.resetForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.resetForm.email.length > 50) {
+      }
+
+      if (this.resetForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.resetForm.email)) {
+      }
+
+      if (!this.validEmail(this.resetForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       } // パスワードのバリデーション
@@ -7425,7 +7432,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.resetForm.password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.resetForm.password.length < 8) {
+      }
+
+      if (this.resetForm.password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       } // パスワード再入力のバリデーション
@@ -7434,10 +7443,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (!this.resetForm.password_confirmation) {
         // 未入力チェック
         this.confirmErrors.push(MSG_PASS_EMPTY);
-      } else if (this.resetForm.password_confirmation.length < 8) {
+      }
+
+      if (this.resetForm.password_confirmation.length < 8) {
         // 文字数チェック
         this.confirmErrors.push(MSG_PASS_LESS);
-      } else if (this.resetForm.password !== this.resetForm.password_confirmation) {
+      }
+
+      if (this.resetForm.password !== this.resetForm.password_confirmation) {
         // パスワード一致チェック
         this.confirmErrors.push(MSG_RETYPE);
       } // エラーメッセージを格納した配列を全て結合
@@ -7476,20 +7489,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 2:
                 response = _context.sent;
 
-                if (!(response.status === _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
-                  _context.next = 18;
+                if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_4__.OK)) {
+                  _context.next = 6;
                   break;
                 }
 
-                // Laravel側で設定したresultフラグを取得
-                result = response.data.result; // パスワード変更が完了した場合
+                // errorモジュールのsetCodeミューテーションでステータスを更新して処理を終了
+                _this.$store.commit("error/setCode", response.status);
 
-                if (!(result === "success")) {
-                  _context.next = 13;
+                return _context.abrupt("return");
+
+              case 6:
+                // API通信が失敗した場合は、Laravel側で設定したresultフラグを取得
+                result = response.data.result; // パスワード変更できなかった場合は、エラーメッセージを表示して処理を終了
+
+                if (!(result === "failed")) {
+                  _context.next = 10;
                   break;
                 }
 
-                // ログイン処理を実行
+                _this.apiMessage = response.data.status;
+                return _context.abrupt("return");
+
+              case 10:
+                // パスワード変更が完了した場合、ログイン処理を実行
                 // setUserDataミューテーションでuserDataステートを更新
                 _this.$store.commit("auth/setUserData", response.data.user); // ログインユーザーのTwitterアカウント情報とフォロー済みリストを更新
 
@@ -7508,27 +7531,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   timeout: 2000
                 });
 
-                return _context.abrupt("return");
-
-              case 13:
-                if (!(result === "failed")) {
-                  _context.next = 16;
-                  break;
-                }
-
-                // エラーメッセージを表示
-                _this.apiMessage = response.data.status;
-                return _context.abrupt("return");
-
-              case 16:
-                _context.next = 19;
-                break;
-
-              case 18:
-                // 失敗の場合はerrorモジュールのsetCodeミューテーションでステータスを更新
-                _this.$store.commit("error/setCode", response.status);
-
-              case 19:
+              case 14:
               case "end":
                 return _context.stop();
             }
@@ -7855,26 +7858,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
  // VuexのmapState関数をインポート
 
 
@@ -7926,10 +7909,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.registerForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.registerForm.email.length > 50) {
+      }
+
+      if (this.registerForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.registerForm.email)) {
+      }
+
+      if (!this.validEmail(this.registerForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       } // パスワードのバリデーション
@@ -7938,7 +7925,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.registerForm.password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.registerForm.password.length < 8) {
+      }
+
+      if (this.registerForm.password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       } // パスワード再入力のバリデーション
@@ -7947,10 +7936,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (!this.registerForm.password_confirmation) {
         // 未入力チェック
         this.confirmErrors.push(MSG_PASS_EMPTY);
-      } else if (this.registerForm.password_confirmation.length < 8) {
+      }
+
+      if (this.registerForm.password_confirmation.length < 8) {
         // 文字数チェック
         this.confirmErrors.push(MSG_PASS_LESS);
-      } else if (this.registerForm.password !== this.registerForm.password_confirmation) {
+      }
+
+      if (this.registerForm.password !== this.registerForm.password_confirmation) {
         // パスワード一致チェック
         this.confirmErrors.push(MSG_RETYPE);
       } // エラーメッセージを格納した配列を全て結合
@@ -8615,33 +8608,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8660,10 +8626,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      column: 'tweet_hour',
+      column: "tweet_hour",
       items: [],
       //トレンド一覧を格納
-      updatedAt: '',
+      updatedAt: "",
       //更新日時を格納
       isActive: false,
       //絞り込みメニューの表示有無
@@ -8675,7 +8641,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     // ツイート数の大きい順に配列を並べ替え
     sortedItems: function sortedItems() {
       // トレンド一覧のオブジェクトitemsを、表示するカラム（過去1時間、過去24時間、過去1週間のいずれか）の降順で並べ替え
-      return _.orderBy(this.items, this.column, 'desc');
+      return _.orderBy(this.items, this.column, "desc");
     },
     addRankNum: function addRankNum() {
       return _.each(this.sortedItems, function (item, index) {
@@ -8701,13 +8667,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // 表示中のトレンド
     activeColumn: function activeColumn() {
-      if (this.column === 'tweet_hour') {
-        return '1時間';
-      } else if (this.column === 'tweet_day') {
-        return '24時間';
-      } else if (this.column === 'tweet_week') {
-        return '1週間';
-      }
+      var tab_names = {
+        tweet_hour: "1時間",
+        tweet_day: "24時間",
+        tweet_week: "1週間"
+      };
+      return tab_names[this.column];
     }
   },
   watch: {
@@ -8747,16 +8712,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.$store.commit('loader/setIsLoading', true); //ローディング表示をオン
+                _this2.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
 
 
                 _context2.next = 3;
-                return axios.get('/api/trend');
+                return axios.get("/api/trend");
 
               case 3:
                 response = _context2.sent;
 
-                _this2.$store.commit('loader/setIsLoading', false); //ローディング表示をオフ
+                _this2.$store.commit("loader/setIsLoading", false); //ローディング表示をオフ
 
 
                 if (!(response.status !== _utility__WEBPACK_IMPORTED_MODULE_7__.OK)) {
@@ -8765,7 +8730,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 // 通信失敗の場合
-                _this2.$store.commit('error/setCode', response.status);
+                _this2.$store.commit("error/setCode", response.status);
 
                 return _context2.abrupt("return", false);
 
@@ -8785,13 +8750,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     // sortedItems()で並べ替えるキーとなるカラム、タブ表示するカラムを指定
     sortByHour: function sortByHour() {
-      this.column = 'tweet_hour';
+      this.column = "tweet_hour";
     },
     sortByDay: function sortByDay() {
-      this.column = 'tweet_day';
+      this.column = "tweet_day";
     },
     sortByWeek: function sortByWeek() {
-      this.column = 'tweet_week';
+      this.column = "tweet_week";
     },
     // 絞り込みを解除
     deselect: function deselect() {
@@ -8803,7 +8768,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       // 絞り込み表示の配列を一旦空にする
       this.selectedItems = []; // APIで取得したトレンド一覧の配列からidのみを取り出し、絞り込み表示の配列に格納
 
-      this.selectedItems = _.map(this.items, 'id');
+      this.selectedItems = _.map(this.items, "id");
     }
   }
 });
@@ -54725,7 +54690,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("h2", { staticClass: "c-container__title" }, [
-      _vm._v("\n    パスワードの再設定\n  ")
+      _vm._v("パスワードの再設定")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "c-form__wrapper" }, [
@@ -55384,7 +55349,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("h2", { staticClass: "c-container__title" }, [
-      _vm._v("\n    新規ユーザー登録\n  ")
+      _vm._v("新規ユーザー登録")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "c-form__wrapper" }, [
@@ -55553,7 +55518,7 @@ var render = function() {
             { staticClass: "c-form__info" },
             [
               _c("router-link", { attrs: { to: { name: "terms" } } }, [
-                _vm._v("\n          利用規約\n        ")
+                _vm._v(" 利用規約 ")
               ]),
               _vm._v("\n        および\n        "),
               _c("router-link", { attrs: { to: { name: "privacy" } } }, [
@@ -56190,9 +56155,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "c-container--bg" }, [
     _c("section", { staticClass: "c-section" }, [
-      _c("h5", { staticClass: "c-section__title" }, [
-        _vm._v("\n      トレンド一覧\n    ")
-      ]),
+      _c("h5", { staticClass: "c-section__title" }, [_vm._v("トレンド一覧")]),
       _vm._v(" "),
       _vm._m(0),
       _vm._v(" "),
@@ -56252,9 +56215,9 @@ var render = function() {
                   ? _c("span", { staticClass: "u-font--small u-font--muted" })
                   : _c("span", { staticClass: "u-font--small u-font--muted" }, [
                       _vm._v(
-                        " " +
+                        "\n              " +
                           _vm._s(_vm.selectedItems.length) +
-                          "件を絞り込み表示 "
+                          "件を絞り込み表示\n            "
                       )
                     ]),
                 _vm._v(" "),
@@ -56322,7 +56285,7 @@ var render = function() {
                 },
                 [
                   _c("p", { staticClass: "p-trend__select-text" }, [
-                    _vm._v("\n              表示する銘柄を選択\n            ")
+                    _vm._v("表示する銘柄を選択")
                   ]),
                   _vm._v(" "),
                   _c("i", {
@@ -56408,7 +56371,11 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(" 選択をすべて解除 ")]
+                          [
+                            _vm._v(
+                              "\n                選択をすべて解除\n              "
+                            )
+                          ]
                         )
                       : _c(
                           "a",
@@ -56420,7 +56387,11 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(" すべてを選択 ")]
+                          [
+                            _vm._v(
+                              "\n                すべてを選択\n              "
+                            )
+                          ]
                         )
                   ])
                 ]
@@ -56434,11 +56405,11 @@ var render = function() {
                 _c("thead", { staticClass: "c-table__thead" }, [
                   _c("tr", { staticClass: "c-table__tr" }, [
                     _c("th", { staticClass: "c-table__th c-table--left" }, [
-                      _vm._v("\n                順位\n              ")
+                      _vm._v("順位")
                     ]),
                     _vm._v(" "),
                     _c("th", { staticClass: "c-table__th c-table--left" }, [
-                      _vm._v("\n                銘柄名\n              ")
+                      _vm._v("銘柄名")
                     ]),
                     _vm._v(" "),
                     _c("th", { staticClass: "c-table__th c-table--center" }, [
@@ -56609,11 +56580,7 @@ var render = function() {
                                   {
                                     staticClass: "u-font--small u-font--muted"
                                   },
-                                  [
-                                    _vm._v(
-                                      "\n                  不明\n                "
-                                    )
-                                  ]
+                                  [_vm._v("不明")]
                                 )
                           ]
                         ),
@@ -56639,11 +56606,7 @@ var render = function() {
                                   {
                                     staticClass: "u-font--small u-font--muted"
                                   },
-                                  [
-                                    _vm._v(
-                                      "\n                  不明\n                "
-                                    )
-                                  ]
+                                  [_vm._v("不明")]
                                 )
                           ]
                         )

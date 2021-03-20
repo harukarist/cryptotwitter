@@ -104,7 +104,8 @@ export default {
       if (!this.changePassForm.current_password) {
         // 未入力チェック
         this.passwordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.changePassForm.current_password.length < 8) {
+      }
+      if (this.changePassForm.current_password.length < 8) {
         // 文字数チェック
         this.passwordErrors.push(MSG_PASS_LESS);
       }
@@ -112,7 +113,8 @@ export default {
       if (!this.changePassForm.new_password) {
         // 未入力チェック
         this.newPasswordErrors.push(MSG_PASS_EMPTY);
-      } else if (this.changePassForm.new_password.length < 8) {
+      }
+      if (this.changePassForm.new_password.length < 8) {
         // 文字数チェック
         this.newPasswordErrors.push(MSG_PASS_LESS);
       }
@@ -120,10 +122,12 @@ export default {
       if (!this.changePassForm.new_password_confirmation) {
         // 未入力チェック
         this.confirmErrors.push(MSG_PASS_EMPTY);
-      } else if (this.changePassForm.new_password_confirmation.length < 8) {
+      }
+      if (this.changePassForm.new_password_confirmation.length < 8) {
         // 文字数チェック
         this.confirmErrors.push(MSG_PASS_LESS);
-      } else if (
+      }
+      if (
         this.changePassForm.new_password !==
         this.changePassForm.new_password_confirmation
       ) {
@@ -140,7 +144,7 @@ export default {
         this.changePassword();
       }
     },
-    
+
     // パスワード変更WebAPI呼び出し
     async changePassword() {
       this.$store.commit("loader/setIsLoading", true); //ローディング表示をオン
@@ -153,7 +157,9 @@ export default {
       if (response.status === UNPROCESSABLE_ENTITY) {
         this.apiMessages = response.data.errors;
         return false;
-      } else if (response.status !== OK) {
+      }
+      // バリデーションエラー以外のエラーの場合はエラー情報をストアに保存
+      if (response.status !== OK) {
         this.$store.commit("error/setCode", response.status);
         return false;
       }

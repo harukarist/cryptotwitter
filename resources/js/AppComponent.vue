@@ -49,7 +49,8 @@ export default {
             type: "danger",
             timeout: 2000,
           });
-        } else if (val === UNAUTHORIZED) {
+        }
+        if (val === UNAUTHORIZED) {
           // セッション切れなど認証エラーの場合
           // CSRFトークンのリフレッシュ処理
           await axios.get("/api/refresh-token");
@@ -57,7 +58,8 @@ export default {
           this.$store.commit("auth/setUserData", null);
           // ログイン画面へ遷移
           this.$router.push({ name: "login" });
-        } else if (val === NOT_FOUND) {
+        }
+        if (val === NOT_FOUND) {
           // 404エラーの場合はNotFoundページを表示
           this.$router.push({ name: "errors.notfound" });
         }

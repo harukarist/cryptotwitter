@@ -71,10 +71,12 @@ export default {
       if (!this.editForm.email) {
         // 未入力チェック
         this.emailErrors.push(MSG_EMAIL_EMPTY);
-      } else if (this.editForm.email.length > 50) {
+      }
+      if (this.editForm.email.length > 50) {
         // 文字数チェック
         this.emailErrors.push(MSG_EMAIL_MAX);
-      } else if (!this.validEmail(this.editForm.email)) {
+      }
+      if (!this.validEmail(this.editForm.email)) {
         // 下記のメソッドで形式チェック
         this.emailErrors.push(MSG_EMAIL_TYPE);
       }
