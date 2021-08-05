@@ -6,6 +6,12 @@ Twitterで仮想通貨の各銘柄についてどのぐらいつぶやかれて�
 
 サイトURL：https://crypto-trend.harukarist.com/
 
+  ※以下のサンプルアカウントでログインいただけます
+  
+    メールアドレス：　　test@example.com
+    
+     パスワード：    testtest
+
 ## 使用言語など
 
 Laravel/MySQL/Vue.js/Sass/HTML
